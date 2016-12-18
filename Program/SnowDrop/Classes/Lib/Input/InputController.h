@@ -56,6 +56,14 @@ public:
 	virtual bool getAttackFlag() = 0;
 
 	/*
+	* @desc 攻撃入力フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	virtual bool getCheckFlag() = 0;
+
+
+	/*
 	* @desc セーブ入力フラグ取得 
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
