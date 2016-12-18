@@ -120,13 +120,14 @@ public:
 	enum class STATE :int {
 		STAND = 0,
 		JUMPING = 0,
-		WALK = 1,
-		HIT = 2,
-		FALING = 3,
-		ATTACK = 4,
-		PURSUIT = 5,
-		IDLE = 6,
-		DAMAGE = 7,
+		WALK_RIGHT = 1,
+		WALK_LEFT = 2,
+		HIT = 3,
+		FALING = 4,
+		ATTACK = 5,
+		PURSUIT = 6,
+		IDLE = 7,
+		DAMAGE = 8,
 
 	};
 

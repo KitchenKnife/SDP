@@ -185,15 +185,6 @@ bool CGameMain::init() {
 
 	//初期画面にいる敵の生成
 	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
-	
-	//CMapManager::getInstance()->getMap()->m_launchEnemyLine = 30;
-
-	// 敵の生成と取り付け
-	//CEnemyCharacter* pEne = CEnemyCharacter::create(320.0f, 240.0f);
-	//this->m_pMainLayer->addChild(pEne);
-	//配列に取り付ける
-	//this->m_pEnemyChara->push_back((CEnemyCharacter*)pEne);
-
 	//全体の拡大
 	this->setScale(SCALE_MAIN);
 	//拡大に伴う画面位置の設定

@@ -16,17 +16,6 @@ std::vector<CAnimation* >* CEnemeyPartsFactory::getAnimations() {
 	//アニメーションデータ群の作成
 	std::vector<CAnimation*>* pAnimations = new std::vector<CAnimation*>;
 
-	//直立アニメーションの設定
-	pAnimations->push_back(new CChipNotAnimation());
-	//歩行アニメーションの設定
-	pAnimations->push_back(new CChipListAnimation(10, true));
-	//ダメージを受け時のアニメーション設定
-	pAnimations->push_back(new CChipNotAnimation());
-	//落ちているときのアニメーション
-	pAnimations->push_back(new CChipNotAnimation());
-	//打撃攻撃中のアニメーション
-	pAnimations->push_back(new CChipListAnimation(60, false));
-
 	return pAnimations;
 }
 
@@ -72,52 +61,16 @@ CStatus* CEnemeyPartsFactory::getStatus() {
 	return new CStatus();
 }
 
-
 //================================================
-// メイドの生成と組み立てを担当するクラス
-//	（FactoryMethod）
+// メイド工場
 //================================================
-CEnemyCharacter* CMaideadCreateFactory::createEnemy() {
-
-	//CCharacter* pEnemy = new CEnemyCharacter();
-	CEnemyCharacter* pEnemy = CEnemyCharacter::create();
-
-	//移動用データの取得
-	pEnemy->m_pMove = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getMove();
-	//アニメーションデータ群の取得
-	pEnemy->m_pAnimations = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getAnimations();
-	//適用する物理演算群の取得
-	pEnemy->m_pPhysicals = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getPhysicals();
-	//アクション群の取得
-	pEnemy->m_pActions = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getActions();
-
-	if (pEnemy->m_pActions == NULL) {
-		CCLOG("");
-	}
-
-	//衝突判定用データの取得
-	pEnemy->m_pBody = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getBody();
-	//衝突判定の取得
-	pEnemy->m_pCollisionAreas = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getCollisionAreas();
-	//ステータスの取得
-	pEnemy->m_pStatus = this->partsFactories[(int)ENEMY_RACE_TYPE::MAIDEAD]->getStatus();
-
-	return pEnemy;
-}
-
-//================================================
-// キャラクターのパーツのセッティングを担当するクラス
-//	（FactoryMethod）
-//================================================
-
-//各々のパーツのセッティング
 void CBaseEnemyFactory::settingMove(CEnemyCharacter* pCharacter, float posX, float posY) {
 
 	//初期位置の設定
 	pCharacter->m_pMove->m_pos.set(posX,posY);
+	// 初期速度
+	pCharacter->m_pMove->m_vel.set(-1.0f, 0.0f);
 
-	// 初期速度の設定(左移動)
-	pCharacter->m_pMove->m_vel.set(-1, 0);
 }
 void CBaseEnemyFactory::settingTexture(CEnemyCharacter* pCharacter) {
 	//テクスチャの設定
@@ -127,13 +80,31 @@ void CBaseEnemyFactory::settingTexture(CEnemyCharacter* pCharacter) {
 
 void CBaseEnemyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
+
+	//直立アニメーションの設定
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	//歩行アニメーションの設定（右）
+	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
+	//歩行アニメーションの設定(左)
+	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
+	//ダメージを受け時のアニメーション設定
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	//落ちているときのアニメーション
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	//打撃攻撃中のアニメーション
+	pCharacter->m_pAnimations->push_back(new CChipListAnimation(60, false));
+
+
 	//直立アニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
 
-	//歩行アニメーションに設定する1枚目のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK]->addChipData(new CChip(0, 0, 64, 64));
-	//歩行アニメーションに設定する2枚目のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK]->addChipData(new CChip(64, 0, 64, 64));
+	//歩行アニメーション(右)
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(64, 0, 64, 64));
+
+	//歩行アニメーション(左)
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(64, 0, 64, 64));
 
 	//ダメージを受けた時のアニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::HIT]->addChipData(new CChip(128, 0, 64, 64));
@@ -243,64 +214,58 @@ void CBaseEnemyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 
 }
 
-
-//================================================
-// 飛行キャラ生成と組み立てを担当するクラス
-//	（FactoryMethod）
-//================================================
-//飛行キャラ生成と組み立て
-CEnemyCharacter* CFlyCreateFactory::createEnemy() {
-
-	CEnemyCharacter* pEnemy = CEnemyCharacter::create();
-
-	//移動用データの取得
-	pEnemy->m_pMove = this->partsFactories[(int)ENEMY_RACE_TYPE::BAT]->getMove();
-	//アニメーションデータ群の取得
-	pEnemy->m_pAnimations = this->partsFactories[(int)ENEMY_RACE_TYPE::BAT]->getAnimations();
-	//適用する物理演算群の取得
-	pEnemy->m_pPhysicals = this->partsFactories[(int)ENEMY_RACE_TYPE::BAT]->getPhysicals();
-	//アクション群の取得
-	pEnemy->m_pActions = this->partsFactories[(int)ENEMY_RACE_TYPE::BAT]->getActions();
-	//衝突判定用データの取得
-	pEnemy->m_pBody = this->partsFactories[(int)ENEMY_RACE_TYPE::BAT]->getBody();
-		
-	//ステータスの取得
-	pEnemy->m_pStatus = this->partsFactories[(int)ENEMY_RACE_TYPE::BAT]->getStatus();
-
-
-	return pEnemy;
-
-}
-
 //================================================
 // 飛行キャラのパーツのセッティングを担当するクラス
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
-void CFlyFactory::settingMove(CEnemyCharacter* pCharacter,float x, float y) {
+void CBatFactory::settingMove(CEnemyCharacter* pCharacter,float x, float y) {
 
 	//初期位置の設定
 	pCharacter->m_pMove->m_pos.set(x, y);
 
-	// 初期速度の設定
-	pCharacter->m_pMove->m_vel.set(-10.0f, 0.0f);
-
 }
-void CFlyFactory::settingTexture(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingTexture(CEnemyCharacter* pCharacter) {
 	//テクスチャの設定
-	pCharacter->setTexture(IMAGE_ENEMY);
+	pCharacter->setTexture(IMAGE_BAT);
 
 }
 
-void CFlyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingAnimations(CEnemyCharacter* pCharacter) {
+
+	//直立アニメーションの設定
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	//歩行アニメーションの設定（右）
+	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
+	//歩行アニメーションの設定（左）
+	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
+	//ダメージを受け時のアニメーション設定
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	//落ちているときのアニメーション
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	//打撃攻撃中のアニメーション
+	pCharacter->m_pAnimations->push_back(new CChipListAnimation(60, false));
+
+
 
 	//直立アニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
 
-	//歩行アニメーションに設定する1枚目のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK]->addChipData(new CChip(0, 64, 64, 64));
-	//歩行アニメーションに設定する2枚目のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK]->addChipData(new CChip(64, 64, 64, 64));
+	//歩行アニメーション（右）
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(0, 64, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(64, 64, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(128, 64, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(192, 64, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(256, 64, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(320, 64, 64, 64));
+
+	//歩行アニメーション（左）
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(64, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(128, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(192, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(256, 0, 64, 64));
+	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(320, 0, 64, 64));
 
 	//ダメージを受けた時のアニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::HIT]->addChipData(new CChip(128, 64, 64, 64));
@@ -314,24 +279,24 @@ void CFlyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 }
 
-void CFlyFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 
 }
 
-void CFlyFactory::settingActions(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
 	// ｼﾞｬﾝﾌﾟ設定
 	CActionJump* pAction = (CActionJump*)(*pCharacter->m_pActions)[(int)CEnemyCharacter::ACTION::JUMP];
 	pAction->set(3.0f, 4);
 
 }
 
-void CFlyFactory::settingBody(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingBody(CEnemyCharacter* pCharacter) {
 
 	pCharacter->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
 }
 
 //衝突判定空間の設定
-void CFlyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//画面端衝突空間の生成
 	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
@@ -386,13 +351,13 @@ void CFlyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 }
 
-void CFlyFactory::settingStatus(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingStatus(CEnemyCharacter* pCharacter) {
 
 	pCharacter->m_pStatus->set(3, 3, 1);
 }
 
 
-void CFlyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	//状態の設定
 	pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
 

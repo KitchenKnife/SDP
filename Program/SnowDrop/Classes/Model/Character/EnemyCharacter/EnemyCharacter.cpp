@@ -93,33 +93,6 @@ void CEnemyCharacter::animationFunc() {
 }
 
 /**
-* @desc 画面範囲外判定処理
-* @tips まだ削除の処理をしていないので画面下で止める処理のみ実装しておく
-*/
-/*
-void  CEnemyCharacter::endOfScreen() {
-	
-	cocos2d::Vec2* pPos = &this->m_pMove->m_pos;
-	cocos2d::Vec2* pVel = &this->m_pMove->m_vel;
-	cocos2d::Vec2* pAccele = &this->m_pMove->m_accele;
-
-
-	//画面下で止めるようにする
-	if (pVel->y < 0.0f  &&  pPos->y + this->m_pBody->m_bottom < WINDOW_BOTTOM) {
-		//設定　修正値
-		auto boundary = (pPos->y + this->m_pBody->m_bottom) - WINDOW_BOTTOM;
-		pPos->y -= boundary;
-
-		//速度と加速度を0にするかはゲームによって変わる
-		pVel->y = 0.0f;
-		pAccele->y = 0.0f;
-
-	}
-	//this->applyFunc();
-}
-*/
-
-/**
 * @desc 状態チェック
 * @tips 値をチェックして現在の状態を変更する
 */
@@ -129,11 +102,11 @@ void CEnemyCharacter::checkState() {
 	if (this->m_pMove->m_vel.x != 0) {
 		if (this->m_pMove->m_vel.x > 0) {
 			//右向きに設定
-			this->setScale(1.0f, 1.0f);
+			this->m_state = (int)STATE::WALK_RIGHT;
 		}
 		else {
 			//左向きに設定
-			this->setScale(-1.0f, 1.0f);
+			this->m_state = (int)STATE::WALK_LEFT;
 		}
 	}
 
@@ -154,9 +127,13 @@ void CEnemyCharacter::checkState() {
 		m_state = (int)STATE::ATTACK;
 
 	}
-	else if (this->m_pMove->m_vel.x != 0.0f) {
-		//歩いている
-		m_state = (int)STATE::WALK;
+	else if (this->m_pMove->m_vel.x > 0.0f) {
+		//右に歩いている
+		m_state = (int)STATE::WALK_RIGHT;
+	}
+	else if (this->m_pMove->m_vel.x < 0.0f) {
+		//左に歩いている
+		m_state = (int)STATE::WALK_LEFT;
 	}
 	else {
 		//立っている
