@@ -105,9 +105,6 @@ public:
 	//出撃スケジュール
 	std::vector<CLaunchTrigger*>* m_pLaunchSchedule = NULL;
 
-	// 敵キャラクター
-	std::vector<CEnemyCharacter*>* m_pEnemyChara = new std::vector<CEnemyCharacter*>;
-
 	//背景
 	cocos2d::Sprite* m_pBackGround = NULL;
 	cocos2d::Sprite* m_pHrizon = NULL;

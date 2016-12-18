@@ -12,6 +12,7 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Character/Character.h"
 #include "Model/Map/Map.h"
+#include "Model/Character/EnemyCharacter/EnemyCharacter.h"
 
 //プレイヤークラスの前方宣言
 class CEnemyCharacter;
@@ -42,23 +43,9 @@ public:
 //	（FactoryMethod）
 //================================================
 class CEnemyFactory {
-public:
-
-	//パーツ製造工場群
-	std::vector<CCharacterPartsFactory*>partsFactories{
-		new CEnemeyPartsFactory(),
-		new CEnemeyPartsFactory()
-	};
-
-	~CEnemyFactory() {
-		//パーツ製造工場群の解放
-		for (CCharacterPartsFactory* pPartsfactory : partsFactories) {
-			SAFE_DELETE(pPartsfactory);
-		}
-	}
+protected:
 
 	//敵の生成と組み立て
-	//派生先によって違うプレイヤーの生成
 	virtual CEnemyCharacter* createEnemy() = 0;
 
 	//各々のパーツのセッティング
@@ -83,6 +70,7 @@ public:
 	//初期設定もろもろ
 	virtual void settingInitialize(CEnemyCharacter* pCharacter) = 0;
 
+public:
 
 	//敵の生成とセッティング
 	CEnemyCharacter* create(float posX,float posY) {
@@ -112,25 +100,45 @@ public:
 		return pCharacter;
 	}
 
+	virtual ~CEnemyFactory() {};
+
 };
 
 //================================================
 // キャラクターの生成と組み立てを担当するクラス
 //	（FactoryMethod）
 //================================================
-class CMaideadCreateFactory :public CEnemyFactory {
+class CEnemyCreateFactory :public CEnemyFactory {
 public:
+	virtual ~CEnemyCreateFactory() {}
 
-	//プレイヤーの生成と組み立て
-	CEnemyCharacter* createEnemy()override;
+protected:
+	virtual CEnemyCharacter* createEnemy()override {
 
+		// 敵生成
+		CEnemyCharacter* pEnemy = CEnemyCharacter::create();
+		// 敵パーツ工場生成
+		CEnemeyPartsFactory pEnemyPartsFactory;
+
+		// パーツの設定
+		pEnemy->m_pAnimations = pEnemyPartsFactory.getAnimations();
+		pEnemy->m_pMove = pEnemyPartsFactory.getMove();
+		pEnemy->m_pPhysicals = pEnemyPartsFactory.getPhysicals();
+		pEnemy->m_pActions = pEnemyPartsFactory.getActions();
+		pEnemy->m_pBody = pEnemyPartsFactory.getBody();
+		pEnemy->m_pCollisionAreas = pEnemyPartsFactory.getCollisionAreas();
+		pEnemy->m_pStatus = pEnemyPartsFactory.getStatus();
+
+		//　敵返す
+		return pEnemy;
+	}
 };
 
 //================================================
 // キャラクターのパーツのセッティングを担当するクラス
 //	（FactoryMethod）
 //================================================
-class CBaseEnemyFactory :public CMaideadCreateFactory {
+class CBaseEnemyFactory :public CEnemyCreateFactory {
 public:
 
 	//各々のパーツのセッティング
@@ -156,23 +164,12 @@ public:
 	void settingInitialize(CEnemyCharacter* pCharacter)override;
 
 };
-//================================================
-// パタパタの生成と組み立てを担当するクラス
-//	（FactoryMethod）
-//================================================
-class CFlyCreateFactory :public CEnemyFactory {
-public:
 
-	//プレイヤーの生成と組み立て
-	CEnemyCharacter* createEnemy()override;
-
-};
 
 //================================================
-// パタパタパーツのセッティングを担当するクラス
-//	（FactoryMethod）
+//　コウモリ
 //================================================
-class CFlyFactory :public CFlyCreateFactory {
+class CBatFactory :public CEnemyCreateFactory {
 public:
 
 	//各々のパーツのセッティング
@@ -214,14 +211,9 @@ class CEnemyFactoryManager {
 private:
 	//コンストラクタ
 	CEnemyFactoryManager() {
-		// プレイヤー基本工場
-		//m_factories.push_back(new CBaseEnemyFactory());
-		// プレイヤー基本工場
-		//m_factories.push_back(new CFlyFactory());
 
-		m_factories[ENEMY_TYPE::KURIBO] = new CBaseEnemyFactory();
 		m_factories[ENEMY_TYPE::MAIDEAD] = new CBaseEnemyFactory();
-		m_factories[ENEMY_TYPE::BAT] = new CFlyFactory();
+		m_factories[ENEMY_TYPE::BAT] = new CBatFactory();
 	}
 
 	//共有のインスタンス
@@ -246,16 +238,12 @@ public:
 	//インスタンスの取得
 	static CEnemyFactoryManager* getInstance();
 
-	//プレイヤー工場群
+	//敵工場群
 	std::map<ENEMY_TYPE, CEnemyFactory*> m_factories;
 
 
-	//プレイヤー工場のcreate()を呼び出す
+	//敵工場のcreate()を呼び出す
 	CEnemyCharacter* create(Point pos, int type) {
-
-		//CEnemyCharacter* pEnemy = this->pEnemyFactory->create();
-		//return pEnemy;
-
 
 			return this->m_factories[(ENEMY_TYPE)type]->create(pos.x, pos.y);
 	}
