@@ -250,3 +250,17 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+
+#  Ignore cocos2d-x setting
+cocos2d/
+proj.android/
+proj.android-studio/
+proj.ios_mac/
+proj.linux/
+proj.win8.1-universal/
+proj.win10/
+.cocos-project.json
+CMakeLists.txt
+
+ 
