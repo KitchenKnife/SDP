@@ -9,6 +9,15 @@
 #include "cocos2d.h"
 #include "Constants.h"
 
+//コントローラータイプ
+enum class CONTROLLER_TYPE : int
+{
+	KEYBORD = 0, //キーボード
+	GAMEPAD = 1, //ゲームパッド
+};
+
+
+
 /*
  *	入力タイプ
  */

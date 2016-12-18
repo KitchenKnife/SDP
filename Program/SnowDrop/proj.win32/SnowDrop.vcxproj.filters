@@ -180,6 +180,9 @@
     <ClCompile Include="..\Classes\Model\Character\GimmickFactory.cpp">
       <Filter>src\Model\Character</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Input\InputController.cpp">
+      <Filter>src\Lib\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\GimmickFactory.h">
       <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Input\InputController.h">
+      <Filter>src\Lib\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
