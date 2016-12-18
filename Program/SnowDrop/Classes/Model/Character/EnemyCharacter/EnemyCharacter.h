@@ -122,18 +122,16 @@ public:
 		JUMPING = 0,
 		WALK_RIGHT = 1,
 		WALK_LEFT = 2,
-		HIT = 3,
-		FALING = 4,
-		ATTACK = 5,
-		PURSUIT = 6,
-		IDLE = 7,
-		DAMAGE = 8,
+		FALING = 3,
+		ATTACK = 4,
+		PURSUIT = 5,
+		IDLE = 6,
+		DAMAGE = 7,
 
 	};
 
 	//敵が行えるアクション
 	enum class ACTION :int {
-		JUMP = 0,
 		ATTACK = 1,
 		PURSUIT = 2,
 		IDLE = 3,
@@ -173,14 +171,35 @@ public:
 	bool collision(CCharacter* pChara)override;
 
 	/**
-	* @desc マップとの衝突判定
-	* @return true...衝突した
-	*/
-	//bool collisionMap()override;
-
-	/**
 	* @desc 衝突判定処理
 	*/
 	void collisionAll()override;
+
+	/**
+	* @desc 下領域と衝突した際のイベントコールバック
+	* @param マップチップID
+	*		　画面下の際は0
+	*/
+	virtual void collisionBottomCallback(int event) override{
+	}
+
+	/**
+	* @desc 上　衝突した際のイベントコールバック
+	*/
+	virtual void collisionTopCallback(int event) override{
+	}
+
+	/**
+	* @desc 右　衝突した際のイベントコールバック
+	*/
+	virtual void collisionRightCallback(int event) override{
+	}
+
+	/**
+	* @desc 左　衝突した際のイベントコールバック
+	*/
+	virtual void collisionLeftCallback(int event) override{
+	}
+
 };
 

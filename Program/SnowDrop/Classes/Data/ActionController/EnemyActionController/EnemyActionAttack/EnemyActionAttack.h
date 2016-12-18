@@ -75,6 +75,8 @@ protected:
 public:
 	//コンストラクタ
 	CEnemyActionAttack() {}
+	// デストラクタ
+	~CEnemyActionAttack(){}
 
 	// フレーム設定
 	void setFrame(int frame) { this->m_frame = frame; }
@@ -130,6 +132,9 @@ class CEnemyBrowAttack : public CEnemyActionAttack {
 
 public:
 
+	~CEnemyBrowAttack(){}
+
+
 	void attack(CCharacter* pChara) {
 
 		pChara->m_pStatus->decreaseHP(1);
@@ -142,6 +147,8 @@ public:
 class CEnemyAttack : public CEnemyActionAttack {
 
 public:
+	~CEnemyAttack(){}
+
 
 	void attack(CCharacter* pChara) {}
 };
@@ -152,6 +159,8 @@ public:
 class CEnemyBOSS1Attack : public CEnemyActionAttack {
 
 public:
+
+	~CEnemyBOSS1Attack(){}
 
 	void attack(CCharacter* pChara);
 };
@@ -164,5 +173,6 @@ class CEnemyBOSS1AttackQuake : public CEnemyActionAttack {
 
 public:
 
+	~CEnemyBOSS1AttackQuake(){}
 	void attack(CCharacter* pChara);
 };

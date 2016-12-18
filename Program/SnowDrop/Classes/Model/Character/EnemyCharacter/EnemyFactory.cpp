@@ -4,6 +4,8 @@
 #include "EnemyFactory.h"
 #include "EnemyCharacter.h"
 #include "Data/ActionController/EnemyActionController/EnemyActionController.h"
+#include "Data/ActionController/EnemyActionController/EnemyActionPursuit/EnemyActionPursuit.h"
+#include "Data/ActionController/EnemyActionController/EnemyActionAttack/EnemyActionAttack.h"
 
 
 
@@ -35,11 +37,7 @@ std::vector<CPhysical* >* CEnemeyPartsFactory::getPhysicals() {
 
 std::vector<CAction* >* CEnemeyPartsFactory::getActions() {
 	//行えるアクション群を作成
-	std::vector<CAction* >* pActions = new std::vector<CAction*>;
-	//ジャンプアクションの設定
-	pActions->push_back(new CActionJump());
-	//打撃攻撃アクションの設定
-	pActions->push_back(new CActionBlowAttack());
+	std::vector<CAction* >* pActions = new std::vector<CAction*>();
 
 	return pActions;
 }
@@ -106,9 +104,6 @@ void CBaseEnemyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 64, 64));
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(64, 0, 64, 64));
 
-	//ダメージを受けた時のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::HIT]->addChipData(new CChip(128, 0, 64, 64));
-
 	//落ちている時のアニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::FALING]->addChipData(new CChip(128, 0, 64, 64));
 
@@ -126,10 +121,10 @@ void CBaseEnemyFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 }
 
 void CBaseEnemyFactory::settingActions(CEnemyCharacter* pCharacter) {
-
-	// ｼﾞｬﾝﾌﾟ設定
-	CActionJump* pAction = (CActionJump*)(*pCharacter->m_pActions)[(int)CEnemyCharacter::ACTION::JUMP];
-	pAction->set(3.0f, 4);
+	// 攻撃の設定
+	pCharacter->m_pActions->push_back(new CEnemyBrowAttack());
+	//追跡の設定
+	pCharacter->m_pActions->push_back(new CActionPursuitGirlPriority());
 }
 
 void CBaseEnemyFactory::settingBody(CEnemyCharacter* pCharacter) {
@@ -172,20 +167,18 @@ void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
 
 	//基準点の設定
-	for (int i = 0; i < 9; i++) {
+	for (int i = 1; i < 4; i++) {
 		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(8 * i - (32), -32)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(64 - i * 16 , -32)));
 
 		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(8 * i - (32), 32)));
-	}
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(64 - i * 16, 32)));
 
-	for (int i = 0; i < 9; i++) {
 		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32, 8 * i - (32))));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32,64 - i * 16)));
 
 		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32, 8 * i - (132))));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32,64 - i * 16)));
 	}
 
 	//画面端の衝突判定を取り付ける
@@ -251,25 +244,15 @@ void CBatFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 	//直立アニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
 
-	//歩行アニメーション（右）
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(0, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(64, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(128, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(192, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(256, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(320, 64, 64, 64));
+	// 歩行　6枚分
+	for (int i = 0; i < 6; i++) {
+		//歩行アニメーション（右） 
+		(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(i * 64, 64, 64, 64));
 
-	//歩行アニメーション（左）
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(64, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(128, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(192, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(256, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(320, 0, 64, 64));
+		//歩行アニメーション（左）
+		(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(i * 64, 0, 64, 64));
 
-	//ダメージを受けた時のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::HIT]->addChipData(new CChip(128, 64, 64, 64));
-
+	}
 	//落ちている時のアニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::FALING]->addChipData(new CChip(192, 64, 64, 64));
 
@@ -284,9 +267,11 @@ void CBatFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 }
 
 void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
-	// ｼﾞｬﾝﾌﾟ設定
-	CActionJump* pAction = (CActionJump*)(*pCharacter->m_pActions)[(int)CEnemyCharacter::ACTION::JUMP];
-	pAction->set(3.0f, 4);
+	// 攻撃の設定
+	pCharacter->m_pActions->push_back(new CEnemyBrowAttack());
+	//追跡の設定
+	pCharacter->m_pActions->push_back(new CActionPursuitGirlPriority());
+
 
 }
 

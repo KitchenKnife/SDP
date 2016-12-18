@@ -84,11 +84,6 @@ CGameMain::~CGameMain() {
 	// 全ての効果音を停止
 	SimpleAudioEngine::getInstance()->stopAllEffects() ;
 
-	//敵の配列を解放
-	for (CEnemyCharacter* pEne: (*this->m_pEnemyChara)) {
-		SAFE_DELETE(pEne);
-	}
-
 	//プレーヤーのインスタンスの解放
 	CPlayerBoy::removeInstnace();
 	CPlayerGirl::removeInstnace();

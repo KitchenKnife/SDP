@@ -124,19 +124,35 @@ void CActionPursuitGirlPriority::pursuit(CCharacter* pChara) {
 	// UŒ‚‚³‚ê‚½‚ç‹RŽm‚ð‘_‚¤iHP‚ªŒ¸‚Á‚Ä‚¢‚½‚çj
 	if (pChara->m_pStatus->getmaxHp() > pChara->m_pStatus->getHp()) {
 
-		// ‹RŽm‚Ì^ã
+		// ‹RŽm
+		CCharacter* pPlayerBoy = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
 
+		// ‹RŽm‚Ì^ã‚Ì“Vˆä‚ð’†S“_‚Æ‚·‚é
+		cocos2d::Point pt(pPlayerBoy->m_pMove->m_pos.x, WINDOW_TOP);
 
-		//this->swing(pChara,)
+		// ’ÇÕ‚·‚é“G‚Æ‹RŽm‚Ì‹——£ = U‚èŽq‚Ì•‚‚³‚ð‹‚ß‚é
+		float width = std::sqrt(pPlayerBoy->m_pMove->m_pos.x * pPlayerBoy->m_pMove->m_pos.x + pChara->m_pMove->m_pos.x * pChara->m_pMove->m_pos.x);
+		float height = std::sqrt(pPlayerBoy->m_pMove->m_pos.y * pPlayerBoy->m_pMove->m_pos.y + pChara->m_pMove->m_pos.y * pChara->m_pMove->m_pos.y);
 
-		// Ý’è
-//		pChara->m_pMove->m_vel = ;
+		// U‚èŽq‰^“®‚ðs‚¤
+		this->swing(pChara, pt, width, height);
+
 	}
 	else {
 
+		// ­—
+		CCharacter* pPlayerGirl = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_2);
 
-		// Ý’è
-		//pChara->m_pMove->m_vel = pursuitVelGirl;
+		// ­—‚Ì^ã‚Ì“Vˆä‚ð’†S“_‚Æ‚·‚é
+		cocos2d::Point pt(pPlayerGirl->m_pMove->m_pos.x, WINDOW_TOP);
+
+		// ’ÇÕ‚·‚é“G‚Æ­—‚Ì‹——£ = U‚èŽq‚Ì•‚‚³‚ð‹‚ß‚é
+		float width = std::sqrt(pPlayerGirl->m_pMove->m_pos.x * pPlayerGirl->m_pMove->m_pos.x + pChara->m_pMove->m_pos.x * pChara->m_pMove->m_pos.x);
+		float height = std::sqrt(pPlayerGirl->m_pMove->m_pos.y * pPlayerGirl->m_pMove->m_pos.y + pChara->m_pMove->m_pos.y * pChara->m_pMove->m_pos.y);
+
+		// U‚èŽq‰^“®‚ðs‚¤
+		this->swing(pChara, pt, width, height);
+
 	}
 
 }
