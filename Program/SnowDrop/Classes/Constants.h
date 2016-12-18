@@ -2,7 +2,7 @@
 * Constants.h
 *
 *	2016/11/15	Osumi
-*
+*   2016/12/18 Ueba
 */
 #pragma once
 
