@@ -164,8 +164,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\Move\Move.cpp" />
     <ClCompile Include="..\Classes\Data\Physical\Physical.cpp" />
     <ClCompile Include="..\Classes\Data\Status\Status.cpp" />
+    <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\InputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\InputManager.cpp" />
+    <ClCompile Include="..\Classes\Lib\Input\KeyboardInputController.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Character.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.cpp" />
@@ -203,8 +205,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Move\Move.h" />
     <ClInclude Include="..\Classes\Data\Physical\Physical.h" />
     <ClInclude Include="..\Classes\Data\Status\Status.h" />
+    <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\InputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\InputManager.h" />
+    <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h" />
     <ClInclude Include="..\Classes\Model\Character\Character.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.h" />

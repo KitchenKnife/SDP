@@ -10,22 +10,31 @@
 //==========================================
 
 
-//全コントローラー抽象クラス
-class CController
+
+//==========================================
+//
+// Class: CInputController
+//
+// 入力コントローラー基底クラス
+//
+// 2016/12/18
+//						Author Shinya Ueba
+//==========================================
+class CInputController
 {
 public:
 	/**
 	* @desc コンストラクタ
 	* @author Shinya Ueba
 	*/
-	CController();
+	CInputController();
 
 
 	/**
 	* @desc デストラクタ
 	* @author Shinya Ueba
 	*/
-	virtual ~CController();
+	virtual ~CInputController();
 	
 	/*
 	* @desc 左移動入力フラグ取得
@@ -61,7 +70,6 @@ public:
 	* @author Shinya Ueba
 	*/
 	virtual bool getCheckFlag() = 0;
-
 
 	/*
 	* @desc セーブ入力フラグ取得 
