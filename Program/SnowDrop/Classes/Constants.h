@@ -84,6 +84,14 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define TAG_PLAYER_2	(1001)
 #define TAG_WEAPON_1	(2000)
 
+// 1st Enemy
+#define TAG_ENEMY_MEIDEAD	(10000)
+#define TAG_ENEMY_BAT		(10001)
+#define TAG_ENEMY_MALICE	(10002)
+#define TAG_ENEMY_SOLDIER	(10003)
+#define TAG_ENEMY_BOSS_1	(10004)
+
+
 //=========================================================================
 //	サウンドファイルのマクロはここから書く
 //=========================================================================

@@ -116,7 +116,7 @@ public:
 	//		
 	//================================================
 
-	//敵の状態
+	//敵の状態(アニメーション管理)
 	enum class STATE :int {
 		STAND = 0,
 		JUMPING = 0,
@@ -124,12 +124,19 @@ public:
 		HIT = 2,
 		FALING = 3,
 		ATTACK = 4,
+		PURSUIT = 5,
+		IDLE = 6,
+		DAMAGE = 7,
+
 	};
 
 	//敵が行えるアクション
 	enum class ACTION :int {
 		JUMP = 0,
-		BLOW_ATTACK = 1,
+		ATTACK = 1,
+		PURSUIT = 2,
+		IDLE = 3,
+		DAMAGE = 4,
 	};
 
 	//================================================

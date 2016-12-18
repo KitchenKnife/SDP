@@ -85,6 +85,18 @@
     <Filter Include="src\Data\LaunchTrigger">
       <UniqueIdentifier>{f2e1a8f3-2797-4420-be22-311e5b2e7a92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionAttack">
+      <UniqueIdentifier>{bf27dda4-a258-4553-a8db-60e2bc717bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionDamage">
+      <UniqueIdentifier>{163c5200-b15a-4a1d-8b96-d9f589ec1de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionPursuit">
+      <UniqueIdentifier>{9fd186a1-9a22-4bda-a1dc-22cac9caf9a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionIdle">
+      <UniqueIdentifier>{a7a6d17b-532d-4ca7-aece-73ed9db74426}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -179,6 +191,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\GimmickFactory.cpp">
       <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.cpp">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.cpp">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionDamage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.cpp">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionPursuit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.cpp">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionIdle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +301,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\GimmickFactory.h">
       <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.h">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.h">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionDamage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.h">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionPursuit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.h">
+      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionIdle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

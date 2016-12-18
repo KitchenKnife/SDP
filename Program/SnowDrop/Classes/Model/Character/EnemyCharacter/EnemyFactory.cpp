@@ -74,10 +74,9 @@ CStatus* CEnemeyPartsFactory::getStatus() {
 
 
 //================================================
-// クリボーの生成と組み立てを担当するクラス
+// メイドの生成と組み立てを担当するクラス
 //	（FactoryMethod）
 //================================================
-//クリボーの生成と組み立て
 CEnemyCharacter* CMaideadCreateFactory::createEnemy() {
 
 	//CCharacter* pEnemy = new CEnemyCharacter();

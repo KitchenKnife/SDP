@@ -146,7 +146,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionController.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.cpp" />
     <ClCompile Include="..\Classes\Data\Animation\Animation.cpp" />
@@ -180,7 +184,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Constants.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionController.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.h" />
     <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.h" />
     <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.h" />
     <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.h" />
     <ClInclude Include="..\Classes\Data\Animation\Animation.h" />

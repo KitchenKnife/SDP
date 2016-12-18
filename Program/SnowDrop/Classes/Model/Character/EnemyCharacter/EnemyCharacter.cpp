@@ -74,7 +74,7 @@ void CEnemyCharacter::moveFunc() {
 	(*this->m_pActions)[(int)ACTION::JUMP]->update(this);
 
 	//ジャンプ移動計算
-	(*this->m_pActions)[(int)ACTION::BLOW_ATTACK]->update(this);
+	(*this->m_pActions)[(int)ACTION::ATTACK]->update(this);
 
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals)) {
@@ -148,7 +148,7 @@ void CEnemyCharacter::checkState() {
 		//ｙ軸の速度がマイナスといことは落ちている状態
 		m_state = (int)STATE::FALING;
 	}
-	else if ((*this->m_pActions)[(int)ACTION::BLOW_ATTACK]->getActionFlag()) {
+	else if ((*this->m_pActions)[(int)ACTION::ATTACK]->getActionFlag()) {
 	
 		// 打撃攻撃中
 		m_state = (int)STATE::ATTACK;
