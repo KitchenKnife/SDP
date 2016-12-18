@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scene">
+      <UniqueIdentifier>{3bd55449-3f05-4fe5-99c3-72a539624dc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scene\GameMain">
+      <UniqueIdentifier>{9305fc8f-4c9b-44e7-99d7-57fe4a36c0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib">
+      <UniqueIdentifier>{fb29527d-1704-4359-b6a7-3d1aabfcb772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Lib\Input">
+      <UniqueIdentifier>{b2a42e77-ffff-4e51-9ce6-c66aecff1e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data">
+      <UniqueIdentifier>{deeb8839-fbc8-421b-9997-2c58700226b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController">
+      <UniqueIdentifier>{326d4975-e313-43bc-8756-1e768df896cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Animation">
+      <UniqueIdentifier>{0ff80823-f73f-4d0f-b648-b73e650a691b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Collision">
+      <UniqueIdentifier>{a8140870-4f02-4532-824f-6d0404eeee7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Move">
+      <UniqueIdentifier>{22f5bc5d-666f-45f7-894c-dc10890089be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Physical">
+      <UniqueIdentifier>{7e0e3058-71a2-4d83-894b-bffcd765d88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model">
+      <UniqueIdentifier>{85ba6d70-a649-4785-81cd-0e142bdfdfe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Character">
+      <UniqueIdentifier>{f15f433c-00e4-48ff-a66a-fda9b314c013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Map">
+      <UniqueIdentifier>{02fb3a4a-485b-431e-bd80-0873477901c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\PlayerActionController">
+      <UniqueIdentifier>{1fb2b0b8-aeb9-4373-b9ab-03603d4a2e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Status">
+      <UniqueIdentifier>{63071aef-ea1a-4d4f-afe0-ff5324addc3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Status\PlayerStatus">
+      <UniqueIdentifier>{9fcfce80-9e32-4325-b6b6-705e7fe29e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Character\EnemyCharacter">
+      <UniqueIdentifier>{e593d3ee-7560-4be5-8ca5-ebd6b83c9f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController">
+      <UniqueIdentifier>{18a3238f-3737-4662-9341-104dbea8d916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Effect">
+      <UniqueIdentifier>{de81eec4-e8ed-4af9-b37f-eb56cf2a9e75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Effect\PlayerEffect">
+      <UniqueIdentifier>{47b676f1-2024-4cdd-a958-3d479dec410a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Weapon">
+      <UniqueIdentifier>{d4d2c35d-d54e-43e2-8770-36a7cbb0bbbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Weapon\PlayerWeapon">
+      <UniqueIdentifier>{62b38928-b3a8-4fea-ba2f-419fa6c9637b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\PlayerActionController\PlayerWeaponActionController">
+      <UniqueIdentifier>{5b5667f8-1966-45e7-8bdc-796d9e9aa853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\LaunchData">
+      <UniqueIdentifier>{c523751d-1096-4943-8e50-f0ce579d8f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\LaunchTrigger">
+      <UniqueIdentifier>{f2e1a8f3-2797-4420-be22-311e5b2e7a92}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\GameMain\GameMain.cpp">
+      <Filter>src\Scene\GameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Input\InputManager.cpp">
+      <Filter>src\Lib\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionController.cpp">
+      <Filter>src\Data\ActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Animation\Animation.cpp">
+      <Filter>src\Data\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Collision\Collision.cpp">
+      <Filter>src\Data\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Move\Move.cpp">
+      <Filter>src\Data\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Physical\Physical.cpp">
+      <Filter>src\Data\Physical</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Character.cpp">
+      <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\PlayerCharacter.cpp">
+      <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Map\Map.cpp">
+      <Filter>src\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\PlayerFactory.cpp">
+      <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.cpp">
+      <Filter>src\Data\ActionController\PlayerActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Status\Status.cpp">
+      <Filter>src\Data\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp">
+      <Filter>src\Model\Character\EnemyCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.cpp">
+      <Filter>src\Model\Character\EnemyCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\EnemyType.cpp">
+      <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.cpp">
+      <Filter>src\Data\ActionController\EnemyActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Effect\Effect.cpp">
+      <Filter>src\Data\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.cpp">
+      <Filter>src\Data\Effect\PlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.cpp">
+      <Filter>src\Data\Effect\PlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Weapon\Weapon.cpp">
+      <Filter>src\Model\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeapon.cpp">
+      <Filter>src\Model\Weapon\PlayerWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.cpp">
+      <Filter>src\Data\ActionController\PlayerActionController\PlayerWeaponActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.cpp">
+      <Filter>src\Model\Weapon\PlayerWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\Collision\CollisionArea.cpp">
+      <Filter>src\Data\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\LaunchData\LaunchData.cpp">
+      <Filter>src\Data\LaunchData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.cpp">
+      <Filter>src\Data\LaunchTrigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\GimmickCharacter.cpp">
+      <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\GimmickFactory.cpp">
+      <Filter>src\Model\Character</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Constants.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameMain\GameMain.h">
+      <Filter>src\Scene\GameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Input\InputManager.h">
+      <Filter>src\Lib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionController.h">
+      <Filter>src\Data\ActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Animation\Animation.h">
+      <Filter>src\Data\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Collision\Collision.h">
+      <Filter>src\Data\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Move\Move.h">
+      <Filter>src\Data\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Physical\Physical.h">
+      <Filter>src\Data\Physical</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Character.h">
+      <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\PlayerCharacter.h">
+      <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Map\Map.h">
+      <Filter>src\Model\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\PlayerFactory.h">
+      <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.h">
+      <Filter>src\Data\ActionController\PlayerActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Status\Status.h">
+      <Filter>src\Data\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h">
+      <Filter>src\Model\Character\EnemyCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.h">
+      <Filter>src\Model\Character\EnemyCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\EnemyType.h">
+      <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.h">
+      <Filter>src\Data\ActionController\EnemyActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Effect\Effect.h">
+      <Filter>src\Data\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.h">
+      <Filter>src\Data\Effect\PlayerEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.h">
+      <Filter>src\Data\Effect\PlayerEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Weapon\Weapon.h">
+      <Filter>src\Model\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeapon.h">
+      <Filter>src\Model\Weapon\PlayerWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.h">
+      <Filter>src\Data\ActionController\PlayerActionController\PlayerWeaponActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.h">
+      <Filter>src\Model\Weapon\PlayerWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Collision\CollisionArea.h">
+      <Filter>src\Data\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\LaunchData\LaunchData.h">
+      <Filter>src\Data\LaunchData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h">
+      <Filter>src\Data\LaunchTrigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\GimmickCharacter.h">
+      <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\GimmickFactory.h">
+      <Filter>src\Model\Character</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
