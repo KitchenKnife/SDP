@@ -39,10 +39,6 @@ public:
 	*/
 	virtual void start(CStatus* pStatus , CCharacter* pChara =NULL ) = 0;
 
-	/*
-	* @desc I—¹
-	*/
-	//void stop()override;
 
 
 
