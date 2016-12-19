@@ -172,8 +172,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyType.cpp" />
+    <ClCompile Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\GimmickCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\GimmickFactory.cpp" />
+    <ClCompile Include="..\Classes\Model\Character\GirlCharacter\GirlCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\PlayerCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\PlayerFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Map\Map.cpp" />
@@ -213,6 +215,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyType.h" />
+    <ClInclude Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\GimmickCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\GimmickFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\PlayerCharacter.h" />
