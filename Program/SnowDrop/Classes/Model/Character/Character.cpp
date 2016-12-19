@@ -9,10 +9,12 @@
 
 using namespace cocos2d;
 
+//================================================
+// キャラクタークラス
+//		全てのキャラクターの雛形となる抽象クラス
+//================================================
 //コンストラクタ
-CCharacter::CCharacter() {
-
-}
+CCharacter::CCharacter() {}
 
 //デストラクタ
 CCharacter::~CCharacter() {
@@ -47,25 +49,18 @@ CCharacter::~CCharacter() {
 
 //初期化処理
 bool CCharacter::init() {
-
+	//スプライトの初期化
 	if (Sprite::init() == false) {
-		CCLOG("Characterの初期化に失敗");
+		//初期化に失敗した場合
+		CCLOG("Spriteの初期化に失敗");
 		return false;
 	}
-
-	//update()メンバ関数の呼び出し
-	this->scheduleUpdate();
-
+	//初期化に成功した場合
 	return true;
 }
 
 //更新処理
 void CCharacter::update(float deltaTime) {
-
-	if ((this->m_pActions) == NULL) {
-		CCLOG(" ");
-		return;
-	}
 
 	//移動処理
 	this->moveFunc();
@@ -75,13 +70,6 @@ void CCharacter::update(float deltaTime) {
 
 	//衝突判定
 	this->collisionAll();
-
-	/*
-	//画面範囲外判定処理
-	this->endOfScreen();
-	//マップチップとの衝突判定
-	this->collisionMap();
-	*/
 
 	//状態チェック
 	this->checkState();
@@ -100,7 +88,6 @@ CCharacterAggregate* CCharacterAggregate::m_pSareedAggregate = NULL;
 //コンストラクタ
 CCharacterAggregate::CCharacterAggregate() {}
 
-
 //デストラクタ
 CCharacterAggregate::~CCharacterAggregate() {}
 
@@ -113,37 +100,39 @@ CCharacterAggregate* CCharacterAggregate::getInstance() {
 
 	return CCharacterAggregate::m_pSareedAggregate;
 }
+
 //共有インスタンスの破棄
 void CCharacterAggregate::removeInstance() {
 	SAFE_DELETE(CCharacterAggregate::m_pSareedAggregate);
 }
 
 /**
-* @desc キャラタクーの集まりの参照を設定
-* @param 設定するキャラクターの集まりのアドレス
-*/
+ * @desc	キャラタクーの集まりの参照を設定
+ * @param	設定するキャラクターの集まりのアドレス
+ */
 void CCharacterAggregate::set(std::vector<CCharacter*>* pCharacters) {
 	//既に設定されていたら設定しないようにしておく
 	if (this->m_pCharacters != NULL)
 		return;
 
+	//設定されていなければ引数のキャラクター群のアドレスを登録する
 	this->m_pCharacters = pCharacters;
-
 }
 
 /**
-* @desc キャラタクーの集まりのを取得
-* @return キャラクターの集まり
-*/
+ * @desc	キャラタクーの集まりのを取得
+ * @return	キャラクターの集まり
+ */
 std::vector<CCharacter*>* CCharacterAggregate::get() {
+	//キャラクター群のアドレスを返す
 	return this->m_pCharacters;
 }
 
 /**
-* @desc キャラタクー１体を取得
-* @param  添え字番号
-* @return キャラクター
-*/
+ * @desc	配列番号から指定したキャラタクー１体を取得
+ * @param	添え字番号
+ * @return	キャラクター
+ */
 CCharacter* CCharacterAggregate::getAt(int index) {
 
 	//最大数以上ならNULLを返すように設定しておく
@@ -151,39 +140,40 @@ CCharacter* CCharacterAggregate::getAt(int index) {
 		return NULL;
 	}
 
+	//最大数以下ならその指定されたキャラクターを返す
 	return (*this->m_pCharacters)[index];
 }
 
 /**
-* @desc キャラタクー１体を取得
-* @param  タグ
-* @return キャラクター
-*　　　　　存在しなければNULLを返す
-*/
+ * @desc	タグから指定したキャラタクー１体を取得
+ * @param	タグ
+ * @return	キャラクター
+ * @tips	存在しなければNULLを返す
+ */
 CCharacter* CCharacterAggregate::getAtTag(int tag) {
-
+	//指定されたタグを保有するキャラクターがいるか検索する。
 	for (CCharacter* pChara : (*this->m_pCharacters)) {
+		//もし指定されたキャラクターがいればそのキャラクターを返す
 		if (pChara->m_tag == tag) {
 			return pChara;
 		}
 	}
-
 	//存在しなければNULLを返す
 	return NULL;
 }
 
 /**
-* @desc キャラタクーの追加
-* @param  追加するキャラクター
-*/
+ * @desc	キャラタクーの追加
+ * @param	追加するキャラクター
+ */
 void CCharacterAggregate::add(CCharacter* pCharacter) {
 	this->m_pCharacters->push_back(pCharacter);
 }
 
 /**
-* @desc キャラタクーの集まりの取り付けられている数を取得
-* @param  取り付けられている数
-*/
+ * @desc	キャラタクーの集まりの取り付けられている数を取得
+ * @param	取り付けられている数
+ */
 int CCharacterAggregate::getSize() {
 	return (int)this->m_pCharacters->size();
 }

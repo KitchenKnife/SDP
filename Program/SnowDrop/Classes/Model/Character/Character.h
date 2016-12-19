@@ -23,17 +23,17 @@
 #include <stdio.h>
 
 using namespace cocos2d;
-//using namespace std;
 
 //================================================
 // キャラクタータイプ
 //================================================
 enum class CHARACTER_TYPE :int {
-	NONE = -1,//無し
-	PLAYER = 0,//プレイヤー
-	ENEMY = 1,//敵
-	BULLET = 2,//弾
-	GIMMICK = 3,//ギミック
+	NONE = -1,	//無し
+	PLAYER_BOY = 0,	//少年（プレイヤー）
+	PLAYER_GIRL = 1,	//少女
+	ENEMY = 2,	//敵
+	BULLET = 3,	//弾
+	GIMMICK = 4,//ギミック
 };
 
 //================================================
@@ -42,7 +42,9 @@ enum class CHARACTER_TYPE :int {
 //================================================
 class CCharacter :public Sprite {
 public:
-
+	//================================================ 
+	// 必須関数の列挙	
+	//================================================
 	//コンストラクタ
 	CCharacter();
 
@@ -55,53 +57,60 @@ public:
 	//更新処理
 	virtual void update(float deltaTime)override;
 
+	//================================================ 
+	// キャラクター群の必要情報群
+	//================================================
 	//アニメーションデータ群
 	std::vector<CAnimation* >* m_pAnimations = NULL;
 
 	//移動データ
 	CMove* m_pMove = NULL;
 
-	//適用させる物理演算群
+	//物理演算データ群
 	std::vector<CPhysical* >* m_pPhysicals = NULL;
 
-	//行えるアクション群
+	//アクションデータ群
 	std::vector<CAction* >* m_pActions = NULL;
 
 	//実体データ
 	CBody* m_pBody = NULL;
 
-	//衝突判定空間群
+	//衝突判定空間データ群
 	std::vector<CCollisionArea*>* m_pCollisionAreas = NULL;
 
-	//状態（派生先によってタイプが変化する）
-	int m_state = 0;
-
-	// ステータス
+	//ステータスデータ
 	CStatus* m_pStatus = NULL;
 
+	//状態データ
+	int m_state = 0;
+
 	//有効フラグ
+	//表示・非表示関連
 	bool m_activeFlag = false;
 
-	//生きてるか死んでるかのフラグ
-	//true...生きている　false...死んでいる
+	//生死フラグ
+	//表示している状態での生死関連
 	bool m_isAlive = false;
 
-	//タグ
-	int m_tag = 0;
-
-	//キャラクタータイプ
+	//大まかなタイプ別（キャラタイプ）
 	CHARACTER_TYPE m_charaType = CHARACTER_TYPE::NONE;
 
-protected:
+	//細かなタイプ別（タグ）
+	int m_tag = 0;
 
+protected:
+	//================================================ 
+	// キャラクター群の基本的にアップデートする関数の列挙
+	//	以下の関数はすべてのキャラクター派生クラス内でオーバーライドさせる。
+	//================================================
 	//移動処理
 	virtual void moveFunc() = 0;
 
 	//アニメーション処理
 	virtual void animationFunc() = 0;
 
-	//画面範囲端判定処理
-//	virtual void endOfScreen() = 0;
+	//衝突判定処理
+	virtual void collisionAll() = 0;
 
 	//状態チェック
 	virtual void checkState() = 0;
@@ -110,45 +119,51 @@ protected:
 	virtual void applyFunc() = 0;
 
 public:
+	//================================================ 
+	// 衝突判定用関数の列挙
+	//================================================
 	/**
-	* @desc キャラクター1体との衝突判定処理
-	* @param キャラクターのアドレス
-	* @return true...衝突した
-	*/
+	 * @desc	キャラクター1体との衝突判定処理
+	 * @param	キャラクターのアドレス
+	 * @return	true...衝突した
+	 */
 	virtual bool collision(CCharacter* pChara) = 0;
 
 	/**
-	* @desc 衝突判定処理
-	*/
-	virtual void collisionAll() = 0;
+	 * @desc	他クラスから衝突判定を受けた際の処理
+	 * @param	キャラクターのアドレス
+	 * @tips	テンプレート化しておくので、この関数を呼び出すときは明示的に指定すること
+	 */
+	template <namespace Ty>
+	virtual void hits(Ty* pChara) = 0;
+
+	
+
+	//================================================ 
+	// イベントコールバック専用関数の列挙	
+	//================================================
 
 	/**
-	* @desc 下領域と衝突した際のイベントコールバック
-	* @param マップチップID
-	*		　画面下の際は0
-	*/
+	 * @desc	下領域と衝突した際のイベントコールバック
+	 * @param	マップチップID
+	 *			画面下の際は0
+	 */
 	virtual void collisionBottomCallback(int event) {}
 
 	/**
-	* @desc 衝突した際のイベントコールバック
-	*/
+	 * @desc	衝突した際のイベントコールバック
+	 */
 	virtual void collisionTopCallback(int event) {}
 
 	/**
-	* @desc 衝突した際のイベントコールバック
-	*/
+	 * @desc	衝突した際のイベントコールバック
+	 */
 	virtual void collisionRightCallback(int event) {}
 
 	/**
-	* @desc 画面端領域と衝突した際のイベントコールバック
-	*/
+	 * @desc	画面端領域と衝突した際のイベントコールバック
+	 */
 	virtual void collisionLeftCallback(int event) {}
-
-	//================================================
-	// 
-	//　ここまでにメンバに関するコードを追加
-	//		
-	//================================================
 };
 
 //=============================================
@@ -179,49 +194,51 @@ public:
 	//=============================================
 
 private:
+	//=============================================
+	// Aggregate設定はここから
+	//=============================================
 	//キャラクターの集まり
 	std::vector<CCharacter*>* m_pCharacters = NULL;
 
 public:
 	/**
-	* @desc キャラタクーの集まりの参照を設定
-	* @param 設定するキャラクターの集まりのアドレス
-	*/
+	 * @desc	キャラタクーの集まりの参照を設定
+	 * @param	設定するキャラクターの集まりのアドレス
+	 */
 	void set(std::vector<CCharacter*>* pCharacters);
 
 	/**
-	* @desc キャラタクーの集まりのを取得
-	* @return キャラクターの集まり
-	*/
+	 * @desc	キャラタクーの集まりのを取得
+	 * @return	キャラクターの集まり
+	 */
 	std::vector<CCharacter*>* get();
 
 	/**
-	* @desc キャラタクー１体を取得
-	* @param  添え字番号
-	* @return キャラクター
-	*/
+	 * @desc	配列番号から指定したキャラタクー１体を取得
+	 * @param	添え字番号
+	 * @return	キャラクター
+ 	 */
 	CCharacter* getAt(int index);
 
 	/**
-	* @desc キャラタクー１体を取得
-	* @param  タグ
-	* @return キャラクター
-	*　　　　　存在しなければNULLを返す
-	*/
+	 * @desc	タグから指定したキャラタクー１体を取得
+	 * @param	タグ
+	 * @return	キャラクター
+	 * @tips	存在しなければNULLを返す
+	 */
 	CCharacter* getAtTag(int tag);
 
 	/**
-	* @desc キャラタクーの追加
-	* @param  追加するキャラクター
-	*/
+	 * @desc	キャラクターの追加
+	 * @param	追加するキャラクター
+	 */
 	void add(CCharacter* pCharacter);
 
 	/**
-	* @desc キャラタクーの集まりの取り付けられている数を取得
-	* @param  取り付けられている数
-	*/
+	 * @desc	キャラタクーの集まりの取り付けられている数を取得
+	 * @param	取り付けられている数
+	 */
 	int getSize();
-
 };
 
 //================================================
@@ -230,14 +247,21 @@ public:
 //================================================
 class CCharacterPartsFactory {
 public:
-
+	//デストラクタ
 	virtual ~CCharacterPartsFactory() {}
 
+	//アニメーションデータ群の実体を生成して返す
 	virtual std::vector<CAnimation* >* getAnimations() = 0;
+	//移動データの実体を生成して返す
 	virtual CMove* getMove() = 0;
+	//物理演算データ群の実体を生成して返す
 	virtual std::vector<CPhysical* >* getPhysicals() = 0;
+	//アクションデータ群の実体を生成して返す
 	virtual std::vector<CAction* >* getActions() = 0;
+	//実体データの実体を生成して返す
 	virtual CBody* getBody() = 0;
+	//ステータスデータの実体を生成して返す
 	virtual CStatus* getStatus() = 0;
+	//衝突判定空間データ群の実体を生成して返す
 	virtual std::vector<CCollisionArea* >* getCollisionAreas() = 0;
 };
