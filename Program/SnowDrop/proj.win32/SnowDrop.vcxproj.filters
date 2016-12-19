@@ -100,13 +100,14 @@
     <Filter Include="src\Scene\Title">
       <UniqueIdentifier>{df8fa0fd-891f-4bab-8c7c-249d482a6a2b}</UniqueIdentifier>
     </Filter>
+
     <Filter Include="src\Model\Character\Factory">
       <UniqueIdentifier>{830de2c9-bd2a-491c-8ab1-33cce3c68d9e}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Model\Character\GirlCharacter">
       <UniqueIdentifier>{89a0cba5-0579-48f4-9c14-87a693659056}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
+  <ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
@@ -221,6 +222,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.cpp">
       <Filter>src\Data\ActionController\EnemyActionController\EnemyActionPursuit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\GirlCharacter\GirlCharacter.cpp">
+      <Filter>src\Model\Character\GirlCharacter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,9 +347,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Input\InputController.h">
       <Filter>src\Lib\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\GirlCharacter\GirlCharacter.h">
-      <Filter>src\Model\Character\GirlCharacter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
