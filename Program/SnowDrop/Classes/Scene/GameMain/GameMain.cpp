@@ -142,17 +142,20 @@ bool CGameMain::init() {
 	this->m_pBackGround->setTexture(IMAGE_BACK_GROUND);
 	this->m_pBackGround->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
 	this->m_pMainLayer->addChild(this->m_pBackGround);
-	/*
-	//地平線の生成と取り付け
-	this->m_pHrizon = Sprite::create();
-	this->m_pHrizon->setTexture(IMAGE_BACK_HORIZON);
-	this->m_pHrizon->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
-	this->m_pUILayer->addChild(this->m_pHrizon);
-	*/
+	
 
 	//マップの生成と取り付け
 	this->m_pMainLayer->addChild(CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE));
 
+	
+	//地平線の生成と取り付け
+	this->m_pHrizon = Sprite::create();
+	this->m_pHrizon->setTexture(IMAGE_BACK_HORIZON);
+	this->m_pHrizon->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
+	this->m_pMainLayer->addChild(this->m_pHrizon);
+	
+
+	
 	// プレイヤーの生成
 	CPlayerCharacter* pPlayerChara = CPlayerFactoryManager::getInstance()->create(0);
 	//プレイヤー1のタグを設定
