@@ -10,7 +10,7 @@
 //=========================================================================
 //	追加のインクルードはここから
 //=========================================================================
-#include "Model/Character/PlayerCharacter.h"
+#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Model/Character/EnemyCharacter/EnemyCharacter.h"
 #include "Data/LaunchData/LaunchData.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"

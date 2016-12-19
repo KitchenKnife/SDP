@@ -6,7 +6,7 @@
 */
 
 #include "Data/ActionController/PlayerActionController/PlayerActionController.h"
-#include "Model/Character/PlayerCharacter.h"
+#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 
 //===================================================================
 //	プレイヤーの持ち上げアクション	

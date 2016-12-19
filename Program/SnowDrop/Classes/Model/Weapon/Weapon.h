@@ -7,7 +7,7 @@
 */
 #pragma once
 
-#include "Model/Character/PlayerCharacter.h"
+#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "cocos2d.h"
 
 //================================================

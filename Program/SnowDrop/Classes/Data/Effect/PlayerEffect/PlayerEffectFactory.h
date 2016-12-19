@@ -10,7 +10,7 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#include "Model/Character/PlayerCharacter.h"
+#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Data/Effect/PlayerEffect/PlayerEffect.h"
 
 //クラスの前方宣言

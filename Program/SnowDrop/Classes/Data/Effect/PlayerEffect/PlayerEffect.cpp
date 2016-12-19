@@ -1,5 +1,5 @@
 
-#include "Model/Character/PlayerCharacter.h"
+#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Data/Effect/PlayerEffect/PlayerEffect.h"
 #include "Data/Effect/PlayerEffect/PlayerEffectFactory.h"
 

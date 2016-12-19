@@ -106,6 +106,12 @@
     <Filter Include="src\Model\Character\GirlCharacter">
       <UniqueIdentifier>{89a0cba5-0579-48f4-9c14-87a693659056}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Model\Character\GimmickCharacter">
+      <UniqueIdentifier>{4b74d07d-ba2a-4ca5-afe4-0be83a73b656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Character\PlayerCharacter">
+      <UniqueIdentifier>{eef276ae-3c20-407f-b4cd-63e0d337e4c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,14 +144,8 @@
     <ClCompile Include="..\Classes\Model\Character\Character.cpp">
       <Filter>src\Model\Character</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\PlayerCharacter.cpp">
-      <Filter>src\Model\Character</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Model\Map\Map.cpp">
       <Filter>src\Model\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\PlayerFactory.cpp">
-      <Filter>src\Model\Character</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.cpp">
       <Filter>src\Data\ActionController\PlayerActionController</Filter>
@@ -155,12 +155,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp">
       <Filter>src\Model\Character\EnemyCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.cpp">
-      <Filter>src\Model\Character\EnemyCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\EnemyType.cpp">
-      <Filter>src\Model\Character</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.cpp">
       <Filter>src\Data\ActionController\EnemyActionController</Filter>
@@ -195,12 +189,6 @@
     <ClCompile Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.cpp">
       <Filter>src\Data\LaunchTrigger</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\GimmickCharacter.cpp">
-      <Filter>src\Model\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\GimmickFactory.cpp">
-      <Filter>src\Model\Character</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Lib\Input\InputController.cpp">
       <Filter>src\Lib\Input</Filter>
     </ClCompile>
@@ -227,6 +215,21 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.cpp">
       <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\EnemyFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\PlayerFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\GimmickFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\GimmickCharacter\GimmickCharacter.cpp">
+      <Filter>src\Model\Character\GimmickCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\PlayerCharacter\PlayerCharacter.cpp">
+      <Filter>src\Model\Character\PlayerCharacter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,14 +266,8 @@
     <ClInclude Include="..\Classes\Model\Character\Character.h">
       <Filter>src\Model\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\PlayerCharacter.h">
-      <Filter>src\Model\Character</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Model\Map\Map.h">
       <Filter>src\Model\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\PlayerFactory.h">
-      <Filter>src\Model\Character</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.h">
       <Filter>src\Data\ActionController\PlayerActionController</Filter>
@@ -280,12 +277,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h">
       <Filter>src\Model\Character\EnemyCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyFactory.h">
-      <Filter>src\Model\Character\EnemyCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\EnemyType.h">
-      <Filter>src\Model\Character</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.h">
       <Filter>src\Data\ActionController\EnemyActionController</Filter>
@@ -320,12 +311,6 @@
     <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h">
       <Filter>src\Data\LaunchTrigger</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\GimmickCharacter.h">
-      <Filter>src\Model\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\GimmickFactory.h">
-      <Filter>src\Model\Character</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h">
       <Filter>src\Lib\Input</Filter>
     </ClInclude>
@@ -352,6 +337,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.h">
       <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\EnemyFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\PlayerFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\GimmickFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\GimmickCharacter\GimmickCharacter.h">
+      <Filter>src\Model\Character\GimmickCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\PlayerCharacter\PlayerCharacter.h">
+      <Filter>src\Model\Character\PlayerCharacter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

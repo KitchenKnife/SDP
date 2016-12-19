@@ -12,7 +12,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include"Data/ActionController/ActionController.h"
-#include "Model/Character/EnemyCharacter/EnemyFactory.h"
+#include "Model/Character/Factory/EnemyFactory.h"
 
 //===================================================================
 // コウモリ用　アクション管理クラス

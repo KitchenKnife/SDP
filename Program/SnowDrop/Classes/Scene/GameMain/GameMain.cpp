@@ -9,10 +9,10 @@
 #include "Model/Map/Map.h"
 
 //プレイヤー工場
-#include "Model/Character/PlayerFactory.h"
+#include "Model/Character/Factory/PlayerFactory.h"
 
 //敵工場
-#include "Model/Character/EnemyCharacter/EnemyFactory.h"
+#include "Model/Character/Factory/EnemyFactory.h"
 
 //プレイヤーの武器アクション
 #include "Data/ActionController/PlayerActionController/PlayerWeaponActionController/PlayerWeaponActionController.h"
