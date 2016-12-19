@@ -2,7 +2,7 @@
 /*
 * EnemyCharacter.h
 *
-*	2016/11/11	Yamasaki
+*	2016/11/11	Yamasaki _Smith
 *
 */
 
