@@ -9,7 +9,7 @@
 #include"Character.h"
 #include "Model/Character/EnemyCharacter/EnemyCharacter.h"
 
-
+//スミス
 /*
 	@ 種族で敵の絵が決まる
 	@ 行動タイプで移動アニメーションが変わる
