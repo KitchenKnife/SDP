@@ -60,6 +60,7 @@ Point CMap::getTilePosition(cocos2d::Point pos) {
 
 }
 
+
 /**
 * @desc	点とマップチップの衝突判定
 * @param 対象位置X
@@ -83,6 +84,54 @@ bool CMap::hitTest(float posX, float posY) {
 	return cpt.collision(&crect);
 
 }
+
+/**
+* @desc	点とオブジェクトの衝突判定
+* @param 対象位置X
+* @param 対象位置Y
+* @author Shinya Ueba
+*/
+bool CMap::hitTestObject(float posX, float posY)
+{
+	//対象の衝突判定の点
+	CCollisionPoint cpt(Point(posX, posY));
+
+	cocos2d::CCTMXObjectGroup* pointerTiledMapObjectGroup = this->getObjectGroup(this->m_layerName[3]);
+	if (!pointerTiledMapObjectGroup)
+	{
+		return false;
+	}
+
+	auto arrayAutoObjects = pointerTiledMapObjectGroup->getObjects();
+
+	for (auto autoObject : arrayAutoObjects)
+	{
+		// objectに設定されているプロパティなどを取得
+		cocos2d::ValueMap valueMapObjectInfomation = autoObject.asValueMap();
+
+		cocos2d::Vec2 vec2MapPosition = this->getPosition();
+		cocos2d::Vec2 vec2ObjectPosition;
+		vec2ObjectPosition.x = valueMapObjectInfomation["x"].asFloat() + vec2MapPosition.x + this->getTileSize().width * 0.5f;
+		vec2ObjectPosition.y = valueMapObjectInfomation["y"].asFloat() + vec2MapPosition.y + this->getTileSize().height * 0.5f;
+		
+		CCollisionRect crectObject(CBody(	valueMapObjectInfomation["width"].asFloat() * -0.5,
+									valueMapObjectInfomation["height"].asFloat() * 0.5,
+									valueMapObjectInfomation["width"].asFloat() * 0.5,
+									valueMapObjectInfomation["height"].asFloat() * -0.5),
+									vec2ObjectPosition);
+		
+		cocos2d::log("X:%f,Y%f", vec2ObjectPosition.x, vec2ObjectPosition.y);
+
+		//collisionを使用して判定
+		if (cpt.collision(&crectObject))
+		{
+			
+			return true;
+		}
+	}
+	return false;
+}
+
 
 /**
 * @desc		タイル番号確認

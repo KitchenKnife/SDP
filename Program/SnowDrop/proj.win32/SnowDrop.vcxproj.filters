@@ -97,6 +97,9 @@
     <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionIdle">
       <UniqueIdentifier>{a7a6d17b-532d-4ca7-aece-73ed9db74426}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene\Title">
+      <UniqueIdentifier>{df8fa0fd-891f-4bab-8c7c-249d482a6a2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

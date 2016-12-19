@@ -27,7 +27,7 @@ public:
 	CEnemyCharacter();
 
 	//デストラクタ
-	~CEnemyCharacter();
+	virtual ~CEnemyCharacter();
 
 	//初期化処理
 	bool init()override;

@@ -93,9 +93,6 @@ public:
 	//メインレイヤー
 	static Layer* m_pMainLayer;// = NULL;
 
-	//マップレイヤー
-	Layer* m_pMapLayer = NULL;
-
 	//UIレイヤー
 	Layer* m_pUILayer = NULL;
 

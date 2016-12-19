@@ -529,6 +529,81 @@ void CCollisionTerritoryMapChipLeft::collision(CCharacter* pChara, cocos2d::Poin
 
 
 
+//====================================================================
+//
+//	Class: CCollisionTerritoryMapObjectBottom
+//	
+//	下にあるマップオブジェクト領域との衝突判定
+//
+//	2016/12/19
+//									Author Shinya Ueba
+//====================================================================
+/**
+* @desc コンストラクタ
+*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+*		設定しておく
+*/
+CCollisionTerritoryMapObjectBottom::CCollisionTerritoryMapObjectBottom() 
+	:CCollisionTerritory(TERRITORY_TYPE::BOTTOM)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CCollisionTerritoryMapObjectBottom::~CCollisionTerritoryMapObjectBottom()
+{
+
+
+}
+
+/**
+* @desc 衝突判定
+* @param 衝突対象のキャラクター
+* @param 基準点
+*/
+void CCollisionTerritoryMapObjectBottom::collision(CCharacter* pChara, cocos2d::Point basePt)
+{
+	//下に移動しているかどうかチェック
+	if (pChara->m_pMove->m_vel.y < 0.0f) 
+	{
+		//衝突してきた点（キャラクターの点）
+		cocos2d::Point pt(pChara->m_pMove->m_pos.x + basePt.x, pChara->m_pMove->m_pos.y + basePt.y);
+
+		//衝突いてるかどうか
+		if (CMapManager::getInstance()->getMap()->hitTestObject(pt.x, pt.y))
+		{
+
+				//衝突してた
+				//タイルのサイズ（32,32）
+				Size tileSize = CMapManager::getInstance()->getMap()->getTileSize();
+
+				//キャラクターがめり込んでいるブロックの下のブロックの位置　＝　ブロック数*ブロックの高さ
+				float blockPos = floor((pt.y) / tileSize.height)*tileSize.height;
+
+				//戻すべき位置
+				//		修正位置（キャラクターがめり込んでるブロックの下の位置）＝
+				//		キャラクターがめり込んでるブロックの下のブロックの位置　+　ブロック1個分　-位置ｙ
+				//めり込んだ分の計算
+				float boundary = (pt.y) - (blockPos + tileSize.height);
+
+				//最終的に戻す（値めり込んでる分を修正）
+				pChara->m_pMove->m_pos.y -= boundary;
+
+				//リセット値
+				pChara->m_pMove->m_vel.y = 0.0f;
+				pChara->m_pMove->m_accele.y = 0.0f;
+
+				//イベントコールバックの呼び出し
+				this->callEventCallback(pChara);
+		}
+	}
+}
+
+
+
 //=====================================
 //
 // 衝突判定空間
@@ -596,6 +671,52 @@ void CCollsionAreaMap::collision(CCharacter* pChara) {
 	}
 
 }
+
+//====================================================================
+//
+//	Class: CCollsionAreaMapObject
+//	
+//	画面上にある全てのマップオブジェクトとの衝突判定空間
+//
+//	2016/12/19
+//									Author Shinya Ueba
+//====================================================================
+
+/**
+* @desc コンストラクタ
+*/
+CCollsionAreaMapObject::CCollsionAreaMapObject(void)
+{
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CCollsionAreaMapObject::~CCollsionAreaMapObject(void)
+{
+
+}
+
+/**
+* @desc 衝突判定
+* @param 衝突対象のキャラクター
+*/
+void CCollsionAreaMapObject::collision(CCharacter* pChara)
+{
+	//領域分繰り返す
+	for (CCollisionTerritory* pTerritory : (*this->m_pTerritories)) {
+		//基準点分繰り返す
+		for (CCollisionBasePoint* pBasePt : (*this->m_pBasePoints)) {
+
+			//基準点の中に登録されている衝突判定領域タイプが一致したらその基準点で衝突判定を行う
+			if (pBasePt->m_type == pTerritory->m_type) {
+				pTerritory->collision(pChara, pBasePt->m_pt);
+			}
+		}
+	}
+}
+
 
 
 //=====================================

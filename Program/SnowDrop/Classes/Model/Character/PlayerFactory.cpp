@@ -271,7 +271,7 @@ void CPlayerBoyFactory::settingCollisionArea(CPlayerCharacter* pCharacter) {
 	//画面端の衝突判定を取り付ける
 	pCharacter->m_pCollisionAreas->push_back(pEndOfScreenArea);
 
-
+	
 	//マップ衝突空間の生成
 	CCollisionArea* pMapArea = new CCollsionAreaMap();
 	//マップチップ領域と衝突した際のイベントコールバックを設定
@@ -305,7 +305,31 @@ void CPlayerBoyFactory::settingCollisionArea(CPlayerCharacter* pCharacter) {
 
 	//画面端の衝突判定を取り付ける
 	pCharacter->m_pCollisionAreas->push_back(pMapArea);
+	
 
+	/*
+	CCollisionArea* pMapObjectArea = new CCollsionAreaMapObject();
+	//マップチップ領域と衝突した際のイベントコールバックを設定
+	CCollisionTerritory* pMapObjectBottomTerritory = new CCollisionTerritoryMapObjectBottom();
+	//下のマップチップ領域と衝突した際のイベントコールバックを設定
+	pMapObjectBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
+	//マップチップ領域を設定
+	pMapObjectArea->addTerritory(pMapObjectBottomTerritory);
+
+
+	for (int i = 0; i < 9; i++) {
+		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
+		pMapObjectArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(16 * i - (64), -128)));
+
+		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
+//		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(16 * i - (64), 128)));
+	}
+
+
+
+	//画面端の衝突判定を取り付ける
+	pCharacter->m_pCollisionAreas->push_back(pMapObjectArea);
+	*/
 }
 
 

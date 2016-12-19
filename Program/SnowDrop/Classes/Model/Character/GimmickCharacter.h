@@ -17,7 +17,7 @@ public:
 	CGimmickCharacter();
 
 	//デストラクタ
-	~CGimmickCharacter();
+	virtual ~CGimmickCharacter();
 
 	//初期化処理
 	bool init()override;

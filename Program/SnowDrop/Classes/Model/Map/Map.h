@@ -94,7 +94,8 @@ public:
 		//"main",
 		"normal",
 		"launchenemy",
-		"gimmick"
+		"gimmick",
+		"collision",
 	};
 
 public:
@@ -128,12 +129,28 @@ public:
 	*/
 	cocos2d::Point getTilePosition(cocos2d::Point pos);
 
+
+	/**
+	* @desc		オブジェクト位置の取得
+	* @param	左下を原点として対象の座標位置
+	* @author	Shinya Ueba
+	*/
+	//cocos2d::Point getObjectPosition(cocos2d::Point pos);
+
 	/**
 	* @desc	点とマップチップの衝突判定
 	* @param 対象位置X
 	* @param 対象位置Y
 	*/
 	bool hitTest(float posX, float posY);
+
+	/**
+	* @desc	点とオブジェクトの衝突判定
+	* @param 対象位置X
+	* @param 対象位置Y
+	* @author Shinya Ueba
+	*/
+	bool hitTestObject(float posX, float posY);
 
 	/**
 	* @desc	タイル番号確認

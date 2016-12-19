@@ -384,6 +384,41 @@ public:
 
 
 
+
+
+//====================================================================
+//
+//	Class: CCollisionTerritoryMapObjectBottom
+//	
+//	下にあるマップオブジェクト領域との衝突判定
+//
+//	2016/12/19
+//									Author Shinya Ueba
+//====================================================================
+class CCollisionTerritoryMapObjectBottom :public CCollisionTerritory {
+public:
+	/**
+	* @desc コンストラクタ
+	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	*		設定しておく
+	*/
+	CCollisionTerritoryMapObjectBottom();
+
+	/**
+	* @desc デストラクタ
+	*/
+	virtual ~CCollisionTerritoryMapObjectBottom();
+
+	/**
+	* @desc 衝突判定
+	* @param 衝突対象のキャラクター
+	* @param 基準点
+	*/
+	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
+};
+
+
+
 //=====================================
 //
 // 衝突判定空間
@@ -491,6 +526,38 @@ public:
 	void collision(CCharacter* pChara)override;
 
 };
+
+
+//====================================================================
+//
+//	Class: CCollsionAreaMapObject
+//	
+//	画面上にある全てのマップオブジェクトとの衝突判定空間
+//
+//	2016/12/19
+//									Author Shinya Ueba
+//====================================================================
+class CCollsionAreaMapObject : public CCollisionArea {
+public:
+	
+	/**
+	* @desc コンストラクタ
+	*/
+	CCollsionAreaMapObject(void);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CCollsionAreaMapObject(void);
+
+	/**
+	* @desc 衝突判定
+	* @param 衝突対象のキャラクター
+	*/
+	void collision(CCharacter* pChara)override;
+
+};
+
 
 //=====================================
 // 画面外との衝突判定空間

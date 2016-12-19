@@ -136,25 +136,22 @@ bool CGameMain::init() {
 	this->m_pUILayer = Layer::create();
 	this->addChild(this->m_pUILayer,-1);
 
-	//マップレイヤーの生成と取り付け
-	this->m_pMapLayer = Layer::create();
-	this->addChild(this->m_pMapLayer, -2);
 	
-
 	//背景の生成と取り付け
 	this->m_pBackGround = Sprite::create();
 	this->m_pBackGround->setTexture(IMAGE_BACK_GROUND);
 	this->m_pBackGround->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
-	this->m_pUILayer->addChild(this->m_pBackGround);
+	this->m_pMainLayer->addChild(this->m_pBackGround);
+	/*
 	//地平線の生成と取り付け
 	this->m_pHrizon = Sprite::create();
 	this->m_pHrizon->setTexture(IMAGE_BACK_HORIZON);
 	this->m_pHrizon->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
 	this->m_pUILayer->addChild(this->m_pHrizon);
-	
+	*/
 
 	//マップの生成と取り付け
-	this->m_pMapLayer->addChild(CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE));
+	this->m_pMainLayer->addChild(CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE));
 
 	// プレイヤーの生成
 	CPlayerCharacter* pPlayerChara = CPlayerFactoryManager::getInstance()->create(0);
@@ -208,7 +205,7 @@ void CGameMain::scroll() {
 	//プレイヤーキャラクターの取得
 	CCharacter* pPlayerChara = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
 
-	/*
+	
 	//プレイヤーの位置が320.0ｆを超えたら
 	if (pt.x > WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x) {
 		//原点を超えた分に設定する
@@ -219,7 +216,7 @@ void CGameMain::scroll() {
 		//原点を超えた分に設定する
 		pt.x = WINDOW_RIGHT * 1/3 - pPlayerChara->m_pMove->m_pos.x;
 	}
-	*/
+	
 
 	//超えた分を設定する
 	this->m_pMainLayer->setPosition(pt);

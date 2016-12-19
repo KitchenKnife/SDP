@@ -16,10 +16,10 @@ Vec2 getScreenSize() {
 }
 
 //フルスクリーン（1920,1080）
-static cocos2d::Size designResolutionSize = cocos2d::Size(1920, 1050);
+static cocos2d::Size designResolutionSize = cocos2d::Size(1920, 1080);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(640, 480);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(1920, 1050);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(1920, 1080);
 
 AppDelegate::AppDelegate() {
 	//getScreenSize();
