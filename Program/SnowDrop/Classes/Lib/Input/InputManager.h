@@ -164,5 +164,7 @@ public:
 // 入力フラグマクロ
 #define inputflag (*CInputManager::getInstance()->getInputFlag())
 
+//EOF
+
 
 
