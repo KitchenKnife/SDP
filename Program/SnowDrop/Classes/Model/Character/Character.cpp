@@ -55,6 +55,8 @@ bool CCharacter::init() {
 		CCLOG("Sprite‚Ì‰Šú‰»‚É¸”s");
 		return false;
 	}
+	this->scheduleUpdate();
+
 	//‰Šú‰»‚É¬Œ÷‚µ‚½ê‡
 	return true;
 }
