@@ -175,6 +175,8 @@ public:
 	*/
 	void collisionAll()override;
 
+	void hits(CCharacter* pChara)override{}
+
 	/**
 	* @desc 下領域と衝突した際のイベントコールバック
 	* @param マップチップID

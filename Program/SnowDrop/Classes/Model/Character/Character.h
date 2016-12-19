@@ -132,10 +132,8 @@ public:
 	/**
 	 * @desc	他クラスから衝突判定を受けた際の処理
 	 * @param	キャラクターのアドレス
-	 * @tips	テンプレート化しておくので、この関数を呼び出すときは明示的に指定すること
 	 */
-	template <namespace Ty>
-	virtual void hits(Ty* pChara) = 0;
+	virtual void hits(CCharacter* pChara) = 0;
 
 	
 

@@ -264,6 +264,8 @@ public:
 	//XVˆ—
 	void update(float deltaTime)override;
 
+	void hits(CCharacter* pChara)override{}
+
 	/**
 	* @desc “ü—Íˆ—
 	* @tips ˆÚ“®ˆ—‚ÅŒÄ‚Ño‚·
@@ -397,5 +399,7 @@ public:
 	*/
 	void goWithBoyFunc(Point* pPos);
 
+
+	void hits(CCharacter* pChara)override{}
 };
 

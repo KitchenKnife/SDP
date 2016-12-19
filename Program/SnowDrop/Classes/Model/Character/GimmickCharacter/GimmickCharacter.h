@@ -74,6 +74,8 @@ public:
 	//反映処理
 	void applyFunc() override;
 
+	void hits(CCharacter* pChara)override{}
+
 	/**
 	* @desc キャラクター1体との衝突判定処理
 	* @param キャラクターのアドレス

@@ -214,4 +214,6 @@ public:
 		return true;
 	};
 
+	void hits(CCharacter* pChara)override{}
+
 };
