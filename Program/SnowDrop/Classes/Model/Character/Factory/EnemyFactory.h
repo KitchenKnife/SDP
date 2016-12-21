@@ -2,7 +2,7 @@
 /*
 * EnemyFactory.h
 *
-*	2016/11/07	Yamasaki
+*	2016/12/21	Yamasaki
 *
 */
 
