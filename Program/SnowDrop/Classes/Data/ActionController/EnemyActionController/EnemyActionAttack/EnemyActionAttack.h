@@ -65,7 +65,6 @@ protected:
 	//現在のフレーム
 	int m_currentFrame = 0;
 
-
 	//攻撃中かどうかのフラグ	true...攻撃中
 	bool m_isAttacking = false;
 

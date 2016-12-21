@@ -174,12 +174,34 @@ bool CGameMain::init() {
 	playerGirl->m_tag = TAG_PLAYER_2;
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(playerGirl);
+
+	playerGirl->m_pMove->m_pos.set(1200,500);
+
 	//取り付け
 	this->m_pMainLayer->addChild(playerGirl);
 
 
 	//初期画面にいる敵の生成
-	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
+	//CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
+
+	//=========================================================================
+	//	敵のテスト出現
+	//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+	//=========================================================================
+	//敵出撃データを作成
+	CEnemyLaunchData* pLaunchData = new CEnemyLaunchData(ENEMY_TYPE::MAIDEAD, cocos2d::Point(200.0, 500.0));
+
+	//出撃トリガーを生成し、敵出撃データを設定
+	CEnemyLaunchTrigger* pTrigger = new CEnemyLaunchTrigger(pLaunchData);
+
+	//出撃トリガーを出撃スケジュールとして追加する
+	CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
+
+	//=========================================================================
+	//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+	//	敵のテスト出現
+	//=========================================================================
+
 	//全体の拡大
 	this->setScale(SCALE_MAIN);
 	//拡大に伴う画面位置の設定
