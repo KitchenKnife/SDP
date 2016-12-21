@@ -38,7 +38,7 @@ void CEnemyActionPursuit::update(CCharacter* pChara) {
 
 			// ‚±‚±‚ÉƒgƒŠƒK[Žæ‚è•t‚¯
 
-			(*pChara->m_pActions)[(int)CEnemyCharacter::ACTION::ATTACK]->start();
+			//(*pChara->m_pActions)[(int)CEnemyCharacter::ACTION::ATTACK]->start();
 
 			//Ä¶‚ðŽ~‚ß‚é
 			this->stop();

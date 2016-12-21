@@ -14,9 +14,9 @@
 //	（AbstractFactory）
 //================================================
 
-std::vector<CAnimation* >* CEnemeyPartsFactory::getAnimations() {
+std::map<CEnemyCharacter::STATE, CAnimation*> CEnemeyPartsFactory::getAnimations() {
 	//アニメーションデータ群の作成
-	std::vector<CAnimation*>* pAnimations = new std::vector<CAnimation*>;
+	std::map<CEnemyCharacter::STATE, CAnimation*> pAnimations;
 
 	return pAnimations;
 }
@@ -35,9 +35,9 @@ std::vector<CPhysical* >* CEnemeyPartsFactory::getPhysicals() {
 }
 
 
-std::vector<CAction* >* CEnemeyPartsFactory::getActions() {
+std::map<CEnemyCharacter::STATE, CAction*> CEnemeyPartsFactory::getActions(){
 	//行えるアクション群を作成
-	std::vector<CAction* >* pActions = new std::vector<CAction*>();
+	std::map<CEnemyCharacter::STATE, CAction*> pActions;
 
 	return pActions;
 }
@@ -60,80 +60,69 @@ CStatus* CEnemeyPartsFactory::getStatus() {
 }
 
 //================================================
-// メイド工場
+// メイデッド工場
 //================================================
-void CBaseEnemyFactory::settingMove(CEnemyCharacter* pCharacter, float posX, float posY) {
+void CMaideadFactory::settingMove(CEnemyCharacter* pCharacter, float posX, float posY) {
 
 	//初期位置の設定
 	pCharacter->m_pMove->m_pos.set(posX,posY);
 	// 初期速度
 	pCharacter->m_pMove->m_vel.set(-1.0f, 0.0f);
-
 }
-void CBaseEnemyFactory::settingTexture(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingTexture(CEnemyCharacter* pCharacter) {
 	//テクスチャの設定
-	pCharacter->setTexture(IMAGE_ENEMY);
-
+	pCharacter->setTexture(IMAGE_MEIDEAD);
 }
 
-void CBaseEnemyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 
 	//直立アニメーションの設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//歩行アニメーションの設定（右）
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//歩行アニメーションの設定(左)
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//ダメージを受け時のアニメーション設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//落ちているときのアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//打撃攻撃中のアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(60, false));
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::STAY] = (new CChipNotAnimation());
+	//さまようアニメーションの設定
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::WANDERING] = (new CChipAnimation(5, 2 ,true));
+	//追跡アニメーションの設定
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::CHASE] = (new CChipAnimation(5, 2, true));
 
 
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
-
-	//歩行アニメーション(右)
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(64, 0, 64, 64));
-
-	//歩行アニメーション(左)
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(64, 0, 64, 64));
-
-	//落ちている時のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::FALING]->addChipData(new CChip(128, 0, 64, 64));
-
-	//打撃攻撃中のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(128, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(192, 0, 64, 64));
-
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::STAY]->addChipData(new CChip(0, 0, 64, 64));
+	//さまようアニメーションのチップデータ設定
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::WANDERING]->addChipData(new CChip(0, 0, 64, 64));
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::WANDERING]->addChipData(new CChip(64, 0, 64, 64));
+	//追跡アニメーションの設定
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::CHASE]->addChipData(new CChip(0, 0, 64, 64));
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::CHASE]->addChipData(new CChip(64, 0, 64, 64));
+	
+	
 }
 
-void CBaseEnemyFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 
 	// 歩行キャラには重力つける
 	pCharacter->m_pPhysicals->push_back(new CPhysicalGravity());
 
 }
 
-void CBaseEnemyFactory::settingActions(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingActions(CEnemyCharacter* pCharacter) {
 	// 攻撃の設定
-	pCharacter->m_pActions->push_back(new CEnemyBrowAttack());
-	//追跡の設定
-	pCharacter->m_pActions->push_back(new CActionPursuitGirlPriority());
+	
+	//時間による待機アクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::STAY] = (new CEnemyActionStayAtTime(CEnemyAction::TARGET_TYPE::BOTH));
+	//さまよいアクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::WANDERING] = (new CEnemyActionWondering(CEnemyAction::TARGET_TYPE::BOTH));
+	//追跡アクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::CHASE] = (new CEnemyActionChase());
 }
 
-void CBaseEnemyFactory::settingBody(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingBody(CEnemyCharacter* pCharacter) {
 
 	pCharacter->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
+	
 }
 
 //衝突判定空間の設定
-void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//画面端衝突空間の生成
 	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
@@ -169,16 +158,16 @@ void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 	//基準点の設定
 	for (int i = 1; i < 4; i++) {
 		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(64 - i * 16 , -32)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(32 - i *4 , -32)));
 
 		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(64 - i * 16, 32)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(32 - i * 4, 32)));
 
 		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32,64 - i * 16)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32,32 - i *4)));
 
 		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32,64 - i * 16)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32,32 - i *4)));
 	}
 
 	//画面端の衝突判定を取り付ける
@@ -186,15 +175,25 @@ void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 }
 
-void CBaseEnemyFactory::settingStatus(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingStatus(CEnemyCharacter* pCharacter) {
 
 	pCharacter->m_pStatus->set(3, 3, 1);
+	pCharacter->m_pStatus->setSpeed(2.0);
 }
 
 
-void CBaseEnemyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	//状態の設定
-	pCharacter->m_state = (int)CEnemyCharacter::STATE::FALING;
+	pCharacter->m_state = CEnemyCharacter::STATE::WANDERING;
+
+	//プレイヤーを感知、追跡する範囲
+	pCharacter->m_chaseRange = 360;
+
+	//現在の優先攻撃対象(メイデッドは近い方)
+	//pCharacter->m_currentTarget = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_2);
+
+	//攻撃範囲
+	pCharacter->m_attackRange = 60;
 
 	//有効フラグを立てる
 	pCharacter->m_activeFlag = true;
@@ -208,7 +207,7 @@ void CBaseEnemyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 }
 
 //================================================
-// 飛行キャラのパーツのセッティングを担当するクラス
+// コウモリ工場
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
@@ -216,8 +215,10 @@ void CBatFactory::settingMove(CEnemyCharacter* pCharacter,float x, float y) {
 
 	//初期位置の設定
 	pCharacter->m_pMove->m_pos.set(x, y);
-
+	// 初期速度
+	pCharacter->m_pMove->m_vel.set(0.0f, 0.0f);
 }
+
 void CBatFactory::settingTexture(CEnemyCharacter* pCharacter) {
 	//テクスチャの設定
 	pCharacter->setTexture(IMAGE_BAT);
@@ -227,38 +228,24 @@ void CBatFactory::settingTexture(CEnemyCharacter* pCharacter) {
 void CBatFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 	//直立アニメーションの設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//歩行アニメーションの設定（右）
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//歩行アニメーションの設定（左）
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//ダメージを受け時のアニメーション設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//落ちているときのアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//打撃攻撃中のアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(60, false));
-
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::STAY] = (new CChipNotAnimation());
+	//さまようアニメーションの設定
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::WANDERING] = (new CChipAnimation(7, 6, true));
+	//追跡アニメーションの設定
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::CHASE] = (new CChipAnimation(7, 6, true));
 
 
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
+	pCharacter->m_pAnimations[CEnemyCharacter::STATE::STAY]->addChipData(new CChip(64*0, 62.7*2, 64, 62.7));
 
-	// 歩行　6枚分
-	for (int i = 0; i < 6; i++) {
-		//歩行アニメーション（右） 
-		(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(i * 64, 64, 64, 64));
-
-		//歩行アニメーション（左）
-		(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(i * 64, 0, 64, 64));
-
+	//さまようアニメーションのチップデータ設定
+	for (int i = 0; i<6; i++) {
+		pCharacter->m_pAnimations[CEnemyCharacter::STATE::WANDERING]->addChipData(new CChip(64 * i, 62.7 * 0, 64, 62.7));
 	}
-	//落ちている時のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::FALING]->addChipData(new CChip(192, 64, 64, 64));
-
-	//打撃攻撃中のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(128, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(192, 64, 64, 64));
+	//追跡アニメーションの設定
+	for (int i = 0; i<6; i++) {
+		pCharacter->m_pAnimations[CEnemyCharacter::STATE::CHASE]->addChipData(new CChip(64 * i, 62.7 * 0, 64, 62.7));
+	}
 
 }
 
@@ -268,11 +255,13 @@ void CBatFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 
 void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
 	// 攻撃の設定
-	pCharacter->m_pActions->push_back(new CEnemyBrowAttack());
-	//追跡の設定
-	pCharacter->m_pActions->push_back(new CActionPursuitGirlPriority());
 
-
+	//待機アクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::STAY] = (new CEnemyActionStay(CEnemyAction::TARGET_TYPE::GIRL));
+	//さまよいアクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::WANDERING] = (new CEnemyActionReturnLanchPos(CEnemyAction::TARGET_TYPE::GIRL, pCharacter));
+	//追跡アクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::CHASE] = (new CEnemyActionChase(true));
 }
 
 void CBatFactory::settingBody(CEnemyCharacter* pCharacter) {
@@ -293,9 +282,9 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//画面端の衝突判定空間に領域を設定
 	//画面端の領域を設定
-	pEndOfScreenArea->addTerritory(pEndOfScreenBottomTerritory);
+	//pEndOfScreenArea->addTerritory(pEndOfScreenBottomTerritory);
 	//画面左端領域の生成と取り付け
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+	//pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
 	//画面端の衝突判定を取り付ける
 	pCharacter->m_pCollisionAreas->push_back(pEndOfScreenArea);
 
@@ -309,10 +298,10 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//マップチップ衝突空間に領域を設定
 	//マップチップ領域を設定
-	pMapArea->addTerritory(pMapChipBottomTerritory);
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+	//pMapArea->addTerritory(pMapChipBottomTerritory);
+	//pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
 
 	//基準点の設定
 	for (int i = 0; i < 9; i++) {
@@ -339,12 +328,23 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 void CBatFactory::settingStatus(CEnemyCharacter* pCharacter) {
 
 	pCharacter->m_pStatus->set(3, 3, 1);
+	pCharacter->m_pStatus->setSpeed(1.8f);
 }
 
 
 void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
+
 	//状態の設定
-	pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
+	pCharacter->m_state = CEnemyCharacter::STATE::STAY;
+
+	//プレイヤーを感知、追跡する範囲
+	pCharacter->m_chaseRange = 350;
+
+	//現在の優先攻撃対象
+	pCharacter->m_currentTarget = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_2);
+
+	//攻撃範囲
+	pCharacter->m_attackRange = 70;
 
 	//有効フラグを立てる
 	pCharacter->m_activeFlag = true;
@@ -356,8 +356,6 @@ void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	pCharacter->applyFunc();
 
 }
-
-
 
 //================================================
 // パーツセッティングクラスを管理するクラス

@@ -21,7 +21,6 @@
 //================================================
 class CEnemyCharacter :public CCharacter {
 public:
-
 	//コンストラクタ
 	CEnemyCharacter();
 
@@ -31,12 +30,52 @@ public:
 	//初期化処理
 	bool init()override;
 
-	
+	//================================================
+	// 
+	//	定数に関するコードの追加はここから
+	//		
+	//================================================
+	//敵の状態(アニメーションとアクションを管理)
+	enum class STATE :int {
+		NONE		= -1,
+		STAND		= 0,
+		JUMPING		= 0,
+		WALK		= 1,
+		FALING		= 2,
+		ATTACK		= 3,
+		CHASE		= 4,
+		STAY		= 5,
+		WANDERING	= 6,	//コウモリは出現位置に向かう、それ以外はさまよい行動
+		DAMAGE		= 7,
+		DIE			= 8,
+	};
+
+	//===========================================
+	//  敵の変数(ここから)
+	//===========================================
+
+	//プレイヤーを感知、追跡する範囲
+	float m_chaseRange  = 0;
+
+	//攻撃範囲
+	float m_attackRange = 0;
+
+	//状態（CEnemyCharacter::STATE）
+	STATE m_state = STATE::NONE;
+
+	//現在の優先攻撃対象
+	CCharacter* m_currentTarget = NULL;
+
+	//===========================================
+	//  敵の変数(ここまで)
+	//===========================================
 	//行えるアクション群
 	//std::vector<CAction* >* m_pActions = NULL;
+	std::map<STATE,CAction*>m_pActions;
 
-	//行えるアクション群
+	//アニメーション群
 	//std::vector<CEnemyAction* >* m_pActions = NULL;
+	std::map<STATE, CAnimation*>m_pAnimations;
 
 	/*
 	* @desc	初期化処理
@@ -62,7 +101,6 @@ public:
 	*　　　　　なので、create静的メンバ関数をカスタマイズする。
 	*/
 	//CREATE_FUNC(CEnemyCharacter);
-	
 	static CEnemyCharacter* create() {
 		CEnemyCharacter* pRet = new(std::nothrow) CEnemyCharacter();
 	
@@ -76,7 +114,6 @@ public:
 			return NULL;
 		}
 	}
-	
 
 	/**
 	* @desc CREATE_FUNCをオーバーロード
@@ -106,43 +143,13 @@ public:
 		}
 	}
 
-
-
 	//================================================
-	// 
-	//	定数に関するコードの追加はここから
-	//		
-	//		
-	//================================================
-
-	//敵の状態(アニメーション管理)
-	enum class STATE :int {
-		STAND = 0,
-		JUMPING = 0,
-		WALK_RIGHT = 1,
-		WALK_LEFT = 2,
-		FALING = 3,
-		ATTACK = 4,
-		PURSUIT = 5,
-		IDLE = 6,
-		DAMAGE = 7,
-
-	};
-
-	//敵が行えるアクション
-	enum class ACTION :int {
-		ATTACK = 1,
-		PURSUIT = 2,
-		IDLE = 3,
-		DAMAGE = 4,
-	};
-
-	//================================================
-	// 
+	//
 	// メンバーに関するコードの追加はここから
-	//		
-	//		
+	//
 	//================================================
+	//ターゲットの設定
+	void setTarget(CCharacter* pChara);
 
 	// アクション処理
 	void actionFunc(CCharacter* pChara);

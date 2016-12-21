@@ -52,6 +52,8 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //=========================================================================
 //タイトル
 #define IMAGE_TITLE				"Images/Title.jpg"
+#define IMAGE_TITLE_BUTTON_START		"Images/button/Start.png"
+#define IMAGE_TITLE_BUTTON_END			"Images/button/End.png"
 
 
 // プレイヤー
@@ -71,7 +73,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //敵
 //#define IMAGE_ENEMY			"Images/kuribo.png"
 #define IMAGE_ENEMY				"Images/Enemy/kari.png"
-//#define IMAGE_MEIDEAD			"Images/Enemy/Meidead.png"	
+#define IMAGE_MEIDEAD			"Images/Enemy/kari.png"
 #define IMAGE_BAT				"Images/Enemy/Bat/bat.png"
 
 // 敵武器もち
@@ -107,6 +109,8 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define SOUND_FILE_BGM_STAGE_FIRST "Sound/BGM_02.mp3"
 #define SOUND_FILE_BGM_STAGE_THIRD "Sound/BGM_03.mp3"
 
+// ボタンの押下音
+#define SOUND_FILE_SE_BUTTON		"Sound/button83.mp3"
 
 
 //=========================================================================

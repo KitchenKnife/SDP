@@ -23,12 +23,13 @@ void CEnemyActionDamage::update(CCharacter* pChara) {
 		this->Damage(pChara);
 
 		///////
+		/*
 		if (pChara->m_state != (int)CEnemyCharacter::STATE::DAMAGE) {
 
 			//Ä¶‚ðŽ~‚ß‚é
 			this->stop();
 			return;
-		}
+		}*/
 
 	}
 	else if (this->m_isDamageStart == true) {

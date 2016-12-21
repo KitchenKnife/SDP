@@ -62,7 +62,7 @@ void CEnemyActionAttack::update(CCharacter* pChara) {
 //======================================
 void CEnemyBOSS1Attack::attack(CCharacter* pChara) {
 	
-	pChara->m_state = (int)CEnemyCharacter::STATE::ATTACK;
+	//pChara->m_state = (int)CEnemyCharacter::STATE::ATTACK;
 
 	// 3‰ñ’†‰½‰ñ“–‚½‚Á‚½‚©Šm”F
 	if (this->m_currentFrame % 60 == 0) {

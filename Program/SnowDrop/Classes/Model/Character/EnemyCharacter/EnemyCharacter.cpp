@@ -26,6 +26,22 @@ CEnemyCharacter::CEnemyCharacter() {
 //デストラクタ
 CEnemyCharacter::~CEnemyCharacter() {
 
+	//アニメーション群の解放
+	std::map<STATE, CAnimation*>::iterator animeItr = this->m_pAnimations.begin();
+	while (animeItr != this->m_pAnimations.end()) {
+		SAFE_DELETE(animeItr->second);
+		animeItr++;
+	}
+	this->m_pAnimations.clear();
+
+	//アクション関数群の解放
+	std::map<STATE, CAction*>::iterator actItr = this->m_pActions.begin();
+	while (actItr != this->m_pActions.end()) {
+		SAFE_DELETE(actItr->second);
+		actItr++;
+	}
+	this->m_pActions.clear();
+
 }
 
 //初期化処理
@@ -55,25 +71,30 @@ bool CEnemyCharacter::init(float posX, float posY) {
 	return true;
 }
 
+//ターゲットの設定
+void CEnemyCharacter::setTarget(CCharacter* pChara) {
+	this->m_currentTarget = pChara;
+}
+
 // アクション処理
 void CEnemyCharacter::actionFunc(CCharacter* pChara) {
 
-	if (this->m_state != (int)STATE::ATTACK) {
-
-		// 打撃攻撃
-		//(*this->m_pActions)[(int)ACTION::BLOW_ATTACK]->start(pChara->m_pStatus);
-
-	}
+	this->m_pAnimations[this->m_state]->update();
 }
 
 
 //移動処理
 void CEnemyCharacter::moveFunc() {
 	// アクション
+	/*
 	for (CAction* pAction : (*m_pActions)) {
 		pAction->update(this);
 	}
-	
+	*/
+
+	//アクション処理
+	(this->m_pActions)[this->m_state]->update(this);
+
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals)) {
 		pPhysical->update(this->m_pMove);
@@ -87,7 +108,7 @@ void CEnemyCharacter::moveFunc() {
 void CEnemyCharacter::animationFunc() {
 
 	//アニメーション
-	(*this->m_pAnimations)[m_state]->update();
+	(this->m_pAnimations)[this->m_state]->update();
 }
 
 /**
@@ -96,18 +117,19 @@ void CEnemyCharacter::animationFunc() {
 */
 void CEnemyCharacter::checkState() {
 
+	
 	//向きを判定
 	if (this->m_pMove->m_vel.x != 0) {
 		if (this->m_pMove->m_vel.x > 0) {
 			//右向きに設定
-			this->m_state = (int)STATE::WALK_RIGHT;
+			this->setScale(-1.0, 1.0);
 		}
 		else {
 			//左向きに設定
-			this->m_state = (int)STATE::WALK_LEFT;
+			this->setScale(1.0, 1.0);
 		}
 	}
-
+	/*
 	//状態の判定
 	if (this->m_pMove->m_vel.y > 0.0f) {
 
@@ -137,7 +159,7 @@ void CEnemyCharacter::checkState() {
 		//立っている
 		m_state = (int)STATE::STAND;
 	}
-
+	*/
 
 }
 
@@ -148,7 +170,7 @@ void CEnemyCharacter::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[m_state]->getCurrentChip());
+	this->setTextureRect(this->m_pAnimations[this->m_state]->getCurrentChip());
 
 }
 
