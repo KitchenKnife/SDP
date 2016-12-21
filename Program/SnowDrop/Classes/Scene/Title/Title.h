@@ -89,7 +89,18 @@ private:
 
 public:
 	// デストラクタ
-	~CAudioManager(){}
+	~CAudioManager(){
+		SAFE_DELETE(m_pSharedAudioManager);
+
+		std::map<std::string, int>::iterator itr = this->m_musicID.begin();
+
+		while (itr != this->m_musicID.end()) {
+			itr->second = NULL;
+			itr++;
+		}
+		this->m_musicID.clear();
+
+	}
 
 	// 共有インスタンス取得
 	static CAudioManager* getInstance() {
