@@ -12,14 +12,14 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Weapon/PlayerWeapon/PlayerWeapon.h"
-
+/*
 //クラスの前方宣言
 
 //================================================
 // 武器パーツ製造工場
 //	（AbstractFactory）
 //================================================
-class CPlayerWeaponPartsFactory /*:public CCharacterPartsFactory*/ {
+class CPlayerWeaponPartsFactory /*:public CCharacterPartsFactory*{
 public:
 
 	virtual ~CPlayerWeaponPartsFactory() {}
@@ -192,7 +192,7 @@ public:
 	void settingInitialize(CPlayerWeapon* pWeapon)override;
 
 };
-*/
+*
 
 //================================================
 // パーツセッティングクラス（CBasePlayerFactory）を管理するクラス
@@ -247,4 +247,4 @@ public:
 
 };
 
-
+*/

@@ -14,7 +14,9 @@
 
 //================================================
 // ­”NƒNƒ‰ƒX
-// by Harada
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 class CPlayerCharacterBoy :public CCharacter {
 public:

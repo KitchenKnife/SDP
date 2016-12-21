@@ -10,7 +10,7 @@
 #include "Model/Weapon/Weapon.h"
 #include "cocos2d.h"
 #include "Lib/Input/InputManager.h"
-
+/*
 class CPlayerWeaponAttack;
 
 //武器の状態
@@ -130,7 +130,7 @@ public:
 	* @desc キャラクター1体との衝突判定処理
 	* @param キャラクターのアドレス
 	* @return true...衝突した
-	*/
+	*
 	//virtual bool collision(CCharacter* pChara) = 0;
 
 };
@@ -201,15 +201,15 @@ protected:
 
 	/**
 	* @desc 衝突判定処理
-	*/
+	*
 	void collisionAll()override {};
 
 public:
 	/**
 	* @desc キャラクター1体との衝突判定処理
 	* @param キャラクターのアドレス
-	* @return true...衝突した
-	*/
+	* return true...衝突した
+	*
 	bool collision(CCharacter* pChara)override {
 		return true;
 	};
@@ -217,3 +217,4 @@ public:
 	void hits(CCharacter* pChara)override{}
 
 };
+*/

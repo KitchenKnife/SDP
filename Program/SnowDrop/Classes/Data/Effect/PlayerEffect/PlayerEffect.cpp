@@ -2,7 +2,7 @@
 #include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Data/Effect/PlayerEffect/PlayerEffect.h"
 #include "Data/Effect/PlayerEffect/PlayerEffectFactory.h"
-
+/*/
 //================================================
 // 
 // プレイヤーのエフェクトの基底クラス
@@ -80,3 +80,4 @@ bool CBoyDamageEffect::init() {
 
 	return true;
 }
+*/

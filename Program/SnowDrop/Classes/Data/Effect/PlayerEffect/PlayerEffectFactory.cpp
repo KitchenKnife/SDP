@@ -9,7 +9,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Data/Effect/PlayerEffect/PlayerEffectFactory.h"
-
+/*
 //================================================
 // エフェクトパーツクラス工場
 //	（AbstractFactory）
@@ -27,7 +27,7 @@ CAnimation* CPlayerEffactPartsFactory::getAnimation() {
 
 	return pAnimation;
 }
-*/
+*
 
 
 //================================================
@@ -92,7 +92,7 @@ void CDisappearEffectFactory::settingInitialize(CPlayerEffect* pEffct) {
 	/*
 	*　計算データのままで起動すると1フレームずれが発生するので
 	*　初期化時に最後に値をSpriteに反映する
-	*/
+	*
 	pEffct->applyFunc();
 }
 
@@ -113,3 +113,4 @@ CPlayerEffectFactoryManager* CPlayerEffectFactoryManager::getInstance() {
 
 	return CPlayerEffectFactoryManager::m_pPlayerEffectFactoryManager;
 }
+*/

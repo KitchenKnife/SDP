@@ -42,7 +42,7 @@ CWeapon::~CWeapon(){
 	SAFE_DELETE(this->m_pAnimations);
 
 
-	SAFE_DELETE(this->m_pStatus);
+	
 }
 
 //‰Šú‰»ˆ—

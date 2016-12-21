@@ -6,7 +6,7 @@
 *
 */
 
-#pragma once
+/*
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -19,7 +19,7 @@
 // エッフェクトパーツ製造工場
 //	（AbstractFactory）
 //================================================
-class CPlayerEffactPartsFactory /*:public CCharacterPartsFactory*/ {
+class CPlayerEffactPartsFactory /*:public CCharacterPartsFactory* {
 public:
 
 	virtual ~CPlayerEffactPartsFactory() {}
@@ -151,7 +151,7 @@ public:
 	void settingInitialize(CPlayerEffect* pEffct)override;
 
 };
-*/
+*
 
 //================================================
 // パーツセッティングクラス（CBasePlayerFactory）を管理するクラス
@@ -197,3 +197,4 @@ public:
 
 };
 
+*/

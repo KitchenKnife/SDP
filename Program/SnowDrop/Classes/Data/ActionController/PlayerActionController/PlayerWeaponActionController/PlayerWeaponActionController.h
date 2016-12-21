@@ -8,7 +8,7 @@
 */
 
 #include "Data/ActionController/ActionController.h"
-
+/*
 class CPlayerWeapon;
 class CPlayerBoy;
 //class CPlayerCharacter;
@@ -95,18 +95,18 @@ public:
 
 	/*
 	* @desc 開始処理
-	*/
+	*
 	void start()override;
 
 	/*
 	* @desc 更新処理（ジャンプ移動計算）
 	* @param 対象のキャラクター
-	*/
+	*
 	void update(CCharacter* pChara)override;
 
 	/*
 	* @desc 終了処理
-	*/
+	*
 	void stop()override;
 
 };
@@ -114,3 +114,4 @@ public:
 
 
 
+*/

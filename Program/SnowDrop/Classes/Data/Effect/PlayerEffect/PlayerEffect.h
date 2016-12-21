@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Data/Effect/Effect.h"
-
+/*
 class CPlayerCharacter;
 
 //==========================================
@@ -139,3 +139,4 @@ protected:
 	//		
 	//================================================
 };
+*/

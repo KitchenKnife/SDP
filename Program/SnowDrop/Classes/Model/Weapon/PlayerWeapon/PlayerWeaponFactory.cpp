@@ -11,7 +11,7 @@
 #include "Model/Weapon/PlayerWeapon/PlayerWeaponFactory.h"
 #include "Data/ActionController/PlayerActionController/PlayerWeaponActionController/PlayerWeaponActionController.h"
 //#include "PlayerCharacter.h"
-
+/*
 
 //================================================
 // 武器パーツクラス工場
@@ -203,7 +203,7 @@ void CPlayerNormalWeaponFactory::settingInitialize(CPlayerWeapon* pWeapon) {
 	/*
 	*　計算データのままで起動すると1フレームずれが発生するので
 	*　初期化時に最後に値をSpriteに反映する
-	*/
+	*
 	pWeapon->applyFunc();
 
 }
@@ -225,3 +225,4 @@ CPlayerWeaponFactoryManager* CPlayerWeaponFactoryManager::getInstance() {
 
 	return CPlayerWeaponFactoryManager::m_pPlayerWeaponFactoryManager;
 }
+*/

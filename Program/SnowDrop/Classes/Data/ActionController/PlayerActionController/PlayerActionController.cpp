@@ -7,13 +7,13 @@
 
 #include "Data/ActionController/PlayerActionController/PlayerActionController.h"
 #include "Model/Character/PlayerCharacter/PlayerCharacter.h"
-
+/*
 //===================================================================
 //	プレイヤーの持ち上げアクション	
 //===================================================================
 /*
 * @desc 処理
-*/
+*
 void CPlayerLiftUpAction::start() {
 
 	//ジャンプ開始
@@ -26,7 +26,7 @@ void CPlayerLiftUpAction::start() {
 * @desc 更新処理
 * @param 対象のキャラクター
 * @tips 関数を呼び出す
-*/
+*
 void CPlayerLiftUpAction::update(CCharacter* pChara) {
 	
 	CPlayerBoy* pBoy = CPlayerBoy::getInstance();
@@ -100,7 +100,7 @@ void CPlayerLiftUpAction::update(CCharacter* pChara) {
 /*
 * @desc ジャンプ終了
 * @tips 着地した際にこの関数を呼び出す
-*/
+*
 void CPlayerLiftUpAction::stop(){
 
 	//アクションフラグをNONEにする
@@ -122,7 +122,7 @@ void CPlayerLiftUpAction::stop(){
 /*
 * @desc 暇つぶし開始処理
 * @tips 暇つぶし時間がある程度経過したらに呼び出す
-*/
+*
 void CGirlBaseWasteTimeAction::start(){
 
 	CPlayerGirl* pGirl = CPlayerGirl::getInstance();
@@ -137,7 +137,7 @@ void CGirlBaseWasteTimeAction::start(){
 * @desc 更新処理（ジャンプ移動計算）
 * @param 対象のキャラクター
 * @tips 関数を呼び出す
-*/
+*
 void CGirlBaseWasteTimeAction::update(CCharacter* pChara){
 
 	CPlayerGirl* pGirl = CPlayerGirl::getInstance();
@@ -188,7 +188,7 @@ void CGirlBaseWasteTimeAction::branchWasteAction(){
 
 /*
 * @desc　終了
-*/
+*
 void CGirlBaseWasteTimeAction::stop() {
 	CPlayerGirl* pGirl = CPlayerGirl::getInstance();
 	//カウンターをリセット
@@ -210,14 +210,14 @@ CGirlWasteBaseAction::CGirlWasteBaseAction(){
 
 /*
 * @desc 暇つぶし処理
-*/
+*
 void CGirlWasteBaseAction::start() {
 	this->m_pGirl = CPlayerGirl::getInstance();
 }
 
 /*
 * @desc　終了
-*/
+*
 void CGirlWasteBaseAction::stop() {
 
 	if (CPlayerBoy::getInstance()->m_isShakeHands == true) {
@@ -248,7 +248,7 @@ CGirlWasteAction_01::CGirlWasteAction_01(){
 
 /*
 * @desc 暇つぶし処理
-*/
+*
 void CGirlWasteAction_01::start() {
 	CGirlWasteBaseAction::start();
 	this->m_pGirl->m_playerState = CPlayerCharacter::STATE::WASTE_ANIME_01;
@@ -256,7 +256,7 @@ void CGirlWasteAction_01::start() {
 
 /*
 * @desc 更新処理
-*/
+*
 void CGirlWasteAction_01::update(CCharacter* pChara) {
 	//暇つぶしカウンターをインクリメント
 	this->m_pGirl->m_wasteActCounter++;
@@ -285,7 +285,7 @@ CGirlWasteAction_02::CGirlWasteAction_02() {
 
 /*
 * @desc 暇つぶし処理
-*/
+*
 void CGirlWasteAction_02::start() {
 	CGirlWasteBaseAction::start();
 	//※this->m_pGirl->m_playerState = CPlayerCharacter::STATE::WASTE_ANIME_02;
@@ -295,7 +295,7 @@ void CGirlWasteAction_02::start() {
 
 /*
 * @desc 更新処理
-*/
+*
 void CGirlWasteAction_02::update(CCharacter* pChara) {
 	//暇つぶしカウンターをインクリメント
 	this->m_pGirl->m_wasteActCounter++;
@@ -360,3 +360,4 @@ void CGirlWasteAction_02::update(CCharacter* pChara) {
 }
 
 
+*/

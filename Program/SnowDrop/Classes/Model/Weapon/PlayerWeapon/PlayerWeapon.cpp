@@ -9,7 +9,7 @@
 #include "Model/Weapon/PlayerWeapon/PlayerWeapon.h"
 #include "Data/ActionController/PlayerActionController/PlayerWeaponActionController/PlayerWeaponActionController.h"
 #include "Model/Weapon/PlayerWeapon/PlayerWeaponFactory.h"
-
+/*
 //================================================
 //
 //　プレイヤーの武器基底クラス
@@ -279,3 +279,4 @@ void CPlayerNormalWeapon::animationFunc() {
 	CPlayerWeapon::animationFunc();
 
 }
+*/

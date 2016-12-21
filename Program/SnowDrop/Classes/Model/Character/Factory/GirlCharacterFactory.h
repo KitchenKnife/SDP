@@ -4,6 +4,9 @@
 //================================================
 // 少女キャラクターパーツ製造工場
 //	（AbstractFactory）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 class CPlayerGirlPartsFactory :public CCharacterPartsFactory {
 public:
@@ -28,6 +31,9 @@ public:
 //================================================
 // キャラクターの生成過程を抽象化したクラス
 //	（FactoryMethod）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 class CPlayerGirlFactory {
 public:
@@ -71,6 +77,9 @@ public:
 //================================================
 // 女の子の生成と組み立てを担当するクラス
 //	（FactoryMethod）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 class CPlayerGirlCreateFactory :public CPlayerGirlFactory {
 public:
@@ -83,6 +92,9 @@ public:
 //================================================
 // 女の子のパーツのセッティングを担当するクラス
 //	（FactoryMethod）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 class CBasePlayerGirlFactory :public CPlayerGirlCreateFactory {
 public:
@@ -115,6 +127,9 @@ enum class GIRL_TYPE :int {
 //================================================
 // 少女キャラクター生成工場を管理するクラス
 //	（Singleton）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 class CPlayerGirlFactoryManager {
 private:

@@ -9,7 +9,7 @@
 #include "Data/ActionController/PlayerActionController/PlayerWeaponActionController/PlayerWeaponActionController.h"
 #include "Model/Weapon/PlayerWeapon/PlayerWeapon.h"
 #include <math.h>
-
+/*
 //===================================================================
 //
 //	武器攻撃の抽象クラス
@@ -31,7 +31,7 @@ CPlayerWeaponAttack::CPlayerWeaponAttack() {
 //===================================================================
 /*
 * @desc 開始処理
-*/
+*
 void CNormalSlashAttack_01::start() {
 	
 	//プレイヤーキャラクターの取得
@@ -59,7 +59,7 @@ void CNormalSlashAttack_01::start() {
 * @desc 更新処理 
 *        基準点の更新と、プレイヤーの移動
 * @param 対象のキャラクター
-*/
+*
 void CNormalSlashAttack_01::update(CCharacter* pChara) {
 	
 	//方向の設定
@@ -195,7 +195,7 @@ void CNormalSlashAttack_01::update(CCharacter* pChara) {
 /*
 * @desc 終了
 * @tips 着地した際にこの関数を呼び出す
-*/
+*
 void CNormalSlashAttack_01::stop() {
 
 	//入力受付を可能にする
@@ -214,3 +214,4 @@ void CNormalSlashAttack_01::stop() {
 	this->m_attackStep = 0;
 }
 
+*/

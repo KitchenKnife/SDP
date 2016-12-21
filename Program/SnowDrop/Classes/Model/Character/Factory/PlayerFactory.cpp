@@ -13,6 +13,9 @@
 //================================================
 // 少年キャラクターパーツクラス工場
 //	（AbstractFactory）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 //アニメーション群データの生成と取得
 std::vector<CAnimation* >* CPlayerBoyPartsFactory::getAnimations() {
@@ -53,6 +56,9 @@ std::vector<CCollisionArea* >* CPlayerBoyPartsFactory::getCollisionAreas() {
 //================================================
 // キャラクターの生成過程を抽象化したクラス
 //	（FactoryMethod）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 //プレイヤーの生成と設定
 CPlayerCharacterBoy* CPlayerBoyFactory::create() {
@@ -85,6 +91,9 @@ CPlayerCharacterBoy* CPlayerBoyFactory::create() {
 //================================================
 // キャラクターの生成と組み立てを担当するクラス
 //	（FactoryMethod）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 //プレイヤーの生成と組み立て
 CPlayerCharacterBoy* CPlayerBoyCreateFactory::createPlayer() {
@@ -119,6 +128,9 @@ CPlayerCharacterBoy* CPlayerBoyCreateFactory::createPlayer() {
 //================================================
 // キャラクターのパーツのセッティングを担当するクラス
 //	（FactoryMethod）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 
 //移動データの設定
@@ -233,6 +245,9 @@ void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 //================================================
 // 少年キャラクター生成工場を管理するクラス
 //	（Singleton）
+//
+//	2016/12/22
+//									Author Harada
 //================================================
 //共有のインスタンスの実体
 CPlayerBoyFactoryManager* CPlayerBoyFactoryManager::m_pPlayerBoyFactoryManager = NULL;

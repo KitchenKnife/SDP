@@ -7,7 +7,7 @@
 *
 */
 
-
+/*
 #include "Data/ActionController/ActionController.h"
 //#include "Model/Character/PlayerCharacter.h"
 
@@ -83,20 +83,20 @@ public:
 	* @desc 処理
 	* @param 加速度
 	* @tips ジャンプボタンが押された際に値の設定と共に呼び出す
-	*/
+	*
 	void start()override;
 
 	/*
 	* @desc 更新処理（ジャンプ移動計算）
 	* @param 対象のキャラクター
 	* @tips 関数を呼び出す
-	*/
+	*
 	void update(CCharacter* pChara);
 
 	/*
 	* @desc 終了
 	* @tips 持ち上げ終わった時に関数を呼び出す
-	*/
+	*
 	void stop()override;
 
 };
@@ -120,14 +120,14 @@ public:
 	/*
 	* @desc 暇つぶし開始処理
 	* @tips 暇つぶし時間がある程度経過したらに呼び出す
-	*/
+	*
 	void start()override;
 
 	/*
 	* @desc 更新処理（ジャンプ移動計算）
 	* @param 対象のキャラクター
 	* @tips 関数を呼び出す
-	*/
+	*
 	void update(CCharacter* pChara);
 
 	//暇つぶし行動の枝分かれ
@@ -136,7 +136,7 @@ public:
 	/*
 	* @desc　終了
 	* @tips　着地した際にこの関数を呼び出す
-	*/
+	*
 	void stop()override;
 
 };
@@ -163,12 +163,12 @@ public:
 
 	/*
 	* @desc 暇つぶし処理
-	*/
+	*
 	void start()override;
 
 	/*
 	* @desc　終了
-	*/
+	*
 	void stop()override;
 
 };
@@ -188,12 +188,12 @@ public:
 
 	/*
 	* @desc 暇つぶし処理
-	*/
-	void start()override;
+	*
+	void tart()override;
 
 	/*
 	* @desc 更新処理
-	*/
+	*
 	void update(CCharacter* pChara);
 
 };
@@ -216,7 +216,7 @@ protected:
 	* 1.向きに沿って移動
 	* 2.立ち止まる
 	* 3.向きに沿って移動
-	*/
+	*
 	int m_actionStep = 0;
 	
 	int m_vec = 1;
@@ -227,12 +227,13 @@ public:
 
 	/*
 	* @desc 暇つぶし処理
-	*/
+	*
 	void start()override;
 
 	/*
 	* @desc 更新処理
-	*/
+	*
 	void update(CCharacter* pChara);
 
 };
+*/
