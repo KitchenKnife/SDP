@@ -3,7 +3,7 @@
 //
 // File: KeyboardInputController.h
 //
-// キーボード入力コントローラー基底クラス
+// キーボード入力コントローラー ファイル
 //
 // 2016/12/18
 //						Author Shinya Ueba
