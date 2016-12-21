@@ -1,8 +1,6 @@
 
 #include "LaunchTrigger.h"
-#include "Model/Character/Character.h"
 #include "Model/Character/Factory/EnemyFactory.h"
-#include "Model/Character/GimmickCharacter/GimmickCharacter.h"
 #include "Model\Character\Factory\GimmickFactory.h"
 
 //=======================================

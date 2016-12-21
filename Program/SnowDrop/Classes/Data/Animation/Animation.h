@@ -1,10 +1,9 @@
 /*
-* Animation.h
-*
-*	2016/11/07	Osumi
-*
-*/
-
+ * Animation.h
+ *
+ *	2016/11/07	Osumi
+ *
+ */
 #pragma once
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
@@ -47,43 +46,33 @@ protected:
 	bool m_isEnd = false;
 
 public:
-	//アニメーション枚数の取得
-	int getInterval() {
-		return this->m_interval;
-	}
-	//アニメーション枚数の取得
-	int getNumber() {
-		return this->m_number;
-	}
-
-	//アニメーション時間の取得( アニメーション枚数 * アニメーション枚数 )
-	int getAnimationTime() {
-		return this->m_number*this->m_interval;
-	}
-
+	//コンストラクタ
 	CAnimation(int interval, int number, bool isLoop = false) :
 		m_interval(interval), m_number(number), m_isLoop(isLoop) {}
 
+	//デストラクタ
 	virtual ~CAnimation() {}
 
-	//現在のフレームの取得
-	int getCurrentFrame() { return this->m_currentFrame; }
-	//アニメーションが終了したかどうか
-	bool isEnd() { return this->m_isEnd; }
+	/**
+	 * @desc	現在のフレームの取得
+	 * @return	現在のフレーム
+	 */
+	int getCurrentFrame() {
+		return this->m_currentFrame;
+	}
 
 	/**
-	* @desc カウンターや現在のフレーム数のクリア
-	*/
-	void clear() {
-		this->m_counter = 0;
-		this->m_currentFrame = 0;
-		this->m_isEnd = false;
+	 * @desc	アニメーション終了フラグの取得
+	 * @return	true...終了しました。
+	 */
+	bool isEnd() {
+		return this->m_isEnd;
 	}
 	
 	/**
-	* @desc アニメーションの更新処理
-	* @return 表示するフレーム数（-1初期化がまだ行われていない）
-	*/
+	 * @desc	アニメーションの更新処理
+	 * @return	表示するフレーム数（-1初期化がまだ行われていない）
+	 */
 	virtual int update() {
 
 		//アニメーションが終了していなければカウンターの更新を行う
@@ -114,19 +103,20 @@ public:
 		//表示するフレーム数
 		m_currentFrame = this->m_counter / this->m_interval;
 
+		//更新した現在のフレームを一応返す。
 		return m_currentFrame;
 	}
 
 	/**
-	* @desc チップデータの追加
-	* @param チップデータ
-	*/
-	virtual void addChipData(CChip* ) = 0;
+	 * @desc	チップデータの追加
+	 * @para	チップデータ
+	 */
+	virtual void addChipData(CChip* pChip) = 0;
 
 	/**
-	* @desc 現在フレームのチップを取得する
-	* @return 現在のフレームチップ
-	*/
+	 * @desc	現在フレームのチップを取得する
+	 * @return	現在のフレームチップ
+	 */
 	virtual CChip getCurrentChip() = 0;
 
 };
@@ -163,10 +153,10 @@ public:
 	virtual CChip getCurrentChip() override {
 		CChip chip
 		(
-			m_pChip->size.width*m_currentFrame,
-			m_pChip->origin.y,
-			m_pChip->size.width,
-			m_pChip->size.height
+			this->m_pChip->size.width * this->m_currentFrame,
+			this->m_pChip->origin.y,
+			this->m_pChip->size.width,
+			this->m_pChip->size.height
 		);
 
 		return chip;
@@ -228,6 +218,7 @@ public:
 		//チップの解放
 		std::vector<CChip*>::iterator itr = this->m_chipList.begin();
 		while (itr != this->m_chipList.end()) {
+			SAFE_DELETE((*itr));
 			itr++;
 		}
 
@@ -252,11 +243,7 @@ public:
 	*/
 	virtual CChip getCurrentChip() override {
 		//添字演算子で取得したデータ自体がCChip*なのでその中身を返す。
-
 		return *(this->m_chipList[this->m_currentFrame]);
 	}
 
 };
-
-
-

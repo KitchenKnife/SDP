@@ -1,13 +1,10 @@
-
 /*
-* Character.cpp
-*
-*	2016/11/07	Osumi
-*
-*/
+ * Character.cpp
+ *
+ *	2016/11/07	Osumi
+ *
+ */
 #include "Character.h"
-
-using namespace cocos2d;
 
 //================================================
 // キャラクタークラス
@@ -18,33 +15,31 @@ CCharacter::CCharacter() {}
 
 //デストラクタ
 CCharacter::~CCharacter() {
-
+	//実体データの削除
 	SAFE_DELETE(this->m_pBody);
 
-	if ((this->m_pActions) == NULL) {
-		CCLOG(" ");
-		return;
-	}
-
+	//アクション群データの削除
 	for (CAction* pAction: (*m_pActions)) {
 		SAFE_DELETE(pAction);
 	}
 	SAFE_DELETE(this->m_pActions);
 
+	//物理演算群データの削除
 	for (CPhysical* pPhysical : (*m_pPhysicals)) {
 		SAFE_DELETE(pPhysical);
 	}
 	SAFE_DELETE(this->m_pPhysicals);
 
+	//移動データの削除
 	SAFE_DELETE(this->m_pMove);
 
+	//アニメーションデータ群の削除
 	for (CAnimation* pAnimation: (*m_pAnimations)) {
 		SAFE_DELETE(pAnimation);
 	}
 	SAFE_DELETE(this->m_pAnimations);
 
-	SAFE_DELETE(this->m_pStatus);
-
+	//SAFE_DELETE(this->m_pStatus);
 }
 
 //初期化処理
@@ -55,6 +50,7 @@ bool CCharacter::init() {
 		CCLOG("Spriteの初期化に失敗");
 		return false;
 	}
+	//個別に更新処理を起動させる。
 	this->scheduleUpdate();
 
 	//初期化に成功した場合

@@ -11,6 +11,9 @@
 //プレイヤー工場
 #include "Model/Character/Factory/PlayerFactory.h"
 
+//少女工場
+#include "Model/Character/Factory/GirlCharacterFactory.h"
+
 //敵工場
 #include "Model/Character/Factory/EnemyFactory.h"
 
@@ -83,10 +86,6 @@ CGameMain::~CGameMain() {
 	
 	// 全ての効果音を停止
 	SimpleAudioEngine::getInstance()->stopAllEffects() ;
-
-	//プレーヤーのインスタンスの解放
-	CPlayerBoy::removeInstnace();
-	CPlayerGirl::removeInstnace();
 	
 }
 
@@ -157,11 +156,7 @@ bool CGameMain::init() {
 
 	
 	// プレイヤーの生成
-	CPlayerCharacter* pPlayerChara = CPlayerFactoryManager::getInstance()->create(0);
-	//プレイヤー1のタグを設定
-	pPlayerChara->m_tag = TAG_PLAYER_1;
-	//武器の装備
-	pPlayerChara->equipWeapon();
+	CCharacter* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
 	//取り付け
@@ -169,9 +164,7 @@ bool CGameMain::init() {
 
 
 	// 少女の生成と取り付け
-	CPlayerCharacter* playerGirl = CPlayerFactoryManager::getInstance()->create(1);
-	//プレイヤー2のタグを設定
-	playerGirl->m_tag = TAG_PLAYER_2;
+	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(playerGirl);
 	//取り付け

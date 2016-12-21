@@ -1,11 +1,9 @@
 /*
-* ActionController.h
-*
-*	2016/11/09	Osumi
-*
-*/
-
-
+ * ActionController.h
+ *
+ *	2016/11/09	Osumi
+ *
+ */
 #pragma once
 
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -13,9 +11,6 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include"cocos2d.h"
 #include"Constants.h"
-#include "data/Status/Status.h"
-
-using namespace cocos2d;
 
 //================================================
 // 前方宣言に関するコードはここから書く
@@ -27,28 +22,26 @@ class CCharacter;
 //================================================
 class CAction {
 public:
+	//デストラクタ
 	virtual ~CAction(){}
+
 	//アクションを開始するたびに呼び出す
 	virtual void start() = 0;
 
 	//アクションの更新処理
 	virtual void update(CCharacter* pChara) = 0;
+
 	//アクションを終了するたびに呼び出す
 	virtual void stop() = 0;
 
-	virtual bool getActionFlag() {
-		CCLOG("this function is brank!!!!");
-		return false; 
-	};
 
 	/**
-	* @desc	アクションの再起動
-	* @param 再起動するキャラクター
-	* @tips 標準的なアクションの再起動
-	*　　　　ここではキャラクターは使用しない
-	*/
+	 * @desc	アクションの再起動
+	 * @param	再起動するキャラクター
+	 * @tips	標準的なアクションの再起動
+	 *　		ここではキャラクターは使用しない
+	 */
 	virtual void restart(CCharacter* pChara) {
-
 		//アクションの停止
 		this->stop();
 
@@ -84,47 +77,44 @@ protected:
 	bool m_isJumpStart = false;
 
 public:
-	//コンストラクタ
+	//デフォルトコンストラクタ
 	CActionJump(){}
-	CActionJump(float accele, int boost):
-		m_accele(accele),m_boost(boost){}
+	//コンストラクタ（各種設定）
+	CActionJump(float accele, int boost)
+		:m_accele(accele),m_boost(boost){}
 
 	/*
-	* @desc 加速度とブーストの設定
-	* @param 加速度
-	* @param ジャンプブースト
-	*/
+	 * @desc	加速度とブーストの設定
+	 * @param	加速度
+	 * @param	ジャンプブースト
+	 */
 	void set(float accele, int boost)  {
 		m_accele = accele;
 		m_boost = boost;
 	}
 
 	/*
-	* @desc ジャンプ処理
-	* @param 加速度
-	* @param ジャンプブースト
-	* @tips ジャンプボタンが押された際に値の設定と共に呼び出す
-	*/
+	 * @desc	ジャンプ開始
+	 * @tips	ジャンプボタンが押された際に呼び出す
+	 */
 	void start()override {
-
-		//ジャンプ開始
+		//ジャンプ開始フラグを上げる
 		this->m_isJumpStart = true;
 	}
 
 
 	/*
-	* @desc 更新処理（ジャンプ移動計算）
-	* @param ジャンプする対象のキャラクター
-	* @tips 上キーが押されたらこの関数を呼び出す
-	*/
+	 * @desc	更新処理（ジャンプ移動計算）
+	 * @param	ジャンプする対象のキャラクター
+	 * @tips	上キーが押されたらこの関数を呼び出す
+	 */
 	void update(CCharacter* pChara); 
 
 	/*
-	* @desc ジャンプ終了
-	* @tips 着地した際にこの関数を呼び出す
-	*/
+	 * @desc	ジャンプ終了
+	 * @tips	着地した際に呼び出す
+	 */
 	void stop()override {
-
 		//ジャンプ中フラグを下す
 		this->m_isJumping = false;
 	}
@@ -135,9 +125,4 @@ public:
 	* @tips キャラクターのY成分のリセット
 	*/
 	void restart(CCharacter* pChara)override;
-
 };
-
-
-
-

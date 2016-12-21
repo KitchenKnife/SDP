@@ -42,10 +42,7 @@ public:
 //
 //=====================================
 class CCollisionTerritory {
-
-
 public:
-
 	//領域タイプ
 	TERRITORY_TYPE m_type;
 
@@ -56,10 +53,10 @@ public:
 	virtual ~CCollisionTerritory() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	virtual void collision(CCharacter* pChara, cocos2d::Point basePt) = 0;
 
 public:
@@ -71,58 +68,57 @@ public:
 
 	//ここで　*EventCallback　は　戻り値がvoid、引数がint　の関数のアドレスを格納できる関数ポインタを意味する。
 	//引数の　変数eventは　今回イベントのコールバックということをわかりやすくするための単なる名前なので　event自体に意味はない
-	//http://www.c-lang.org/pointer_function.html
 
 protected:
 	//イベントコールバック
 	EventCallback m_pEventCallBack = NULL;
 public:
 	/**
-	* @desc イベントコールバックの設定
-	* @param 設定するコールバックイベント
-	* @tips　領域を生成し、生成した領域に
-	*　　　　イベントコールバック（メンバ関数ポインタ）を設定することで　
-	*　　　　その領域イベントが発生したときに
-	*　　　　登録したメンバ関数ポインタが呼び出される
-	*/
+	 * @desc	イベントコールバックの設定
+	 * @param	設定するコールバックイベント
+	 * @tips	領域を生成し、生成した領域に
+	 *　　　	イベントコールバック（メンバ関数ポインタ）を設定することで　
+	 *　　　　	その領域イベントが発生したときに
+	 *　　　　	登録したメンバ関数ポインタが呼び出される
+	 */
 	void setEventCallback(EventCallback pEventCallback) {
 		this->m_pEventCallBack = pEventCallback;
 	}
 
 	/**
-	* @desc イベントコールバックの呼び出し
-	* @param 呼びだすインスタンス
-	* @param イベント
-	*　　　　マップちっぷの際はマップチップIDをイベントとして渡すが
-	*　　　　画面端などはイベントは存在しないので
-	*　　　　デフォルト値として0を設定しておく
-	* @tips　領域のイベントの発生時にこのメンバ関数を呼び出すことで
-	*　　　　登録したメンバ関数が呼び出される　
-	*/
+	 * @desc	イベントコールバックの呼び出し
+	 * @param	呼びだすインスタンス
+	 * @param	イベント
+	 *　　　	マップちっぷの際はマップチップIDをイベントとして渡すが
+	 *　　　	画面端などはイベントは存在しないので
+	 *　　　	デフォルト値として0を設定しておく
+	 * @tips	領域のイベントの発生時にこのメンバ関数を呼び出すことで
+	 *　　　	登録したメンバ関数が呼び出される　
+	 */
 	void callEventCallback(CCharacter* pChara, int event = 0);
 
 };
+
 //=====================================
 // 下にある画面端領域との衝突判定
 //=====================================
 class CCollisionTerritoryEndOfScreenBottom :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryEndOfScreenBottom():CCollisionTerritory(TERRITORY_TYPE::BOTTOM) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryEndOfScreenBottom() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 
 };
@@ -131,22 +127,21 @@ public:
 //=====================================
 class CCollisionTerritoryEndOfScreenTop :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryEndOfScreenTop() :CCollisionTerritory(TERRITORY_TYPE::TOP) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryEndOfScreenTop() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -154,22 +149,21 @@ public:
 //=====================================
 class CCollisionTerritoryEndOfScreenRight :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryEndOfScreenRight() :CCollisionTerritory(TERRITORY_TYPE::RIGHT) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryEndOfScreenRight() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -177,22 +171,21 @@ public:
 //=====================================
 class CCollisionTerritoryEndOfScreenLeft :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryEndOfScreenLeft() :CCollisionTerritory(TERRITORY_TYPE::LEFT) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryEndOfScreenLeft() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 
@@ -203,22 +196,21 @@ public:
 //=====================================
 class CCollisionTerritoryOutOfScreenBottom :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryOutOfScreenBottom() :CCollisionTerritory(TERRITORY_TYPE::BOTTOM) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryOutOfScreenBottom() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 
 };
@@ -227,22 +219,21 @@ public:
 //=====================================
 class CCollisionTerritoryOutOfScreenTop :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryOutOfScreenTop() :CCollisionTerritory(TERRITORY_TYPE::TOP) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryOutOfScreenTop() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -250,22 +241,21 @@ public:
 //=====================================
 class CCollisionTerritoryOutOfScreenRight :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryOutOfScreenRight() :CCollisionTerritory(TERRITORY_TYPE::RIGHT) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryOutOfScreenRight() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -273,22 +263,21 @@ public:
 //=====================================
 class CCollisionTerritoryOutOfScreenLeft :public CCollisionTerritory {
 public:
-
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryOutOfScreenLeft() :CCollisionTerritory(TERRITORY_TYPE::LEFT) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryOutOfScreenLeft() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 
@@ -299,20 +288,20 @@ public:
 class CCollisionTerritoryMapChipBottom :public CCollisionTerritory {
 public:
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryMapChipBottom():CCollisionTerritory(TERRITORY_TYPE::BOTTOM) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryMapChipBottom() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -321,20 +310,20 @@ public:
 class CCollisionTerritoryMapChipTop :public CCollisionTerritory {
 public:
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryMapChipTop() :CCollisionTerritory(TERRITORY_TYPE::TOP) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryMapChipTop() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -343,20 +332,20 @@ public:
 class CCollisionTerritoryMapChipRight :public CCollisionTerritory {
 public:
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryMapChipRight() :CCollisionTerritory(TERRITORY_TYPE::RIGHT) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryMapChipRight() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 //=====================================
@@ -365,20 +354,20 @@ public:
 class CCollisionTerritoryMapChipLeft :public CCollisionTerritory {
 public:
 	/**
-	* @desc コンストラクタ
-	*		領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
-	*		設定しておく
-	*/
+	 * @desc	コンストラクタ
+	 *			領域タイプの設定を初期化子でTERRITORY_TYPE::BOTTOMに
+	 *			設定しておく
+	 */
 	CCollisionTerritoryMapChipLeft() :CCollisionTerritory(TERRITORY_TYPE::LEFT) {}
 
 	//デストラクタ
 	virtual ~CCollisionTerritoryMapChipLeft() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @param 基準点
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @param	基準点
+	 */
 	void collision(CCharacter* pChara, cocos2d::Point basePt)override;
 };
 
@@ -462,26 +451,26 @@ public:
 	}
 
 	/**
-	* @desc 衝突基準点の追加
-	* @param 衝突基準点
-	*/
+	 * @desc	衝突基準点の追加
+	 * @param	衝突基準点
+	 */
 	void addBasePoint(CCollisionBasePoint* pBasePoints) {
 		this->m_pBasePoints->push_back(pBasePoints);
 	}
 
 	/**
-	* @desc 衝突判定領域の追加
-	* @param 衝突判定領域
-	*/
+	 * @desc	衝突判定領域の追加
+	 * @param	衝突判定領域
+	 */
 	void addTerritory(CCollisionTerritory* pTerritory) {
 		this->m_pTerritories->push_back(pTerritory);
 	}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	* @tips  毎フレーム呼び出す
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 * @tips	毎フレーム呼び出す
+	 */
 	virtual void collision(CCharacter* pChara) = 0;
 
 };
@@ -501,9 +490,9 @@ public:
 	~CCollsionAreaEndOfScreen(){}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 */
 	void collision(CCharacter* pChara)override;
 
 };
@@ -514,15 +503,19 @@ public:
 //=====================================
 class CCollsionAreaMap : public CCollisionArea {
 public:
+	//デフォルトコンストラクタ
+	CCollsionAreaMap();
+
 	//コンストラクタ
-	CCollsionAreaMap() {}
+	CCollsionAreaMap(CBody* pBody, float width, float height);
+
 	//デストラクタ
 	~CCollsionAreaMap() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 */
 	void collision(CCharacter* pChara)override;
 
 };
@@ -574,9 +567,9 @@ public:
 	~CCollsionAreaOutOfScreen() {}
 
 	/**
-	* @desc 衝突判定
-	* @param 衝突対象のキャラクター
-	*/
+	 * @desc	衝突判定
+	 * @param	衝突対象のキャラクター
+	 */
 	void collision(CCharacter* pChara)override;
 
 };

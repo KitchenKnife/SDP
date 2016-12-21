@@ -10,9 +10,7 @@
 //=========================================================================
 //	追加のインクルードはここから
 //=========================================================================
-#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Model/Character/EnemyCharacter/EnemyCharacter.h"
-#include "Data/LaunchData/LaunchData.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"
 #include "cocos2d.h"
 #include "Constants.h"

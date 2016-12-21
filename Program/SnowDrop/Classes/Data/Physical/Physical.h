@@ -1,26 +1,25 @@
-
 /*
-* Physical.h
-*
-*	2016/11/07	Osumi
-*
-*/
+ * Physical.h
+ *
+ *	2016/11/07	Osumi
+ *
+ */
 #pragma once
-
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include"Data/Move/Move.h"
-
 
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　物理演算クラス
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 class CPhysical {
 public:
+	//デストラクタ
 	virtual ~CPhysical(){}
-	virtual void update(CMove* pMove) = 0;
 
+	//更新処理
+	virtual void update(CMove* pMove) = 0;
 };
 
 
@@ -29,16 +28,18 @@ public:
 //=====================================
 class CPhysicalGravity : public CPhysical {
 public:
+	//デストラクタ
+	virtual ~CPhysicalGravity(){}
+
 	//重力係数
 	constexpr static const float GRAVITY = -0.5f;
 
-public:
+	//更新処理
 	void update(CMove* pMove)override {
 
 		//y軸の速度(重力計算)
 		pMove->m_vel.y += pMove->m_accele.y + CPhysicalGravity::GRAVITY;
 	}
-
 };
 
 
@@ -57,26 +58,27 @@ public:
 	//全体の摩擦係数
 	constexpr static const float FRICTION = 0.3f;
 
+	//デフォルトコンストラクタ
 	CPhysicalFriction(){}
-	CPhysicalFriction(float maxSpeed):m_maxSpeed(maxSpeed){}
+
+	//コンストラクタ（各種設定）
+	CPhysicalFriction(float maxSpeed,float friction)
+		:m_maxSpeed(maxSpeed),m_personalFriction(friction){}
 
 	/**
-	* @desc 最高速度と個々の摩擦係数の設定
-	* @param 最高速度
-	* @param 個々の摩擦係数
-	*/
+	 * @desc	最高速度と個々の摩擦係数の設定
+	 * @param	最高速度
+	 * @param	個々の摩擦係数
+	 */
 	void set(float maxSpeed, float friction) {
 		m_maxSpeed = maxSpeed;
 		m_personalFriction = friction;
 	}
 
 	/**
-	* @desc 更新処理（摩擦計算）
-	*/
+	 * @desc	更新処理（摩擦計算）
+	 */
 	void update(CMove* pMove)override {
-
-
-		
 		//摩擦
 		float friction = 0.0f;
 
@@ -110,5 +112,4 @@ public:
 			pMove->m_vel.x = this->m_maxSpeed;
 		}
 	}
-
 };

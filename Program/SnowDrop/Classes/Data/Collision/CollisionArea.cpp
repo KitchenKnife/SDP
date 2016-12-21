@@ -1,4 +1,3 @@
-
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -6,24 +5,21 @@
 #include "Model/Character/Character.h"
 #include "Model/Map/Map.h"
 
-
 //=====================================
 //
 // 衝突判定領域
 //
 //=====================================
-
-
 /**
-* @desc イベントコールバックの呼び出し
-* @param 呼びだすインスタンス
-* @param イベント
-*　　　　マップちっぷの際はマップチップIDをイベントとして渡すが
-*　　　　画面端などはイベントは存在しないので
-*　　　　デフォルト値として0を設定しておく
-* @tips　領域のイベントの発生時にこのメンバ関数を呼び出すことで
-*　　　　登録したメンバ関数が呼び出される　
-*/
+ * @desc	イベントコールバックの呼び出し
+ * @param	呼びだすインスタンス
+ * @param	イベント
+ *　　　	マップちっぷの際はマップチップIDをイベントとして渡すが
+ *　　　　	画面端などはイベントは存在しないので
+ *　　　	デフォルト値として0を設定しておく
+ * @tips	領域のイベントの発生時にこのメンバ関数を呼び出すことで
+ *　　　	登録したメンバ関数が呼び出される　
+ */
 void CCollisionTerritory::callEventCallback(CCharacter* pChara, int event) {
 
 	//イベントコールバックが設定されていれば。。。
@@ -40,10 +36,10 @@ void CCollisionTerritory::callEventCallback(CCharacter* pChara, int event) {
 // 下にある画面端領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryEndOfScreenBottom::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//下に移動しているかどうかチェック
@@ -64,11 +60,6 @@ void CCollisionTerritoryEndOfScreenBottom::collision(CCharacter* pChara, cocos2d
 			//リセットする値
 			pChara->m_pMove->m_vel.y = 0.0f;
 			pChara->m_pMove->m_accele.y = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
-
 		}
 	}
 }
@@ -77,10 +68,10 @@ void CCollisionTerritoryEndOfScreenBottom::collision(CCharacter* pChara, cocos2d
 // 上にある画面端領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryEndOfScreenTop::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//上に移動しているかどうかチェック
@@ -101,10 +92,6 @@ void CCollisionTerritoryEndOfScreenTop::collision(CCharacter* pChara, cocos2d::P
 			//リセットする値
 			pChara->m_pMove->m_vel.y = 0.0f;
 			pChara->m_pMove->m_accele.y = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }
@@ -112,10 +99,10 @@ void CCollisionTerritoryEndOfScreenTop::collision(CCharacter* pChara, cocos2d::P
 // 右にある画面端領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryEndOfScreenRight::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//右に移動しているかどうかチェック
@@ -136,10 +123,6 @@ void CCollisionTerritoryEndOfScreenRight::collision(CCharacter* pChara, cocos2d:
 			//リセットする値
 			pChara->m_pMove->m_vel.x = 0.0f;
 			pChara->m_pMove->m_accele.x = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }
@@ -147,10 +130,10 @@ void CCollisionTerritoryEndOfScreenRight::collision(CCharacter* pChara, cocos2d:
 // 左にある画面端領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryEndOfScreenLeft::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//左に移動しているかどうかチェック
@@ -162,8 +145,6 @@ void CCollisionTerritoryEndOfScreenLeft::collision(CCharacter* pChara, cocos2d::
 			//イベントコールバックの呼び出し
 			this->callEventCallback(pChara);
 
-
-
 			//めり込んだ分の計算
 			float boundary = (pChara->m_pMove->m_pos.x + basePt.x) - WINDOW_LEFT;
 
@@ -173,10 +154,6 @@ void CCollisionTerritoryEndOfScreenLeft::collision(CCharacter* pChara, cocos2d::
 			//リセットする値
 			pChara->m_pMove->m_vel.x = 0.0f;
 			pChara->m_pMove->m_accele.x = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }
@@ -186,10 +163,10 @@ void CCollisionTerritoryEndOfScreenLeft::collision(CCharacter* pChara, cocos2d::
 // 下にある画面外領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター0
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryOutOfScreenBottom::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//下に移動しているかどうかチェック
@@ -204,11 +181,6 @@ void CCollisionTerritoryOutOfScreenBottom::collision(CCharacter* pChara, cocos2d
 			//リセットする値
 			pChara->m_pMove->m_vel.y = 0.0f;
 			pChara->m_pMove->m_accele.y = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
-
 		}
 	}
 }
@@ -217,10 +189,10 @@ void CCollisionTerritoryOutOfScreenBottom::collision(CCharacter* pChara, cocos2d
 // 上にある画面外領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryOutOfScreenTop::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//上に移動しているかどうかチェック
@@ -235,21 +207,18 @@ void CCollisionTerritoryOutOfScreenTop::collision(CCharacter* pChara, cocos2d::P
 			//リセットする値
 			pChara->m_pMove->m_vel.y = 0.0f;
 			pChara->m_pMove->m_accele.y = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }
+
 //=====================================
 // 右にある画面外領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryOutOfScreenRight::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//右に移動しているかどうかチェック
@@ -264,10 +233,6 @@ void CCollisionTerritoryOutOfScreenRight::collision(CCharacter* pChara, cocos2d:
 			//リセットする値
 			pChara->m_pMove->m_vel.x = 0.0f;
 			pChara->m_pMove->m_accele.x = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }
@@ -275,10 +240,10 @@ void CCollisionTerritoryOutOfScreenRight::collision(CCharacter* pChara, cocos2d:
 // 左にある画面外領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryOutOfScreenLeft::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//左に移動しているかどうかチェック
@@ -293,10 +258,6 @@ void CCollisionTerritoryOutOfScreenLeft::collision(CCharacter* pChara, cocos2d::
 			//リセットする値
 			pChara->m_pMove->m_vel.x = 0.0f;
 			pChara->m_pMove->m_accele.x = 0.0f;
-
-			//ジャンプの停止はいったんコメントアウトしておく
-			//この部分は考えなくてはならないが今考えるとまとまらないので
-			//今は考えない
 		}
 	}
 }
@@ -307,10 +268,10 @@ void CCollisionTerritoryOutOfScreenLeft::collision(CCharacter* pChara, cocos2d::
 // 下にあるマップチップ領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryMapChipBottom::collision(CCharacter* pChara, cocos2d::Point basePt){
 
 	//下に移動しているかどうかチェック
@@ -358,16 +319,15 @@ void CCollisionTerritoryMapChipBottom::collision(CCharacter* pChara, cocos2d::Po
 			}
 		}
 	}
-
 }
 //=====================================
 // 上にあるマップチップ領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryMapChipTop::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//上に移動しているかどうかチェック
@@ -413,16 +373,15 @@ void CCollisionTerritoryMapChipTop::collision(CCharacter* pChara, cocos2d::Point
 			}
 		}
 	}
-
 }
 //=====================================
 // 右にあるマップチップ領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryMapChipRight::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//右に移動しているかどうかチェック
@@ -468,16 +427,15 @@ void CCollisionTerritoryMapChipRight::collision(CCharacter* pChara, cocos2d::Poi
 			}
 		}
 	}
-
 }
 //=====================================
 // 左にあるマップチップ領域との衝突判定
 //=====================================
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-* @param 基準点
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ * @param	基準点
+ */
 void CCollisionTerritoryMapChipLeft::collision(CCharacter* pChara, cocos2d::Point basePt) {
 
 	//左に移動しているかどうかチェック
@@ -524,7 +482,6 @@ void CCollisionTerritoryMapChipLeft::collision(CCharacter* pChara, cocos2d::Poin
 			}
 		}
 	}
-
 }
 
 
@@ -627,9 +584,9 @@ CCollsionAreaEndOfScreen::CCollsionAreaEndOfScreen(CBody* pBody){
 }
 
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ */
 void CCollsionAreaEndOfScreen::collision(CCharacter* pChara) {
 
 	//領域分繰り返す
@@ -652,10 +609,34 @@ void CCollsionAreaEndOfScreen::collision(CCharacter* pChara) {
 // 画面上にある全てのマップチップとの衝突判定空間
 //　つまりマップチップとの衝突判定空間
 //=====================================
+//デフォルトコンストラクタ
+CCollsionAreaMap::CCollsionAreaMap(){}
+
+//コンストラクタ
+CCollsionAreaMap::CCollsionAreaMap(CBody* pBody,float width, float height) {
+	//基準点の設定
+	for (int i = 1; i < 8; i++) {
+		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(width + (16.0f * i), pBody->m_bottom)));
+
+		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(width + (16.0f * i), pBody->m_top)));
+	}
+
+	for (int i = 1; i < 16; i++) {
+		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(pBody->m_right * 0.5f, height + (16.0f * i))));
+
+		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(pBody->m_left * 0.5f, height + (16.0f * i))));
+	}
+
+}
+
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ */
 void CCollsionAreaMap::collision(CCharacter* pChara) {
 
 	//領域分繰り返す
@@ -683,25 +664,25 @@ void CCollsionAreaMap::collision(CCharacter* pChara) {
 //====================================================================
 
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CCollsionAreaMapObject::CCollsionAreaMapObject(void)
 {
 
 }
 
 /**
-* @desc デストラクタ
-*/
+ * @desc	デストラクタ
+ */
 CCollsionAreaMapObject::~CCollsionAreaMapObject(void)
 {
 
 }
 
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ */
 void CCollsionAreaMapObject::collision(CCharacter* pChara)
 {
 	//領域分繰り返す
@@ -737,9 +718,9 @@ CCollsionAreaOutOfScreen::CCollsionAreaOutOfScreen(CBody* pBody) {
 }
 
 /**
-* @desc 衝突判定
-* @param 衝突対象のキャラクター
-*/
+ * @desc	衝突判定
+ * @param	衝突対象のキャラクター
+ */
 void CCollsionAreaOutOfScreen::collision(CCharacter* pChara) {
 
 	//領域分繰り返す
@@ -753,6 +734,4 @@ void CCollsionAreaOutOfScreen::collision(CCharacter* pChara) {
 			}
 		}
 	}
-
 }
-

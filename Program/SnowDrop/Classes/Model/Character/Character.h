@@ -1,10 +1,9 @@
-
 /*
-* Character.h
-*
-*	2016/11/07	Osumi And Harada
-*
-*/
+ * Character.h
+ *
+ *	2016/11/07	Osumi And Harada
+ *
+ */
 
 /*collision(CCharacter )*/
 
@@ -20,25 +19,22 @@
 #include "Data/Collision/CollisionArea.h"
 #include "Data/Status/Status.h"
 
-#include <stdio.h>
-
-using namespace cocos2d;
-
 //================================================
 // キャラクタータイプ
 //================================================
 enum class CHARACTER_TYPE :int {
-	NONE = -1,	//無し
-	PLAYER_BOY = 0,	//少年（プレイヤー）
+	NONE		= -1,	//無し
+	PLAYER_BOY	= 0,	//少年（プレイヤー）
 	PLAYER_GIRL = 1,	//少女
-	ENEMY = 2,	//敵
-	BULLET = 3,	//弾
-	GIMMICK = 4,//ギミック
+	ENEMY		= 2,	//敵
+	BULLET		= 3,	//弾
+	GIMMICK		= 4,	//ギミック
 };
 
 //================================================
 // キャラクタークラス
 //		全てのキャラクターの雛形となる抽象クラス
+//	by Harada
 //================================================
 class CCharacter :public Sprite {
 public:
@@ -78,12 +74,6 @@ public:
 	//衝突判定空間データ群
 	std::vector<CCollisionArea*>* m_pCollisionAreas = NULL;
 
-	//ステータスデータ
-	CStatus* m_pStatus = NULL;
-
-	//状態データ
-	int m_state = 0;
-
 	//有効フラグ
 	//表示・非表示関連
 	bool m_activeFlag = false;
@@ -93,14 +83,14 @@ public:
 	bool m_isAlive = false;
 
 	//大まかなタイプ別（キャラタイプ）
-	CHARACTER_TYPE m_charaType = CHARACTER_TYPE::NONE;
+	int m_charaType = (int)CHARACTER_TYPE::NONE;
 
 	//細かなタイプ別（タグ）
 	int m_tag = 0;
 
 protected:
 	//================================================ 
-	// キャラクター群の基本的にアップデートする関数の列挙
+	// キャラクタークラスの基本的な関数の列挙
 	//	以下の関数はすべてのキャラクター派生クラス内でオーバーライドさせる。
 	//================================================
 	//移動処理
@@ -119,9 +109,6 @@ protected:
 	virtual void applyFunc() = 0;
 
 public:
-	//================================================ 
-	// 衝突判定用関数の列挙
-	//================================================
 	/**
 	 * @desc	キャラクター1体との衝突判定処理
 	 * @param	キャラクターのアドレス
@@ -140,7 +127,6 @@ public:
 	//================================================ 
 	// イベントコールバック専用関数の列挙	
 	//================================================
-
 	/**
 	 * @desc	下領域と衝突した際のイベントコールバック
 	 * @param	マップチップID
@@ -167,6 +153,7 @@ public:
 //=============================================
 // キャラクターの集合体
 //	シングルトン化させてほかのファイルで扱えるようにしておくこと
+// By Harada
 //=============================================
 class CCharacterAggregate {
 private:
@@ -242,24 +229,23 @@ public:
 //================================================
 // キャラクターパーツクラス工場
 //	（AbstractFactory）
+// By Harada
 //================================================
 class CCharacterPartsFactory {
 public:
 	//デストラクタ
 	virtual ~CCharacterPartsFactory() {}
 
-	//アニメーションデータ群の実体を生成して返す
-	virtual std::vector<CAnimation* >* getAnimations() = 0;
 	//移動データの実体を生成して返す
 	virtual CMove* getMove() = 0;
+	//アニメーションデータ群の実体を生成して返す
+	virtual std::vector<CAnimation* >* getAnimations() = 0;
 	//物理演算データ群の実体を生成して返す
 	virtual std::vector<CPhysical* >* getPhysicals() = 0;
 	//アクションデータ群の実体を生成して返す
 	virtual std::vector<CAction* >* getActions() = 0;
 	//実体データの実体を生成して返す
 	virtual CBody* getBody() = 0;
-	//ステータスデータの実体を生成して返す
-	virtual CStatus* getStatus() = 0;
 	//衝突判定空間データ群の実体を生成して返す
 	virtual std::vector<CCollisionArea* >* getCollisionAreas() = 0;
 };

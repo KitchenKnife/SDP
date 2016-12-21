@@ -1,19 +1,17 @@
 /*
-* ActionController.cpp
-*
-*	2016/11/07	Osumi
-*
-*/
-
-
+ * ActionController.cpp
+ *
+ *	2016/11/07	Osumi
+ *
+ */
 #include "ActionController.h"
 #include "Model/Character/Character.h"
 
 /*
-* @desc 更新処理（ジャンプ移動計算）
-* @param ジャンプする対象のキャラクター
-* @tips 上キーが押されたらこの関数を呼び出す
-*/
+ * @desc	更新処理（ジャンプ移動計算）
+ * @param	ジャンプする対象のキャラクター
+ * @tips	上キーが押されたらこの関数を呼び出す
+ */
 void  CActionJump::update(CCharacter* pChara) {
 	
 	if (this->m_isJumping == true) {
@@ -48,10 +46,10 @@ void  CActionJump::update(CCharacter* pChara) {
 }
 
 /**
-* @desc	アクションの再起動
-* @param 再起動するキャラクター
-* @tips キャラクターのY成分のリセット
-*/
+ * @desc	アクションの再起動
+ * @param	再起動するキャラクター
+ * @tips	キャラクターのY成分のリセット
+ */
 void CActionJump::restart(CCharacter* pChara) {
 
 	//Y成分の速度と加速度のリセっト
