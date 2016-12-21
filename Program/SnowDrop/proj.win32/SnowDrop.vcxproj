@@ -182,6 +182,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Weapon\Weapon.cpp" />
     <ClCompile Include="..\Classes\Scene\GameMain\GameMain.cpp" />
+    <ClCompile Include="..\Classes\Scene\Title\Title.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +225,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.h" />
     <ClInclude Include="..\Classes\Model\Weapon\Weapon.h" />
     <ClInclude Include="..\Classes\Scene\GameMain\GameMain.h" />
+    <ClInclude Include="..\Classes\Scene\Title\Title.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

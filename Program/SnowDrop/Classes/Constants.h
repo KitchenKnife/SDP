@@ -50,6 +50,9 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //=========================================================================
 //	画像ファイルのマクロはここから書く
 //=========================================================================
+//タイトル
+#define IMAGE_TITLE				"Images/Title.jpg"
+
 
 // プレイヤー
 //#define IMAGE_PLAYER			"Images/player.png"
@@ -97,6 +100,14 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //=========================================================================
 //	サウンドファイルのマクロはここから書く
 //=========================================================================
+//BGM
+#define SOUND_FILE_BGM_TITLE  "Sound/Title_01.mp3"
+//#define SOUND_FILE_BGM_ENDING "Sound/BGM_ENDING.mp3"
+#define SOUND_FILE_BGM_STAGE_FIRST "Sound/BGM_01.mp3"
+#define SOUND_FILE_BGM_STAGE_FIRST "Sound/BGM_02.mp3"
+#define SOUND_FILE_BGM_STAGE_THIRD "Sound/BGM_03.mp3"
+
+
 
 //=========================================================================
 //	フォントのマクロはここから書く

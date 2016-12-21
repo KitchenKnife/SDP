@@ -185,6 +185,13 @@ bool CGameMain::init() {
 	//拡大に伴う画面位置の設定
 	this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
 
+	//BGMの読み込み
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic(SOUND_FILE_BGM_STAGE_FIRST);
+	//BGMの再生
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(SOUND_FILE_BGM_STAGE_FIRST, true);
+
+
+
 	//=========================================================================
 	//
 	//	ここまでに初期化、初期設定のコードを追加

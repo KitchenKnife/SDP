@@ -231,6 +231,9 @@
     <ClCompile Include="..\Classes\Model\Character\PlayerCharacter\PlayerCharacter.cpp">
       <Filter>src\Model\Character\PlayerCharacter</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\Title\Title.cpp">
+      <Filter>src\Scene\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\PlayerCharacter\PlayerCharacter.h">
       <Filter>src\Model\Character\PlayerCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\Title\Title.h">
+      <Filter>src\Scene\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

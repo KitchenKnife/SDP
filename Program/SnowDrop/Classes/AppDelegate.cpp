@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "Scene/GameMain/GameMain.h"
+#include "Scene/Title/Title.h"
 #include "Constants.h"
 #include "cocos2d.h"
 
@@ -90,6 +91,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     auto scene = CGameMain::createScene();
+	//auto scene = CTitle::createScene();
 
     // run
     director->runWithScene(scene);
