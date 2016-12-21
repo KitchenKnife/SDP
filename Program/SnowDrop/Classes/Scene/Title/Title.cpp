@@ -57,14 +57,6 @@ bool CTitle::init()
 	//レイヤーに取り付け
 	this->addChild(pointerBackGround);
 
-	//cocos2d::Label* pointerTitleLabel = cocos2d::Label::createWithTTF("ライフ", FONT_FILE_LETLO, 62);
-	//初期位置の設定
-	//pointerTitleLabel->setPosition(320.0f, 360.0f);
-	//文字色の設定
-	//pointerTitleLabel->setColor(cocos2d::Color3B(255, 255, 255));
-	//レイヤーに取り付け
-	//this->addChild(pointerTitleLabel);
-
 	/*
 	* @desc		メニューアイテムの生成　ゲーム開始ボタン
 	* @param	通常の画像を設定

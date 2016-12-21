@@ -1,8 +1,14 @@
+//==========================================
+// ヘッダインクルード
+//==========================================
 #include "AppDelegate.h"
 #include "Scene/GameMain/GameMain.h"
 #include "Scene/Title/Title.h"
 #include "Constants.h"
 #include "cocos2d.h"
+// サウンド用
+#include "SimpleAudioEngine.h"
+
 
 USING_NS_CC;
 
@@ -103,8 +109,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
 
-    // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+
+	// if you use SimpleAudioEngine, it must be pause
+	// SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+
+
+	// BGM・SE一時停止
+	CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+	CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
@@ -113,4 +125,8 @@ void AppDelegate::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+
+	// BGM・SE再開
+	CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+	CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

@@ -16,8 +16,6 @@ enum class CONTROLLER_TYPE : int
 	GAMEPAD = 1, //ゲームパッド
 };
 
-
-
 /*
  *	入力タイプ
  */
@@ -82,10 +80,6 @@ public:
 	 */
 	virtual bool isKeyPressed( kInputType keyType_ ) ;
 } ;
-
-
-
-
 
 
 /*
