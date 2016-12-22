@@ -43,9 +43,9 @@ void CKeyboardInputFlag::clear() {
 *	@desc	キーが押されている時の反映
 *	@param	キーコード
 */
-void CKeyboardInputFlag::up(kInputType keyType_) {
+void CKeyboardInputFlag::up(int keyType_) {
 
-	switch (keyType_) {
+	switch ((kInputType)keyType_) {
 
 	case kInputType::UP: this->m_up = true; break;
 	case kInputType::DOWN: this->m_down = true; break;
@@ -69,8 +69,8 @@ void CKeyboardInputFlag::up(kInputType keyType_) {
 *	@desc	キーが離されている時の反映
 *	@param	キーコード
 */
-void CKeyboardInputFlag::down(kInputType keyType_) {
-	switch (keyType_) {
+void CKeyboardInputFlag::down(int keyType_) {
+	switch ((kInputType)keyType_) {
 	case kInputType::UP: this->m_up = false; break;
 	case kInputType::DOWN: this->m_down = false; break;
 	case kInputType::LEFT: this->m_left = false; break;
@@ -97,9 +97,9 @@ void CKeyboardInputFlag::down(kInputType keyType_) {
 *	@tips	入力のタイプによって変化
 *			キーボードタイプでは使用する必要はない
 */
-bool CKeyboardInputFlag::isKeyPressed(kInputType keyType_) {
+bool CKeyboardInputFlag::isKeyPressed(int keyType_) {
 
-	switch (keyType_) {
+	switch ((kInputType)keyType_) {
 	case kInputType::UP: return this->m_up; break;
 	case kInputType::DOWN: return this->m_down; break;
 	case kInputType::LEFT: return this->m_left; break;

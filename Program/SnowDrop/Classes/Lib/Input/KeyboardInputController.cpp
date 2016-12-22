@@ -40,7 +40,7 @@ CKeyboardInputController::~CKeyboardInputController(void)
 */
 bool CKeyboardInputController::getLeftMoveFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed(kInputType::LEFT);
+	return this->m_inputFlag.isKeyPressed((int)kInputType::LEFT);
 }
 
 /*
@@ -50,7 +50,7 @@ bool CKeyboardInputController::getLeftMoveFlag(void)
 */
 bool CKeyboardInputController::getRightMoveFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed(kInputType::RIGHT);
+	return this->m_inputFlag.isKeyPressed((int)kInputType::RIGHT);
 }
 
 /*
@@ -60,7 +60,7 @@ bool CKeyboardInputController::getRightMoveFlag(void)
 */
 bool CKeyboardInputController::getJumpFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed(kInputType::UP);
+	return this->m_inputFlag.isKeyPressed((int)kInputType::UP);
 }
 
 /*
@@ -70,7 +70,7 @@ bool CKeyboardInputController::getJumpFlag(void)
 */
 bool CKeyboardInputController::getAttackFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed(kInputType::Z);
+	return this->m_inputFlag.isKeyPressed((int)kInputType::Z);
 }
 
 /*
@@ -80,7 +80,7 @@ bool CKeyboardInputController::getAttackFlag(void)
 */
 bool CKeyboardInputController::getHolodHandsFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed(kInputType::X);
+	return this->m_inputFlag.isKeyPressed((int)kInputType::X);
 }
 
 /*
@@ -90,6 +90,26 @@ bool CKeyboardInputController::getHolodHandsFlag(void)
 */
 bool CKeyboardInputController::getHugFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed(kInputType::C);
+	return this->m_inputFlag.isKeyPressed((int)kInputType::C);
+}
+
+/*
+* @desc	ゲーム終了フラグ取得
+* @return true...入力あり　false...入力なし
+* @author Shinya Ueba
+*/
+bool CKeyboardInputController::getGameExitFlag(void)
+{
+	return this->m_inputFlag.isKeyPressed((int)kInputType::ESC);
+}
+
+
+/**
+* @desc 入力フラグインスタンスの取得
+* @return　 入力フラグインスタンス
+*/
+CInputFlag* CKeyboardInputController::getInputFlagInstance(void)
+{
+	return &this->m_inputFlag;
 }
 //EOF

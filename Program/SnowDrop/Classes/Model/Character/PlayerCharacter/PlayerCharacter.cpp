@@ -147,20 +147,30 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
  * @tips 移動処理で呼び出す
  */
 void  CPlayerCharacterBoy::inputFunc() {
+
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController(CONTROLLER_TYPE::KEYBORD);
+
+
 	//左へ移動（歩行）
-	if (inputflag.m_left == true) {
+	if (pointerInputController->getLeftMoveFlag())
+	{
 		this->m_pMove->m_accele.x = -0.5f;
 	}
 
 	//右へ移動（歩行）
-	if (inputflag.m_right == true) {
+	if (pointerInputController->getRightMoveFlag())
+	{
 		this->m_pMove->m_accele.x = 0.5f;
 	}
-	if (inputflag.m_right == false && inputflag.m_left == false) {
+
+	if (!pointerInputController->getRightMoveFlag() && 
+		!pointerInputController->getLeftMoveFlag())
+	{
 		this->m_pMove->m_accele.x = 0.0f;
 	}
 		
-	if (inputflag.m_up == true) {
+	if (pointerInputController->getJumpFlag() == true) 
+	{
 		//ジャンプを開始させる
 		(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
 	}

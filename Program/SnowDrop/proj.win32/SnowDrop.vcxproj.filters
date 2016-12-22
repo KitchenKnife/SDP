@@ -243,6 +243,9 @@
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputType.cpp">
       <Filter>src\Lib\Input</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Input\InputFlag.cpp">
+      <Filter>src\Lib\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -372,6 +375,9 @@
       <Filter>src\Lib\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputType.h">
+      <Filter>src\Lib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Input\InputFlag.h">
       <Filter>src\Lib\Input</Filter>
     </ClInclude>
   </ItemGroup>

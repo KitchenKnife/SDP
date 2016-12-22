@@ -8,7 +8,7 @@
 // 2016/12/18
 //						Author Shinya Ueba
 //==========================================
-
+#include "InputFlag.h"
 
 
 //==========================================
@@ -77,5 +77,19 @@ public:
 	* @author Shinya Ueba
 	*/
 	virtual bool getHugFlag(void) = 0;
+
+
+	/*
+	* @desc	ゲーム終了フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	virtual bool getGameExitFlag(void) = 0;
+
+	/**
+	* @desc 入力フラグインスタンスの取得
+	* @return　 入力フラグインスタンス
+	*/
+	virtual CInputFlag* getInputFlagInstance(void) = 0;
 };
 //EOF

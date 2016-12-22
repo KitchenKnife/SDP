@@ -87,5 +87,19 @@ public:
 	* @author Shinya Ueba
 	*/
 	bool getHugFlag(void)override;
+
+	/*
+	* @desc	ゲーム終了フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	bool getGameExitFlag(void)override;
+
+
+	/**
+	* @desc 入力フラグインスタンスの取得
+	* @return　 入力フラグインスタンス
+	*/
+	CInputFlag* getInputFlagInstance(void)override;
 };
 //EOF

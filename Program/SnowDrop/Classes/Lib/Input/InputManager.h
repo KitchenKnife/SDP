@@ -2,6 +2,7 @@
 * InputManager.h
 *
 *	2016/11/07	Osumi
+*	2016/12/23	Shinya Ueba			
 *
 */
 #pragma once
@@ -45,8 +46,6 @@ public:
 	~CInputManager() ;
 	
 private:
-	// 入力フラグ
-	CKeyboardInputFlag* m_pInputFlag = NULL ;
 
 	//入力コントローラーデータ群
 	std::vector<CInputController* >* m_pInputControllers = NULL;
@@ -73,32 +72,19 @@ public:
 	 */
 	void onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode_ ) ;
 	
-	/**
-	 *	@desc	入力フラグの設定
-	 *	@param	入力フラグ
-	 */
-	void setInputFlag( CKeyboardInputFlag* pInputFlag_ ) ;
-	
-	/**
-	 *	@desc	入力フラグの削除
-	 */
-	void removeInputFlag() ;
-	
+
 	/**
 	 *	@desc	入力フラグのクリア
 	 */
-	void clearInputFlag() ;
-	
+	void clearInputFlag(CONTROLLER_TYPE type) ;
+
 	/**
-	 *	@desc	入力フラグの取得
-	 *	@return	入力フラグ
-	 */
-	CKeyboardInputFlag* getInputFlag() ;
+	*	@desc	入力コントローラーの取得
+	*	@param	コントローラータイプ
+	*	@return	入力コントローラー
+	*/
+	CInputController* getInputController(CONTROLLER_TYPE type);
 } ;
-
-
-// 入力フラグマクロ
-#define inputflag (*CInputManager::getInstance()->getInputFlag())
 
 //EOF
 
