@@ -156,7 +156,9 @@ void  CPlayerCharacterBoy::inputFunc() {
 	if (inputflag.m_right == true) {
 		this->m_pMove->m_accele.x = 0.5f;
 	}
-
+	if (inputflag.m_right == false && inputflag.m_left == false) {
+		this->m_pMove->m_accele.x = 0.0f;
+	}
 		
 	if (inputflag.m_up == true) {
 		//ジャンプを開始させる

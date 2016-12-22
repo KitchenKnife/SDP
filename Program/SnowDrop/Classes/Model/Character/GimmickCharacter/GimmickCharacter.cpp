@@ -12,7 +12,7 @@
 //コンストラクタ
 CGimmickCharacter::CGimmickCharacter() {
 	//キャラクタータイプ
-	this->m_charaType = CHARACTER_TYPE::GIMMICK;
+	this->m_charaType = (int)CHARACTER_TYPE::GIMMICK;
 }
 
 //デストラクタ
@@ -52,7 +52,7 @@ void CGimmickCharacter::moveFunc() {
 void CGimmickCharacter::animationFunc() {
 
 	//アニメーション
-	(*this->m_pAnimations)[m_state]->update();
+	(*this->m_pAnimations)[0]->update();
 }
 
 //衝突判定処理
@@ -94,7 +94,7 @@ void CGimmickCharacter::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[m_state]->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[0]->getCurrentChip());
 
 }
 

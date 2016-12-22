@@ -10,12 +10,8 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#include "Model/Character/Character.h"
 #include "Model/Map/Map.h"
 #include "Model/Character/EnemyCharacter/EnemyCharacter.h"
-
-//プレイヤークラスの前方宣言
-class CEnemyCharacter;
 
 //================================================
 // キャラクターパーツ製造工場
@@ -32,8 +28,6 @@ public:
 	virtual std::vector<CAction* >* getActions()override;
 	virtual CBody* getBody()override;
 	virtual std::vector<CCollisionArea* >* getCollisionAreas()override;
-
-	virtual CStatus* getStatus()override;
 
 };
 
@@ -63,8 +57,7 @@ protected:
 	virtual void settingBody(CEnemyCharacter* pCharacter) = 0;
 	//衝突判定空間
 	virtual void settingCollisionArea(CEnemyCharacter* pCharacter) = 0;
-	//ステータスの設定
-	virtual void settingStatus(CEnemyCharacter* pCharacter) = 0;
+
 	
 
 	//初期設定もろもろ
@@ -92,8 +85,6 @@ public:
 		this->settingBody(pCharacter);
 		//衝突判定空間
 		this->settingCollisionArea(pCharacter);
-		//ステータスの設定
-		this->settingStatus(pCharacter);
 		//初期化もろもろ
 		this->settingInitialize(pCharacter);
 
@@ -127,7 +118,6 @@ protected:
 		pEnemy->m_pActions = pEnemyPartsFactory.getActions();
 		pEnemy->m_pBody = pEnemyPartsFactory.getBody();
 		pEnemy->m_pCollisionAreas = pEnemyPartsFactory.getCollisionAreas();
-		pEnemy->m_pStatus = pEnemyPartsFactory.getStatus();
 
 		//　敵返す
 		return pEnemy;
@@ -156,8 +146,7 @@ public:
 	void settingBody(CEnemyCharacter* pCharacter)override;
 	//衝突判定空間
 	void settingCollisionArea(CEnemyCharacter* pCharacter)override;
-	//ステータスの設定
-	void settingStatus(CEnemyCharacter* pCharacter)override;
+
 
 
 	//初期設定もろもろ
@@ -187,8 +176,7 @@ public:
 	void settingBody(CEnemyCharacter* pCharacter)override;
 	//衝突判定空間
 	void settingCollisionArea(CEnemyCharacter* pCharacter)override;
-	//ステータスの設定
-	void settingStatus(CEnemyCharacter* pCharacter)override;
+
 
 
 	//初期設定もろもろ
@@ -212,8 +200,8 @@ private:
 	//コンストラクタ
 	CEnemyFactoryManager() {
 
-		m_factories[ENEMY_TYPE::MAIDEAD] = new CBaseEnemyFactory();
-		m_factories[ENEMY_TYPE::BAT] = new CBatFactory();
+		m_factories.push_back(new CBaseEnemyFactory());
+		m_factories.push_back(new CBatFactory());
 	}
 
 	//共有のインスタンス
@@ -224,11 +212,8 @@ public:
 	~CEnemyFactoryManager() {
 		SAFE_DELETE(m_pEnemyFactoryManager);
 
-		std::map<ENEMY_TYPE, CEnemyFactory*>::iterator itr = this->m_factories.begin();
-
-		while (itr != this->m_factories.end()) {
-			SAFE_DELETE(itr->second);
-			itr++;
+		for (CEnemyFactory* pFactory : this->m_factories) {
+			SAFE_DELETE(pFactory);
 		}
 
 		this->m_factories.clear();
@@ -239,13 +224,13 @@ public:
 	static CEnemyFactoryManager* getInstance();
 
 	//敵工場群
-	std::map<ENEMY_TYPE, CEnemyFactory*> m_factories;
+	std::vector<CEnemyFactory*> m_factories;
 
 
 	//敵工場のcreate()を呼び出す
 	CEnemyCharacter* create(Point pos, int type) {
 
-			return this->m_factories[(ENEMY_TYPE)type]->create(pos.x, pos.y);
+			return this->m_factories[type]->create(pos.x, pos.y);
 	}
 
 };

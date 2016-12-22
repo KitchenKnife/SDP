@@ -24,10 +24,10 @@ public:
 	// 必須関数の列挙
 	//================================================
 	//コンストラクタ
-	CEffect(){}
+	CEffect();
 
 	//デストラクタ
-	virtual ~CEffect(){}
+	virtual ~CEffect();
 
 	//初期化処理
 	virtual bool init()override;
@@ -61,12 +61,6 @@ protected:
 	virtual void applyFunc();
 };
 
-//================================================
-// 指定したキャラクターに追随するエフェクトの基底クラス
-//================================================
-class CEffectFollowCharacter : public CEffect {
-	
-};
 
 
 //=============================================
@@ -81,7 +75,7 @@ private:
 	static CEffectAggregate* m_pSareedAggregate;
 
 	//コンストラクタ
-	CEffectAggregate(){}
+	CEffectAggregate();
 
 public:
 	//デストラクタ

@@ -172,7 +172,7 @@ bool CGameMain::init() {
 
 
 	//‰Šú‰æ–Ê‚É‚¢‚é“G‚Ì¶¬
-	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
+	//CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
 	//‘S‘Ì‚ÌŠg‘å
 	this->setScale(SCALE_MAIN);
 	//Šg‘å‚É”º‚¤‰æ–ÊˆÊ’u‚ÌÝ’è

@@ -54,10 +54,6 @@ std::vector<CCollisionArea* >* CEnemeyPartsFactory::getCollisionAreas() {
 	return pCollisionAreas;
 }
 
-CStatus* CEnemeyPartsFactory::getStatus() {
-	// ステータスの作成
-	return new CStatus();
-}
 
 //================================================
 // メイド工場
@@ -81,35 +77,8 @@ void CBaseEnemyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 	//直立アニメーションの設定
 	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//歩行アニメーションの設定（右）
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//歩行アニメーションの設定(左)
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//ダメージを受け時のアニメーション設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//落ちているときのアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//打撃攻撃中のアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(60, false));
-
-
 	//直立アニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
-
-	//歩行アニメーション(右)
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(64, 0, 64, 64));
-
-	//歩行アニメーション(左)
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(64, 0, 64, 64));
-
-	//落ちている時のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::FALING]->addChipData(new CChip(128, 0, 64, 64));
-
-	//打撃攻撃中のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(128, 0, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(192, 0, 64, 64));
 
 }
 
@@ -121,10 +90,7 @@ void CBaseEnemyFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 }
 
 void CBaseEnemyFactory::settingActions(CEnemyCharacter* pCharacter) {
-	// 攻撃の設定
-	pCharacter->m_pActions->push_back(new CEnemyBrowAttack());
-	//追跡の設定
-	pCharacter->m_pActions->push_back(new CActionPursuitGirlPriority());
+
 }
 
 void CBaseEnemyFactory::settingBody(CEnemyCharacter* pCharacter) {
@@ -186,15 +152,11 @@ void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 }
 
-void CBaseEnemyFactory::settingStatus(CEnemyCharacter* pCharacter) {
-
-	pCharacter->m_pStatus->set(3, 3, 1);
-}
 
 
 void CBaseEnemyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	//状態の設定
-	pCharacter->m_state = (int)CEnemyCharacter::STATE::FALING;
+	//pCharacter->m_state = (int)CEnemyCharacter::STATE::FALING;
 
 	//有効フラグを立てる
 	pCharacter->m_activeFlag = true;
@@ -228,37 +190,8 @@ void CBatFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 	//直立アニメーションの設定
 	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//歩行アニメーションの設定（右）
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//歩行アニメーションの設定（左）
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(10, true));
-	//ダメージを受け時のアニメーション設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//落ちているときのアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
-	//打撃攻撃中のアニメーション
-	pCharacter->m_pAnimations->push_back(new CChipListAnimation(60, false));
-
-
-
 	//直立アニメーションに設定する為のチップデータの設定
 	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
-
-	// 歩行　6枚分
-	for (int i = 0; i < 6; i++) {
-		//歩行アニメーション（右） 
-		(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_RIGHT]->addChipData(new CChip(i * 64, 64, 64, 64));
-
-		//歩行アニメーション（左）
-		(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::WALK_LEFT]->addChipData(new CChip(i * 64, 0, 64, 64));
-
-	}
-	//落ちている時のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::FALING]->addChipData(new CChip(192, 64, 64, 64));
-
-	//打撃攻撃中のアニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(128, 64, 64, 64));
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::ATTACK]->addChipData(new CChip(192, 64, 64, 64));
 
 }
 
@@ -267,10 +200,7 @@ void CBatFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 }
 
 void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
-	// 攻撃の設定
-	pCharacter->m_pActions->push_back(new CEnemyBrowAttack());
-	//追跡の設定
-	pCharacter->m_pActions->push_back(new CActionPursuitGirlPriority());
+	
 
 
 }
@@ -336,15 +266,11 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 }
 
-void CBatFactory::settingStatus(CEnemyCharacter* pCharacter) {
-
-	pCharacter->m_pStatus->set(3, 3, 1);
-}
 
 
 void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	//状態の設定
-	pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
+	//pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
 
 	//有効フラグを立てる
 	pCharacter->m_activeFlag = true;

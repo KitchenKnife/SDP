@@ -1,7 +1,3 @@
-
-
-
-
 //================================================
 //追跡	
 //================================================
@@ -20,7 +16,7 @@
 /*
 * @desc 更新処理
 * @param 追跡を行うキャラクターのアドレス
-*/
+*
 void CEnemyActionPursuit::update(CCharacter* pChara) {
 
 	if (this->m_isPursuiting == true) {
@@ -68,7 +64,7 @@ void CEnemyActionPursuit::update(CCharacter* pChara) {
 /*
 *	@desc　近いプレイヤー優先の追跡
 *	@param 追跡する敵のアドレス
-*/
+*
 void CActionPursuitNear::pursuit(CCharacter* pChara) {
 
 
@@ -117,7 +113,7 @@ void CActionPursuitNear::pursuit(CCharacter* pChara) {
 /*
 *	@desc　追跡
 *	@param 追跡する敵のアドレス
-*/
+*//*
 void CActionPursuitGirlPriority::pursuit(CCharacter* pChara) {
 
 
@@ -164,7 +160,7 @@ void CActionPursuitGirlPriority::pursuit(CCharacter* pChara) {
 /*
 *	@desc　追跡
 *	@param 追跡する敵のアドレス
-*/
+*
 void CActionPursuitGirlOnly::pursuit(CCharacter* pChara) {
 
 	// 敵とプレイヤーの距離を測る
@@ -240,3 +236,4 @@ void CActionPursuitDirection::pursuit(CCharacter* pChara) {
 
 	
 }
+*/

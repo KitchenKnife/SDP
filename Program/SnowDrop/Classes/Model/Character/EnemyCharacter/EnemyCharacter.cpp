@@ -19,14 +19,10 @@
 //	敵キャラクターのメンバ関数のコードの追加はここから
 //================================================
 //コンストラクタ
-CEnemyCharacter::CEnemyCharacter() {
-
-}
+CEnemyCharacter::CEnemyCharacter() {}
 
 //デストラクタ
-CEnemyCharacter::~CEnemyCharacter() {
-
-}
+CEnemyCharacter::~CEnemyCharacter() {}
 
 //初期化処理
 bool CEnemyCharacter::init() {
@@ -37,33 +33,6 @@ bool CEnemyCharacter::init() {
 	}
 
 	return true;
-}
-
-/*
-* @desc	初期化処理
-* @param　初期化位置X
-* @param　初期化位置Y
-*/
-bool CEnemyCharacter::init(float posX, float posY) {
-
-	//キャラクタークラスの初期化
-	if (CCharacter::init() == false) {
-		CCLOG("キャラクターの初期化に失敗");
-		return false;
-	}
-
-	return true;
-}
-
-// アクション処理
-void CEnemyCharacter::actionFunc(CCharacter* pChara) {
-
-	if (this->m_state != (int)STATE::ATTACK) {
-
-		// 打撃攻撃
-		//(*this->m_pActions)[(int)ACTION::BLOW_ATTACK]->start(pChara->m_pStatus);
-
-	}
 }
 
 
@@ -86,8 +55,7 @@ void CEnemyCharacter::moveFunc() {
 //アニメーション処理
 void CEnemyCharacter::animationFunc() {
 
-	//アニメーション
-	(*this->m_pAnimations)[m_state]->update();
+	
 }
 
 /**
@@ -96,47 +64,7 @@ void CEnemyCharacter::animationFunc() {
 */
 void CEnemyCharacter::checkState() {
 
-	//向きを判定
-	if (this->m_pMove->m_vel.x != 0) {
-		if (this->m_pMove->m_vel.x > 0) {
-			//右向きに設定
-			this->m_state = (int)STATE::WALK_RIGHT;
-		}
-		else {
-			//左向きに設定
-			this->m_state = (int)STATE::WALK_LEFT;
-		}
-	}
 
-	//状態の判定
-	if (this->m_pMove->m_vel.y > 0.0f) {
-
-		//ｙ軸の速度がプラスということはジャンプしている状態
-		m_state = (int)STATE::JUMPING;
-
-	}
-	else if (this->m_pMove->m_vel.y < 0.0f) {
-		//ｙ軸の速度がマイナスといことは落ちている状態
-		m_state = (int)STATE::FALING;
-	}
-	else if ((*this->m_pActions)[(int)ACTION::ATTACK]->getActionFlag()) {
-	
-		// 打撃攻撃中
-		m_state = (int)STATE::ATTACK;
-
-	}
-	else if (this->m_pMove->m_vel.x > 0.0f) {
-		//右に歩いている
-		m_state = (int)STATE::WALK_RIGHT;
-	}
-	else if (this->m_pMove->m_vel.x < 0.0f) {
-		//左に歩いている
-		m_state = (int)STATE::WALK_LEFT;
-	}
-	else {
-		//立っている
-		m_state = (int)STATE::STAND;
-	}
 
 
 }
@@ -148,15 +76,15 @@ void CEnemyCharacter::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[m_state]->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[0]->getCurrentChip());
 
 }
 
 /**
-* @desc キャラクター1体との衝突判定処理
-* @param キャラクターのアドレス
-* @return true...衝突した
-*/
+ * @desc キャラクター1体との衝突判定処理
+ * @param キャラクターのアドレス
+ * @return true...衝突した
+ */
 bool CEnemyCharacter::collision(CCharacter* pChara) {
 
 	//プレイヤーと敵の矩形を生成
@@ -180,5 +108,3 @@ void CEnemyCharacter::collisionAll() {
 		pArea->collision(this);
 	}
 }
-
-

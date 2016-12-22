@@ -15,6 +15,7 @@
 * @desc 更新処理
 * @param ダメージを受けたキャラクターのアドレス
 */
+/*
 void CEnemyActionDamage::update(CCharacter* pChara) {
 
 	if (this->m_isDamaging == true) {
@@ -45,7 +46,7 @@ void CEnemyActionDamage::update(CCharacter* pChara) {
 
 }
 
-
+*/
 
 //===================================================================
 // ダメージを受けて停止するクラス

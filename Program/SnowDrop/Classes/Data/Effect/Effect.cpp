@@ -1,12 +1,12 @@
-
-#include "Data/Effect/Effect.h"
-
 /*
  * Effect.cpp
  *
  *	2016/11/25	Osumi
  *
  */
+#include "Data/Effect/Effect.h"
+
+
 
 //================================================
 // 

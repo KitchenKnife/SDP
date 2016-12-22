@@ -206,7 +206,7 @@ void CDamageBlockFactory::settingColllisionArea(CGimmickCharacter* pCharacter) {
 void CDamageBlockFactory::settingInitialize(CGimmickCharacter* pCharacter) {
 
 	//ó‘Ô‚ÌÝ’è
-	pCharacter->m_state = 0;
+	//pCharacter->m_state = 0;
 
 	//”­ŽË•ûŒü‚ðÝ’è
 	//pCharacter->m_shotVector = vec;
