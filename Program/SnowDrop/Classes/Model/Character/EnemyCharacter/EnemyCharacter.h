@@ -81,19 +81,7 @@ public:
 	*/
 	//CREATE_FUNC(CEnemyCharacter);
 	
-	static CEnemyCharacter* create() {
-		CEnemyCharacter* pRet = new(std::nothrow) CEnemyCharacter();
-	
-		if (pRet && pRet->init()) {
-			pRet->autorelease();
-			return pRet;
-		}
-		else {
-			delete pRet;
-			pRet = NULL;
-			return NULL;
-		}
-	}
+
 	
 
 	/**
@@ -126,26 +114,7 @@ public:
 
 
 
-	//================================================
-	// 
-	//	定数に関するコードの追加はここから
-	//		
-	//		
-	//================================================
 
-	//敵の状態(アニメーション管理)
-	enum class STATE :int {
-		STAND = 0,
-		JUMPING = 0,
-		WALK_RIGHT = 1,
-		WALK_LEFT = 2,
-		FALING = 3,
-		ATTACK = 4,
-		PURSUIT = 5,
-		IDLE = 6,
-		DAMAGE = 7,
-
-	};
 
 	//敵が行えるアクション
 	enum class ACTION :int {

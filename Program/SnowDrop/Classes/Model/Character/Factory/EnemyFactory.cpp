@@ -14,12 +14,6 @@
 //	（AbstractFactory）
 //================================================
 
-std::map<CEnemyCharacter::STATE, CAnimation*> CEnemeyPartsFactory::getAnimations() {
-	//アニメーションデータ群の作成
-	std::map<CEnemyCharacter::STATE, CAnimation*> pAnimations;
-
-	return pAnimations;
-}
 
 CMove* CEnemeyPartsFactory::getMove() {
 	//移動データの作成
@@ -34,13 +28,20 @@ std::vector<CPhysical* >* CEnemeyPartsFactory::getPhysicals() {
 	return pPhysicals;
 }
 
-
-std::map<CEnemyCharacter::STATE, CAction*> CEnemeyPartsFactory::getActions(){
-	//行えるアクション群を作成
-	std::map<CEnemyCharacter::STATE, CAction*> pActions;
+std::vector<CAction* >* CEnemeyPartsFactory::getActions() {
+	//適用させる物理演算作成
+	std::vector<CAction* >* pActions = new std::vector<CAction*>();
 
 	return pActions;
 }
+
+std::vector<CAnimation* >* CEnemeyPartsFactory::getAnimations() {
+	//適用させる物理演算作成
+	std::vector<CAnimation* >* pAnimations = new std::vector<CAnimation*>;
+
+	return pAnimations;
+}
+
 
 CBody* CEnemeyPartsFactory::getBody() {
 	//実体データの作成
@@ -87,7 +88,7 @@ void CMaideadFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 
 }
 
-void CBaseEnemyFactory::settingActions(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingActions(CEnemyCharacter* pCharacter) {
 
 }
 
@@ -153,7 +154,7 @@ void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 
 
-void CBaseEnemyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	//状態の設定
 	//pCharacter->m_state = (int)CEnemyCharacter::STATE::FALING;
 
@@ -203,13 +204,6 @@ void CBatFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
 	
 
-
-	//待機アクションの設定
-	pCharacter->m_pActions[CEnemyCharacter::STATE::STAY] = (new CEnemyActionStay(CEnemyAction::TARGET_TYPE::GIRL));
-	//さまよいアクションの設定
-	pCharacter->m_pActions[CEnemyCharacter::STATE::WANDERING] = (new CEnemyActionReturnLanchPos(CEnemyAction::TARGET_TYPE::GIRL, pCharacter));
-	//追跡アクションの設定
-	pCharacter->m_pActions[CEnemyCharacter::STATE::CHASE] = (new CEnemyActionChase(true));
 }
 
 void CBatFactory::settingBody(CEnemyCharacter* pCharacter) {
@@ -277,8 +271,7 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 
-	//状態の設定
-	pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
+	
 
 	//有効フラグを立てる
 	pCharacter->m_activeFlag = true;

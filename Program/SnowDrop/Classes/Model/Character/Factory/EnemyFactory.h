@@ -18,17 +18,15 @@
 // キャラクターパーツ製造工場
 //	（AbstractFactory）
 //================================================
-class CEnemeyPartsFactory /*:public CCharacterPartsFactory*/ {
+class CEnemeyPartsFactory :public CCharacterPartsFactory {
 public:
 
 	virtual ~CEnemeyPartsFactory() {}
 
-	//virtual std::vector<CAnimation* >* getAnimations()override;
-	virtual std::map<CEnemyCharacter::STATE, CAnimation*> getAnimations();
+	virtual std::vector<CAnimation* >* getAnimations()override;
 	virtual CMove* getMove();
 	virtual std::vector<CPhysical* >* getPhysicals();
-	//virtual std::vector<CAction* >* getActions()override;
-	virtual std::map<CEnemyCharacter::STATE, CAction*> getActions();
+	virtual std::vector<CAction* >* getActions()override;
 	virtual CBody* getBody();
 	virtual std::vector<CCollisionArea* >* getCollisionAreas();
 
@@ -202,7 +200,7 @@ private:
 	//コンストラクタ
 	CEnemyFactoryManager() {
 
-		m_factories.push_back(new CBaseEnemyFactory());
+		m_factories.push_back(new CMaideadFactory());
 		m_factories.push_back(new CBatFactory());
 	}
 
