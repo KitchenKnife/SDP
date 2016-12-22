@@ -39,6 +39,10 @@ public:
 
 	}
 
+	//ƒXƒs[ƒh‚ðÝ’è‚·‚é
+	void setSpeed(float speed) {
+		this->m_speed = speed;
+	}
 
 	// ‚g‚o‚ÌŽæ“¾
 	int getHp() {

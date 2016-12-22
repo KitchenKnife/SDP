@@ -24,6 +24,16 @@ CEnemyCharacter::CEnemyCharacter() {}
 //デストラクタ
 CEnemyCharacter::~CEnemyCharacter() {}
 
+	//アクション関数群の解放
+	std::map<STATE, CAction*>::iterator actItr = this->m_pActions.begin();
+	while (actItr != this->m_pActions.end()) {
+		SAFE_DELETE(actItr->second);
+		actItr++;
+	}
+	this->m_pActions.clear();
+
+}
+
 //初期化処理
 bool CEnemyCharacter::init() {
 
@@ -39,10 +49,15 @@ bool CEnemyCharacter::init() {
 //移動処理
 void CEnemyCharacter::moveFunc() {
 	// アクション
+	/*
 	for (CAction* pAction : (*m_pActions)) {
 		pAction->update(this);
 	}
-	
+	*/
+
+	//アクション処理
+	(this->m_pActions)[this->m_state]->update(this);
+
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals)) {
 		pPhysical->update(this->m_pMove);

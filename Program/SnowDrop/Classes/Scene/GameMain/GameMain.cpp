@@ -167,6 +167,9 @@ bool CGameMain::init() {
 	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(playerGirl);
+
+	playerGirl->m_pMove->m_pos.set(1200,500);
+
 	//取り付け
 	this->m_pMainLayer->addChild(playerGirl);
 
@@ -177,6 +180,13 @@ bool CGameMain::init() {
 	this->setScale(SCALE_MAIN);
 	//拡大に伴う画面位置の設定
 	this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
+
+	//BGMの読み込み
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic(SOUND_FILE_BGM_STAGE_FIRST);
+	//BGMの再生
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(SOUND_FILE_BGM_STAGE_FIRST, true);
+
+
 
 	//=========================================================================
 	//
@@ -256,7 +266,6 @@ void CGameMain::update( float deltaTime_ ) {
 	//=========================================================================
 
 
-
 	//=========================================================================
 	//	画面のスクロール
 	//=========================================================================
@@ -272,7 +281,4 @@ void CGameMain::update( float deltaTime_ ) {
 	//	ここまでに更新処理のコードを追加
 	//
 	//=========================================================================
-
-
-
 }

@@ -2,7 +2,8 @@
 /*
 * EnemyFactory.h
 *
-*	2016/11/07	Yamasaki
+*	2016/12/21	Yamasaki
+*	test
 *
 */
 
@@ -17,17 +18,19 @@
 // キャラクターパーツ製造工場
 //	（AbstractFactory）
 //================================================
-class CEnemeyPartsFactory :public CCharacterPartsFactory {
+class CEnemeyPartsFactory /*:public CCharacterPartsFactory*/ {
 public:
 
 	virtual ~CEnemeyPartsFactory() {}
 
-	virtual std::vector<CAnimation* >* getAnimations()override;
-	virtual CMove* getMove()override;
-	virtual std::vector<CPhysical* >* getPhysicals()override;
-	virtual std::vector<CAction* >* getActions()override;
-	virtual CBody* getBody()override;
-	virtual std::vector<CCollisionArea* >* getCollisionAreas()override;
+	//virtual std::vector<CAnimation* >* getAnimations()override;
+	virtual std::map<CEnemyCharacter::STATE, CAnimation*> getAnimations();
+	virtual CMove* getMove();
+	virtual std::vector<CPhysical* >* getPhysicals();
+	//virtual std::vector<CAction* >* getActions()override;
+	virtual std::map<CEnemyCharacter::STATE, CAction*> getActions();
+	virtual CBody* getBody();
+	virtual std::vector<CCollisionArea* >* getCollisionAreas();
 
 };
 
@@ -125,10 +128,9 @@ protected:
 };
 
 //================================================
-// キャラクターのパーツのセッティングを担当するクラス
-//	（FactoryMethod）
+// メイデッド工場
 //================================================
-class CBaseEnemyFactory :public CEnemyCreateFactory {
+class CMaideadFactory :public CEnemyCreateFactory {
 public:
 
 	//各々のパーツのセッティング
@@ -156,7 +158,7 @@ public:
 
 
 //================================================
-//　コウモリ
+//　コウモリ工場
 //================================================
 class CBatFactory :public CEnemyCreateFactory {
 public:

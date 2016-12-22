@@ -8,6 +8,9 @@
 
 #include "cocos2d.h"
 #include "Constants.h"
+#include "KeyboardInputController.h"
+#include "GamepadInputController.h"
+
 
 //コントローラータイプ
 enum class CONTROLLER_TYPE : int
@@ -15,76 +18,6 @@ enum class CONTROLLER_TYPE : int
 	KEYBORD = 0, //キーボード
 	GAMEPAD = 1, //ゲームパッド
 };
-
-
-
-/*
- *	入力タイプ
- */
-enum class kInputType : int {
-	NONE	= -1,
-	UP		= 0,
-	DOWN	= 1,
-	LEFT	= 2,
-	RIGHT	= 3,
-	ESC		= 4,
-	SPACE	= 5,
-	Z		= 6,
-	X		= 7,
-	C		= 8,
-	A		= 9,
-	S		= 10,
-	D		= 11,
-} ;
-
-/*
- *	キーボード用入力フラグ
- */
-class CInputFlag {
-public:
-	bool m_up = false ;		// 上キー
-	bool m_down = false ;	// 下キー
-	bool m_left = false ;	// 左キー
-	bool m_right = false ;	// 右キー
-	bool m_esc = false ;	// ESC キー
-	bool m_space = false ;	// スペースキー
-	
-	bool m_z = false ;		// z キー
-	bool m_x = false ;		// x キー
-	bool m_c = false ;		// c キー
-	
-	bool m_a = false ;		// a キー
-	bool m_s = false ;		// s キー
-	bool m_d = false ;		// d キー
-
-	/**
-	 *	@desc	値のクリア
-	 */
-	virtual void clear() ;
-	
-	/**
-	 *	@desc	キーのフラグを上げる ( フラグアップ )
-	 *	@param	キーコード
-	 */
-	virtual void up( kInputType keyType_ ) ;
-	/**
-	 *	@desc	キーのフラグを下げる ( フラグダウン )
-	 *	@praram	キーコード
-	 */
-	virtual void down( kInputType keyType_ ) ;
-	
-	/**
-	 *	@desc	指定したキーが押されているかどうかを取得
-	 *	@param	キータイプ
-	 *	@return	true...押されている
-	 *	@tips	入力のタイプによって変化
-	 *			キーボードタイプでは使用する必要はない
-	 */
-	virtual bool isKeyPressed( kInputType keyType_ ) ;
-} ;
-
-
-
 
 
 
@@ -113,7 +46,10 @@ public:
 	
 private:
 	// 入力フラグ
-	CInputFlag* m_pInputFlag = NULL ;
+	CKeyboardInputFlag* m_pInputFlag = NULL ;
+
+	//入力コントローラーデータ群
+	std::vector<CInputController* >* m_pInputControllers = NULL;
 	
 public:
 	/**
@@ -141,7 +77,7 @@ public:
 	 *	@desc	入力フラグの設定
 	 *	@param	入力フラグ
 	 */
-	void setInputFlag( CInputFlag* pInputFlag_ ) ;
+	void setInputFlag( CKeyboardInputFlag* pInputFlag_ ) ;
 	
 	/**
 	 *	@desc	入力フラグの削除
@@ -157,7 +93,7 @@ public:
 	 *	@desc	入力フラグの取得
 	 *	@return	入力フラグ
 	 */
-	CInputFlag* getInputFlag() ;
+	CKeyboardInputFlag* getInputFlag() ;
 } ;
 
 

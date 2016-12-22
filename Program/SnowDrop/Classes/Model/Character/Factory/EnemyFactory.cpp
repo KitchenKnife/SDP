@@ -14,9 +14,9 @@
 //	（AbstractFactory）
 //================================================
 
-std::vector<CAnimation* >* CEnemeyPartsFactory::getAnimations() {
+std::map<CEnemyCharacter::STATE, CAnimation*> CEnemeyPartsFactory::getAnimations() {
 	//アニメーションデータ群の作成
-	std::vector<CAnimation*>* pAnimations = new std::vector<CAnimation*>;
+	std::map<CEnemyCharacter::STATE, CAnimation*> pAnimations;
 
 	return pAnimations;
 }
@@ -35,9 +35,9 @@ std::vector<CPhysical* >* CEnemeyPartsFactory::getPhysicals() {
 }
 
 
-std::vector<CAction* >* CEnemeyPartsFactory::getActions() {
+std::map<CEnemyCharacter::STATE, CAction*> CEnemeyPartsFactory::getActions(){
 	//行えるアクション群を作成
-	std::vector<CAction* >* pActions = new std::vector<CAction*>();
+	std::map<CEnemyCharacter::STATE, CAction*> pActions;
 
 	return pActions;
 }
@@ -56,23 +56,21 @@ std::vector<CCollisionArea* >* CEnemeyPartsFactory::getCollisionAreas() {
 
 
 //================================================
-// メイド工場
+// メイデッド工場
 //================================================
-void CBaseEnemyFactory::settingMove(CEnemyCharacter* pCharacter, float posX, float posY) {
+void CMaideadFactory::settingMove(CEnemyCharacter* pCharacter, float posX, float posY) {
 
 	//初期位置の設定
 	pCharacter->m_pMove->m_pos.set(posX,posY);
 	// 初期速度
 	pCharacter->m_pMove->m_vel.set(-1.0f, 0.0f);
-
 }
-void CBaseEnemyFactory::settingTexture(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingTexture(CEnemyCharacter* pCharacter) {
 	//テクスチャの設定
-	pCharacter->setTexture(IMAGE_ENEMY);
-
+	pCharacter->setTexture(IMAGE_MEIDEAD);
 }
 
-void CBaseEnemyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 
 	//直立アニメーションの設定
@@ -82,7 +80,7 @@ void CBaseEnemyFactory::settingAnimations(CEnemyCharacter* pCharacter) {
 
 }
 
-void CBaseEnemyFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
 
 	// 歩行キャラには重力つける
 	pCharacter->m_pPhysicals->push_back(new CPhysicalGravity());
@@ -93,13 +91,14 @@ void CBaseEnemyFactory::settingActions(CEnemyCharacter* pCharacter) {
 
 }
 
-void CBaseEnemyFactory::settingBody(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingBody(CEnemyCharacter* pCharacter) {
 
 	pCharacter->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
+	
 }
 
 //衝突判定空間の設定
-void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//画面端衝突空間の生成
 	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
@@ -135,16 +134,16 @@ void CBaseEnemyFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 	//基準点の設定
 	for (int i = 1; i < 4; i++) {
 		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(64 - i * 16 , -32)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(32 - i *4 , -32)));
 
 		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(64 - i * 16, 32)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(32 - i * 4, 32)));
 
 		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32,64 - i * 16)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32,32 - i *4)));
 
 		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32,64 - i * 16)));
+		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32,32 - i *4)));
 	}
 
 	//画面端の衝突判定を取り付ける
@@ -170,7 +169,7 @@ void CBaseEnemyFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 }
 
 //================================================
-// 飛行キャラのパーツのセッティングを担当するクラス
+// コウモリ工場
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
@@ -178,8 +177,10 @@ void CBatFactory::settingMove(CEnemyCharacter* pCharacter,float x, float y) {
 
 	//初期位置の設定
 	pCharacter->m_pMove->m_pos.set(x, y);
-
+	// 初期速度
+	pCharacter->m_pMove->m_vel.set(0.0f, 0.0f);
 }
+
 void CBatFactory::settingTexture(CEnemyCharacter* pCharacter) {
 	//テクスチャの設定
 	pCharacter->setTexture(IMAGE_BAT);
@@ -203,6 +204,12 @@ void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
 	
 
 
+	//待機アクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::STAY] = (new CEnemyActionStay(CEnemyAction::TARGET_TYPE::GIRL));
+	//さまよいアクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::WANDERING] = (new CEnemyActionReturnLanchPos(CEnemyAction::TARGET_TYPE::GIRL, pCharacter));
+	//追跡アクションの設定
+	pCharacter->m_pActions[CEnemyCharacter::STATE::CHASE] = (new CEnemyActionChase(true));
 }
 
 void CBatFactory::settingBody(CEnemyCharacter* pCharacter) {
@@ -223,9 +230,9 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//画面端の衝突判定空間に領域を設定
 	//画面端の領域を設定
-	pEndOfScreenArea->addTerritory(pEndOfScreenBottomTerritory);
+	//pEndOfScreenArea->addTerritory(pEndOfScreenBottomTerritory);
 	//画面左端領域の生成と取り付け
-	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+	//pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
 	//画面端の衝突判定を取り付ける
 	pCharacter->m_pCollisionAreas->push_back(pEndOfScreenArea);
 
@@ -239,10 +246,10 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 	//マップチップ衝突空間に領域を設定
 	//マップチップ領域を設定
-	pMapArea->addTerritory(pMapChipBottomTerritory);
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
-	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+	//pMapArea->addTerritory(pMapChipBottomTerritory);
+	//pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
 
 	//基準点の設定
 	for (int i = 0; i < 9; i++) {
@@ -269,8 +276,9 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
 
 
 void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
+
 	//状態の設定
-	//pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
+	pCharacter->m_state = (int)CEnemyCharacter::STATE::STAND;
 
 	//有効フラグを立てる
 	pCharacter->m_activeFlag = true;
@@ -282,8 +290,6 @@ void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 	pCharacter->applyFunc();
 
 }
-
-
 
 //================================================
 // パーツセッティングクラスを管理するクラス

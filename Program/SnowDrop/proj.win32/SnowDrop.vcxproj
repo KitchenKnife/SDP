@@ -165,9 +165,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\Physical\Physical.cpp" />
     <ClCompile Include="..\Classes\Data\Status\Status.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp" />
+    <ClCompile Include="..\Classes\Lib\Input\GamePadInputType.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\InputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\InputManager.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputController.cpp" />
+    <ClCompile Include="..\Classes\Lib\Input\KeyboardInputType.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Character.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\EnemyFactory.cpp" />
@@ -182,6 +184,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Weapon\Weapon.cpp" />
     <ClCompile Include="..\Classes\Scene\GameMain\GameMain.cpp" />
+    <ClCompile Include="..\Classes\Scene\Title\Title.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +210,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Physical\Physical.h" />
     <ClInclude Include="..\Classes\Data\Status\Status.h" />
     <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h" />
+    <ClInclude Include="..\Classes\Lib\Input\GamePadInputType.h" />
     <ClInclude Include="..\Classes\Lib\Input\InputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\InputManager.h" />
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h" />
+    <ClInclude Include="..\Classes\Lib\Input\KeyboardInputType.h" />
     <ClInclude Include="..\Classes\Model\Character\Character.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\EnemyFactory.h" />
@@ -224,6 +229,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.h" />
     <ClInclude Include="..\Classes\Model\Weapon\Weapon.h" />
     <ClInclude Include="..\Classes\Scene\GameMain\GameMain.h" />
+    <ClInclude Include="..\Classes\Scene\Title\Title.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

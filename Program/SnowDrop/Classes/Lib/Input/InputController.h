@@ -27,55 +27,55 @@ public:
 	* @desc コンストラクタ
 	* @author Shinya Ueba
 	*/
-	CInputController();
+	CInputController(void);
 
 
 	/**
 	* @desc デストラクタ
 	* @author Shinya Ueba
 	*/
-	virtual ~CInputController();
+	virtual ~CInputController(void);
 	
 	/*
 	* @desc 左移動入力フラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
 	*/
-	virtual bool getLeftMoveFlag() = 0;
+	virtual bool getLeftMoveFlag(void) = 0;
 
 	/*
 	* @desc 右移動入力フラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
 	*/
-	virtual bool getRightMoveFlag() = 0;
+	virtual bool getRightMoveFlag(void) = 0;
 	
 	/*
 	* @desc ジャンプ入力フラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
 	*/
-	virtual bool getJumpFlag() = 0;
+	virtual bool getJumpFlag(void) = 0;
 
 	/*
 	* @desc 攻撃入力フラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
 	*/
-	virtual bool getAttackFlag() = 0;
+	virtual bool getAttackFlag(void) = 0;
 
 	/*
-	* @desc 攻撃入力フラグ取得
+	* @desc 手をつなぐフラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
 	*/
-	virtual bool getCheckFlag() = 0;
+	virtual bool getHolodHandsFlag(void) = 0;
 
 	/*
-	* @desc セーブ入力フラグ取得 
+	* @desc お姫様抱っこフラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba
 	*/
-	virtual bool getSaveFlag() = 0;
+	virtual bool getHugFlag(void) = 0;
 };
 //EOF

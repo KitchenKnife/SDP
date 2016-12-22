@@ -112,6 +112,9 @@
     <Filter Include="src\Model\Character\PlayerCharacter">
       <UniqueIdentifier>{eef276ae-3c20-407f-b4cd-63e0d337e4c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Lib\Sound">
+      <UniqueIdentifier>{2fd70ea6-5452-4ffc-aa9e-5f23716da1e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,9 +198,6 @@
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputController.cpp">
       <Filter>src\Lib\Input</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp">
-      <Filter>src\Lib\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.cpp">
       <Filter>src\Data\ActionController\EnemyActionController\EnemyActionAttack</Filter>
     </ClCompile>
@@ -230,6 +230,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\PlayerCharacter\PlayerCharacter.cpp">
       <Filter>src\Model\Character\PlayerCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\Title\Title.cpp">
+      <Filter>src\Scene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp">
+      <Filter>src\Lib\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Input\GamePadInputType.cpp">
+      <Filter>src\Lib\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Input\KeyboardInputType.cpp">
+      <Filter>src\Lib\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,9 +326,6 @@
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h">
       <Filter>src\Lib\Input</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h">
-      <Filter>src\Lib\Input</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.h">
       <Filter>src\Data\ActionController\EnemyActionController\EnemyActionAttack</Filter>
     </ClInclude>
@@ -352,6 +361,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\PlayerCharacter\PlayerCharacter.h">
       <Filter>src\Model\Character\PlayerCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\Title\Title.h">
+      <Filter>src\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h">
+      <Filter>src\Lib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Input\GamePadInputType.h">
+      <Filter>src\Lib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Input\KeyboardInputType.h">
+      <Filter>src\Lib\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
