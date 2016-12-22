@@ -8,8 +8,6 @@
 //						Author Shinya Ueba
 //==========================================
 
-
-
 //==========================================
 // ヘッダインクルード
 //==========================================
@@ -21,7 +19,7 @@
 * @desc コンストラクタ
 * @author Shinya Ueba
 */
-CKeyboardInputController::CKeyboardInputController()
+CKeyboardInputController::CKeyboardInputController(void)
 {
 
 }
@@ -30,7 +28,7 @@ CKeyboardInputController::CKeyboardInputController()
 * @desc デストラクタ
 * @author Shinya Ueba
 */
-CKeyboardInputController::~CKeyboardInputController()
+CKeyboardInputController::~CKeyboardInputController(void)
 {
 
 }
@@ -40,9 +38,9 @@ CKeyboardInputController::~CKeyboardInputController()
 * @return true...入力あり　false...入力なし
 * @author Shinya Ueba
 */
-bool CKeyboardInputController::getLeftMoveFlag()
+bool CKeyboardInputController::getLeftMoveFlag(void)
 {
-	return false;
+	return this->m_inputFlag.isKeyPressed(kInputType::LEFT);
 }
 
 /*
@@ -50,9 +48,9 @@ bool CKeyboardInputController::getLeftMoveFlag()
 * @return true...入力あり　false...入力なし
 * @author Shinya Ueba
 */
-bool CKeyboardInputController::getRightMoveFlag()
+bool CKeyboardInputController::getRightMoveFlag(void)
 {
-	return false;
+	return this->m_inputFlag.isKeyPressed(kInputType::RIGHT);
 }
 
 /*
@@ -60,9 +58,9 @@ bool CKeyboardInputController::getRightMoveFlag()
 * @return true...入力あり　false...入力なし
 * @author Shinya Ueba
 */
-bool CKeyboardInputController::getJumpFlag()
+bool CKeyboardInputController::getJumpFlag(void)
 {
-	return false;
+	return this->m_inputFlag.isKeyPressed(kInputType::UP);
 }
 
 /*
@@ -70,28 +68,28 @@ bool CKeyboardInputController::getJumpFlag()
 * @return true...入力あり　false...入力なし
 * @author Shinya Ueba
 */
-bool CKeyboardInputController::getAttackFlag()
+bool CKeyboardInputController::getAttackFlag(void)
 {
-	return false;
+	return this->m_inputFlag.isKeyPressed(kInputType::Z);
 }
 
 /*
-* @desc 攻撃入力フラグ取得
+* @desc 手をつなぐフラグ取得
 * @return true...入力あり　false...入力なし
 * @author Shinya Ueba
 */
-bool CKeyboardInputController::getCheckFlag()
+bool CKeyboardInputController::getHolodHandsFlag(void)
 {
-	return false;
+	return this->m_inputFlag.isKeyPressed(kInputType::X);
 }
 
 /*
-* @desc セーブ入力フラグ取得
+* @desc お姫様抱っこフラグ取得
 * @return true...入力あり　false...入力なし
 * @author Shinya Ueba
 */
-bool CKeyboardInputController::getSaveFlag()
+bool CKeyboardInputController::getHugFlag(void)
 {
-	return false;
+	return this->m_inputFlag.isKeyPressed(kInputType::C);
 }
 //EOF
