@@ -98,5 +98,11 @@ class CGamepadInputController : public CInputController
 //	* @author Shinya Ueba
 //	*/
 //	bool getHugFlag(void)override;
+
+	/**
+	* @desc 入力フラグインスタンスの取得
+	* @return　 入力フラグインスタンス
+	*/
+	//CInputFlag* getInputFlagInstance(void)override;
 };
 //EOF

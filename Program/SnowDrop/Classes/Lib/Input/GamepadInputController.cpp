@@ -116,4 +116,14 @@
 //{
 //	return this->m_inputFlag.isBottomPressed(GamePadInputType::Y);
 //}
+
+/**
+* @desc 入力フラグインスタンスの取得
+* @return　 入力フラグインスタンス
+*/
+//CInputFlag* CGamepadInputController::getInputFlagInstance(void)
+//{
+//return &this->m_inputFlag;
+//}
+
 //EOF

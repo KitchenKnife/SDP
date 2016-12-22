@@ -167,6 +167,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\GamePadInputType.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\InputController.cpp" />
+    <ClCompile Include="..\Classes\Lib\Input\InputFlag.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\InputManager.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputType.cpp" />
@@ -212,6 +213,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\GamePadInputType.h" />
     <ClInclude Include="..\Classes\Lib\Input\InputController.h" />
+    <ClInclude Include="..\Classes\Lib\Input\InputFlag.h" />
     <ClInclude Include="..\Classes\Lib\Input\InputManager.h" />
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputType.h" />

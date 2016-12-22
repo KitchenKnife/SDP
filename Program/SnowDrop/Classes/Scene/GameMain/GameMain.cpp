@@ -240,10 +240,11 @@ void CGameMain::scroll() {
 void CGameMain::update( float deltaTime_ ) {
 	
 	// esc キーを押したらゲーム終了
-	if ( inputflag.m_esc == true ) {
+	if ( CInputManager::getInstance()->getInputController(CONTROLLER_TYPE::KEYBORD)->getGameExitFlag())
+	{
 		cocos2d::Director::getInstance()->end() ;
 	}
-	
+
 
 	//=========================================================================
 	//

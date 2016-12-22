@@ -20,7 +20,7 @@ CInputManager* CInputManager::m_sharedInputManager = NULL ;
 CInputManager::CInputManager() {
 
 	// 入力フラグの生成と設定
-	this->setInputFlag( new CKeyboardInputFlag() ) ;
+	//this->setInputFlag( new CKeyboardInputFlag() ) ;
 
 	//入力コントローラーデータ群の生成
 	this->m_pInputControllers = new std::vector<CInputController*>();
@@ -45,12 +45,8 @@ CInputManager* CInputManager::getInstance() {
 
 
 // デストラクタ
-CInputManager::~CInputManager() {
-
-	// 入力フラグの破棄
-	SAFE_DELETE( this->m_pInputFlag ) ;
-
-
+CInputManager::~CInputManager()
+{
 	//入力コントローラーの削除
 	for (CInputController* pController : (*this->m_pInputControllers)) {
 		SAFE_DELETE(pController);
@@ -153,8 +149,10 @@ kInputType CInputManager::changeToInputTypeFromKeyCode( cocos2d::EventKeyboard::
  *	@param	キーコード
  */
 void CInputManager::onKeyPressed( cocos2d::EventKeyboard::KeyCode keyCode_ ) {
-	if ( this->m_pInputFlag ) {
-		this->m_pInputFlag->up( this->changeToInputTypeFromKeyCode( keyCode_ ) ) ;
+	if ((*this->m_pInputControllers)[(int)CONTROLLER_TYPE::KEYBORD]) {
+
+		CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)CONTROLLER_TYPE::KEYBORD]->getInputFlagInstance();
+		pointerInputFlag->up((int)this->changeToInputTypeFromKeyCode(keyCode_));;
 	}
 }
 
@@ -163,46 +161,31 @@ void CInputManager::onKeyPressed( cocos2d::EventKeyboard::KeyCode keyCode_ ) {
  *	@param	キーコード
  */
 void CInputManager::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode_ ) {
-	if ( this->m_pInputFlag ) {
-		this->m_pInputFlag->down( this->changeToInputTypeFromKeyCode( keyCode_ ) ) ;
+	if ((*this->m_pInputControllers)[(int)CONTROLLER_TYPE::KEYBORD]) {
+
+		CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)CONTROLLER_TYPE::KEYBORD]->getInputFlagInstance();
+		pointerInputFlag->down((int) this->changeToInputTypeFromKeyCode( keyCode_ ) ) ;
 	}
 }
 
-/**
- *	@desc	入力フラグの設定
- *	@param	入力フラグ
- */
-void CInputManager::setInputFlag( CKeyboardInputFlag* pInputFlag_ ) {
-	if ( this->m_pInputFlag ) {
-		printf( "既に取り付け済み\n" ) ;
-		return ;
-	}
-	this->m_pInputFlag = pInputFlag_ ;
-}
-
-/**
- *	@desc	入力フラグの削除
- */
-void CInputManager::removeInputFlag() {
-	if ( this->m_pInputFlag ) {
-		delete this->m_pInputFlag ;
-		this->m_pInputFlag = NULL ;
-	}
-}
 
 /**
  *	@desc	入力フラグのクリア
  */
-void CInputManager::clearInputFlag() {
-	if ( this->m_pInputFlag ) {
-		this->m_pInputFlag->clear() ;
+void CInputManager::clearInputFlag(CONTROLLER_TYPE type) {
+	if ((*this->m_pInputControllers)[(int)type]) {
+		
+		CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)type]->getInputFlagInstance();
+		pointerInputFlag->clear() ;
 	}
 }
 
 /**
- *	@desc	入力フラグの取得
- *	@return	入力フラグ
- */
-CKeyboardInputFlag* CInputManager::getInputFlag() {
-	return this->m_pInputFlag ;
+*	@desc	入力コントローラーの取得
+*	@param	コントローラータイプ
+*	@return	入力コントローラー
+*/
+CInputController* CInputManager::getInputController(CONTROLLER_TYPE type)
+{
+	return (*this->m_pInputControllers)[(int)type];
 }

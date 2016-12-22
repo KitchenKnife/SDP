@@ -106,7 +106,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define SOUND_FILE_BGM_TITLE  "Sound/Title_01.mp3"
 //#define SOUND_FILE_BGM_ENDING "Sound/BGM_ENDING.mp3"
 #define SOUND_FILE_BGM_STAGE_FIRST "Sound/BGM_01.mp3"
-#define SOUND_FILE_BGM_STAGE_FIRST "Sound/BGM_02.mp3"
+#define SOUND_FILE_BGM_STAGE_SECOND "Sound/BGM_02.mp3"
 #define SOUND_FILE_BGM_STAGE_THIRD "Sound/BGM_03.mp3"
 
 // ƒ{ƒ^ƒ“‚Ì‰Ÿ‰º‰¹

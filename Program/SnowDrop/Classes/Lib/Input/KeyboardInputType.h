@@ -8,6 +8,8 @@
 // 2016/12/22
 //						Author Shinya Ueba
 //==========================================
+#include"InputFlag.h"
+
 
 /*
 *	入力タイプ
@@ -31,7 +33,7 @@ enum class kInputType : int {
 /*
 *	キーボード用入力フラグ
 */
-class CKeyboardInputFlag {
+class CKeyboardInputFlag :public CInputFlag{
 public:
 	bool m_up = false;		// 上キー
 	bool m_down = false;	// 下キー
@@ -48,21 +50,21 @@ public:
 	bool m_s = false;		// s キー
 	bool m_d = false;		// d キー
 
-							/**
-							*	@desc	値のクリア
-							*/
-	virtual void clear();
+	/**
+	*	@desc	値のクリア
+	*/
+	virtual void clear(void)override;
 
 	/**
 	*	@desc	キーのフラグを上げる ( フラグアップ )
 	*	@param	キーコード
 	*/
-	virtual void up(kInputType keyType_);
+	virtual void up(int keyType_)override;
 	/**
 	*	@desc	キーのフラグを下げる ( フラグダウン )
 	*	@praram	キーコード
 	*/
-	virtual void down(kInputType keyType_);
+	virtual void down(int keyType_)override;
 
 	/**
 	*	@desc	指定したキーが押されているかどうかを取得
@@ -71,6 +73,6 @@ public:
 	*	@tips	入力のタイプによって変化
 	*			キーボードタイプでは使用する必要はない
 	*/
-	virtual bool isKeyPressed(kInputType keyType_);
+	virtual bool isKeyPressed(int keyType_)override;
 };
 //EOF
