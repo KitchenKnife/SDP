@@ -19,9 +19,6 @@ CInputManager* CInputManager::m_sharedInputManager = NULL ;
 
 CInputManager::CInputManager() {
 
-	// 入力フラグの生成と設定
-	//this->setInputFlag( new CKeyboardInputFlag() ) ;
-
 	//入力コントローラーデータ群の生成
 	this->m_pInputControllers = new std::vector<CInputController*>();
 	//キーボード入力コントローラーの生成と取り付け
@@ -130,19 +127,19 @@ void CInputManager::updateGamePadInputState(void)
 				}
 			}
 			*/
-
-			this->changeToInputTypeFromXInput(wButtons);
+			//全てのボタンの入力状態を確認する
+			this->changeAllBottons(wButtons);
 		}
 	}
 }
 
 
 /**
-*	@desc	キーコードからキータイプに変換
-*	@param	キーコード
-*	@return	キータイプ
+*	@desc	全てのボタンの入力状態を確認する
+*	@param	全ボタンの入力状態
+*	@author Shinya Ueba
 */
-void CInputManager::changeToInputTypeFromXInput(DWORD wBottons)
+void CInputManager::changeAllBottons(DWORD wBottons)
 {
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_UP,(int)GamePadInputType::DPAD_UP);
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_DOWN, (int)GamePadInputType::DPAD_DOWN);
@@ -161,16 +158,16 @@ void CInputManager::changeToInputTypeFromXInput(DWORD wBottons)
 }
 
 /**
-*	@desc	キーコードからキータイプに変換
-*	@param	キーコード
-*	@return	キータイプ
-*/
-void CInputManager::checkPressBotton(DWORD wBottons, BYTE mask,int setType)
+*	@desc	ボタンの入力状態を確認する
+*	@param　全ボタンの入力状態
+*	@param	ビットマスク
+*	@param	設定するキータイプ
+*	@author Shinya Ueba
+*/void CInputManager::checkPressBotton(DWORD wBottons, DWORD mask,int setType)
 {
 	CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)CONTROLLER_TYPE::GAMEPAD]->getInputFlagInstance();
 	if (wBottons & mask)
-	{
-	//	cocos2d::log("HEY");
+	{		
 		pointerInputFlag->up(setType);
 	}
 	else

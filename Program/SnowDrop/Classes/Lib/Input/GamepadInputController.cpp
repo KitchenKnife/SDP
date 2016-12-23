@@ -103,6 +103,26 @@ bool CGamepadInputController::getGameExitFlag(void)
 	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::BACK);
 }
 
+/**
+*	@desc デバッグモードフラグ取得
+*	@return true...入力あり　false...入力なし
+*/
+bool CGamepadInputController::getDebugModeFlag(void)
+{
+
+//デバッグ用
+#ifdef _DEBUG
+	if (this->m_inputFlag.isKeyPressed((int)GamePadInputType::LEFT_SHOULDER) &&
+		this->m_inputFlag.isKeyPressed((int)GamePadInputType::RIGHT_SHOULDER))
+	{
+		return true;
+	}
+#endif // DEBUG
+
+	return false;
+}
+
+
 
 /**
 * @desc 入力フラグインスタンスの取得

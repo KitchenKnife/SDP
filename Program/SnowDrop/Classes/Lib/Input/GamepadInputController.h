@@ -95,6 +95,13 @@ public:
 
 
 	/**
+	*	@desc デバッグモードフラグ取得
+	*	@return true...入力あり　false...入力なし
+	*/
+	bool getDebugModeFlag(void)override;
+
+
+	/**
 	* @desc 入力フラグインスタンスの取得
 	* @return　 入力フラグインスタンス
 	*/

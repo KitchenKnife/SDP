@@ -29,8 +29,6 @@ enum class CONTROLLER_TYPE : int
 // 2016/12/22
 //						Author Shinya Ueba
 //==========================================
-
-
 struct CONTROLER_STATE
 {
 	XINPUT_STATE state;
@@ -82,34 +80,38 @@ public:
 	*/
 	void update(void);
 
-
+private:
 	/**
-	* @desc GamePadの接続状態の更新
+	*	@desc GamePadの接続状態の更新
+	*	@author Shinya Ueba
 	*/
 	HRESULT updateGamePadConnectState(void);
 
 	/**
-	* @desc GamePadの入力状態の更新
+	*	@desc GamePadの入力状態の更新
+	*	@author Shinya Ueba
 	*/
 	void updateGamePadInputState(void);
 
+	/**
+	*	@desc	全てのボタンの入力状態を確認する
+	*	@param	全ボタンの入力状態
+	*	@author Shinya Ueba
+	*/
+	void changeAllBottons(DWORD wBottons);
 
 
 	/**
-	*	@desc	キーコードからキータイプに変換
-	*	@param	キーコード
-	*	@return	キータイプ
+	*	@desc	ボタンの入力状態を確認する
+	*	@param　全ボタンの入力状態
+	*	@param	ビットマスク
+	*	@param	設定するキータイプ
+	*	@author Shinya Ueba
 	*/
-	void changeToInputTypeFromXInput(DWORD wBottons);
+	void checkPressBotton(DWORD wBottons, DWORD mask,int setType);
 
 
-	/**
-	*	@desc	キーコードからキータイプに変換
-	*	@param	キーコード
-	*	@return	キータイプ
-	*/
-	void checkPressBotton(DWORD wBottons, BYTE mask,int setType);
-
+public:
 	/**
 	 *	@desc	キーコードからキータイプに変換
 	 *	@param	キーコード
