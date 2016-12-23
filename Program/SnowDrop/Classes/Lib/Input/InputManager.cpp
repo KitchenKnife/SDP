@@ -19,9 +19,6 @@ CInputManager* CInputManager::m_sharedInputManager = NULL ;
 
 CInputManager::CInputManager() {
 
-	// 入力フラグの生成と設定
-	//this->setInputFlag( new CKeyboardInputFlag() ) ;
-
 	//入力コントローラーデータ群の生成
 	this->m_pInputControllers = new std::vector<CInputController*>();
 	//キーボード入力コントローラーの生成と取り付け
@@ -158,6 +155,7 @@ void CInputManager::changeToInputTypeFromXInput(DWORD wBottons)
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_B, (int)GamePadInputType::B);
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_X, (int)GamePadInputType::X);
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_Y, (int)GamePadInputType::Y);
+
 }
 
 /**
@@ -165,12 +163,18 @@ void CInputManager::changeToInputTypeFromXInput(DWORD wBottons)
 *	@param	キーコード
 *	@return	キータイプ
 */
-void CInputManager::checkPressBotton(DWORD wBottons, BYTE mask,int setType)
+void CInputManager::checkPressBotton(DWORD wBottons, DWORD mask,int setType)
 {
+
+	cocos2d::log("INPUT%ld", (wBottons));
+	cocos2d::log("BYTE%ld", (mask));
+	//cocos2d::log("%ld", (wBottons & mask));
+
 	CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)CONTROLLER_TYPE::GAMEPAD]->getInputFlagInstance();
 	if (wBottons & mask)
 	{
-	//	cocos2d::log("HEY");
+		
+		cocos2d::log("HEY");
 		pointerInputFlag->up(setType);
 	}
 	else

@@ -29,8 +29,6 @@ enum class CONTROLLER_TYPE : int
 // 2016/12/22
 //						Author Shinya Ueba
 //==========================================
-
-
 struct CONTROLER_STATE
 {
 	XINPUT_STATE state;
@@ -108,7 +106,7 @@ public:
 	*	@param	キーコード
 	*	@return	キータイプ
 	*/
-	void checkPressBotton(DWORD wBottons, BYTE mask,int setType);
+	void checkPressBotton(DWORD wBottons, DWORD mask,int setType);
 
 	/**
 	 *	@desc	キーコードからキータイプに変換
