@@ -82,9 +82,15 @@ public:
 		HUG			=	4,	//お姫様だっこ　（キャー(^q^)）
 	};
 
+	//プレイヤーと少女の状態
+	enum class PAYER_GIRL_STATE : int{
+		FREE	= 0,	//なにもなし
+	};
+
+	
+
 	//少女の状態
 	int m_state = (int)GIRL_STATE::STAND;
 
-	//イベントの状態
-	int m_event = (int)GIRL_EVENT::NONE;
+
 };
