@@ -1,18 +1,16 @@
-
 /*
-* EnemyFactory.h
-*
-*	2016/12/21	Yamasaki
-*	test
-*
-*/
+ * EnemyFactory.h
+ *
+ *	2016/12/21	Yamasaki And Harada
+ *	
+ */
 
 #pragma once
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#include "Model/Map/Map.h"
 #include "Model/Character/EnemyCharacter/EnemyCharacter.h"
+#include <map>
 
 //================================================
 // キャラクターパーツ製造工場
@@ -20,15 +18,21 @@
 //================================================
 class CEnemeyPartsFactory :public CCharacterPartsFactory {
 public:
+	//デストラクタ
+	virtual ~CEnemeyPartsFactory();
 
-	virtual ~CEnemeyPartsFactory() {}
-
+	//アニメーション群データの実体を生成し取得
 	virtual std::vector<CAnimation* >* getAnimations()override;
-	virtual CMove* getMove();
-	virtual std::vector<CPhysical* >* getPhysicals();
+	//移動データの実体を生成し取得
+	virtual CMove* getMove()override;
+	//物理演算群データの実体を生成し取得
+	virtual std::vector<CPhysical* >* getPhysicals()override;
+	//アクション群データの実体を生成し取得
 	virtual std::vector<CAction* >* getActions()override;
-	virtual CBody* getBody();
-	virtual std::vector<CCollisionArea* >* getCollisionAreas();
+	//実体データの実体を生成し取得
+	virtual CBody* getBody()override;
+	//衝突判定空間群データの実体を生成し取得
+	virtual std::vector<CCollisionArea* >* getCollisionAreas()override;
 
 };
 
@@ -43,57 +47,53 @@ protected:
 	//敵の生成と組み立て
 	virtual CEnemyCharacter* createEnemy() = 0;
 
-	//各々のパーツのセッティング
-	//移動用データの設定
-	virtual void settingMove(CEnemyCharacter* pCharacter ,float x,float y) = 0;
+	//移動データの設定
+	virtual void settingMove(CEnemyCharacter* pChara ,float x,float y) = 0;
 	//画像の設定
-	virtual void settingTexture(CEnemyCharacter* pCharacter) = 0;
-	//アニメーションの設定
-	virtual void settingAnimations(CEnemyCharacter* pCharacter) = 0;
-	//適用する物理計算の設定
-	virtual void settingPhysicals(CEnemyCharacter* pCharacter) = 0;
-	//アクションの設定
-	virtual void settingActions(CEnemyCharacter* pCharacter) = 0;
-	//衝突判定データの設定
-	virtual void settingBody(CEnemyCharacter* pCharacter) = 0;
-	//衝突判定空間
-	virtual void settingCollisionArea(CEnemyCharacter* pCharacter) = 0;
+	virtual void settingTexture(CEnemyCharacter* pChara) = 0;
+	//アニメーション群データの設定
+	virtual void settingAnimations(CEnemyCharacter* pChara) = 0;
+	//物理演算群データの設定
+	virtual void settingPhysicals(CEnemyCharacter* pChara) = 0;
+	//アクション群データの設定
+	virtual void settingActions(CEnemyCharacter* pChara) = 0;
+	//実体データの設定
+	virtual void settingBody(CEnemyCharacter* pChara) = 0;
+	//衝突判定空間群データの設定
+	virtual void settingCollisionArea(CEnemyCharacter* pChara) = 0;
 
-	
-
-	//初期設定もろもろ
-	virtual void settingInitialize(CEnemyCharacter* pCharacter) = 0;
+	//その他　初期設定
+	virtual void settingInitialize(CEnemyCharacter* pChara) = 0;
 
 public:
+	//デストラクタ
+	virtual ~CEnemyFactory() {};
 
 	//敵の生成とセッティング
 	CEnemyCharacter* create(float posX,float posY) {
 
 		//敵の生成と組み立て
-		CEnemyCharacter* pCharacter = this->createEnemy();
+		CEnemyCharacter* pChara = this->createEnemy();
 
-		//初期位置の設定
-		this->settingMove(pCharacter,posX,posY);
-		//テクスチャの設定
-		this->settingTexture(pCharacter);
-		//アニメーションの設定
-		this->settingAnimations(pCharacter);
-		//適用する物理計算の設定
-		this->settingPhysicals(pCharacter);
-		//アクションの設定
-		this->settingActions(pCharacter);
-		//衝突判定用データの設定
-		this->settingBody(pCharacter);
-		//衝突判定空間
-		this->settingCollisionArea(pCharacter);
-		//初期化もろもろ
-		this->settingInitialize(pCharacter);
+		//移動データ設定
+		this->settingMove(pChara,posX,posY);
+		//画像の設定
+		this->settingTexture(pChara);
+		//アニメーション群データの設定
+		this->settingAnimations(pChara);
+		//物理演算群データの設定
+		this->settingPhysicals(pChara);
+		//アクション群データの設定
+		this->settingActions(pChara);
+		//実体データの設定
+		this->settingBody(pChara);
+		//衝突判定空間群データの設定
+		this->settingCollisionArea(pChara);
+		//その他初期化
+		this->settingInitialize(pChara);
 
-		return pCharacter;
+		return pChara;
 	}
-
-	virtual ~CEnemyFactory() {};
-
 };
 
 //================================================
@@ -102,9 +102,11 @@ public:
 //================================================
 class CEnemyCreateFactory :public CEnemyFactory {
 public:
+	//デストラクタ
 	virtual ~CEnemyCreateFactory() {}
 
 protected:
+	//敵の生成と組み立て
 	virtual CEnemyCharacter* createEnemy()override {
 
 		// 敵生成
@@ -113,8 +115,9 @@ protected:
 		CEnemeyPartsFactory pEnemyPartsFactory;
 
 		// パーツの設定
-		pEnemy->m_pAnimations = pEnemyPartsFactory.getAnimations();
 		pEnemy->m_pMove = pEnemyPartsFactory.getMove();
+		pEnemy->m_pAnimations = pEnemyPartsFactory.getAnimations();
+		
 		pEnemy->m_pPhysicals = pEnemyPartsFactory.getPhysicals();
 		pEnemy->m_pActions = pEnemyPartsFactory.getActions();
 		pEnemy->m_pBody = pEnemyPartsFactory.getBody();
@@ -130,27 +133,25 @@ protected:
 //================================================
 class CMaideadFactory :public CEnemyCreateFactory {
 public:
+	//デストラクタ
+	virtual ~CMaideadFactory(){}
 
-	//各々のパーツのセッティング
-	//移動用データの設定
-	void settingMove(CEnemyCharacter* pCharacter , float posX, float posY)override;
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
 	//画像の設定
-	void settingTexture(CEnemyCharacter* pCharacter)override;
-	//アニメーションの設定
-	void settingAnimations(CEnemyCharacter* pCharacter)override;
-	//適用する物理計算の設定
-	void settingPhysicals(CEnemyCharacter* pCharacter)override;
-	//アクションの設定
-	void settingActions(CEnemyCharacter* pCharacter)override;
-	//衝突判定データの設定
-	void settingBody(CEnemyCharacter* pCharacter)override;
-	//衝突判定空間
-	void settingCollisionArea(CEnemyCharacter* pCharacter)override;
-
-
-
-	//初期設定もろもろ
-	void settingInitialize(CEnemyCharacter* pCharacter)override;
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CEnemyCharacter* pChara)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
 
 };
 
@@ -160,48 +161,41 @@ public:
 //================================================
 class CBatFactory :public CEnemyCreateFactory {
 public:
-
-	//各々のパーツのセッティング
-	//移動用データの設定
-	void settingMove(CEnemyCharacter* pCharacter , float posX, float posY)override;
+	//デストラクタ
+	~CBatFactory(){}
+	
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
 	//画像の設定
-	void settingTexture(CEnemyCharacter* pCharacter)override;
-	//アニメーションの設定
-	void settingAnimations(CEnemyCharacter* pCharacter)override;
-	//適用する物理計算の設定
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
 	void settingPhysicals(CEnemyCharacter* pCharacter)override;
-	//アクションの設定
-	void settingActions(CEnemyCharacter* pCharacter)override;
-	//衝突判定データの設定
-	void settingBody(CEnemyCharacter* pCharacter)override;
-	//衝突判定空間
-	void settingCollisionArea(CEnemyCharacter* pCharacter)override;
-
-
-
-	//初期設定もろもろ
-	void settingInitialize(CEnemyCharacter* pCharacter)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
 
 };
 
 //================================================
-// パーツセッティングクラス（CBaseEnemyFactory）を管理するクラス
-//	（FactoryMethod）
+// 敵工場群を管理するクラス
+//	（Singleton）
 //================================================
-//敵の種族タイプ
-enum ENEMY_RACE_TYPE :int{
-	MAIDEAD = 0,			// メイド
-	BAT		= 1,			// コウモリ
-	MALICE	= 2,			// マリス
-};
-
 class CEnemyFactoryManager {
 private:
 	//コンストラクタ
 	CEnemyFactoryManager() {
+		//メイド生成工場を生成し [key : MAIDEAD] に取り付ける
+		m_factories[ENEMY_TYPE::MAIDEAD] = new CMaideadFactory();
 
-		m_factories.push_back(new CMaideadFactory());
-		m_factories.push_back(new CBatFactory());
+		//コウモリ生成工場を生成し [key : BAT] に取り付ける
+		m_factories[ENEMY_TYPE::BAT] = new CBatFactory();
 	}
 
 	//共有のインスタンス
@@ -210,13 +204,17 @@ private:
 public:
 	//デストラクタ
 	~CEnemyFactoryManager() {
+		//共有インスタンスの削除
 		SAFE_DELETE(m_pEnemyFactoryManager);
 
-		for (CEnemyFactory* pFactory : this->m_factories) {
-			SAFE_DELETE(pFactory);
+		//取り付けた工場群を削除
+		std::map<ENEMY_TYPE, CEnemyFactory*>::iterator itr = m_factories.begin();
+		while (itr != m_factories.end()) {
+			//クラスのインスタンスを削除
+			SAFE_DELETE(itr->second);
+			//イテレーターを更新
+			itr++;
 		}
-
-		this->m_factories.clear();
 	}
 
 
@@ -224,13 +222,17 @@ public:
 	static CEnemyFactoryManager* getInstance();
 
 	//敵工場群
-	std::vector<CEnemyFactory*> m_factories;
+	std::map<ENEMY_TYPE, CEnemyFactory*> m_factories;
 
-
-	//敵工場のcreate()を呼び出す
-	CEnemyCharacter* create(Point pos, int type) {
-
-			return this->m_factories[type]->create(pos.x, pos.y);
+	/**
+	 * @desc	敵キャラクターを生成
+	 * @param	出撃させる位置
+	 * @param	敵のタイプ
+	 * @return	生成した敵キャラクター
+	 */
+	CEnemyCharacter* create(Point pos, ENEMY_TYPE type) {
+		//敵のタイプを key として敵を生成して返す
+		return this->m_factories[type]->create(pos.x, pos.y);
 	}
 
 };

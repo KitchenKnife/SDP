@@ -97,7 +97,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
    // auto scene = CTitle::createScene();
-	auto scene = CGameMain::createScene();
+	auto scene = CTitle::createScene();
 
     // run
     director->runWithScene(scene);
@@ -112,11 +112,6 @@ void AppDelegate::applicationDidEnterBackground() {
 
 	// if you use SimpleAudioEngine, it must be pause
 	// SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-
-
-	// BGMESEˆêŽž’âŽ~
-	CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-	CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 // this function will be called when the app is active again
@@ -126,7 +121,4 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 
-	// BGMESEÄŠJ
-	CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-	CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

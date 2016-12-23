@@ -40,14 +40,9 @@ bool CEnemyCharacter::init() {
 //移動処理
 void CEnemyCharacter::moveFunc() {
 	// アクション
-	
 	for (CAction* pAction : (*m_pActions)) {
 		pAction->update(this);
 	}
-	
-
-	//アクション処理
-	//(this->m_pActions)[this->m_state]->update(this);
 
 	//物理計算
 	for (CPhysical* pPhysical : (*m_pPhysicals)) {
@@ -60,19 +55,25 @@ void CEnemyCharacter::moveFunc() {
 
 //アニメーション処理
 void CEnemyCharacter::animationFunc() {
-
-	
+	(*this->m_pAnimations)[this->m_state]->update();
 }
 
-/**
-* @desc 状態チェック
-* @tips 値をチェックして現在の状態を変更する
-*/
+//衝突判定処理
+void CEnemyCharacter::collisionAll() {
+
+	//死んでいたら飛ばす
+	if (this->m_isAlive == false)
+		return;
+
+	//空間との衝突判定を行う
+	for (CCollisionArea* pArea : (*this->m_pCollisionAreas)) {
+		pArea->collision(this);
+	}
+}
+
+//状態チェック
 void CEnemyCharacter::checkState() {
-
-
-
-
+	
 }
 
 //反映処理
@@ -102,15 +103,11 @@ bool CEnemyCharacter::collision(CCharacter* pChara) {
 	return pEnemyCollisionRect.collision(&pPlayerCollisionRect);
 
 }
-//衝突判定処理
-void CEnemyCharacter::collisionAll() {
 
-	//死んでいたら飛ばす
-	if (this->m_isAlive == false)
-		return;
+/**
+ * @desc	他クラスから衝突判定を受けた際の処理
+ * @param	キャラクターのアドレス
+ */
+void CEnemyCharacter::hits(CCharacter* pChara) {
 
-	//空間との衝突判定を行う
-	for (CCollisionArea* pArea : (*this->m_pCollisionAreas)) {
-		pArea->collision(this);
-	}
 }

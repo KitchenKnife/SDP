@@ -31,26 +31,26 @@ public:
 	virtual ~CLaunchTrigger() {}
 
 	/**
-	* @desc		発射し終わったかどうか
-	* @retrun	true...発射した　false...発射していない
-	* @tips		発射し終わったかどうかは派生クラスによって
-	*			フラグが変化する場合が存在する
-	*/
+	 * @desc	発射し終わったかどうか
+	 * @retrun	true...発射した　false...発射していない
+	 * @tips	発射し終わったかどうかは派生クラスによって
+	 *			フラグが変化する場合が存在する
+	 */
 	virtual bool isLaunched() {
 		return this->m_activeFlag;
 	}
 
 	/**
-	* @desc		設定されているトリガーがイベントを行えるかどうか
-	* @retrun	true...イベント実行が可能
-	* @tips		イベントの実行可能条件は派生クラスによって変化する
-	*/
+	 * @desc	設定されているトリガーがイベントを行えるかどうか
+	 * @retrun	true...イベント実行が可能
+	 * @tips	イベントの実行可能条件は派生クラスによって変化する
+	 */
 	virtual bool isTrigger() = 0;
 
 	/**
-	* @desc		トリガーイベントの実行
-	*			ここでのトリガーイベントはキャラクターの生成
-	*/
+	 * @desc	トリガーイベントの実行
+	 * @tips	ここでのトリガーイベントはキャラクターの生成
+	 */
 	virtual CCharacter* action() = 0;
 
 };
@@ -69,10 +69,10 @@ private:
 public:
 
 	/**
-	* @desc		コンストラクタ
-	* @param	敵出撃データ
-	* @tips		敵出撃データをトリガーとして設定する
-	*/
+	 * @desc	コンストラクタ
+	 * @param	敵出撃データ
+	 * @tips	敵出撃データをトリガーとして設定する
+	 */
 	CEnemyLaunchTrigger(CEnemyLaunchData* pLaunchdata)
 		:m_pLaunchdata(pLaunchdata) {}
 
@@ -80,58 +80,18 @@ public:
 	virtual ~CEnemyLaunchTrigger();
 
 	/**
-	* @desc		イベントを行えるかどうか
-	* @retrun	true...イベント実行可
-	*/
+	 * @desc	イベントを行えるかどうか
+	 * @retrun	true...イベント実行可
+	 */
 	virtual bool isTrigger()override;
 
 	/**
-	* @desc		設定されている敵出撃データを元に敵を生成する
-	*			トリガーを元にイベントを実行
-	*/
+	 * @desc	設定されている敵出撃データを元に敵を生成する
+	 * @tups	トリガーを元にイベントを実行
+	 */
 	virtual CCharacter* action()override;
 
 };
-
-/*
-//=======================================
-//
-//  弾発射トリガー
-//		弾発射データをトリガーとして弾発射というイベントを実行させる
-//
-//=======================================
-class CBulletLaunchTrigger :public CLaunchTrigger {
-private:
-	//弾出撃データ
-	CBulletLaunchData* m_pLaunchdata = NULL;
-
-public:
-
-	/**
-	* @desc		コンストラクタ
-	* @param	敵出撃データ
-	* @tips		敵出撃データをトリガーとして設定する
-	*
-	CBulletLaunchTrigger(CBulletLaunchData* pLaunchdata)
-		:m_pLaunchdata(pLaunchdata) {}
-
-	//デストラクタ
-	virtual ~CBulletLaunchTrigger();
-
-	/**
-	* @desc		イベントを行えるかどうか
-	* @retrun	true...イベント実行可
-	*
-	virtual bool isTrigger()override;
-
-	/**
-	* @desc		設定されている敵出撃データを元に敵を生成する
-	*			トリガーを元にイベントを実行
-	*
-	virtual CCharacter* action()override;
-
-};
-*/
 
 //=======================================
 //
@@ -146,10 +106,10 @@ private:
 public:
 
 	/**
-	* @desc		コンストラクタ
-	* @param	敵出撃データ
-	* @tips		敵出撃データをトリガーとして設定する
-	*/
+	 * @desc	コンストラクタ
+	 * @param	敵出撃データ
+	 * @tips	敵出撃データをトリガーとして設定する
+	 */
 	CGimmickLaunchTrigger(CGimmickLaunchData* pLaunchdata)
 		:m_pLaunchdata(pLaunchdata) {}
 
@@ -157,15 +117,15 @@ public:
 	virtual ~CGimmickLaunchTrigger();
 
 	/**
-	* @desc		イベントを行えるかどうか
-	* @retrun	true...イベント実行可
-	*/
+	 * @desc	イベントを行えるかどうか
+	 * @retrun	true...イベント実行可
+ 	 */
 	virtual bool isTrigger()override;
 
 	/**
-	* @desc		設定されている敵出撃データを元に敵を生成する
-	*			トリガーを元にイベントを実行
-	*/
+	 * @desc	設定されている敵出撃データを元に敵を生成する
+	 * @tips	トリガーを元にイベントを実行
+	 */
 	virtual CCharacter* action()override;
 
 };
@@ -188,9 +148,9 @@ public:
 	std::vector<CLaunchTrigger*>* m_pLaunchSchedule = NULL;
 
 	/**
-	* @desc コンストラクタ
-	* @param 出撃スケジュールのアドレス
-	*/
+	 * @desc	コンストラクタ
+	 * @param	出撃スケジュールのアドレス
+	 */
 	CLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule)
 		:m_pLaunchSchedule(pLaunchSchedule){}
 
@@ -198,26 +158,26 @@ public:
 	~CLauncher(){}
 
 	/**
-	* @desc トリガーの追加
-	* @param  追加するトリガー
-	*/
+	 * @desc	トリガーの追加
+	 * @param	追加するトリガー
+	 */
 	void add(CLaunchTrigger* pLaunchTrigger) {
 		this->m_pLaunchSchedule->push_back(pLaunchTrigger);
 	}
 
 	/**
-	* @desc 出撃スケジュールのサイズを取得
-	* @return  取り付けられている数
-	*/
+	 * @desc	出撃スケジュールのサイズを取得
+	 * @return	取り付けられている数
+	 */
 	int getSize() {
 		return (int)this->m_pLaunchSchedule->size();
 	}
 
 	/**
-	* @desc キャラタクー１体を取得
-	* @param  添え字番号
-	* @return キャラクター
-	*/
+	 * @desc	キャラタクー１体を取得
+	 * @param	添え字番号
+	 * @return	キャラクター
+	 */
 	CLaunchTrigger* getAt(int index) {
 		//最大数以上ならNULLを返すように設定しておく
 		if (this->getSize() <= index) {
@@ -248,13 +208,13 @@ public:
 
 		//コンストラクタ
 		CLaunchTriggerIterator(CLauncher* pLaucher) 
-		:m_pLaucher(pLaucher){}
+			:m_pLaucher(pLaucher){}
 
 
 		/**
-		* @desc		次の出撃があるかどうか調べる
-		*			もしくは出撃トリガーが起動可能かどうか調べる
-		*/
+		 * @desc	次の出撃があるかどうか調べる
+		 * @tips	もしくは出撃トリガーが起動可能かどうか調べる
+		 */
 		bool hasNext(){
 		
 			//トリガーイベントの集まりのサイズを調べる
@@ -274,8 +234,8 @@ public:
 		}
 
 		/**
-		* @desc		現在の出撃トリガーを取得し添え字番号を次に進める
-		*/
+		 * @desc	現在の出撃トリガーを取得し添え字番号を次に進める
+		 */
 		CLaunchTrigger* next() {
 
 			CLaunchTrigger* pTrigger = this->m_pLaucher->getAt(this->m_triggerCount);
@@ -285,9 +245,9 @@ public:
 	};
 
 	/**
-	* @desc		出撃トリガーイテレーターの生成
-	* @param	出撃トリガーイテレーター
-	*/
+	 * @desc	出撃トリガーイテレーターの生成
+	 * @param	出撃トリガーイテレーター
+	 */
 	std::shared_ptr<CLaunchTriggerIterator> iterator() {
 		return std::shared_ptr<CLaunchTriggerIterator>(new CLaunchTriggerIterator(this));
 	}
@@ -331,15 +291,15 @@ public:
 	CLauncher* m_pLauncher = NULL;
 
 	/**
-	* @desc		発射台の生成
-	* @param	発射台に設定する出撃スケジュールのアドレス
-	*/
+	 * @desc	発射台の生成
+	 * @param	発射台に設定する出撃スケジュールのアドレス
+	 */
 	void createLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule);
 
 	/**
-	* @desc		キャラクターの出撃
-	* @param	取り付けるレイヤー
-	*/
+	 * @desc	キャラクターの出撃
+	 * @param	取り付けるレイヤー
+	 */
 	void launchCharacter(cocos2d::Layer* pLayer);
 
 };

@@ -2,167 +2,129 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "EnemyFactory.h"
-#include "../EnemyCharacter/EnemyCharacter.h"
-
-
 
 //================================================
 // キャラクターパーツクラス工場
 //	（AbstractFactory）
 //================================================
+//デストラクタ
+CEnemeyPartsFactory::~CEnemeyPartsFactory(){}
 
-
+//移動データの実体を生成し取得
 CMove* CEnemeyPartsFactory::getMove() {
-	//移動データの作成
 	return new CMove();
 }
 
-
+//物理演算群データの実体を生成し取得
 std::vector<CPhysical* >* CEnemeyPartsFactory::getPhysicals() {
-	//適用させる物理演算作成
-	std::vector<CPhysical* >* pPhysicals = new std::vector<CPhysical*>;
-
-	return pPhysicals;
+	return new std::vector<CPhysical*>();
 }
 
+//アクション群データの実体を生成し取得
 std::vector<CAction* >* CEnemeyPartsFactory::getActions() {
-	//適用させる物理演算作成
-	std::vector<CAction* >* pActions = new std::vector<CAction*>();
-
-	return pActions;
+	return new std::vector<CAction*>();
 }
 
+//アニメーション群データの実体を生成し取得
 std::vector<CAnimation* >* CEnemeyPartsFactory::getAnimations() {
-	//適用させる物理演算作成
-	std::vector<CAnimation* >* pAnimations = new std::vector<CAnimation*>;
-
-	return pAnimations;
+	return new std::vector<CAnimation*>();
 }
 
-
+//実体データの実体を生成し取得
 CBody* CEnemeyPartsFactory::getBody() {
-	//実体データの作成
 	return new CBody();
 }
 
+//衝突判定空間群データの実体を生成し取得
 std::vector<CCollisionArea* >* CEnemeyPartsFactory::getCollisionAreas() {
-	//	衝突判定空間の生成
-	std::vector<CCollisionArea* >* pCollisionAreas = new std::vector<CCollisionArea*>();
-
-	return pCollisionAreas;
+	return new std::vector<CCollisionArea*>();
 }
 
 
 //================================================
 // メイデッド工場
 //================================================
-void CMaideadFactory::settingMove(CEnemyCharacter* pCharacter, float posX, float posY) {
+void CMaideadFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY) {
 
 	//初期位置の設定
-	pCharacter->m_pMove->m_pos.set(posX,posY);
-	// 初期速度
-	pCharacter->m_pMove->m_vel.set(-1.0f, 0.0f);
+	pChara->m_pMove->m_pos.set(posX,posY);
+	//初期速度
+	pChara->m_pMove->m_vel.set(-1.0f, 0.0f);
 }
-void CMaideadFactory::settingTexture(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingTexture(CEnemyCharacter* pChara) {
 	//テクスチャの設定
-	pCharacter->setTexture(IMAGE_MEIDEAD);
+	pChara->setTexture(IMAGE_MEIDEAD);
 }
 
-void CMaideadFactory::settingAnimations(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingAnimations(CEnemyCharacter* pChara) {
 
 
 	//直立アニメーションの設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
+	(*pChara->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
 
 }
 
-void CMaideadFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingPhysicals(CEnemyCharacter* pChara) {
+	//歩行キャラには重力つける
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+}
 
-	// 歩行キャラには重力つける
-	pCharacter->m_pPhysicals->push_back(new CPhysicalGravity());
+void CMaideadFactory::settingActions(CEnemyCharacter* pChara) {
 
 }
 
-void CMaideadFactory::settingActions(CEnemyCharacter* pCharacter) {
-
-}
-
-void CMaideadFactory::settingBody(CEnemyCharacter* pCharacter) {
-
-	pCharacter->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
-	
+void CMaideadFactory::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
 }
 
 //衝突判定空間の設定
-void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
+void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 
 	//画面端衝突空間の生成
 	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
-	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pCharacter->m_pBody);
-	//画面端領域の生成
-	CCollisionTerritory* pEndOfScreenBottomTerritory = new CCollisionTerritoryEndOfScreenBottom();
-	//画面端領域と衝突した際のイベントコールバック設定
-	pEndOfScreenBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
 
-	//画面端の衝突判定空間に領域を設定
-	//画面端の領域を設定
-	pEndOfScreenArea->addTerritory(pEndOfScreenBottomTerritory);
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
 	//画面左端領域の生成と取り付け
 	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
 	//画面端の衝突判定を取り付ける
-	pCharacter->m_pCollisionAreas->push_back(pEndOfScreenArea);
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
 
 
 	//マップ衝突空間の生成
-	CCollisionArea* pMapArea = new CCollsionAreaMap();
-	//マップチップ領域と衝突した際のイベントコールバックを設定
-	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
-	//下のマップチップ領域と衝突した際のイベントコールバックを設定
-	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 32.0f);
 
-	//マップチップ衝突空間に領域を設定
-	//マップチップ領域を設定
-	pMapArea->addTerritory(pMapChipBottomTerritory);
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
 
-	//基準点の設定
-	for (int i = 1; i < 4; i++) {
-		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(32 - i *4 , -32)));
-
-		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(32 - i * 4, 32)));
-
-		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32,32 - i *4)));
-
-		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32,32 - i *4)));
-	}
-
 	//画面端の衝突判定を取り付ける
-	pCharacter->m_pCollisionAreas->push_back(pMapArea);
-
+	pChara->m_pCollisionAreas->push_back(pMapArea);
 }
 
 
 
-void CMaideadFactory::settingInitialize(CEnemyCharacter* pCharacter) {
-	//状態の設定
-	//pCharacter->m_state = (int)CEnemyCharacter::STATE::FALING;
+void CMaideadFactory::settingInitialize(CEnemyCharacter* pChara) {
+	//状態を待機状態に変更
+	pChara->m_state = (int)CEnemyCharacter::STATE::STAND;
 
 	//有効フラグを立てる
-	pCharacter->m_activeFlag = true;
-	pCharacter->m_isAlive = true;
-	/*
-	*　計算データのままで起動すると1フレームずれが発生するので
-	*　初期化時に最後に値をSpriteに反映する
-	*/
-	pCharacter->applyFunc();
+	pChara->m_activeFlag = true;
+	
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+	
+	//現在の移動データとアニメーションを反映させる。
+	pChara->applyFunc();
 
 }
 
@@ -171,113 +133,87 @@ void CMaideadFactory::settingInitialize(CEnemyCharacter* pCharacter) {
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
-void CBatFactory::settingMove(CEnemyCharacter* pCharacter,float x, float y) {
-
+void CBatFactory::settingMove(CEnemyCharacter* pChara,float x, float y) {
 	//初期位置の設定
-	pCharacter->m_pMove->m_pos.set(x, y);
-	// 初期速度
-	pCharacter->m_pMove->m_vel.set(0.0f, 0.0f);
+	pChara->m_pMove->m_pos.set(x, y);
+	//初期速度
+	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
 }
 
-void CBatFactory::settingTexture(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingTexture(CEnemyCharacter* pChara) {
 	//テクスチャの設定
-	pCharacter->setTexture(IMAGE_BAT);
-
+	pChara->setTexture(IMAGE_BAT);
 }
 
-void CBatFactory::settingAnimations(CEnemyCharacter* pCharacter) {
-
+void CBatFactory::settingAnimations(CEnemyCharacter* pChara) {
 	//直立アニメーションの設定
-	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pCharacter->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
+	(*pChara->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
 
 }
 
-void CBatFactory::settingPhysicals(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingPhysicals(CEnemyCharacter* pChara) {
 
 }
 
-void CBatFactory::settingActions(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingActions(CEnemyCharacter* pChara) {
 	
 
 }
 
-void CBatFactory::settingBody(CEnemyCharacter* pCharacter) {
-
-	pCharacter->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
+void CBatFactory::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
 }
 
 //衝突判定空間の設定
-void CBatFactory::settingCollisionArea(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 
 	//画面端衝突空間の生成
-	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
-	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pCharacter->m_pBody);
-	//画面端領域の生成
-	CCollisionTerritory* pEndOfScreenBottomTerritory = new CCollisionTerritoryEndOfScreenBottom();
-	//画面端領域と衝突した際のイベントコールバック設定
-	pEndOfScreenBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
 
-	//画面端の衝突判定空間に領域を設定
-	//画面端の領域を設定
-	//pEndOfScreenArea->addTerritory(pEndOfScreenBottomTerritory);
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
 	//画面左端領域の生成と取り付け
-	//pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
 	//画面端の衝突判定を取り付ける
-	pCharacter->m_pCollisionAreas->push_back(pEndOfScreenArea);
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
 
 
 	//マップ衝突空間の生成
-	CCollisionArea* pMapArea = new CCollsionAreaMap();
-	//マップチップ領域と衝突した際のイベントコールバックを設定
-	CCollisionTerritory* pMapChipBottomTerritory = new CCollisionTerritoryMapChipBottom();
-	//下のマップチップ領域と衝突した際のイベントコールバックを設定
-	pMapChipBottomTerritory->setEventCallback(&CCharacter::collisionBottomCallback);
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 32.0f);
 
-	//マップチップ衝突空間に領域を設定
-	//マップチップ領域を設定
-	//pMapArea->addTerritory(pMapChipBottomTerritory);
-	//pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
-	//pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
-	//pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
-
-	//基準点の設定
-	for (int i = 0; i < 9; i++) {
-		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(8 * i - (32), -32)));
-
-		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(8 * i - (32), 32)));
-	}
-
-	for (int i = 0; i < 9; i++) {
-		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(32, 8 * i - (32))));
-
-		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		pMapArea->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(-32, 8 * i - (132))));
-	}
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
 
 	//画面端の衝突判定を取り付ける
-	pCharacter->m_pCollisionAreas->push_back(pMapArea);
+	pChara->m_pCollisionAreas->push_back(pMapArea);
 
 }
 
 
 
-void CBatFactory::settingInitialize(CEnemyCharacter* pCharacter) {
+void CBatFactory::settingInitialize(CEnemyCharacter* pChara) {
 
-	
+	//状態を待機状態に変更
+	pChara->m_state = (int)CEnemyCharacter::STATE::STAND;
 
 	//有効フラグを立てる
-	pCharacter->m_activeFlag = true;
-	pCharacter->m_isAlive = true;
-	/*
-	*　計算データのままで起動すると1フレームずれが発生するので
-	*　初期化時に最後に値をSpriteに反映する
-	*/
-	pCharacter->applyFunc();
+	pChara->m_activeFlag = true;
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+	
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
 
 }
 
@@ -291,9 +227,12 @@ CEnemyFactoryManager* CEnemyFactoryManager::m_pEnemyFactoryManager = NULL;
 //インスタンスの取得
 CEnemyFactoryManager* CEnemyFactoryManager::getInstance() {
 
+	//共有インスタンスが存在していなければ
 	if (CEnemyFactoryManager::m_pEnemyFactoryManager == NULL) {
+		//共有インスタンスを生成
 		CEnemyFactoryManager::m_pEnemyFactoryManager = new CEnemyFactoryManager();
 	}
 
+	//共有のインスタンスを返す。
 	return CEnemyFactoryManager::m_pEnemyFactoryManager;
 }

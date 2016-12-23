@@ -37,11 +37,11 @@ enum class BLOCK_TYPE :int {
 //		ブロック番号に依存
 //=========================================================================
 enum class ENEMY_TYPE :int {
-	NONE	 = 0,		//何もない
-	KURIBO  =101,
-	MAIDEAD = 102,		//メイド
-	BAT = 103,		//コウモリ
-	REDMAIDEAD = 104,	//赤クリボー
+	NONE		= 0,	//何もない
+	KURIBO		= 101,	//通常クリボー
+	MAIDEAD		= 102,	//メイド
+	BAT			= 103,	//コウモリ
+	REDMAIDEAD	= 104,	//赤クリボー
 	BLUEMAIDEAD = 105,	//青クリボー
 
 };
@@ -49,13 +49,6 @@ enum class ENEMY_TYPE :int {
 //ギミックの種類
 enum class GIMMICK_TYPE :int {
 	NONE = -1,
-	/*
-	DAMAGE = 11,
-	ROLL = 25,
-	TIKUWA = 10,
-	NOTE = 13,
-	HATENA = 26,
-	*/
 };
 
 //=========================================================================
@@ -74,24 +67,10 @@ public:
 
 	};
 
-		/*
-		//=========================================================================
-		//	マップタイプ
-		//=========================================================================
-		enum class MAP_CHIP_TYPE :int {
-
-			NOMAL			= 0,	//通常マップ
-			LAUNCH_ENEMY	= 1,	//敵出現用マップ
-
-		};
-		*/
-
 	//=========================================================================
 	//	マップタイプによるレイヤーの名前
 	//=========================================================================
 	std::vector<std::string>m_layerName{
-
-		//"main",
 		"normal",
 		"launchenemy",
 		"gimmick",
@@ -153,27 +132,27 @@ public:
 	bool hitTestObject(float posX, float posY);
 
 	/**
-	* @desc	タイル番号確認
-	* @param	2次元配列上の位置X
-	* @param	2次元配列上の位置Y
-	* @param	レイヤータイプ
-	* @return	ブロックの種類
-	* @tips		checkTileという名前にしてるのは
-	*			enchant.js にはデフォルトでマップクラスに
-	*			checkTileという関数が存在しいていて
-	*			同じ機能を持っているので名前を統一している
-	*/
+	 * @desc	タイル番号確認
+	 * @param	2次元配列上の位置X
+	 * @param	2次元配列上の位置Y
+	 * @param	レイヤータイプ
+	 * @return	ブロックの種類
+	 * @tips	checkTileという名前にしてるのは
+	 *  		enchant.js にはデフォルトでマップクラスに
+	 *			checkTileという関数が存在しいていて
+	 *			同じ機能を持っているので名前を統一している
+	 */
 	BLOCK_TYPE checkTile(float posX, float posY , LAYER_TYPE = LAYER_TYPE::NOMAL);
 	
 
 	/**
-	* @desc	タイルの変更
-	* @param	変更するマップチップID(タイル番号、ブロック番号、マップチップ番号)
-	* @param	点が衝突しているタイル、その点のｘ座標
-	* @param	点が衝突しているタイル、その点のｙ座標
-	* @param	レイヤータイプ
-	* @return	true...成功	
-	*/
+	 * @desc	タイルの変更
+	 * @param	変更するマップチップID(タイル番号、ブロック番号、マップチップ番号)
+	 * @param	点が衝突しているタイル、その点のｘ座標
+	 * @param	点が衝突しているタイル、その点のｙ座標
+	 * @param	レイヤータイプ
+	 * @return	true...成功	
+	 */
 	bool changeTile(int mapChipID, float posX, float posY, LAYER_TYPE = LAYER_TYPE::NOMAL);
 
 

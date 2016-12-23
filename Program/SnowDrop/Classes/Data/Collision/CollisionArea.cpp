@@ -614,21 +614,26 @@ CCollsionAreaMap::CCollsionAreaMap(){}
 
 //コンストラクタ
 CCollsionAreaMap::CCollsionAreaMap(CBody* pBody,float width, float height) {
+
+	//繰り返し回数を設定
+	float repetitionNumber = (pBody->m_right - pBody->m_left) / (CMapManager::getInstance()->getMap()->getTileSize().width * 0.5f);
 	//基準点の設定
-	for (int i = 1; i < 8; i++) {
+	for (int i = 1; i < repetitionNumber; i++) {
 		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(width + (16.0f * i), pBody->m_bottom)));
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(width - (16.0f * i), pBody->m_bottom)));
 
 		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(width + (16.0f * i), pBody->m_top)));
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(width - (16.0f * i), pBody->m_top)));
 	}
 
-	for (int i = 1; i < 16; i++) {
+	//繰り返し回数を設定
+	repetitionNumber = (pBody->m_top - pBody->m_bottom) / (CMapManager::getInstance()->getMap()->getTileSize().height * 0.5f);
+	for (int i = 1; i < repetitionNumber; i++) {
 		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(pBody->m_right * 0.5f, height + (16.0f * i))));
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(pBody->m_right * 0.5f, height - (16.0f * i))));
 
 		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(pBody->m_left * 0.5f, height + (16.0f * i))));
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(pBody->m_left * 0.5f, height - (16.0f * i))));
 	}
 
 }

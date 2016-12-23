@@ -47,7 +47,7 @@ void CPlayerCharacterBoy::moveFunc() {
 	//入力処理
 	this->inputFunc();
 
-	//アクション状態の更新処理
+	//アクションの更新処理
 	for (CAction* pAction : (*this->m_pActions)) {
 		pAction->update(this);
 	}
