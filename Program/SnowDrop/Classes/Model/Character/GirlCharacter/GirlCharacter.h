@@ -59,11 +59,21 @@ public:
 	// CPlayerCharacterGirlクラス専用メンバ
 	//================================================
 	//少女の状態
-	enum class GIRL_STATE {
+	enum class GIRL_STATE : int{
 		STAND	= 0,	//待機
 	};
 
+	//プレイヤーと少女の状態
+	enum class PAYER_GIRL_STATE : int{
+		FREE	= 0,	//なにもなし
+	};
+
+	
+
 	//少女の状態
 	int m_state = (int)GIRL_STATE::STAND;
+
+	//プレイヤーと少女の状態
+	int m_playerAndGirlState = (int)PAYER_GIRL_STATE::FREE;
 
 };

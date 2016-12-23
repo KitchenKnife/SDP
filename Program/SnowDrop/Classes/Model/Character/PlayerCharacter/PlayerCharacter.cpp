@@ -175,4 +175,10 @@ void  CPlayerCharacterBoy::inputFunc() {
 		//ジャンプを開始させる
 		(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
 	}
+
+	if (pointerInputController->getAttackFlag() == true) {
+		//攻撃を開始させる。
+		(*this->m_pActions)[(int)PLAYER_ACTION::ATTACK]->start();
+	}
+
 }

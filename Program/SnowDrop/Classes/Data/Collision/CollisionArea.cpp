@@ -617,23 +617,29 @@ CCollsionAreaMap::CCollsionAreaMap(CBody* pBody,float width, float height) {
 
 	//繰り返し回数を設定
 	float repetitionNumber = (pBody->m_right - pBody->m_left) / (CMapManager::getInstance()->getMap()->getTileSize().width * 0.5f);
+
+	//マップチップのタイルのサイズを取得する
+	cocos2d::Size tileSize = CMapManager::getInstance()->getMap()->getTileSize();
+
+
+
 	//基準点の設定
 	for (int i = 1; i < repetitionNumber; i++) {
-		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(width - (16.0f * i), pBody->m_bottom)));
+		//下のマップチップ衝突空間に衝突を行う下の基準点を設定（下にすり抜けないようにxをタイルサイズの半分づつずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::BOTTOM, cocos2d::Point(width - (tileSize.height * 0.5f * i), pBody->m_bottom)));
 
-		//上のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(width - (16.0f * i), pBody->m_top)));
+		//上のマップチップ衝突空間に衝突を行う上の基準点を設定（上にすり抜けないようにxをタイルサイズの半分づつずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::TOP, cocos2d::Point(width - (tileSize.height * 0.5f * i), pBody->m_top)));
 	}
 
 	//繰り返し回数を設定
 	repetitionNumber = (pBody->m_top - pBody->m_bottom) / (CMapManager::getInstance()->getMap()->getTileSize().height * 0.5f);
 	for (int i = 1; i < repetitionNumber; i++) {
-		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(pBody->m_right * 0.5f, height - (16.0f * i))));
+		//右のマップチップ衝突空間に衝突を行う下の基準点を設定（右にすり抜けないようにyをタイルサイズの半分づつずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::RIGHT, cocos2d::Point(pBody->m_right * 0.5f, height - (tileSize.width * 0.5f * i))));
 
-		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（下に落ちないようにxをちょっとずらす）
-		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(pBody->m_left * 0.5f, height - (16.0f * i))));
+		//左のマップチップ衝突空間に衝突を行う下の基準点を設定（左にすり抜けないようにyをタイルサイズの半分づつずらす）
+		this->addBasePoint(new CCollisionBasePoint(TERRITORY_TYPE::LEFT, cocos2d::Point(pBody->m_left * 0.5f, height - (tileSize.width * 0.5f * i))));
 	}
 
 }
@@ -651,6 +657,7 @@ void CCollsionAreaMap::collision(CCharacter* pChara) {
 
 			//基準点の中に登録されている衝突判定領域タイプが一致したらその基準点で衝突判定を行う
 			if (pBasePt->m_type == pTerritory->m_type) {
+				//それぞれの領域で基準点との衝突判定を行い、必要な処理を行う。
 				pTerritory->collision(pChara, pBasePt->m_pt);
 			}
 		}
@@ -697,6 +704,7 @@ void CCollsionAreaMapObject::collision(CCharacter* pChara)
 
 			//基準点の中に登録されている衝突判定領域タイプが一致したらその基準点で衝突判定を行う
 			if (pBasePt->m_type == pTerritory->m_type) {
+				//それぞれの領域で基準点との衝突判定を行い、必要な処理を行う。
 				pTerritory->collision(pChara, pBasePt->m_pt);
 			}
 		}
@@ -735,6 +743,7 @@ void CCollsionAreaOutOfScreen::collision(CCharacter* pChara) {
 
 			//基準点の中に登録されている衝突判定領域タイプが一致したらその基準点で衝突判定を行う
 			if (pBasePt->m_type == pTerritory->m_type) {
+				//それぞれの領域で基準点との衝突判定を行い、必要な処理を行う。
 				pTerritory->collision(pChara, pBasePt->m_pt);
 			}
 		}
