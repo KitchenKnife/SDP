@@ -246,6 +246,9 @@
     <ClCompile Include="..\Classes\Lib\Input\InputFlag.cpp">
       <Filter>src\Lib\Input</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
+      <Filter>src\Lib\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Input\InputFlag.h">
       <Filter>src\Lib\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
+      <Filter>src\Lib\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
