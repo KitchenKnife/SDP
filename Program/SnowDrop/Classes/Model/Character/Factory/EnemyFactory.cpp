@@ -3,9 +3,6 @@
 //
 #include "EnemyFactory.h"
 #include "../EnemyCharacter/EnemyCharacter.h"
-#include "Data/ActionController/EnemyActionController/EnemyActionController.h"
-#include "Data/ActionController/EnemyActionController/EnemyActionPursuit/EnemyActionPursuit.h"
-#include "Data/ActionController/EnemyActionController/EnemyActionAttack/EnemyActionAttack.h"
 
 
 

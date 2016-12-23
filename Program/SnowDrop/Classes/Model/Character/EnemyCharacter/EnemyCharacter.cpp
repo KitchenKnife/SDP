@@ -12,7 +12,6 @@
 #include "Lib/Input/InputManager.h"
 #include "Model/Map/Map.h"
 #include "Data/ActionController/ActionController.h"
-#include "Data/ActionController/EnemyActionController/EnemyActionController.h"
 
 
 //================================================	

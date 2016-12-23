@@ -147,8 +147,9 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
  * @tips 移動処理で呼び出す
  */
 void  CPlayerCharacterBoy::inputFunc() {
-
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController(CONTROLLER_TYPE::KEYBORD);
+	
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
 	//左へ移動（歩行）

@@ -20,6 +20,22 @@ enum class CONTROLLER_TYPE : int
 	GAMEPAD = 1, //ゲームパッド
 };
 
+//==========================================
+//
+// Struct: CONTROLLER_STATE
+//
+// ゲームパッド状態管理 構造体
+//
+// 2016/12/22
+//						Author Shinya Ueba
+//==========================================
+
+
+struct CONTROLER_STATE
+{
+	XINPUT_STATE state;
+	bool boolConnected;
+};
 
 
 /*
@@ -37,6 +53,16 @@ private:
 	
 	// 共有インスタンス
 	static CInputManager* m_sharedInputManager ;
+
+
+	//ゲームパッド最大接続数(今回は１)
+	static const int MAX_CONTROLLERS = 1;
+
+	//ゲームパッド状態データ群
+	CONTROLER_STATE m_controllers[MAX_CONTROLLERS];
+
+	CONTROLLER_TYPE m_controllerType = CONTROLLER_TYPE::KEYBORD;
+
 public:
 	// アクセスポイント
 	static CInputManager* getInstance() ;
@@ -51,6 +77,39 @@ private:
 	std::vector<CInputController* >* m_pInputControllers = NULL;
 	
 public:
+	/**
+	* @desc 更新処理
+	*/
+	void update(void);
+
+
+	/**
+	* @desc GamePadの接続状態の更新
+	*/
+	HRESULT updateGamePadConnectState(void);
+
+	/**
+	* @desc GamePadの入力状態の更新
+	*/
+	void updateGamePadInputState(void);
+
+
+
+	/**
+	*	@desc	キーコードからキータイプに変換
+	*	@param	キーコード
+	*	@return	キータイプ
+	*/
+	void changeToInputTypeFromXInput(DWORD wBottons);
+
+
+	/**
+	*	@desc	キーコードからキータイプに変換
+	*	@param	キーコード
+	*	@return	キータイプ
+	*/
+	void checkPressBotton(DWORD wBottons, BYTE mask,int setType);
+
 	/**
 	 *	@desc	キーコードからキータイプに変換
 	 *	@param	キーコード
@@ -76,14 +135,17 @@ public:
 	/**
 	 *	@desc	入力フラグのクリア
 	 */
-	void clearInputFlag(CONTROLLER_TYPE type) ;
+	void clearInputFlag(void) ;
+
+
+	
 
 	/**
 	*	@desc	入力コントローラーの取得
 	*	@param	コントローラータイプ
 	*	@return	入力コントローラー
 	*/
-	CInputController* getInputController(CONTROLLER_TYPE type);
+	CInputController* getInputController(void);
 } ;
 
 //EOF

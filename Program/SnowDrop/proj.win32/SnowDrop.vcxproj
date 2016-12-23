@@ -84,7 +84,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -146,13 +146,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionController.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.cpp" />
     <ClCompile Include="..\Classes\Data\Animation\Animation.cpp" />
     <ClCompile Include="..\Classes\Data\Collision\Collision.cpp" />
     <ClCompile Include="..\Classes\Data\Collision\CollisionArea.cpp" />
@@ -192,13 +185,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Constants.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionController.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.h" />
     <ClInclude Include="..\Classes\Data\Animation\Animation.h" />
     <ClInclude Include="..\Classes\Data\Collision\Collision.h" />
     <ClInclude Include="..\Classes\Data\Collision\CollisionArea.h" />

@@ -18,7 +18,6 @@
 #include "Model/Character/Factory/EnemyFactory.h"
 
 //プレイヤーの武器アクション
-#include "Data/ActionController/PlayerActionController/PlayerWeaponActionController/PlayerWeaponActionController.h"
 
 // 入力
 #include "Lib/Input/InputManager.h"
@@ -239,8 +238,11 @@ void CGameMain::scroll() {
  */
 void CGameMain::update( float deltaTime_ ) {
 	
+	//入力状態の更新処理
+	CInputManager::getInstance()->update();
+
 	// esc キーを押したらゲーム終了
-	if ( CInputManager::getInstance()->getInputController(CONTROLLER_TYPE::KEYBORD)->getGameExitFlag())
+	if ( CInputManager::getInstance()->getInputController()->getGameExitFlag())
 	{
 		cocos2d::Director::getInstance()->end() ;
 	}
