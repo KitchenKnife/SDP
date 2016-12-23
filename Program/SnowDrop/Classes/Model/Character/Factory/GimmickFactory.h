@@ -18,7 +18,7 @@ class CGimmickCharacter;
 class CGimmickPartsFactory /*:public CCharacterPartsFactory*/ {
 public:
 
-	~CGimmickPartsFactory() {}
+	virtual ~CGimmickPartsFactory() {}
 
 	std::vector<CAnimation* >* getAnimations();
 	CMove* getMove();
@@ -37,7 +37,7 @@ public:
 class CGimmickFactory {
 public:
 
-	~CGimmickFactory() {}
+	virtual ~CGimmickFactory() {}
 
 	//ギミックの生成と組み立て
 	//派生先によって違うギミックの生成
@@ -96,6 +96,9 @@ public:
 //================================================
 class CGimmickCreateFactory :public CGimmickFactory {
 public:
+
+	//デストラクタ
+	virtual ~CGimmickCreateFactory() {}
 
 	//ギミックの生成と組み立て
 	CGimmickCharacter* createGimmick()override;

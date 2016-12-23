@@ -105,6 +105,22 @@ bool CKeyboardInputController::getGameExitFlag(void)
 
 
 /**
+*	@desc デバッグモードフラグ取得
+*	@return true...入力あり　false...入力なし
+*/
+bool CKeyboardInputController::getDebugModeFlag(void)
+{
+	//デバッグ用
+#ifdef _DEBUG
+	return this->m_inputFlag.isKeyPressed((int)kInputType::D);
+#endif // DEBUG
+
+	return false;
+}
+
+
+
+/**
 * @desc 入力フラグインスタンスの取得
 * @return　 入力フラグインスタンス
 */

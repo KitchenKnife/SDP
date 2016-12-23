@@ -48,7 +48,7 @@ public:
 class CPlayerBoyFactory {
 public:
 	//デストラクタ
-	~CPlayerBoyFactory() {}
+	virtual ~CPlayerBoyFactory() {}
 
 	//プレイヤーの生成と組み立て
 	//派生先によって違うプレイヤーの生成
@@ -94,7 +94,7 @@ public:
 class CPlayerBoyCreateFactory :public CPlayerBoyFactory {
 public:
 	//デストラクタ
-	~CPlayerBoyCreateFactory(){}
+	virtual ~CPlayerBoyCreateFactory(){}
 
 	//プレイヤーの生成と組み立て
 	CPlayerCharacterBoy* createPlayer()override;

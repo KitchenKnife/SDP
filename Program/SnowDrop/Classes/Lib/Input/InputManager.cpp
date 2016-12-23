@@ -127,19 +127,19 @@ void CInputManager::updateGamePadInputState(void)
 				}
 			}
 			*/
-
-			this->changeToInputTypeFromXInput(wButtons);
+			//全てのボタンの入力状態を確認する
+			this->changeAllBottons(wButtons);
 		}
 	}
 }
 
 
 /**
-*	@desc	キーコードからキータイプに変換
-*	@param	キーコード
-*	@return	キータイプ
+*	@desc	全てのボタンの入力状態を確認する
+*	@param	全ボタンの入力状態
+*	@author Shinya Ueba
 */
-void CInputManager::changeToInputTypeFromXInput(DWORD wBottons)
+void CInputManager::changeAllBottons(DWORD wBottons)
 {
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_UP,(int)GamePadInputType::DPAD_UP);
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_DOWN, (int)GamePadInputType::DPAD_DOWN);
@@ -155,26 +155,19 @@ void CInputManager::changeToInputTypeFromXInput(DWORD wBottons)
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_B, (int)GamePadInputType::B);
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_X, (int)GamePadInputType::X);
 	checkPressBotton(wBottons, XINPUT_GAMEPAD_Y, (int)GamePadInputType::Y);
-
 }
 
 /**
-*	@desc	キーコードからキータイプに変換
-*	@param	キーコード
-*	@return	キータイプ
-*/
-void CInputManager::checkPressBotton(DWORD wBottons, DWORD mask,int setType)
+*	@desc	ボタンの入力状態を確認する
+*	@param　全ボタンの入力状態
+*	@param	ビットマスク
+*	@param	設定するキータイプ
+*	@author Shinya Ueba
+*/void CInputManager::checkPressBotton(DWORD wBottons, DWORD mask,int setType)
 {
-
-	cocos2d::log("INPUT%ld", (wBottons));
-	cocos2d::log("BYTE%ld", (mask));
-	//cocos2d::log("%ld", (wBottons & mask));
-
 	CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)CONTROLLER_TYPE::GAMEPAD]->getInputFlagInstance();
 	if (wBottons & mask)
-	{
-		
-		cocos2d::log("HEY");
+	{		
 		pointerInputFlag->up(setType);
 	}
 	else
