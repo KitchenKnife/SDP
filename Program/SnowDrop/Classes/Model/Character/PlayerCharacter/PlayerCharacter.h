@@ -37,6 +37,13 @@ public:
 	//================================================ 
 	// キャラクタークラスのオーバーライドさせる関数群
 	//================================================
+
+	/**
+	*	@desc 継承キャラクター個別の更新処理
+	*	@author Shinya Ueba
+	*/
+	virtual void updatePersonal(void)override;
+
 	//移動処理
 	virtual void moveFunc();
 

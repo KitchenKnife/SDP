@@ -36,6 +36,15 @@ bool CPlayerCharacterBoy::init() {
 }
 
 
+/**
+*	@desc 継承キャラクター個別の更新処理
+*	@author Shinya Ueba
+*/
+void CPlayerCharacterBoy::updatePersonal(void)
+{
+
+
+}
 
 //移動処理
 void CPlayerCharacterBoy::moveFunc() {

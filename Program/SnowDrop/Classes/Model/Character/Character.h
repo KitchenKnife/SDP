@@ -1,7 +1,7 @@
 /*
  * Character.h
  *
- *	2016/11/07	Osumi And Harada
+ *	2016/11/07	Osumi And Harada And Shinya Ueba
  *
  */
 
@@ -17,6 +17,7 @@
 #include "Data/Collision/Collision.h"
 #include "Data/Collision/CollisionArea.h"
 #include "Data/Status/Status.h"
+#include "Data/StateMachine/StateMachine.h"
 
 //================================================
 // キャラクタータイプ
@@ -75,6 +76,10 @@ public:
 	//衝突判定空間データ群
 	std::vector<CCollisionArea*>* m_pCollisionAreas = NULL;
 
+	//状態遷移データ
+	CStateMachine* m_pStateMachine = NULL;
+
+
 	//有効フラグ
 	//表示・非表示関連
 	bool m_activeFlag = false;
@@ -94,6 +99,14 @@ protected:
 	// キャラクタークラスの基本的な関数の列挙
 	//	以下の関数はすべてのキャラクター派生クラス内でオーバーライドさせる。
 	//================================================
+	
+	/**
+	*	@desc 継承キャラクター個別の更新処理
+	*	@author Shinya Ueba
+	*/
+	virtual void updatePersonal(void) {};
+	
+	
 	//移動処理
 	virtual void moveFunc() = 0;
 
@@ -253,4 +266,6 @@ public:
 	virtual CBody* getBody() = 0;
 	//衝突判定空間データ群の実体を生成して返す
 	virtual std::vector<CCollisionArea* >* getCollisionAreas() = 0;
+	//状態遷移データの生成と取得
+	virtual	CStateMachine*	getStateMachine(void) { return NULL; }
 };
