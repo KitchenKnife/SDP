@@ -26,11 +26,8 @@
 #include <stdlib.h>
 #include <time.h>
 // サウンド用
-#include "SimpleAudioEngine.h"
+#include "Lib/Sound/AudioManager.h"
 
-
-
-using namespace CocosDenshion;
 //==================================================
 // 　静的メンバ変数の実体
 //==================================================
@@ -82,10 +79,7 @@ void CGameMain::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 CGameMain::~CGameMain() {
 
 	// BGM の停止
-	SimpleAudioEngine::getInstance()->stopBackgroundMusic() ;
-	
-	// 全ての効果音を停止
-	SimpleAudioEngine::getInstance()->stopAllEffects() ;
+	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_STAGE1));
 	
 }
 
@@ -181,11 +175,10 @@ bool CGameMain::init() {
 	//拡大に伴う画面位置の設定
 	this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
 
-	//BGMの読み込み
-	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic(SOUND_FILE_BGM_STAGE_FIRST);
-	//BGMの再生
-	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(SOUND_FILE_BGM_STAGE_FIRST, true);
-
+	// BGMの再生
+	int musicID = AudioEngine::play2d(SOUND_FILE_BGM_STAGE_FIRST, true, 0.0f);
+	// ID設定
+	CAudioManager::getInstance()->setMusicID(BGM_STAGE1, musicID);
 
 
 	//=========================================================================
@@ -251,7 +244,10 @@ void CGameMain::update( float deltaTime_ ) {
 	//	ここから更新処理のコードを追加
 	//
 	//=========================================================================
-
+	//=========================================================================
+	// サウンド フェードイン
+	//=========================================================================
+	CAudioManager::getInstance()->fadeIn(BGM_STAGE1);
 
 	//=========================================================================
 	//	出撃スケジューラの起動
