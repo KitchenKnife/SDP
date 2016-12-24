@@ -207,6 +207,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h" />
+    <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h" />
     <ClInclude Include="..\Classes\Data\LaunchData\LaunchData.h" />
     <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h" />
     <ClInclude Include="..\Classes\Data\Move\Move.h" />

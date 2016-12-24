@@ -115,9 +115,6 @@
     <Filter Include="src\Data\Enum">
       <UniqueIdentifier>{c533eac9-b790-4957-91e0-fae38de4abcb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\Enum\Enemy">
-      <UniqueIdentifier>{0b2b9ac0-cdc9-4a62-9855-4f31c8629834}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Data\ActionController\ActionMoveStraight">
       <UniqueIdentifier>{d889f896-7c36-446a-85f0-4c3abef84c03}</UniqueIdentifier>
     </Filter>
@@ -401,9 +398,6 @@
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h">
       <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h">
-      <Filter>src\Data\Enum\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h">
       <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
     </ClInclude>
@@ -418,6 +412,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
       <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h">
+      <Filter>src\Data\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h">
+      <Filter>src\Data\Enum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

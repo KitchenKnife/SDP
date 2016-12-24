@@ -11,6 +11,7 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "PlayerCharacter.h"
 #include "Lib/Input/InputManager.h"
+#include "Data\Enum\EnumPlayer.h"
 
 //================================================	
 //	少年クラスのメンバ関数のコードの追加はここから
@@ -67,8 +68,10 @@ void CPlayerCharacterBoy::moveFunc() {
 //アニメーション処理
 void CPlayerCharacterBoy::animationFunc() {
 
+	cocos2d::log("%d",this->m_animationState);
+
 	//プレイヤーアニメーション
-	(*this->m_pAnimations)[m_playerState]->update();
+	(*this->m_pAnimations)[this->m_animationState]->update();
 
 }
 
@@ -96,15 +99,17 @@ void CPlayerCharacterBoy::checkState()
 	//状態の判定
 	if (this->m_pMove->m_vel.x > 0) {
 		//右歩行状態
-		m_playerState = (int)PLAYER_STATE::WALK_RIGHT;
+//		m_playerState = (int)PLAYER_STATE::WALK_RIGHT;
+		this->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_RIGHT;
 	}
 	else if (this->m_pMove->m_vel.x < 0) {
 		//左歩行状態
-		m_playerState = (int)PLAYER_STATE::WALK_LEFT;
+//		m_playerState = (int)PLAYER_STATE::WALK_LEFT;
+		this->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_LEFT;
 	}
 	else if (this->m_pMove->m_vel.y > 0.0f) {
 		//ジャンプ状態
-		m_playerState = (int)PLAYER_STATE::JUMP;
+//		m_playerState = (int)PLAYER_STATE::JUMP;
 	}
 	else if (this->m_pMove->m_vel.y < 0.0f) {
 		//落下状態
@@ -112,7 +117,9 @@ void CPlayerCharacterBoy::checkState()
 	}
 	else {
 		//待機状態
-		m_playerState = (int)PLAYER_STATE::STAND;
+//		m_playerState = (int)PLAYER_STATE::STAND;
+
+		this->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
 	}
 }
 
@@ -124,7 +131,7 @@ void  CPlayerCharacterBoy::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[m_playerState]->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
 }
 
 

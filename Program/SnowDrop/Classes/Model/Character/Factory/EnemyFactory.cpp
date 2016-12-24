@@ -57,8 +57,7 @@ void CMaideadFactory<Ty>::settingMove(CEnemyCharacter* pChara, float posX, float
 
 	//‰ŠúˆÊ’u‚ÌÝ’è
 	pChara->m_pMove->m_pos.set(posX,posY);
-	//‰Šú‘¬“x
-	//pChara->m_pMove->m_vel.set(-1.0f, 0.0f);
+
 }
 
 template <class Ty>

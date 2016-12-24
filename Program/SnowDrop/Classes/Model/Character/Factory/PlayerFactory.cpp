@@ -9,6 +9,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "PlayerFactory.h"
+#include "Data\Enum\EnumPlayer.h"
 
 //================================================
 // 少年キャラクターパーツクラス工場
@@ -139,6 +140,8 @@ void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
+	
+	/*
 	//待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
 	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
@@ -150,7 +153,42 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//右歩行状態のアニメーションを設定（配列番号２）
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
 	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 256, 256));
+	*/
 
+	//開始時のアニメーションの状態
+	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
+
+	//右待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(1024, 768, 256, 256));
+
+	//左待機 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_LEFT]->addChipData(new CChip(0, 768, 256, 256));
+
+	//右歩行 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
+
+	//左歩行 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 512, 256, 256));
+
+	//装備する のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP]->addChipData(new CChip(768, 0, 256, 256));
+
+	//装備を外す のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP]->addChipData(new CChip(0, 0, 256, 256));
+
+	//手を掴む右向き のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(512, 1024, 256, 256));
+
+	//手を掴む左向き のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 1024, 256, 256));
 }
 
 void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
