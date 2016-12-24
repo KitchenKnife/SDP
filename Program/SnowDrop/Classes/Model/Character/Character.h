@@ -68,7 +68,7 @@ public:
 	std::vector<CPhysical* >* m_pPhysicals = NULL;
 
 	//アクションデータ群マップ配列
-	std::map<int, std::vector<CAction*>*>		m_mapAction;//std::vector<CAction* >* m_pActions = NULL;
+	std::map<int, std::vector<CAction*>*> m_mapAction;
 
 	//実体データ
 	CBody* m_pBody = NULL;

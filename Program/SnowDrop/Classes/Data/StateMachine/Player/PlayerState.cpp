@@ -64,7 +64,7 @@ CPlayerStandState::CPlayerStandState(int nextRegisterKey,CPlayerCharacterBoy* co
 */
 CPlayerStandState::~CPlayerStandState(void)
 {
-
+	
 
 }
 

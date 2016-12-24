@@ -101,7 +101,7 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//待機状態中に行うアクションを生成して取りける
 	pActionIdle->push_back(new CActionIdle());
 	//待機状態アクションをマップ配列に取り付ける
-	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::IDLE, pActionIdle));
+	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::IDLE] = pActionIdle;
 
 	//--------------------------------------------------------------------
 	//
@@ -122,7 +122,7 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//移動アクション中に行うアクションを生成して取りける
 	pActionStraight->push_back(new CActionMoveStraight());
 	//移動アクションをマップ配列に取り付ける
-	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING, pActionStraight));
+	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING] = pActionStraight;
 
 	//--------------------------------------------------------------------
 	//
