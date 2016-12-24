@@ -50,3 +50,22 @@ public:
 };
 
 
+//=========================================================================
+//　エフェクト出撃データ
+//=========================================================================
+class CEffectLaunchData {
+public:
+	//エフェクトのタイプ
+	EFFECT_TYPE m_type;
+	//出現位置
+	cocos2d::Point m_pos;
+
+	//コンストラクタ
+	CEffectLaunchData(EFFECT_TYPE type, cocos2d::Point pos) {
+
+		this->m_type = type;
+		this->m_pos = pos;
+
+	}
+
+};

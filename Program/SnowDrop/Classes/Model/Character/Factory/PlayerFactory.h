@@ -49,10 +49,8 @@ public:
 	virtual ~CPlayerBoyFactory() {}
 
 	//プレイヤーの生成と組み立て
-	//派生先によって違うプレイヤーの生成
 	virtual CPlayerCharacterBoy* createPlayer() = 0;
 
-	//各々のパーツのセッティング
 	//移動用データの設定
 	virtual void settingMove(CPlayerCharacterBoy* pChara) = 0;
 

@@ -5,9 +5,6 @@
  *
  */
 #include "Data/Effect/Effect.h"
-
-
-
 //================================================
 // 
 // エフェクトの基底クラス
@@ -20,37 +17,16 @@
 CEffect::CEffect(){}
 
 //デストラクタ
-CEffect::~CEffect() {
-	//
-	SAFE_DELETE(this->m_pAnimations);
-
-	SAFE_DELETE(this->m_pMove);
-}
+CEffect::~CEffect() {}
 //初期化処理
 bool CEffect::init(){
 
-	if (Sprite::init() == false) {
+	if (CCharacter::init() == false) {
 		CCLOG("スプライトクラスの初期化に失敗");
 		return false;
 	}
 
-	//エフェクトの更新処理は独自で行うようにする。
-	this->scheduleUpdate();
-
 	return true;
-}
-
-//更新処理
-void CEffect::update(float delta) {
-
-	//移動処理
-	this->moveFunc();
-
-	//アニメーション処理
-	this->animationFunc();
-
-	//反映処理
-	this->applyFunc();
 }
 
 /**
@@ -59,20 +35,52 @@ void CEffect::update(float delta) {
  *			オーバーライドさせる
  */
 void CEffect::moveFunc() {
-	//処理なし。
+	
+	//アクションの更新処理
+	for (CAction* pAction : (*this->m_pActions)) {
+		pAction->update(this);
+	}
+
+	//物理計算
+	for (CPhysical* pPhysical : (*this->m_pPhysicals)) {
+		pPhysical->update(this->m_pMove);
+	}
+
+	//移動計算
+	this->m_pMove->moveBy();
 }
 
 //アニメーション処理
 void CEffect::animationFunc() {
 
 	//アニメーション更新
-	this->m_pAnimations->update();
+	(*this->m_pAnimations)[0]->update();
 
 	//アニメーションの終了フラグを確認
-	if (this->m_pAnimations->isEnd()) {
+	if ((*this->m_pAnimations)[0]->isEnd()) {
 		//終了していればアクティブフラグを false に変更
 		this->m_activeFlag = false;
 	}
+}
+
+//衝突判定処理
+void CEffect::collisionAll() {
+	//空間との衝突判定を行う
+	for (CCollisionArea* pArea : (*this->m_pCollisionAreas)) {
+		pArea->collision(this);
+	}
+
+	//全てのキャラクターとの衝突判定
+	std::vector<CCharacter*>* pCharacters = CCharacterAggregate::getInstance()->get();
+	for (CCharacter* pChara : (*pCharacters)) {
+		//一体のキャラとの衝突判定
+		this->collision(pChara);
+	}
+}
+
+//状態チェック
+void CEffect::checkState() {
+
 }
 
 //反映処理
@@ -82,89 +90,23 @@ void CEffect::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect(this->m_pAnimations->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[0]->getCurrentChip());
 
-}
-
-
-
-//=============================================
-// エフェクト集合体
-//=============================================
-//共有インスタンスの本体
-CEffectAggregate* CEffectAggregate::m_pSareedAggregate = NULL;
-
-//コンストラクタ
-CEffectAggregate::CEffectAggregate() {}
-
-//デストラクタ
-CEffectAggregate::~CEffectAggregate() {}
-
-//共有インスタンスの取得
-CEffectAggregate* CEffectAggregate::getInstance() {
-
-	if (CEffectAggregate::m_pSareedAggregate == NULL) {
-		CEffectAggregate::m_pSareedAggregate = new CEffectAggregate();
-	}
-
-	return CEffectAggregate::m_pSareedAggregate;
-}
-
-//共有インスタンスの破棄
-void CEffectAggregate::removeInstance() {
-	SAFE_DELETE(CEffectAggregate::m_pSareedAggregate);
 }
 
 /**
- * @desc	エフェクトの集まりの参照を設定 
- * @param	設定するエフェクトの集まりのアドレス
+ * @desc	キャラクター1体との衝突判定処理
+ * @param	キャラクターのアドレス
+ * @return	true...衝突した
  */
-void CEffectAggregate::set(std::vector<CEffect*>* pCharacters) {
-	//既に設定されていたら設定しないようにしておく
-	if (this->m_pEffects != NULL)
-		return;
-
-	//設定されていなければ引数のエフェクト群のアドレスを登録する
-	this->m_pEffects = pCharacters;
+bool CEffect::collision(CCharacter* pChara) {
+	return true;
 }
 
 /**
- * @desc	エフェクトの集まりのを取得
- * @return	エフェクトの集まり
+ * @desc	他クラスから衝突判定を受けた際の処理
+ * @param	キャラクターのアドレス
  */
-std::vector<CEffect*>* CEffectAggregate::get() {
-	//エフェクト群のアドレスを返す
-	return this->m_pEffects;
-}
+void CEffect::hits(CCharacter* pChara) {
 
-/**
- * @desc	配列番号から指定したエフェクト１つを取得
- * @param	添え字番号
- * @return	エフェクト
- */
-CEffect* CEffectAggregate::getAt(int index) {
-
-	//最大数以上ならNULLを返すように設定しておく
-	if (this->m_pEffects->size() <= index) {
-		return NULL;
-	}
-
-	//最大数以下ならその指定されたエフェクトを返す
-	return (*this->m_pEffects)[index];
-}
-
-/**
- * @desc	エフェクトの追加
- * @param	追加するエフェクト
- */
-void CEffectAggregate::add(CEffect* pEffe) {
-	this->m_pEffects->push_back(pEffe);
-}
-
-/**
- * @desc	エフェクトの集まりの取り付けられている数を取得
- * @param	取り付けられている数
- */
-int CEffectAggregate::getSize() {
-	return (int)this->m_pEffects->size();
 }
