@@ -29,7 +29,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CStateBase(void);
+	CStateBase(int nextRegisterKey);
 
 	/**
 	* @desc デストラクタ
@@ -56,9 +56,20 @@ public:
 	*/
 	bool isNext(void);
 
+	/**
+	* @desc 次の状態のキーを取得する
+	*/
+	int getNextKey(void);
+
 protected:
 	// 次に行くための条件
 	bool m_isNext = false;
+
+	// 次に行く登録した名前
+	int m_nextRegisterKey;
+
+	// 標準の次に行く登録した名前
+	const int m_defaultNextRegisterKey;
 };
 
 //==========================================
@@ -76,7 +87,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CStateSwitch(CStateBase* const pState, const int nextRegisterKey);
+	CStateSwitch(CStateBase* const pState);
 
 	/**
 	* @desc デストラクタ
@@ -104,7 +115,7 @@ public:
 
 public:
 	// 次に行く登録した名前
-	const int m_nextRegisterKey;
+	int getNextRegisterKey(void);
 
 private:
 	// 親クラス

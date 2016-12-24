@@ -24,16 +24,6 @@ bool CPlayerCharacterGirl::init() {
 	return true;
 }
 
-/**
-*	@desc 継承キャラクター個別の更新処理
-*	@author Shinya Ueba
-*/
-void CPlayerCharacterGirl::updatePersonal(void)
-{
-
-
-}
-
 
 //移動処理
 void CPlayerCharacterGirl::moveFunc() {
@@ -43,9 +33,13 @@ void CPlayerCharacterGirl::moveFunc() {
 		return;
 
 	//アクション状態の更新処理
-	for (CAction* pAction : (*this->m_pActions)) {
-		pAction->update(this);
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
 	}
+
 
 	//物理計算
 	for (CPhysical* pPhysical : (*this->m_pPhysicals)) {

@@ -35,11 +35,7 @@ std::vector<CPhysical* >* CPlayerBoyPartsFactory::getPhysicals() {
 	return new std::vector<CPhysical*>();
 }
 
-//アクション群データの生成と取得
-std::vector<CAction* >* CPlayerBoyPartsFactory::getActions() {
-	//アクション群を作成
-	return new std::vector<CAction*>();
-}
+
 
 //実体データの生成と取得
 CBody* CPlayerBoyPartsFactory::getBody() {
@@ -112,9 +108,6 @@ CPlayerCharacterBoy* CPlayerBoyCreateFactory::createPlayer() {
 	
 	//物理演算群の取得
 	pPlayerBoy->m_pPhysicals = factory.getPhysicals();
-
-	//アクション群の取得
-	pPlayerBoy->m_pActions = factory.getActions();
 	
 	//実体の取得
 	pPlayerBoy->m_pBody = factory.getBody();
@@ -169,7 +162,14 @@ void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
-	pChara->m_pActions->push_back(new CActionJump(3.0f, 4.0f));
+
+	//ジャンプアクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//ジャンプ中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionJump(3.0f,4.0f));
+	//ジャンプアクションをマップ配列に取り付ける
+	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type(0, pActionIdle));
+
 
 }
 
@@ -232,6 +232,9 @@ void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 
 	//細かなタイプ別（タグ）
 	pChara->m_tag = TAG_PLAYER_1;
+
+	//キャラクター状態
+	pChara->m_state = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
 
 	/*
 	 *　計算データのままで起動すると1フレームずれが発生するので

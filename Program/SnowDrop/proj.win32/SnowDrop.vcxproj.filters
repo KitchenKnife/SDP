@@ -94,14 +94,38 @@
     <Filter Include="src\Lib\Sound">
       <UniqueIdentifier>{2fd70ea6-5452-4ffc-aa9e-5f23716da1e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Model\Character\StateMachine">
+      <UniqueIdentifier>{71d468cc-ef17-45f2-9c1f-d902f266dce5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Data\StateMachine">
-      <UniqueIdentifier>{96ea8c10-9d55-4d2b-af15-ab01ee848a20}</UniqueIdentifier>
+      <UniqueIdentifier>{60b0799c-36e8-45e6-b3d3-399aeccc2d06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\StateMachine\Girl">
-      <UniqueIdentifier>{3af16284-0eb1-4cc1-9f80-b698f56e5d7d}</UniqueIdentifier>
+    <Filter Include="src\Data\StateMachine\EnemyState">
+      <UniqueIdentifier>{b1f6efc9-b97a-44b6-934d-93e7b5d21c72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\StateMachine\Player">
-      <UniqueIdentifier>{8d5bdc3e-c178-4b01-8d85-514195fccd58}</UniqueIdentifier>
+    <Filter Include="src\Data\StateMachine\EnemyState\MaideadState">
+      <UniqueIdentifier>{9ffd46c1-9108-45ac-b067-0e4ae0d34368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\GirlState">
+      <UniqueIdentifier>{ad953aa0-7ad0-4888-ad7d-c62cf4c13833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\PlayerState">
+      <UniqueIdentifier>{66d2e083-bf4b-4f66-89db-263b78d85ba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Enum">
+      <UniqueIdentifier>{c533eac9-b790-4957-91e0-fae38de4abcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Enum\Enemy">
+      <UniqueIdentifier>{0b2b9ac0-cdc9-4a62-9855-4f31c8629834}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionMoveStraight">
+      <UniqueIdentifier>{d889f896-7c36-446a-85f0-4c3abef84c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionJump">
+      <UniqueIdentifier>{53192a7e-45d4-4a07-9cfc-acee45aeb08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionIdle">
+      <UniqueIdentifier>{737e30e7-c6fb-40e0-8782-ecaf07374424}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -216,17 +240,32 @@
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
       <Filter>src\Lib\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
-      <Filter>src\Model\Character\Factory</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp">
       <Filter>src\Data\StateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp">
-      <Filter>src\Data\StateMachine\Girl</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp">
-      <Filter>src\Data\StateMachine\Player</Filter>
+      <Filter>src\Data\StateMachine\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp">
+      <Filter>src\Data\StateMachine\GirlState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp">
+      <Filter>src\Data\StateMachine\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp">
+      <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.cpp">
+      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionJump\ActionJump.cpp">
+      <Filter>src\Data\ActionController\ActionJump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\Action.cpp">
+      <Filter>src\Data\ActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.cpp">
+      <Filter>src\Data\ActionController\ActionIdle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,17 +383,35 @@
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
       <Filter>src\Lib\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
-      <Filter>src\Model\Character\Factory</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h">
       <Filter>src\Data\StateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h">
-      <Filter>src\Data\StateMachine\Girl</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h">
-      <Filter>src\Data\StateMachine\Player</Filter>
+      <Filter>src\Data\StateMachine\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h">
+      <Filter>src\Data\StateMachine\GirlState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h">
+      <Filter>src\Data\StateMachine\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h">
+      <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h">
+      <Filter>src\Data\Enum\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h">
+      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionJump\ActionJump.h">
+      <Filter>src\Data\ActionController\ActionJump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\Action.h">
+      <Filter>src\Data\ActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.h">
+      <Filter>src\Data\ActionController\ActionIdle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

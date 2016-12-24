@@ -30,7 +30,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CGirlStandState(void);
+	CGirlStandState(int nextRegisterKey);
 
 	/**
 	* @desc デストラクタ

@@ -29,13 +29,15 @@ public:
 	*	@param ‚g‚o
 	*	@param Å‘å‚g‚o
 	*	@param UŒ‚—Í
+	*	@param ˆÚ“®‘¬“x
 	*/
 
-	void set(int hp, int maxHp, int attackPt) {
+	void set(int hp, int maxHp, int attackPt,int speed) {
 
 		this->m_hp = hp;
 		this->m_maxHp = maxHp;
 		this->m_attackPt = attackPt;
+		this->m_speed = speed; 
 
 	}
 

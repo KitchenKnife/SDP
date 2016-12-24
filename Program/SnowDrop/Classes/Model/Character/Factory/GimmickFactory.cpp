@@ -34,12 +34,7 @@ std::vector<CPhysical* >* CGimmickPartsFactory::getPhysicals() {
 	return pPhysicals;
 }
 
-std::vector<CAction* >* CGimmickPartsFactory::getActions() {
-	//行えるアクション群を作成
-	std::vector<CAction* >* pActions = new std::vector<CAction*>;
 
-	return pActions;
-}
 
 CBody* CGimmickPartsFactory::getBody() {
 	//実体データの作成
@@ -71,8 +66,6 @@ CGimmickCharacter* CGimmickCreateFactory::createGimmick() {
 	pGimmick->m_pAnimations = partsFactories[0]->getAnimations();
 	//適用する物理演算群の取得
 	pGimmick->m_pPhysicals = partsFactories[0]->getPhysicals();
-	//アクション群の取得
-	pGimmick->m_pActions = partsFactories[0]->getActions();
 	//衝突判定用データの取得
 	pGimmick->m_pBody = partsFactories[0]->getBody();
 	//衝突判定空間群の取得
