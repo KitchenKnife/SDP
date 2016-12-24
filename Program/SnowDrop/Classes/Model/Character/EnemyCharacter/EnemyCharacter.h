@@ -82,7 +82,7 @@ public:
 	};
 
 	//アニメーションの状態
-	int m_state = (int)STATE::NONE;
+	//int m_state = (int)STATE::NONE;
 
 	//敵が行えるアクション
 	enum class ACTION :int {
@@ -98,9 +98,5 @@ public:
 	//		
 	//		
 	//================================================
-
-
-
-
 };
 

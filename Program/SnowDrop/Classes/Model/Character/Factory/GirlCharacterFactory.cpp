@@ -39,12 +39,6 @@ std::vector<CPhysical* >* CPlayerGirlPartsFactory::getPhysicals() {
 	return new std::vector<CPhysical*>();
 }
 
-//アクション群データの生成と取得
-std::vector<CAction* >* CPlayerGirlPartsFactory::getActions() {
-	//アクション群を作成
-	return new std::vector<CAction*>();
-}
-
 //実体データの生成と取得
 CBody* CPlayerGirlPartsFactory::getBody() {
 	//実体データの作成
@@ -134,8 +128,6 @@ CPlayerCharacterGirl* CPlayerGirlCreateFactory::createPlayer() {
 	//物理演算群の取得
 	pPlayerGirl->m_pPhysicals = factory.getPhysicals();
 
-	//アクション群の取得
-	pPlayerGirl->m_pActions = factory.getActions();
 
 	//実体の取得
 	pPlayerGirl->m_pBody = factory.getBody();
@@ -248,8 +240,7 @@ void CBasePlayerGirlFactory::settingStateMachine(CPlayerCharacterGirl* pChara)
 	//必要な状態を作成していく
 
 	//立ち状態
-	CStateSwitch* pStandStateSwitch = new CStateSwitch(	new CGirlStandState(),
-														(int)CPlayerCharacterGirl::GIRL_STATE::STAND);
+	CStateSwitch* pStandStateSwitch = new CStateSwitch(new CGirlStandState((int)CPlayerCharacterGirl::GIRL_STATE::STAND));
 	//作成した状態を登録していく
 	pChara->m_pStateMachine->registerState((int)CPlayerCharacterGirl::GIRL_STATE::STAND, pStandStateSwitch);
 

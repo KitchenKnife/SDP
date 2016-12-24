@@ -23,7 +23,6 @@ public:
 	std::vector<CAnimation* >* getAnimations();
 	CMove* getMove();
 	std::vector<CPhysical* >* getPhysicals();
-	std::vector<CAction* >* getActions();
 	CBody* getBody();
 	std::vector<CCollisionArea* >* getCollisionAreas();
 

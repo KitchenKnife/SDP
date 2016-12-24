@@ -2,6 +2,9 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "EnemyFactory.h"
+#include "Data\Enum\EnumEnemy.h"
+#include "Data\StateMachine\Enemy\Maidead\MaideadState.h"
+
 
 //================================================
 // キャラクターパーツクラス工場
@@ -20,10 +23,6 @@ std::vector<CPhysical* >* CEnemeyPartsFactory::getPhysicals() {
 	return new std::vector<CPhysical*>();
 }
 
-//アクション群データの実体を生成し取得
-std::vector<CAction* >* CEnemeyPartsFactory::getActions() {
-	return new std::vector<CAction*>();
-}
 
 //アニメーション群データの実体を生成し取得
 std::vector<CAnimation* >* CEnemeyPartsFactory::getAnimations() {
@@ -40,6 +39,17 @@ std::vector<CCollisionArea* >* CEnemeyPartsFactory::getCollisionAreas() {
 	return new std::vector<CCollisionArea*>();
 }
 
+/**
+*	@desc 状態遷移データの生成と取得
+*	@return 状態遷移データ
+*	@author Shinya Ueba
+*/
+CStateMachine*	CEnemeyPartsFactory::getStateMachine(void)
+{
+	return new CStateMachine();
+}
+
+
 
 //================================================
 // メイデッド工場
@@ -49,7 +59,7 @@ void CMaideadFactory::settingMove(CEnemyCharacter* pChara, float posX, float pos
 	//初期位置の設定
 	pChara->m_pMove->m_pos.set(posX,posY);
 	//初期速度
-	pChara->m_pMove->m_vel.set(-1.0f, 0.0f);
+	//pChara->m_pMove->m_vel.set(-1.0f, 0.0f);
 }
 void CMaideadFactory::settingTexture(CEnemyCharacter* pChara) {
 	//テクスチャの設定
@@ -58,12 +68,13 @@ void CMaideadFactory::settingTexture(CEnemyCharacter* pChara) {
 
 void CMaideadFactory::settingAnimations(CEnemyCharacter* pChara) {
 
+	//開始時のアニメーションの状態
+	pChara->m_animationState = (int)ENEMY_MAIDEAD_ANIMATION_STATE::IDLE;
 
 	//直立アニメーションの設定
 	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pChara->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 0, 64, 64));
-
+	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_STATE::IDLE]->addChipData(new CChip(0, 0, 64, 64));
 }
 
 void CMaideadFactory::settingPhysicals(CEnemyCharacter* pChara) {
@@ -72,6 +83,49 @@ void CMaideadFactory::settingPhysicals(CEnemyCharacter* pChara) {
 }
 
 void CMaideadFactory::settingActions(CEnemyCharacter* pChara) {
+	//開始時のアクションの状態
+	int m_actionState = (int)ENEMY_MAIDEAD_ACTION_STATE::IDLE;
+
+//--------------------------------------------------------------------
+//
+//	待機アクションを設定する ここから
+//
+//--------------------------------------------------------------------
+	
+	//待機状態アクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機状態中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機状態アクションをマップ配列に取り付ける
+	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::IDLE,pActionIdle));
+
+//--------------------------------------------------------------------
+//
+//	ここまで
+//
+//--------------------------------------------------------------------
+
+
+
+//--------------------------------------------------------------------
+//
+//	移動アクションを設定する ここから
+//
+//--------------------------------------------------------------------
+	
+	//移動アクションの生成
+	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
+	//移動アクション中に行うアクションを生成して取りける
+	pActionStraight->push_back(new CActionMoveStraight());
+	//移動アクションをマップ配列に取り付ける
+	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING, pActionStraight));
+
+//--------------------------------------------------------------------
+//
+//	ここまで
+//
+//--------------------------------------------------------------------
+
 
 }
 
@@ -111,17 +165,77 @@ void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 	pChara->m_pCollisionAreas->push_back(pMapArea);
 }
 
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+void CMaideadFactory::settingStateMachine(CEnemyCharacter* pChara)
+{
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_MAIDEAD_STATE::IDLE;
+
+	//必要な状態を作成していく
+
+//--------------------------------------------------------------------
+//
+//	待機状態を設定する ここから
+//
+//--------------------------------------------------------------------
+
+	//待機状態
+	CStateSwitch* pIdleStateSwitch = new CStateSwitch(new CMaideadIdleState((int)ENEMY_MAIDEAD_STATE::IDLE,
+														pChara,
+														NULL,
+														NULL));
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::IDLE, pIdleStateSwitch);
+
+//--------------------------------------------------------------------
+//
+//	ここまで
+//
+//--------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------
+//
+//	徘徊状態を設定する ここから
+//
+//--------------------------------------------------------------------
+
+	//待機状態
+	CStateSwitch* pWanderingStateSwitch = new CStateSwitch(new CMaideadWanderingState((int)ENEMY_MAIDEAD_STATE::CHASE,
+															pChara,
+															NULL,
+															NULL));
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::WANDERING, pWanderingStateSwitch);
+
+//--------------------------------------------------------------------
+//
+//	ここまで
+//
+//--------------------------------------------------------------------
+
+
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)ENEMY_MAIDEAD_STATE::IDLE);
+}
 
 
 void CMaideadFactory::settingInitialize(CEnemyCharacter* pChara) {
-	//状態を待機状態に変更
-	pChara->m_state = (int)CEnemyCharacter::STATE::STAND;
+
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;
 	
 	//生死フラグを立てる
 	pChara->m_isAlive = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3,3,1,1);
 	
 	//現在の移動データとアニメーションを反映させる。
 	pChara->applyFunc();
@@ -199,6 +313,15 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 
 }
 
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+void CBatFactory::settingStateMachine(CEnemyCharacter* pChara)
+{
+
+}
 
 
 void CBatFactory::settingInitialize(CEnemyCharacter* pChara) {
@@ -208,6 +331,9 @@ void CBatFactory::settingInitialize(CEnemyCharacter* pChara) {
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 3);
 
 	//生死フラグを立てる
 	pChara->m_isAlive = true;

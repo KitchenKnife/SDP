@@ -27,12 +27,17 @@ public:
 	virtual CMove* getMove()override;
 	//物理演算群データの実体を生成し取得
 	virtual std::vector<CPhysical* >* getPhysicals()override;
-	//アクション群データの実体を生成し取得
-	virtual std::vector<CAction* >* getActions()override;
 	//実体データの実体を生成し取得
 	virtual CBody* getBody()override;
 	//衝突判定空間群データの実体を生成し取得
 	virtual std::vector<CCollisionArea* >* getCollisionAreas()override;
+	/**
+	*	@desc 状態遷移データの生成と取得
+	*	@return 状態遷移データ
+	*	@author Shinya Ueba
+	*/
+	virtual	CStateMachine*	getStateMachine(void)override;
+
 
 };
 
@@ -61,7 +66,12 @@ protected:
 	virtual void settingBody(CEnemyCharacter* pChara) = 0;
 	//衝突判定空間群データの設定
 	virtual void settingCollisionArea(CEnemyCharacter* pChara) = 0;
-
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	virtual	void settingStateMachine(CEnemyCharacter* pChara) = 0;
 	//その他　初期設定
 	virtual void settingInitialize(CEnemyCharacter* pChara) = 0;
 
@@ -89,6 +99,8 @@ public:
 		this->settingBody(pChara);
 		//衝突判定空間群データの設定
 		this->settingCollisionArea(pChara);
+		//状態遷移マシンの設定
+		this->settingStateMachine(pChara);
 		//その他初期化
 		this->settingInitialize(pChara);
 
@@ -119,9 +131,11 @@ protected:
 		pEnemy->m_pAnimations = pEnemyPartsFactory.getAnimations();
 		
 		pEnemy->m_pPhysicals = pEnemyPartsFactory.getPhysicals();
-		pEnemy->m_pActions = pEnemyPartsFactory.getActions();
 		pEnemy->m_pBody = pEnemyPartsFactory.getBody();
 		pEnemy->m_pCollisionAreas = pEnemyPartsFactory.getCollisionAreas();
+
+		//状態データの生成と取得
+		pEnemy->m_pStateMachine = pEnemyPartsFactory.getStateMachine();
 
 		//　敵返す
 		return pEnemy;
@@ -150,6 +164,14 @@ public:
 	void settingBody(CEnemyCharacter* pChara)override;
 	//衝突判定空間群データの設定
 	void settingCollisionArea(CEnemyCharacter* pChara)override;
+
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
+
 	//その他初期設定
 	void settingInitialize(CEnemyCharacter* pChara)override;
 
@@ -178,6 +200,12 @@ public:
 	void settingBody(CEnemyCharacter* pChara)override;
 	//衝突判定空間群データの設定
 	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
 	//その他初期設定
 	void settingInitialize(CEnemyCharacter* pChara)override;
 
@@ -237,3 +265,4 @@ public:
 
 };
 
+//EOF

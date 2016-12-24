@@ -12,6 +12,12 @@
 //================================================
 #include "Model/Character/Character.h"
 
+
+//================================================
+//　前方宣言
+//================================================
+class CPlayerCharacterGirl;
+
 //================================================
 // 少年クラス
 //
@@ -37,12 +43,6 @@ public:
 	//================================================ 
 	// キャラクタークラスのオーバーライドさせる関数群
 	//================================================
-
-	/**
-	*	@desc 継承キャラクター個別の更新処理
-	*	@author Shinya Ueba
-	*/
-	virtual void updatePersonal(void)override;
 
 	//移動処理
 	virtual void moveFunc();
@@ -72,6 +72,17 @@ public:
 	 */
 	virtual void hits(CCharacter* pChara);
 
+
+	/**
+	* @desc 手をつなげる状態かチェック
+	* @param 相方（少女）
+	* @tips 手をつなげる状態なら"手つなぎフラグ"を上げる
+	* @author Osumi
+	* @author Shinya Ueba
+	*/
+	void checkHoldHands(CPlayerCharacterGirl* pGirl);
+
+
 	//================================================ 
 	// イベントコールバック専用関数の列挙	
 	//================================================
@@ -82,7 +93,7 @@ public:
 	 */
 	virtual void collisionBottomCallback(int event)override {
 		//ジャンプを停止させる。
-		(*this->m_pActions)[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
+		(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
 	}
 
 	//================================================ 
@@ -114,5 +125,9 @@ public:
 	 * @tips	移動処理で呼び出す
 	 */
 	void inputFunc();
+
+private:
+	//手をつなぐことが可能かどうか true...可能 false 無理
+	bool m_enableHoldHands = false;
 
 };

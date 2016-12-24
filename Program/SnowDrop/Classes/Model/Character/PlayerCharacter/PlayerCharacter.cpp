@@ -35,17 +35,6 @@ bool CPlayerCharacterBoy::init() {
 	return true;
 }
 
-
-/**
-*	@desc 継承キャラクター個別の更新処理
-*	@author Shinya Ueba
-*/
-void CPlayerCharacterBoy::updatePersonal(void)
-{
-
-
-}
-
 //移動処理
 void CPlayerCharacterBoy::moveFunc() {
 
@@ -57,9 +46,13 @@ void CPlayerCharacterBoy::moveFunc() {
 	this->inputFunc();
 
 	//アクションの更新処理
-	for (CAction* pAction : (*this->m_pActions)) {
-		pAction->update(this);
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
 	}
+
 	
 	//物理計算
 	for (CPhysical* pPhysical : (*this->m_pPhysicals)) {
@@ -96,7 +89,9 @@ void CPlayerCharacterBoy::collisionAll() {
 }
 
 //状態チェック
-void CPlayerCharacterBoy::checkState() {
+void CPlayerCharacterBoy::checkState() 
+{
+
 
 	//状態の判定
 	if (this->m_pMove->m_vel.x > 0) {
@@ -152,6 +147,38 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
 }
 
 /**
+* @desc 手をつなげる状態かチェック
+* @param 相方（少女）
+* @tips 手をつなげる状態なら"手つなぎフラグ"を上げる
+* @author Osumi
+* @author Shinya Ueba
+*/
+void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
+	
+	/*
+	//お互いの距離
+	float length = sqrt(pow(this->m_pMove->m_pos.x - pCharacter->m_pMove->m_pos.x, 2.0) + pow(this->m_pMove->m_pos.y - pCharacter->m_pMove->m_pos.y, 2.0));
+
+	//お互いの距離がある程度近ければお互いの"手つなぎフラグを上げる"
+	if (length <= 45) {
+
+
+		this->m_playerState = 
+
+		WALK_LEFT = 1,	//左歩行
+			WALK_RIGHT = 2,	//右歩行
+
+		this->m_enableHoldHands = true;
+
+		pCharacter->m_isShakeHands = true;
+	}
+	else
+	{
+
+	}*/
+}
+
+/**
  * @desc 入力処理
  * @tips 移動処理で呼び出す
  */
@@ -182,12 +209,12 @@ void  CPlayerCharacterBoy::inputFunc() {
 	if (pointerInputController->getJumpFlag() == true) 
 	{
 		//ジャンプを開始させる
-		(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
+	//	(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
 	}
 
 	if (pointerInputController->getAttackFlag() == true) {
 		//攻撃を開始させる。
-		(*this->m_pActions)[(int)PLAYER_ACTION::ATTACK]->start();
+	//	(*this->m_pActions)[(int)PLAYER_ACTION::ATTACK]->start();
 	}
 
 }

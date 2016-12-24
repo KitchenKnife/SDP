@@ -35,8 +35,11 @@ bool CGimmickCharacter::init() {
 void CGimmickCharacter::moveFunc() {
 
 	//取り付けらてるアクションの更新
-	for (CAction* pAction : (*m_pActions)) {
-		pAction->update(this);
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
 	}
 
 	//物理計算
@@ -160,7 +163,7 @@ void CGimmickCharacter::hitsPlayerCharacter(CCharacter* pChara) {
 		//(*pChara->m_pActions)[0]->restart(pChara);
 
 		//敵キャラクターのアクションに敵死亡アクション
-		(*this->m_pActions)[0]->start();
+		(*pChara->m_mapAction[0])[0]->stop();
 		//↑死亡フラグの操作も内包
 		//↑ジャンプアクションの再起動も内包
 
@@ -177,7 +180,7 @@ void CGimmickCharacter::hitsPlayerCharacter(CCharacter* pChara) {
 void CGimmickCharacter::hitsNotPlayerCharacter(CCharacter* pChara) {
 
 	//敵キャラクターのアクションに敵死亡アクションを取り付ける
-	(*this->m_pActions)[0]->start();
+	(*this->m_mapAction[0])[0]->start();
 	//↑死亡フラグの操作も内包
 
 }

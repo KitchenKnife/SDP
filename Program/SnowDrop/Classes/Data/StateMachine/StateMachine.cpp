@@ -14,7 +14,8 @@
 /**
 * @desc コンストラクタ
 */
-CStateBase::CStateBase(void)
+CStateBase::CStateBase(int nextRegisterKey)
+	:m_nextRegisterKey(nextRegisterKey),m_defaultNextRegisterKey(nextRegisterKey)
 {
 
 }
@@ -61,6 +62,15 @@ bool CStateBase::isNext(void)
 	return this->m_isNext;
 }
 
+/**
+* @desc 次の状態のキーを取得する
+*/
+int CStateBase::getNextKey(void)
+{
+	return this->m_nextRegisterKey;
+}
+
+
 
 //==========================================
 //
@@ -74,8 +84,8 @@ bool CStateBase::isNext(void)
 /**
 * @desc コンストラクタ
 */
-CStateSwitch::CStateSwitch(CStateBase* const pState, const int nextRegisterKey) :
-	m_pState(pState), m_nextRegisterKey(nextRegisterKey)
+CStateSwitch::CStateSwitch(CStateBase* const pState)
+	:m_pState(pState)
 {
 
 }
@@ -104,7 +114,10 @@ void CStateSwitch::start(void)
 */
 void CStateSwitch::update(void)
 {
-	this->m_pState->update();
+	if (this->m_pState)
+	{
+		this->m_pState->update();
+	}
 }
 
 /**
@@ -120,6 +133,13 @@ bool CStateSwitch::canNextState(void)
 	}
 	return false;
 }
+
+// 次に行く登録した名前
+int CStateSwitch::getNextRegisterKey(void)
+{
+	return this->m_pState->getNextKey();
+}
+
 
 
 
@@ -160,13 +180,18 @@ CStateMachine::~CStateMachine(void)
 */
 void CStateMachine::update(void)
 {
+	if (!this->m_pNowState)
+	{
+		return;
+	}
+	
 	//現在の状態を更新
 	this->m_pNowState->update();
 
 	//次の状態へ移れるか確認
 	if (this->m_pNowState->canNextState())
 	{
-		std::map<int, CStateSwitch* >::iterator itr = this->m_mapState.find(this->m_pNowState->m_nextRegisterKey);
+		std::map<int, CStateSwitch* >::iterator itr = this->m_mapState.find(this->m_pNowState->getNextRegisterKey());
 		if (itr == this->m_mapState.end())
 		{
 			return;
