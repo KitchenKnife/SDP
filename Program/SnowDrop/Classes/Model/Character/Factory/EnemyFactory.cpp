@@ -85,55 +85,52 @@ void CMaideadFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
 	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 }
 
-void CMaideadFactory::settingActions(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//開始時のアクションの状態
 	int m_actionState = (int)ENEMY_MAIDEAD_ACTION_STATE::IDLE;
 
-//--------------------------------------------------------------------
-//
-//	待機アクションを設定する ここから
-//
-//--------------------------------------------------------------------
-	
-	//待機状態アクションの生成
+	//--------------------------------------------------------------------
+	//
+	//	待機アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+		//待機状態アクションの生成
 	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
 	//待機状態中に行うアクションを生成して取りける
 	pActionIdle->push_back(new CActionIdle());
 	//待機状態アクションをマップ配列に取り付ける
-	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::IDLE,pActionIdle));
+	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::IDLE, pActionIdle));
 
-//--------------------------------------------------------------------
-//
-//	ここまで
-//
-//--------------------------------------------------------------------
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
 
 
 
-//--------------------------------------------------------------------
-//
-//	移動アクションを設定する ここから
-//
-//--------------------------------------------------------------------
-	
-	//移動アクションの生成
+	//--------------------------------------------------------------------
+	//
+	//	移動アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+		//移動アクションの生成
 	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
 	//移動アクション中に行うアクションを生成して取りける
 	pActionStraight->push_back(new CActionMoveStraight());
 	//移動アクションをマップ配列に取り付ける
 	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type((int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING, pActionStraight));
 
-//--------------------------------------------------------------------
-//
-//	ここまで
-//
-//--------------------------------------------------------------------
-
-
-template <class Ty>
-void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
-
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
 }
+
 
 template <class Ty>
 void CMaideadFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
@@ -178,7 +175,8 @@ void CMaideadFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
 *	@param 設定するキャラクター
 *	@author Shinya Ueba
 */
-void CMaideadFactory::settingStateMachine(CEnemyCharacter* pChara)
+template <class Ty>
+void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 {
 	//状態を待機状態に変更
 	pChara->m_state = (int)ENEMY_MAIDEAD_STATE::IDLE;
@@ -232,8 +230,6 @@ void CMaideadFactory::settingStateMachine(CEnemyCharacter* pChara)
 	pChara->m_pStateMachine->setStartState((int)ENEMY_MAIDEAD_STATE::IDLE);
 }
 
-
-void CMaideadFactory::settingInitialize(CEnemyCharacter* pChara) {
 template <class Ty>
 void CMaideadFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 
@@ -335,7 +331,8 @@ void CBatFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
 *	@param 設定するキャラクター
 *	@author Shinya Ueba
 */
-void CBatFactory::settingStateMachine(CEnemyCharacter* pChara)
+template <class Ty>
+void CBatFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 {
 
 }

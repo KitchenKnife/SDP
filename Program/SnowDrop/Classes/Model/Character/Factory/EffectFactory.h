@@ -19,8 +19,6 @@ public:
 	virtual CMove* getMove()override;
 	//物理演算群データの生成と取得
 	virtual std::vector<CPhysical*>* getPhysicals()override;
-	//アクション群データの生成と取得
-	virtual std::vector<CAction*>* getActions()override;
 	//実体データの生成と取得
 	virtual CBody* getBody()override;
 	//衝突判定空間群データの生成と取得

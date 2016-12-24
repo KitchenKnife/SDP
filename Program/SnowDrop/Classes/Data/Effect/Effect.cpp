@@ -35,11 +35,6 @@ bool CEffect::init(){
  *			オーバーライドさせる
  */
 void CEffect::moveFunc() {
-	
-	//アクションの更新処理
-	for (CAction* pAction : (*this->m_pActions)) {
-		pAction->update(this);
-	}
 
 	//物理計算
 	for (CPhysical* pPhysical : (*this->m_pPhysicals)) {

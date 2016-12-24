@@ -28,11 +28,6 @@ std::vector<CPhysical* >* CEffectPaartsFactory::getPhysicals() {
 	return new std::vector<CPhysical*>();
 }
 
-//アクション群データの生成と取得
-std::vector<CAction* >* CEffectPaartsFactory::getActions() {
-	//アクション群を作成
-	return new std::vector<CAction*>();
-}
 
 //実体データの生成と取得
 CBody* CEffectPaartsFactory::getBody() {
@@ -105,9 +100,6 @@ CEffect* CEffectCreateFactory::createPlayer() {
 
 	//物理演算群データの実体の取得
 	pEffe->m_pPhysicals = factory.getPhysicals();
-
-	//アクション群データの実体の取得
-	pEffe->m_pActions = factory.getActions();
 
 	//実体データの実体の取得
 	pEffe->m_pBody = factory.getBody();

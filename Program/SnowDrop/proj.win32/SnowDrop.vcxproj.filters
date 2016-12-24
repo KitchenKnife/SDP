@@ -267,6 +267,9 @@
     <ClCompile Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.cpp">
       <Filter>src\Data\ActionController\ActionIdle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.h">
       <Filter>src\Data\ActionController\ActionIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
