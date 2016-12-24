@@ -68,7 +68,6 @@ void CPlayerCharacterBoy::moveFunc() {
 //アニメーション処理
 void CPlayerCharacterBoy::animationFunc() {
 
-	cocos2d::log("%d",this->m_animationState);
 
 	//プレイヤーアニメーション
 	(*this->m_pAnimations)[this->m_animationState]->update();
@@ -94,6 +93,12 @@ void CPlayerCharacterBoy::collisionAll() {
 //状態チェック
 void CPlayerCharacterBoy::checkState() 
 {
+	if (this->m_pStateMachine)
+	{
+		this->m_pStateMachine->update();
+	}
+
+	return;
 
 
 	//状態の判定
@@ -129,6 +134,8 @@ void  CPlayerCharacterBoy::applyFunc() {
 
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
+
+	cocos2d::log("%d",this->m_animationState);
 
 	//チップデータを反映
 	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
@@ -191,6 +198,8 @@ void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
  */
 void  CPlayerCharacterBoy::inputFunc() {
 	
+	return;
+
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 

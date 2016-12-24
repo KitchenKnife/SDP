@@ -33,6 +33,12 @@ public:
 	virtual CBody* getBody()override;
 	//衝突判定空間群データの生成と取得
 	virtual std::vector<CCollisionArea*>* getCollisionAreas()override;
+	/**
+	*	@desc 状態遷移データの生成と取得
+	*	@return 状態遷移データ
+	*	@author Shinya Ueba
+	*/
+	virtual	CStateMachine*	getStateMachine(void)override;
 };
 
 
@@ -71,6 +77,13 @@ public:
 
 	//衝突判定空間
 	virtual void settingCollisionArea(CPlayerCharacterBoy* pChara) = 0;
+
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	virtual	void settingStateMachine(CPlayerCharacterBoy* pChara) = 0;
 
 	//その他：初期設定
 	virtual void settingInitialize(CPlayerCharacterBoy* pChara) = 0;
@@ -123,6 +136,8 @@ public:
 	void settingBody(CPlayerCharacterBoy* pChara)override;
 	//衝突判定空間群データの設定
 	void settingCollisionArea(CPlayerCharacterBoy* pChara)override;
+	//状態遷移マシンの設定
+	void settingStateMachine(CPlayerCharacterBoy* pChara)override;
 
 	//その他初期設定
 	void settingInitialize(CPlayerCharacterBoy* pCharacter)override;
