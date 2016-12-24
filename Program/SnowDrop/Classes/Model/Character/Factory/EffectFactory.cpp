@@ -60,7 +60,7 @@ CEffect* CEffectFactory::create(cocos2d::Point pos) {
 	CEffect* pChara = this->createPlayer();
 
 	//移動データの設定
-	this->settingMove(pChara);
+	this->settingMove(pChara, pos);
 	//画像の設定
 	this->settingTexture(pChara);
 	//アニメーション群データの設定
