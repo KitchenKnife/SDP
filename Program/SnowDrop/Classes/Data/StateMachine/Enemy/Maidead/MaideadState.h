@@ -31,8 +31,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CMaideadState(	int nextRegisterKey,
-					CEnemyCharacter* const pOwner,
+	CMaideadState(	CEnemyCharacter* const pOwner,
 					CPlayerCharacterBoy* const pPlayer,
 					CGirlCharacter* const pGirl);
 
@@ -74,8 +73,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CMaideadIdleState(	int nextRegisterKey,
-						CEnemyCharacter* const pOwner,
+	CMaideadIdleState(	CEnemyCharacter* const pOwner,
 						CPlayerCharacterBoy* const pPlayer,
 						CGirlCharacter* const pGirl);
 
@@ -122,10 +120,9 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CMaideadWanderingState(int nextRegisterKey,
-		CEnemyCharacter* const pOwner,
-		CPlayerCharacterBoy* const pPlayer,
-		CGirlCharacter* const pGirl);
+	CMaideadWanderingState(	CEnemyCharacter* const pOwner,
+							CPlayerCharacterBoy* const pPlayer,
+							CGirlCharacter* const pGirl);
 
 	/**
 	* @desc デストラクタ

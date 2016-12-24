@@ -27,11 +27,10 @@
 /**
 * @desc コンストラクタ
 */
-CMaideadState::CMaideadState(	int nextRegisterKey,
-								CEnemyCharacter* const pOwner,
+CMaideadState::CMaideadState(	CEnemyCharacter* const pOwner,
 								CPlayerCharacterBoy* const pPlayer,
 								CGirlCharacter* const pGirl)
-	:CEnemyState::CEnemyState(nextRegisterKey, pOwner, pPlayer, pGirl)
+	:CEnemyState::CEnemyState(pOwner, pPlayer, pGirl)
 {
 
 }
@@ -97,11 +96,10 @@ void CMaideadState::toChase(void)
 /**
 * @desc コンストラクタ
 */
-CMaideadIdleState::CMaideadIdleState(	int nextRegisterKey,
-										CEnemyCharacter* const pOwner,
+CMaideadIdleState::CMaideadIdleState(	CEnemyCharacter* const pOwner,
 										CPlayerCharacterBoy* const pPlayer,
 										CGirlCharacter* const pGirl)
-	:CMaideadState::CMaideadState(nextRegisterKey,pOwner,pPlayer,pGirl)
+	:CMaideadState::CMaideadState(pOwner,pPlayer,pGirl)
 {
 
 }
@@ -174,11 +172,10 @@ void CMaideadIdleState::onChangeEvent(void)
 /**
 * @desc コンストラクタ
 */
-CMaideadWanderingState::CMaideadWanderingState(int nextRegisterKey,
-	CEnemyCharacter* const pOwner,
-	CPlayerCharacterBoy* const pPlayer,
-	CGirlCharacter* const pGirl)
-	:CMaideadState::CMaideadState(nextRegisterKey, pOwner, pPlayer, pGirl)
+CMaideadWanderingState::CMaideadWanderingState(	CEnemyCharacter* const pOwner,
+												CPlayerCharacterBoy* const pPlayer,
+												CGirlCharacter* const pGirl)
+	:CMaideadState::CMaideadState(pOwner, pPlayer, pGirl)
 {
 
 }

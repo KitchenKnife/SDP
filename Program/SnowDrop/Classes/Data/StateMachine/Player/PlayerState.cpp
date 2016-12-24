@@ -26,8 +26,8 @@
 /**
 * @desc コンストラクタ
 */
-CPlayerState::CPlayerState(int nextRegisterKey, CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CStateBase::CStateBase(nextRegisterKey),m_pPlayer(pPlayer),m_pGirl(pGirl)
+CPlayerState::CPlayerState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:m_pPlayer(pPlayer),m_pGirl(pGirl)
 {
 
 }
@@ -52,8 +52,8 @@ CPlayerState::~CPlayerState(void)
 /**
 * @desc コンストラクタ
 */
-CPlayerStandState::CPlayerStandState(int nextRegisterKey,CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(nextRegisterKey,pPlayer,pGirl)
+CPlayerStandState::CPlayerStandState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer,pGirl)
 {
 
 
@@ -109,7 +109,6 @@ void CPlayerStandState::update(void)
 // 状態が変わるときの処理
 void CPlayerStandState::onChangeEvent(void)
 {
-	this->m_nextRegisterKey = this->m_defaultNextRegisterKey;
 	this->m_isNext = false;
 }
 //EOF

@@ -190,12 +190,9 @@ void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 //--------------------------------------------------------------------
 
 	//‘Ò‹@ó‘Ô
-	CStateSwitch* pIdleStateSwitch = new CStateSwitch(new CMaideadIdleState((int)ENEMY_MAIDEAD_STATE::IDLE,
-														pChara,
-														NULL,
-														NULL));
+	CStateBase* pIdleState = new CMaideadIdleState(	pChara,NULL,NULL);
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
-	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::IDLE, pIdleStateSwitch);
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::IDLE, pIdleState);
 
 //--------------------------------------------------------------------
 //
@@ -211,20 +208,15 @@ void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 //--------------------------------------------------------------------
 
 	//‘Ò‹@ó‘Ô
-	CStateSwitch* pWanderingStateSwitch = new CStateSwitch(new CMaideadWanderingState((int)ENEMY_MAIDEAD_STATE::CHASE,
-															pChara,
-															NULL,
-															NULL));
+	CStateBase* pWanderingState = new CMaideadWanderingState(pChara,NULL,NULL);
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
-	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::WANDERING, pWanderingStateSwitch);
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::WANDERING, pWanderingState);
 
 //--------------------------------------------------------------------
 //
 //	‚±‚±‚Ü‚Å
 //
 //--------------------------------------------------------------------
-
-
 
 	//ÅŒã‚ÉÅ‰‚Ìó‘Ô‚ðÝ’è‚·‚éIIIII
 	pChara->m_pStateMachine->setStartState((int)ENEMY_MAIDEAD_STATE::IDLE);

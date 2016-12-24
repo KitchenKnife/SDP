@@ -37,8 +37,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CEnemyState(int nextRegisterKey,
-				CEnemyCharacter* const pOwner,
+	CEnemyState(CEnemyCharacter* const pOwner,
 				CPlayerCharacterBoy* const pPlayer,
 				CGirlCharacter* const pGirl);
 

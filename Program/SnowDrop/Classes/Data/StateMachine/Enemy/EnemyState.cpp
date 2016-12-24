@@ -29,14 +29,10 @@
 /**
 * @desc コンストラクタ
 */
-CEnemyState::CEnemyState(	int nextRegisterKey,
-							CEnemyCharacter* const pOwner,
+CEnemyState::CEnemyState(	CEnemyCharacter* const pOwner,
 							CPlayerCharacterBoy* const pPlayer,
 							CGirlCharacter* const pGirl)
-	:CStateBase::CStateBase(nextRegisterKey),
-	m_pOwner(pOwner),
-	m_pPlayer(pPlayer),
-	m_pGirl(pGirl)
+	:m_pOwner(pOwner),m_pPlayer(pPlayer),m_pGirl(pGirl)
 {
 
 }

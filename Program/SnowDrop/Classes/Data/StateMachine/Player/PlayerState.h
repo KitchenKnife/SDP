@@ -36,7 +36,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CPlayerState(int nextRegisterKey,CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+	CPlayerState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
 	* @desc デストラクタ
@@ -66,7 +66,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CPlayerStandState(int nextRegisterKey, CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+	CPlayerStandState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
 	* @desc デストラクタ

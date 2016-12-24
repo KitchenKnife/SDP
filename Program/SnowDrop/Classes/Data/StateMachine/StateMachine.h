@@ -29,7 +29,7 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CStateBase(int nextRegisterKey);
+	CStateBase(void);
 
 	/**
 	* @desc デストラクタ
@@ -65,61 +65,8 @@ protected:
 	// 次に行くための条件
 	bool m_isNext = false;
 
-	// 次に行く登録した名前
-	int m_nextRegisterKey;
-
-	// 標準の次に行く登録した名前
-	const int m_defaultNextRegisterKey;
-};
-
-//==========================================
-//
-// Class: CStateSwitch
-//
-// 状態の切り替えクラス
-//
-// 2016/12/23
-//						Author Shinya Ueba
-//==========================================
-class CStateSwitch
-{
-public:
-	/**
-	* @desc コンストラクタ
-	*/
-	CStateSwitch(CStateBase* const pState);
-
-	/**
-	* @desc デストラクタ
-	*/
-	~CStateSwitch();
-
-
-	// アップデートの前に呼ばれる
-	
-	/**
-	* @desc 開始処理
-	*/
-	void start(void);
-
-	/**
-	* @desc 更新処理
-	*/
-	void update(void);
-
-	/**
-	* @desc 次の状態にいけるかどうかを取得する
-	* @return true...いける false...いけない
-	*/
-	bool canNextState(void);
-
-public:
-	// 次に行く登録した名前
-	int getNextRegisterKey(void);
-
-private:
-	// 親クラス
-	CStateBase* m_pState = NULL;
+	//次に進むステートのキー
+	int m_nextRegisterKey = 0;
 };
 
 
@@ -153,10 +100,10 @@ public:
 	/**
 	* @desc 状態を登録する
 	* @param 登録する唯一無二のキー
-	* @param 
+	* @param 登録する状態
 	*/
-	void registerState(const int key, CStateSwitch* const pState);
-	
+	void registerState(const int key, CStateBase* const pState);
+
 	// 最初から始める状態を設定
 	
 	/**
@@ -180,8 +127,8 @@ public:
 
 private:
 	//状態格納用マップ
-	std::map<int, CStateSwitch* > m_mapState;
+	std::map<int, CStateBase* > m_mapState;
 	//現在の状態
-	CStateSwitch* m_pNowState = NULL;
+	CStateBase* m_pNowState = NULL;
 };
 //EOF

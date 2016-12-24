@@ -30,24 +30,24 @@ public:
 	/**
 	* @desc コンストラクタ
 	*/
-	CGirlStandState(int nextRegisterKey);
+	CGirlStandState(void);
 
 	/**
 	* @desc デストラクタ
 	*/
-	~CGirlStandState();
+	~CGirlStandState(void);
 
 	/**
 	* @desc 開始処理
 	*/
-	void start()override;
+	void start(void)override;
 	/**
 	* @desc 更新処理
 	*/
-	void update()override;
+	void update(void)override;
 
 	// 状態が変わるときの処理
-	void onChangeEvent()override;
+	void onChangeEvent(void)override;
 
 private:
 

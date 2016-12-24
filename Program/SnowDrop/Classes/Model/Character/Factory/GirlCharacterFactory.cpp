@@ -240,9 +240,9 @@ void CBasePlayerGirlFactory::settingStateMachine(CPlayerCharacterGirl* pChara)
 	//•K—v‚Èó‘Ô‚ðì¬‚µ‚Ä‚¢‚­
 
 	//—§‚¿ó‘Ô
-	CStateSwitch* pStandStateSwitch = new CStateSwitch(new CGirlStandState((int)CPlayerCharacterGirl::GIRL_STATE::STAND));
+	CStateBase* pStandState = new CGirlStandState();
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
-	pChara->m_pStateMachine->registerState((int)CPlayerCharacterGirl::GIRL_STATE::STAND, pStandStateSwitch);
+	pChara->m_pStateMachine->registerState((int)CPlayerCharacterGirl::GIRL_STATE::STAND, pStandState);
 
 
 

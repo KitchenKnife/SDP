@@ -26,8 +26,7 @@
 /**
 * @desc コンストラクタ
 */
-CGirlStandState::CGirlStandState(int nextRegisterKey)
-	:CStateBase::CStateBase(nextRegisterKey)
+CGirlStandState::CGirlStandState(void)
 {
 
 

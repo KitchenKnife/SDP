@@ -14,8 +14,7 @@
 /**
 * @desc コンストラクタ
 */
-CStateBase::CStateBase(int nextRegisterKey)
-	:m_nextRegisterKey(nextRegisterKey),m_defaultNextRegisterKey(nextRegisterKey)
+CStateBase::CStateBase(void)
 {
 
 }
@@ -74,77 +73,6 @@ int CStateBase::getNextKey(void)
 
 //==========================================
 //
-// Class: CStateSwitch
-//
-// 状態の切り替えクラス
-//
-// 2016/12/23
-//						Author Shinya Ueba
-//==========================================
-/**
-* @desc コンストラクタ
-*/
-CStateSwitch::CStateSwitch(CStateBase* const pState)
-	:m_pState(pState)
-{
-
-}
-
-/**
-* @desc デストラクタ
-*/
-CStateSwitch::~CStateSwitch()
-{
-	SAFE_DELETE(this->m_pState);
-}
-
-
-// アップデートの前に呼ばれる
-
-/**
-* @desc 開始処理
-*/
-void CStateSwitch::start(void)
-{
-	this->m_pState->start();
-}
-
-/**
-* @desc 更新処理
-*/
-void CStateSwitch::update(void)
-{
-	if (this->m_pState)
-	{
-		this->m_pState->update();
-	}
-}
-
-/**
-* @desc 次の状態にいけるかどうかを取得する
-* @return true...いける false...いけない
-*/
-bool CStateSwitch::canNextState(void)
-{
-	if (this->m_pState->isNext())
-	{
-		this->m_pState->onChangeEvent();
-		return true;
-	}
-	return false;
-}
-
-// 次に行く登録した名前
-int CStateSwitch::getNextRegisterKey(void)
-{
-	return this->m_pState->getNextKey();
-}
-
-
-
-
-//==========================================
-//
 // Class: CStateMachine
 //
 // 状態管理クラス
@@ -166,7 +94,7 @@ CStateMachine::CStateMachine(void) :m_pNowState()
 CStateMachine::~CStateMachine(void)
 {
 	//取り付けた状態データを削除
-	std::map<int, CStateSwitch* >::iterator itr = this->m_mapState.begin();
+	std::map<int, CStateBase* >::iterator itr = this->m_mapState.begin();
 	while (itr != this->m_mapState.end()) {
 		//クラスのインスタンスを削除
 		SAFE_DELETE(itr->second);
@@ -189,9 +117,13 @@ void CStateMachine::update(void)
 	this->m_pNowState->update();
 
 	//次の状態へ移れるか確認
-	if (this->m_pNowState->canNextState())
+	if (this->m_pNowState->isNext())
 	{
-		std::map<int, CStateSwitch* >::iterator itr = this->m_mapState.find(this->m_pNowState->getNextRegisterKey());
+		//現在のステートの終了処理を行う
+		this->m_pNowState->onChangeEvent();
+
+
+		std::map<int, CStateBase* >::iterator itr = this->m_mapState.find(this->m_pNowState->getNextKey());
 		if (itr == this->m_mapState.end())
 		{
 			return;
@@ -208,10 +140,10 @@ void CStateMachine::update(void)
 * @param 登録する唯一無二のキー
 * @param 
 */
-void CStateMachine::registerState(const int key,CStateSwitch* const pState)
+void CStateMachine::registerState(const int key,CStateBase* const pState)
 {
 	//状態を登録する
-	this->m_mapState.insert(std::map<int, CStateSwitch*>::value_type(key,pState));
+	this->m_mapState[key] = pState;
 }
 
 /**
@@ -220,7 +152,7 @@ void CStateMachine::registerState(const int key,CStateSwitch* const pState)
 */
 void CStateMachine::setStartState(const int key)
 {
-	std::map<int, CStateSwitch* >::iterator itr = this->m_mapState.find(key);
+	std::map<int, CStateBase* >::iterator itr = this->m_mapState.find(key);
 	if (itr == this->m_mapState.end())
 	{
 		return;
@@ -236,7 +168,7 @@ void CStateMachine::setStartState(const int key)
 */
 void CStateMachine::deregistration(const int key)
 {
-	std::map<int, CStateSwitch* >::iterator itr = this->m_mapState.find(key);
+	std::map<int, CStateBase* >::iterator itr = this->m_mapState.find(key);
 	if (itr == this->m_mapState.end())
 	{
 		return;
