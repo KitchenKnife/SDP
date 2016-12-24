@@ -1,10 +1,9 @@
-
 /*
-* EnemyCharacter.h
-*
-*	2016/11/11	Yamasaki 
-*
-*/
+ * EnemyCharacter.h
+ *
+ *	2016/11/11	Yamasaki 
+ *
+ */
 
 #pragma once
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -12,8 +11,8 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Character/Character.h"
 #include "Model/Map/Map.h"
-#include "Data/Status/Status.h"
 
+#include <map>
 //================================================
 // 
 // 敵キャラクターの基底クラスとなるクラス
@@ -67,7 +66,7 @@ public:
 	//	定数に関するコードの追加はここから
 	//================================================
 	//敵の状態(アニメーション)
-	enum class STATE :int {
+	enum class ENEMY_STATE :int {
 		NONE		= -1,
 		STAND		= 0,
 		JUMPING		= 0,
@@ -81,8 +80,12 @@ public:
 		DIE			= 8,
 	};
 
-	//アニメーションの状態
-	int m_state = (int)STATE::NONE;
+	//敵キャラクターごとの状態を複数保管する変数宣言
+	//敵キャラクターごとに key と 状態番号 を設定する。
+	std::map<ENEMY_STATE, int>enemyState;
+
+	//現在の状態
+	int m_state = (int)ENEMY_STATE::NONE;
 
 	//敵が行えるアクション
 	enum class ACTION :int {
@@ -91,16 +94,4 @@ public:
 		IDLE	= 2,	//
 		DAMAGE	= 3,	//
 	};
-
-	//================================================
-	// 
-	// メンバーに関するコードの追加はここから
-	//		
-	//		
-	//================================================
-
-
-
-
 };
-

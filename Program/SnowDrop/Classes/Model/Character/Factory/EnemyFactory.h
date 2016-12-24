@@ -100,6 +100,7 @@ public:
 // キャラクターの生成と組み立てを担当するクラス
 //	（FactoryMethod）
 //================================================
+template <class Ty>
 class CEnemyCreateFactory :public CEnemyFactory {
 public:
 	//デストラクタ
@@ -110,7 +111,7 @@ protected:
 	virtual CEnemyCharacter* createEnemy()override {
 
 		// 敵生成
-		CEnemyCharacter* pEnemy = CEnemyCharacter::create();
+		CEnemyCharacter* pEnemy = Ty::create();
 		// 敵パーツ工場生成
 		CEnemeyPartsFactory pEnemyPartsFactory;
 
@@ -131,7 +132,8 @@ protected:
 //================================================
 // メイデッド工場
 //================================================
-class CMaideadFactory :public CEnemyCreateFactory {
+template<class Ty>
+class CMaideadFactory :public CEnemyCreateFactory<Ty> {
 public:
 	//デストラクタ
 	virtual ~CMaideadFactory(){}
@@ -159,7 +161,8 @@ public:
 //================================================
 //　コウモリ工場
 //================================================
-class CBatFactory :public CEnemyCreateFactory {
+template <class Ty>
+class CBatFactory :public CEnemyCreateFactory<Ty> {
 public:
 	//デストラクタ
 	~CBatFactory(){}
@@ -192,10 +195,10 @@ private:
 	//コンストラクタ
 	CEnemyFactoryManager() {
 		//メイド生成工場を生成し [key : MAIDEAD] に取り付ける
-		m_factories[ENEMY_TYPE::MAIDEAD] = new CMaideadFactory();
+		m_factories[ENEMY_TYPE::MAIDEAD] = new CMaideadFactory<CEnemyCharacter>();
 
 		//コウモリ生成工場を生成し [key : BAT] に取り付ける
-		m_factories[ENEMY_TYPE::BAT] = new CBatFactory();
+		m_factories[ENEMY_TYPE::BAT] = new CBatFactory<CEnemyCharacter>();
 	}
 
 	//共有のインスタンス

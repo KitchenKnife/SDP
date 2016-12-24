@@ -21,11 +21,11 @@ class CGimmickLaunchData;
 //		新しい種類が出来たらここに増やしていく
 //=========================================================================
 enum class BLOCK_TYPE :int {
-	NONE			= 0,	//何もない
-	KURIBO = 101,
-	MAIDEAD = 102,		//メイド
-	BAT = 103,		//コウモリ
-	REDMAIDEAD = 104,		//赤クリボー
+	NONE		= 0,	//何もない
+	KURIBO		= 101,
+	MAIDEAD		= 102,	//メイド
+	BAT			= 103,	//コウモリ
+	REDMAIDEAD	= 104,	//赤クリボー
 	BLUEMAIDEAD = 105,
 
 };

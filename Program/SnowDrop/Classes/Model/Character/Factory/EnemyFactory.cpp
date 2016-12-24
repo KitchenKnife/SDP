@@ -44,19 +44,24 @@ std::vector<CCollisionArea* >* CEnemeyPartsFactory::getCollisionAreas() {
 //================================================
 // メイデッド工場
 //================================================
-void CMaideadFactory::settingMove(CEnemyCharacter* pChara, float posX, float posY) {
+//移動データの設定
+template <class Ty>
+void CMaideadFactory<Ty>::settingMove(CEnemyCharacter* pChara, float posX, float posY) {
 
 	//初期位置の設定
 	pChara->m_pMove->m_pos.set(posX,posY);
 	//初期速度
 	pChara->m_pMove->m_vel.set(-1.0f, 0.0f);
 }
-void CMaideadFactory::settingTexture(CEnemyCharacter* pChara) {
+
+template <class Ty>
+void CMaideadFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
 	//テクスチャの設定
 	pChara->setTexture(IMAGE_MEIDEAD);
 }
 
-void CMaideadFactory::settingAnimations(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 
 
 	//直立アニメーションの設定
@@ -66,22 +71,26 @@ void CMaideadFactory::settingAnimations(CEnemyCharacter* pChara) {
 
 }
 
-void CMaideadFactory::settingPhysicals(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
 	//歩行キャラには重力つける
 	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 }
 
-void CMaideadFactory::settingActions(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 
 }
 
-void CMaideadFactory::settingBody(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
 	//実体のボディを設定
 	pChara->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
 }
 
 //衝突判定空間の設定
-void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
 
 	//画面端衝突空間の生成
 	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
@@ -112,8 +121,8 @@ void CMaideadFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 }
 
 
-
-void CMaideadFactory::settingInitialize(CEnemyCharacter* pChara) {
+template <class Ty>
+void CMaideadFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 	//状態を待機状態に変更
 	pChara->m_state = (int)CEnemyCharacter::STATE::STAND;
 
@@ -133,19 +142,22 @@ void CMaideadFactory::settingInitialize(CEnemyCharacter* pChara) {
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
-void CBatFactory::settingMove(CEnemyCharacter* pChara,float x, float y) {
+template <class Ty>
+void CBatFactory<Ty>::settingMove(CEnemyCharacter* pChara,float x, float y) {
 	//初期位置の設定
 	pChara->m_pMove->m_pos.set(x, y);
 	//初期速度
 	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
 }
 
-void CBatFactory::settingTexture(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
 	//テクスチャの設定
 	pChara->setTexture(IMAGE_BAT);
 }
 
-void CBatFactory::settingAnimations(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	//直立アニメーションの設定
 	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
@@ -153,22 +165,26 @@ void CBatFactory::settingAnimations(CEnemyCharacter* pChara) {
 
 }
 
-void CBatFactory::settingPhysicals(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
 
 }
 
-void CBatFactory::settingActions(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	
 
 }
 
-void CBatFactory::settingBody(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
 	//実体のボディを設定
 	pChara->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
 }
 
 //衝突判定空間の設定
-void CBatFactory::settingCollisionArea(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
 
 	//画面端衝突空間の生成
 	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
@@ -200,8 +216,8 @@ void CBatFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 }
 
 
-
-void CBatFactory::settingInitialize(CEnemyCharacter* pChara) {
+template <class Ty>
+void CBatFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 
 	//状態を待機状態に変更
 	pChara->m_state = (int)CEnemyCharacter::STATE::STAND;
