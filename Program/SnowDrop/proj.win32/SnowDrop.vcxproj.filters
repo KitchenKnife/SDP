@@ -94,6 +94,21 @@
     <Filter Include="src\Lib\Sound">
       <UniqueIdentifier>{2fd70ea6-5452-4ffc-aa9e-5f23716da1e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Model\Character\StateMachine">
+      <UniqueIdentifier>{71d468cc-ef17-45f2-9c1f-d902f266dce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine">
+      <UniqueIdentifier>{60b0799c-36e8-45e6-b3d3-399aeccc2d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy">
+      <UniqueIdentifier>{b1f6efc9-b97a-44b6-934d-93e7b5d21c72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Player">
+      <UniqueIdentifier>{66d2e083-bf4b-4f66-89db-263b78d85ba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Girl">
+      <UniqueIdentifier>{ad953aa0-7ad0-4888-ad7d-c62cf4c13833}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -206,6 +221,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
       <Filter>src\Lib\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp">
+      <Filter>src\Data\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp">
+      <Filter>src\Data\StateMachine\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp">
+      <Filter>src\Data\StateMachine\Girl</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
       <Filter>src\Model\Character\Factory</Filter>
@@ -325,6 +349,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
       <Filter>src\Lib\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h">
+      <Filter>src\Data\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h">
+      <Filter>src\Data\StateMachine\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h">
+      <Filter>src\Data\StateMachine\Girl</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
       <Filter>src\Model\Character\Factory</Filter>

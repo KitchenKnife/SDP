@@ -1,13 +1,14 @@
 #pragma once
 #include "Model/Character/GirlCharacter/GirlCharacter.h"
 
-//================================================
+//=============================================================
 // 少女キャラクターパーツ製造工場
 //	（AbstractFactory）
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//	2016/12/23						Author	Shinya Ueba
+//============================================================
 class CPlayerGirlPartsFactory :public CCharacterPartsFactory {
 public:
 	//デストラクタ
@@ -25,16 +26,24 @@ public:
 	virtual CBody* getBody()override;
 	//衝突判定空間群データの生成と取得
 	virtual std::vector<CCollisionArea*>* getCollisionAreas()override;
+	/**
+	*	@desc 状態遷移データの生成と取得
+	*	@return 状態遷移データ
+	*	@author Shinya Ueba
+	*/
+	virtual	CStateMachine*	getStateMachine(void)override;
+
 };
 
 
-//================================================
+//=====================================================
 // キャラクターの生成過程を抽象化したクラス
 //	（FactoryMethod）
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//	2016/12/23						Author Shinya Ueba
+//=====================================================
 class CPlayerGirlFactory {
 public:
 	//デストラクタ
@@ -65,6 +74,13 @@ public:
 	//衝突判定空間
 	virtual void settingCollisionArea(CPlayerCharacterGirl* pChara) = 0;
 
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	virtual	void settingStateMachine(CPlayerCharacterGirl* pChara) = 0;
+
 	//その他：初期設定
 	virtual void settingInitialize(CPlayerCharacterGirl* pChara) = 0;
 
@@ -92,13 +108,14 @@ public:
 
 };
 
-//================================================
+//====================================================
 // 女の子のパーツのセッティングを担当するクラス
 //	（FactoryMethod）
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//	2016/12/23						Author Shinya Ueba
+//====================================================
 class CBasePlayerGirlFactory :public CPlayerGirlCreateFactory {
 public:
 
@@ -117,6 +134,14 @@ public:
 	void settingBody(CPlayerCharacterGirl* pCharacter)override;
 	//衝突判定空間群データの設定
 	void settingCollisionArea(CPlayerCharacterGirl* pCharacter)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	virtual	void settingStateMachine(CPlayerCharacterGirl* pChara)override;
+
+
 
 	//その他初期設定
 	void settingInitialize(CPlayerCharacterGirl* pCharacter)override;

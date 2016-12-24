@@ -158,6 +158,8 @@ bool CGameMain::init() {
 
 	// 少女の生成と取り付け
 	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
+	
+	
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(playerGirl);
 

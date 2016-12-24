@@ -17,7 +17,18 @@
 CCharacter::CCharacter() {}
 
 //デストラクタ
+
+/**
+*	@desc デストラクタ
+*	@autor	Osumi
+*	@autor	Harada
+*	@autor	Shinya Ueba
+*/
 CCharacter::~CCharacter() {
+
+	//状態遷移データの削除
+	SAFE_DELETE(this->m_pStateMachine);
+
 	//実体データの削除
 	SAFE_DELETE(this->m_pBody);
 
@@ -62,6 +73,9 @@ bool CCharacter::init() {
 
 //更新処理
 void CCharacter::update(float deltaTime) {
+
+	//派生キャラクター個別の更新処理
+	this->updatePersonal();
 
 	//移動処理
 	this->moveFunc();

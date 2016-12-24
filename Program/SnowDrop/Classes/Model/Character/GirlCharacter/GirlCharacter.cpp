@@ -1,11 +1,12 @@
 #include "GirlCharacter.h"
 
-//================================================
+//====================================================
 // 少女クラスのメンバ関数定義
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//									Author Shinya Ueba
+//====================================================
 //コンストラクタ
 CPlayerCharacterGirl::CPlayerCharacterGirl() {}
 
@@ -23,6 +24,15 @@ bool CPlayerCharacterGirl::init() {
 	return true;
 }
 
+/**
+*	@desc 継承キャラクター個別の更新処理
+*	@author Shinya Ueba
+*/
+void CPlayerCharacterGirl::updatePersonal(void)
+{
+
+
+}
 
 
 //移動処理
@@ -71,10 +81,19 @@ void CPlayerCharacterGirl::collisionAll() {
 	}
 }
 
-//状態チェック
+
+/**
+*	@desc 状態のチェック
+*	@author					Harada
+*	@author					Shinya Ueba
+*/
 void CPlayerCharacterGirl::checkState() {
 
-
+	if(this->m_pStateMachine)
+	{
+		//状態遷移マシンの更新
+		this->m_pStateMachine->update();
+	}
 }
 
 
