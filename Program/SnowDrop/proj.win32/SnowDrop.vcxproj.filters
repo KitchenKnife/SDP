@@ -207,6 +207,9 @@
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
       <Filter>src\Lib\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
       <Filter>src\Lib\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,8 @@
 
 #include "LaunchTrigger.h"
 #include "Model/Character/Factory/EnemyFactory.h"
-#include "Model\Character\Factory\GimmickFactory.h"
+#include "Model/Character/Factory/GimmickFactory.h"
+#include "Model/Character/Factory/EffectFactory.h"
 
 //=======================================
 //
@@ -37,7 +38,7 @@ CCharacter* CEnemyLaunchTrigger::action(){
 
 	//敵を生成
 	//引数に出撃させるポイントと敵のタイプを渡す
-	CCharacter* pEnemyCharacter = (CCharacter*)CEnemyFactoryManager::getInstance()->create(
+	CCharacter* pEnemyCharacter = CEnemyFactoryManager::getInstance()->create(
 		this->m_pLaunchdata->m_pos,
 		this->m_pLaunchdata->m_type
 	);
@@ -82,7 +83,7 @@ CCharacter* CGimmickLaunchTrigger::action() {
 
 	//ギミックを生成
 	//引数にギミックのタイプと出撃させる位置を渡す
-	CCharacter* pGimmickCharacter = (CCharacter*)CGimmickFactoryManager::getInstance()->create(
+	CCharacter* pGimmickCharacter = CGimmickFactoryManager::getInstance()->create(
 		(int)this->m_pLaunchdata->m_type,
 		this->m_pLaunchdata->m_pos
 	);
@@ -92,6 +93,52 @@ CCharacter* CGimmickLaunchTrigger::action() {
 
 	//生成したギミックを返す。
 	return pGimmickCharacter;
+}
+
+
+//=======================================
+//
+//  エフェクト生成トリガー
+//
+//=======================================
+//デストラクタ
+CEffectLaunchTrigger::~CEffectLaunchTrigger() {
+	//エフェクト出撃データを削除
+	SAFE_DELETE(this->m_pLaunchdata);
+}
+
+/**
+ * @desc	イベントを行えるかどうか
+ * @retrun	true...イベント実行可
+ */
+bool CEffectLaunchTrigger::isTrigger() {
+	//エフェクト出撃データに中身がなければ
+	if (this->m_pLaunchdata == NULL) {
+		//イベント実行　不可　を返す
+		return false;
+	}
+	//イベント実行　可　を返す
+	return true;
+}
+
+/**
+ * @desc	設定されているエフェクト出撃データを元にエフェクトを生成する
+ * @tips	トリガーを元にイベントを実行
+ */
+CCharacter* CEffectLaunchTrigger::action() {
+
+	//エフェクトの生成
+	//引数にエフェクトのタイプと出撃させる位置を渡す
+	CCharacter* pEffectCharacter = CEffectFactoryManager::getInstance()->create(
+		this->m_pLaunchdata->m_pos,
+		this->m_pLaunchdata->m_type
+	);
+
+	//発射し終わったかどうかのフラグを立てる
+	this->m_activeFlag = false;
+
+	//生成したギミックを返す。
+	return pEffectCharacter;
 }
 
 //=======================================

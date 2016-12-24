@@ -5,11 +5,8 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#include "Model/Character/Character.h"
+#include "Model/Character/GimmickCharacter/GimmickCharacter.h"
 #include "Model/Map/Map.h"
-
-//プレイヤークラスの前方宣言
-class CGimmickCharacter;
 
 //================================================
 // ギミックパーツ製造工場
