@@ -75,7 +75,12 @@ void CMaideadFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	//直立アニメーションの設定
 	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_STATE::IDLE]->addChipData(new CChip(0, 0, 64, 64));
+	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 0, 256, 256));
+
+	//歩行 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, true));
+	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 0, 256, 256));
+
 }
 
 template <class Ty>
@@ -134,7 +139,7 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 template <class Ty>
 void CMaideadFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
 	//実体のボディを設定
-	pChara->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
+	pChara->m_pBody->set(-128.0f, 128.0f, 128.0f, -128.0f);
 }
 
 //衝突判定空間の設定
@@ -154,7 +159,7 @@ void CMaideadFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
 
 
 	//マップ衝突空間の生成
-	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 32.0f);
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 64.0f, 128.0f);
 
 	//マップチップ下端領域の生成と取り付け
 	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());

@@ -68,6 +68,17 @@ public:
 	bool isEnd() {
 		return this->m_isEnd;
 	}
+
+	/**
+	* @desc	アニメーションをリセットする
+	* @atuhr	Shinya Ueba
+	*/
+	void reset(void) {
+		int m_counter = 0;
+		this->m_currentFrame = 0;
+		this->m_isEnd = false;
+	}
+
 	
 	/**
 	 * @desc	アニメーションの更新処理

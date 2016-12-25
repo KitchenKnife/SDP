@@ -72,47 +72,76 @@ void CGamePadInputFlag::up(int bottomType_)
 	switch ((GamePadInputType)bottomType_)
 	{
 	case GamePadInputType::DPAD_UP:		this->m_dpad_up = true;
-		break;
+										this->m_dpad_upTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_UP] ^ this->m_dpad_up & this->m_dpad_up;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_UP] = this->m_dpad_up;
+										break;
 
 	case GamePadInputType::DPAD_DOWN:	this->m_dpad_down = true;
-		break;
+										this->m_dpad_downTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_DOWN] ^ this->m_dpad_down & this->m_dpad_down;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_DOWN] = this->m_dpad_down;
+										break;
 
 	case GamePadInputType::DPAD_LEFT:	this->m_dpad_left = true;
-		break;
+										this->m_dpad_leftTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_LEFT] ^ this->m_dpad_left & this->m_dpad_left;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_LEFT] = this->m_dpad_left;
+										break;
 
 	case GamePadInputType::DPAD_RIGHT:	this->m_dpad_right = true;
-		break;
+										this->m_dpad_rightTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_RIGHT] ^ this->m_dpad_right & this->m_dpad_right;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_RIGHT] = this->m_dpad_right;
+										break;
 
 	case GamePadInputType::START:		this->m_start = true;
-		break;
+										this->m_startTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::START] ^ this->m_start & this->m_start;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::START] = this->m_start;
+										break;
 
 	case GamePadInputType::BACK:		this->m_back = true;
-		break;
+										this->m_backTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::BACK] ^ this->m_back & this->m_back;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::BACK] = this->m_back;
+										break;
 
 	case GamePadInputType::LEFT_THUMB:	this->m_left_thumb = true;
-		break;
+										this->m_left_thumbTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::LEFT_THUMB] ^ this->m_left_thumb & this->m_left_thumb;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::LEFT_THUMB] = this->m_left_thumb;
+										break;
 
 	case GamePadInputType::RIGHT_THUMB:	this->m_right_thumb = true;
-		break;
+										this->m_right_thumbTrigger = this->m_arrayTriggerLastSate[(int)GamePadInputType::RIGHT_THUMB] ^ this->m_right_thumb & this->m_right_thumb;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::RIGHT_THUMB] = this->m_right_thumb;
+										break;
 
-	case GamePadInputType::LEFT_SHOULDER: this->m_left_shoulder = true;
-		break;
+	case GamePadInputType::LEFT_SHOULDER:	this->m_left_shoulder = true;
+											this->m_left_shoulder = this->m_arrayTriggerLastSate[(int)GamePadInputType::LEFT_SHOULDER] ^ this->m_left_shoulder & this->m_left_shoulder;
+											this->m_arrayTriggerLastSate[(int)GamePadInputType::LEFT_SHOULDER ] = this->m_left_shoulder;
+											break;
 
-	case GamePadInputType::RIGHT_SHOULDER: this->m_right_shoulder = true;
-		break;
+	case GamePadInputType::RIGHT_SHOULDER:	this->m_right_shoulder = true;
+											this->m_right_shoulder = this->m_arrayTriggerLastSate[(int)GamePadInputType::RIGHT_SHOULDER] ^ this->m_right_shoulder & this->m_right_shoulder;
+											this->m_arrayTriggerLastSate[(int)GamePadInputType::RIGHT_SHOULDER] = this->m_right_shoulder;
+											break;
 
 	case GamePadInputType::A:			this->m_a = true;
-		break;
+										this->m_a = this->m_arrayTriggerLastSate[(int)GamePadInputType::A] ^ this->m_a & this->m_a;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::A] = this->m_a;
+										break;
+
+
 
 	case GamePadInputType::B:			this->m_b = true;
-		break;
+										this->m_b = this->m_arrayTriggerLastSate[(int)GamePadInputType::B] ^ this->m_b & this->m_b;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::B] = this->m_b;
+										break;
 
 	case GamePadInputType::X:			this->m_x = true;
-		break;
+										this->m_x = this->m_arrayTriggerLastSate[(int)GamePadInputType::X] ^ this->m_x & this->m_x;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::X] = this->m_x;
+										break;
 
 	case GamePadInputType::Y:			this->m_y = true;
-		break;
-
+										this->m_y = this->m_arrayTriggerLastSate[(int)GamePadInputType::Y] ^ this->m_y & this->m_y;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::Y] = this->m_y;
+										break;
 	default:break;
 	}
 }
@@ -126,46 +155,75 @@ void CGamePadInputFlag::down(int bottomType_)
 	switch ((GamePadInputType)bottomType_)
 	{
 	case GamePadInputType::DPAD_UP:		this->m_dpad_up = false;
-		break;
+										this->m_dpad_upTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_UP] = false;
+										break;
 
 	case GamePadInputType::DPAD_DOWN:	this->m_dpad_down = false;
-		break;
+										this->m_dpad_downTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_DOWN] = false;
+										break;
 
 	case GamePadInputType::DPAD_LEFT:	this->m_dpad_left = false;
-		break;
+										this->m_dpad_leftTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_LEFT] = false;
+										break;
 
 	case GamePadInputType::DPAD_RIGHT:	this->m_dpad_right = false;
-		break;
+										this->m_dpad_rightTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::DPAD_RIGHT] = false;
+										break;
 
 	case GamePadInputType::START:		this->m_start = false;
-		break;
+										this->m_startTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::START] = false;
+										break;
 
 	case GamePadInputType::BACK:		this->m_back = false;
-		break;
+										this->m_backTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::BACK] = false;
+										break;
 
 	case GamePadInputType::LEFT_THUMB:	this->m_left_thumb = false;
-		break;
+										this->m_left_thumbTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::LEFT_THUMB] = false;
+										break;
 
 	case GamePadInputType::RIGHT_THUMB:	this->m_right_thumb = false;
-		break;
+										this->m_right_thumbTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::RIGHT_THUMB] = false;
+										break;
 
 	case GamePadInputType::LEFT_SHOULDER: this->m_left_shoulder = false;
-		break;
+										this->m_left_shoulderTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::LEFT_SHOULDER] = false;
+
+										break;
 
 	case GamePadInputType::RIGHT_SHOULDER: this->m_right_shoulder = false;
-		break;
+										this->m_right_shoulderTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::RIGHT_SHOULDER ] = false;
+										break;
 
 	case GamePadInputType::A:			this->m_a = false;
-		break;
+										this->m_aTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::A] = false;
+										break;
 
 	case GamePadInputType::B:			this->m_b = false;
-		break;
+										this->m_bTrigger = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::B] = false;
+										break;
 
 	case GamePadInputType::X:			this->m_x = false;
-		break;
+										this->m_x = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::X] = false;
+										break;
 
 	case GamePadInputType::Y:			this->m_y = false;
-		break;
+										this->m_y = false;
+										this->m_arrayTriggerLastSate[(int)GamePadInputType::Y] = false;
+										break;
 
 	default:break;
 	}
@@ -227,5 +285,65 @@ bool CGamePadInputFlag::isKeyPressed(int bottomType_)
 
 	
 	return false;
+}
+
+/**
+*	@desc	指定したキーがトリガー入力状態を取得
+*	@param	ボタンタイプ
+*	@return	true...押されている
+*	@tips	入力のタイプによって変化
+*/
+bool CGamePadInputFlag::isKeyTrigger(int bottomType_)
+{
+	switch ((GamePadInputType)bottomType_)
+	{
+	case GamePadInputType::DPAD_UP:			return this->m_dpad_upTrigger;
+		break;
+
+	case GamePadInputType::DPAD_DOWN:		return  this->m_dpad_downTrigger;
+		break;
+
+	case GamePadInputType::DPAD_LEFT:		return this->m_dpad_leftTrigger;
+		break;
+
+	case GamePadInputType::DPAD_RIGHT:		return this->m_dpad_rightTrigger;
+		break;
+
+	case GamePadInputType::START:			return this->m_startTrigger;
+		break;
+
+	case GamePadInputType::BACK:			return this->m_backTrigger;
+		break;
+
+	case GamePadInputType::LEFT_THUMB:		return this->m_left_thumbTrigger;
+		break;
+
+	case GamePadInputType::RIGHT_THUMB:		return this->m_right_thumbTrigger;
+		break;
+
+	case GamePadInputType::LEFT_SHOULDER:	return this->m_left_shoulderTrigger;
+		break;
+
+	case GamePadInputType::RIGHT_SHOULDER:	return this->m_right_shoulderTrigger;
+		break;
+
+	case GamePadInputType::A:				return this->m_aTrigger;
+		break;
+
+	case GamePadInputType::B:				return this->m_bTrigger;
+		break;
+
+	case GamePadInputType::X:				return this->m_xTrigger;
+		break;
+
+	case GamePadInputType::Y:				return this->m_yTrigger;
+		break;
+
+	default:break;
+	}
+
+
+	return false;
+
 }
 //EOF

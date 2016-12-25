@@ -46,7 +46,8 @@ enum class GamePadInputType : int {
 	A = 10,	// Aボタン
 	B = 11,	// Bボタン
 	X = 12,	// Xボタン
-	Y = 13,	// Yボタン	
+	Y = 13,	// Yボタン
+	MAX_INPUT_TYPE
 };
 
 
@@ -63,6 +64,8 @@ enum class GamePadInputType : int {
 class CGamePadInputFlag : public CInputFlag
 {
 public:
+
+	//プレス入力
 	bool m_dpad_up = false;			// 方向パッド上ボタン
 	bool m_dpad_down = false;		// 方向パッド下ボタン
 	bool m_dpad_left = false;		// 方向パッド左ボタン
@@ -77,6 +80,26 @@ public:
 	bool m_b = false;				// Bボタン
 	bool m_x = false;				// Xボタン
 	bool m_y = false;				// Yボタン
+	
+	//トリガー入力
+	bool m_dpad_upTrigger		= false;	// 方向パッド上ボタン
+	bool m_dpad_downTrigger		= false;	// 方向パッド下ボタン
+	bool m_dpad_leftTrigger		= false;	// 方向パッド左ボタン
+	bool m_dpad_rightTrigger	= false;	// 方向パッド右ボタン
+	bool m_startTrigger			= false;	// STARTボタン
+	bool m_backTrigger			= false;	// BACKボタン
+	bool m_left_thumbTrigger	= false;	// 左スティックボタン
+	bool m_right_thumbTrigger	= false;	// 右スティックボタン
+	bool m_left_shoulderTrigger = false;	// LBボタン
+	bool m_right_shoulderTrigger = false;	// RBボタン
+	bool m_aTrigger				= false;	// Aボタン
+	bool m_bTrigger				= false;	// Bボタン
+	bool m_xTrigger				= false;	// Xボタン
+	bool m_yTrigger				= false;	// Yボタン
+
+
+
+	//アナログ入力
 	BYTE  m_left_trigger = 0;		// 左トリガー
 	BYTE  m_right_trigger = 0;		// 右トリガー
 	SHORT m_thumb_L_X = 0;			// 左スティックX軸
@@ -84,6 +107,10 @@ public:
 	SHORT m_thumb_R_X = 0;			// 右スティックX軸
 	SHORT m_thumb_R_Y = 0;			// 右スティックY軸
 
+private:
+
+	bool m_arrayTriggerLastSate[(int)GamePadInputType::MAX_INPUT_TYPE];
+public:
 
 	/**
 	*	@desc	コンストラクタ
@@ -117,5 +144,13 @@ public:
 	*	@return	true...押されている
 	*/
 	bool isKeyPressed(int bottomType_)override;
+
+	/**
+	*	@desc	指定したキーがトリガー入力状態を取得
+	*	@param	ボタンタイプ
+	*	@return	true...押されている
+	*	@tips	入力のタイプによって変化
+	*/
+	bool isKeyTrigger(int bottomType_) override;
 };
 //EOF

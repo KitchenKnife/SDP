@@ -62,7 +62,7 @@ void CMaideadState::toIdle(void)
 void CMaideadState::toWandering(void)
 {
 	this->m_pOwner->m_state				= (int)ENEMY_MAIDEAD_STATE::WANDERING;
-	this->m_pOwner->m_animationState	= (int)ENEMY_MAIDEAD_ANIMATION_STATE::IDLE;
+	this->m_pOwner->m_animationState	= (int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING;
 	this->m_pOwner->m_actionState		= (int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING;
 	this->m_nextRegisterKey				= this->m_pOwner->m_state;
 	//待機動作を終了
@@ -75,7 +75,7 @@ void CMaideadState::toWandering(void)
 void CMaideadState::toChase(void)
 {
 	this->m_pOwner->m_state				= (int)ENEMY_MAIDEAD_STATE::IDLE;
-	this->m_pOwner->m_animationState	= (int)ENEMY_MAIDEAD_ANIMATION_STATE::IDLE;
+	this->m_pOwner->m_animationState	= (int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING;
 	this->m_pOwner->m_actionState		= (int)ENEMY_MAIDEAD_ACTION_STATE::IDLE;
 	this->m_nextRegisterKey				= this->m_pOwner->m_state;
 	//待機動作を終了
@@ -212,6 +212,17 @@ void CMaideadWanderingState::start(void)
 
 	//ランダムでアクション時間を設定(30~60)
 	this->m_actionInterval = rand() % 30 + 31;
+
+	if (this->m_pOwner->m_pMove->m_vel.x > 0)
+	{
+		this->m_pOwner->setScaleX(1.0);
+	}
+	else
+	{
+		this->m_pOwner->setScaleX(-1.0);
+	}
+	
+	
 }
 
 /**

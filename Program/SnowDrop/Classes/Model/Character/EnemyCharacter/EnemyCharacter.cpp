@@ -90,7 +90,7 @@ void CEnemyCharacter::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[0]->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
 
 }
 

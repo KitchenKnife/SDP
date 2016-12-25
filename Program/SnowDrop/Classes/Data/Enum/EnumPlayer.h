@@ -29,14 +29,16 @@
 //---------------------------------------------------------
 enum class PLAYER_STATE :int
 {
-	IDLE_RIGHT	= 0,	//右待機状態
-	IDLE_LEFT	= 1,	//左待機状態
-	WALK_RIGHT	= 2,	//右歩行
-	WALK_LEFT	= 3,	//左歩行
-	EQUIP		= 4,	//装備する
-	UN_EQUIP	= 5,	//装備を外す
-	GRASP_RIGHT = 6,	//手を掴む　右向き
-	GRASP_LEFT	= 7,	//手を掴む　左向き
+	IDLE_RIGHT		= 0,	//右待機状態
+	IDLE_LEFT		= 1,	//左待機状態
+	WALK_RIGHT		= 2,	//右歩行
+	WALK_LEFT		= 3,	//左歩行
+	EQUIP_RIGHT		= 4,	//装備する		右向き
+	EQUIP_LEFT		= 5,	//装備する		左向き
+	UN_EQUIP_RIGHT	= 6,	//装備を外す	右向き	
+	UN_EQUIP_LEFT	= 7,	//装備を外す	左向き
+	GRASP_RIGHT		= 8,	//手を掴む　右向き
+	GRASP_LEFT		= 9,	//手を掴む　左向き
 };
 
 //---------------------------------------------------------
@@ -48,14 +50,16 @@ enum class PLAYER_STATE :int
 //---------------------------------------------------------
 enum class PLAYER_ANIMATION_STATE :int
 {
-	IDLE_RIGHT	= 0,	//右待機状態
-	IDLE_LEFT	= 1,	//左待機状態
-	WALK_RIGHT	= 2,	//右歩行
-	WALK_LEFT	= 3,	//左歩行
-	EQUIP		= 4,	//装備する
-	UN_EQUIP	= 5,	//装備を外す
-	GRASP_RIGHT = 6,	//手を掴む　右向き
-	GRASP_LEFT	= 7,	//手を掴む　左向き
+	IDLE_RIGHT		= 0,	//右待機状態
+	IDLE_LEFT		= 1,	//左待機状態
+	WALK_RIGHT		= 2,	//右歩行
+	WALK_LEFT		= 3,	//左歩行
+	EQUIP_RIGHT		= 4,	//装備する		右向き
+	EQUIP_LEFT		= 5,	//装備する		左向き
+	UN_EQUIP_RIGHT	= 6,	//装備を外す	右向き	
+	UN_EQUIP_LEFT	= 7,	//装備を外す	左向き
+	GRASP_RIGHT		= 8,	//手を掴む　右向き
+	GRASP_LEFT		= 9,	//手を掴む　左向き
 };
 
 //---------------------------------------------------------
