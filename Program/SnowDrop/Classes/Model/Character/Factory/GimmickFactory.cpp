@@ -234,3 +234,10 @@ CGimmickFactoryManager* CGimmickFactoryManager::getInstance() {
 	}
 	return CGimmickFactoryManager::m_pGimmickFactoryManager;
 }
+
+//インスタンスの破棄
+void CGimmickFactoryManager::removeInstance() {
+	if (CGimmickFactoryManager::m_pGimmickFactoryManager != NULL) {
+		SAFE_DELETE(CGimmickFactoryManager::m_pGimmickFactoryManager);
+	}
+}

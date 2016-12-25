@@ -159,6 +159,8 @@ public:
 	//インスタンスの取得
 	static CGimmickFactoryManager* getInstance();
 
+	//インスタンスの破棄
+	static void removeInstance();
 
 	std::vector<CGimmickFactory*> m_factories;
 

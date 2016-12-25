@@ -166,9 +166,13 @@ void CPlayerState::toGraspRight(void)
 */
 void CPlayerState::toGraspLeft(void)
 {
+	//次の総合的なプレイヤーの状態
 	this->m_pPlayer->m_state = (int)PLAYER_STATE::GRASP_LEFT;
+	//現在のプレイヤーのアニメーション状態
 	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::GRASP_LEFT;
+	//現在のプレイヤーのアクション状態
 	this->m_pPlayer->m_actionState = 0;
+	//次の総合的なプレイヤーの状態を次に行くステートとして指定
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;

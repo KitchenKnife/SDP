@@ -252,6 +252,9 @@ public:
 	//インスタンスの取得
 	static CEnemyFactoryManager* getInstance();
 
+	//インスタンスの破棄
+	static void removeInstance();
+
 	//敵工場群
 	std::map<ENEMY_TYPE, CEnemyFactory*> m_factories;
 
