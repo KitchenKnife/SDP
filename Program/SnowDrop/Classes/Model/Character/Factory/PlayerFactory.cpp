@@ -156,20 +156,6 @@ void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
-	
-	/*
-	//待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
-
-	//左歩行状態のアニメーションを設定（配列番号１）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::WALK_LEFT]->addChipData(new CChip(0, 256, 256, 256));
-
-	//右歩行状態のアニメーションを設定（配列番号２）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 256, 256));
-	*/
 
 	//開始時のアニメーションの状態
 	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
@@ -222,7 +208,7 @@ void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 	//ジャンプ中に行うアクションを生成して取りける
 	pActionIdle->push_back(new CActionJump(3.0f,4.0f));
 	//ジャンプアクションをマップ配列に取り付ける
-	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type(0, pActionIdle));
+	pChara->m_mapAction[0] = pActionIdle;
 
 
 }
@@ -317,8 +303,6 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 }
 
 void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
-	//状態の設定
-	pChara->m_playerState = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;
@@ -332,8 +316,6 @@ void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 	//細かなタイプ別（タグ）
 	pChara->m_tag = TAG_PLAYER_1;
 
-	//キャラクター状態
-	pChara->m_state = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
 
 	/*
 	 *　計算データのままで起動すると1フレームずれが発生するので
