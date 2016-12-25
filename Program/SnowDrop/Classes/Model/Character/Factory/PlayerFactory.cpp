@@ -175,7 +175,7 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
 
 	//右待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(1024, 768, 256, 256));
 
 	//左待機 のアニメーションを設定

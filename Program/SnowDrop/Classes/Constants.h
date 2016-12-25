@@ -74,7 +74,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //“G
 //#define IMAGE_ENEMY			"Images/kuribo.png"
 #define IMAGE_ENEMY				"Images/Enemy/kari.png"
-#define IMAGE_MEIDEAD			"Images/Enemy/kari.png"
+#define IMAGE_MEIDEAD			"Images/Enemy/Maidead/meid.png"
 #define IMAGE_BAT				"Images/Enemy/Bat/bat.png"
 
 // “G•Ší‚à‚¿
