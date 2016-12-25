@@ -87,9 +87,17 @@ public:
 	virtual bool getGameExitFlag(void) = 0;
 
 	/**
+	*	@desc デバッグモードフラグ取得
+	*	@return true...入力あり　false...入力なし
+	*/
+	virtual bool getDebugModeFlag(void) = 0;
+
+	/**
 	* @desc 入力フラグインスタンスの取得
 	* @return　 入力フラグインスタンス
 	*/
 	virtual CInputFlag* getInputFlagInstance(void) = 0;
+
+
 };
 //EOF

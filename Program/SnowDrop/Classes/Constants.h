@@ -10,6 +10,7 @@
 //	定数やマクロはここから書く
 //=========================================================================
 
+
 // メモリ解放
 #define SAFE_DELETE( p_ ) if ( p_ ) { delete p_ ; p_ = NULL ; }
 // 配列メモリ解放
@@ -51,14 +52,14 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //	画像ファイルのマクロはここから書く
 //=========================================================================
 //タイトル
-#define IMAGE_TITLE				"Images/Title.jpg"
+#define IMAGE_TITLE						"Images/Title.jpg"
 #define IMAGE_TITLE_BUTTON_START		"Images/button/Start.png"
 #define IMAGE_TITLE_BUTTON_END			"Images/button/End.png"
 
 
 // プレイヤー
 //#define IMAGE_PLAYER			"Images/player.png"
-#define IMAGE_PLAYER			"Images/knight_1.png"
+#define IMAGE_PLAYER			"Images/Boy/1knight1ss.png"
 
 //消失エフェクト
 #define IMAGE_DIAPPEAR_EFFECT	"Images/bakuhatsuM01.png"

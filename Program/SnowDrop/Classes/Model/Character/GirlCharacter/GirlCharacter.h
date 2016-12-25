@@ -27,6 +27,7 @@ public:
 	// キャラクタークラスの基本的な関数の列挙
 	//	以下の関数はすべてのキャラクター派生クラス内でオーバーライドさせる。
 	//================================================
+
 	//移動処理
 	virtual void moveFunc();
 
@@ -59,11 +60,32 @@ public:
 	// CPlayerCharacterGirlクラス専用メンバ
 	//================================================
 	//少女の状態
-	enum class GIRL_STATE {
-		STAND	= 0,	//待機
+	enum class GIRL_STATE :int {
+		NONE		= 0,	//何もなし
+		STAND		= 1,	//待機
+		WASTE		= 2,	//暇
+		HOLD_HANDS	= 3,	//手を繋ぐ
+		HUG			= 4,	//お姫様だっこ　（キャー(^q^)）
 	};
+
+	//少女のイベント
+	enum class GIRL_EVENT :int {
+		NONE		=	0,	//何もなし
+		STAND		=	1,	//待機
+		WASTE		=	2,	//暇
+		HOLD_HANDS	=	3,	//手を繋ぐ
+		HUG			=	4,	//お姫様だっこ　（キャー(^q^)）
+	};
+
+	//プレイヤーと少女の状態
+	enum class PAYER_GIRL_STATE : int{
+		FREE	= 0,	//なにもなし
+	};
+
+	
 
 	//少女の状態
 	int m_state = (int)GIRL_STATE::STAND;
+
 
 };

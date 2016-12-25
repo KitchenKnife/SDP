@@ -1,11 +1,12 @@
 #include "GirlCharacter.h"
 
-//================================================
+//====================================================
 // 少女クラスのメンバ関数定義
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//									Author Shinya Ueba
+//====================================================
 //コンストラクタ
 CPlayerCharacterGirl::CPlayerCharacterGirl() {}
 
@@ -24,7 +25,6 @@ bool CPlayerCharacterGirl::init() {
 }
 
 
-
 //移動処理
 void CPlayerCharacterGirl::moveFunc() {
 
@@ -33,9 +33,13 @@ void CPlayerCharacterGirl::moveFunc() {
 		return;
 
 	//アクション状態の更新処理
-	for (CAction* pAction : (*this->m_pActions)) {
-		pAction->update(this);
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
 	}
+
 
 	//物理計算
 	for (CPhysical* pPhysical : (*this->m_pPhysicals)) {
@@ -71,10 +75,19 @@ void CPlayerCharacterGirl::collisionAll() {
 	}
 }
 
-//状態チェック
+
+/**
+*	@desc 状態のチェック
+*	@author					Harada
+*	@author					Shinya Ueba
+*/
 void CPlayerCharacterGirl::checkState() {
 
-
+	if(this->m_pStateMachine)
+	{
+		//状態遷移マシンの更新
+		this->m_pStateMachine->update();
+	}
 }
 
 

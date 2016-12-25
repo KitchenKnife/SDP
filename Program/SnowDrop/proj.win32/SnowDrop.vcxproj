@@ -84,7 +84,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -145,14 +145,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\Action.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionController.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.cpp" />
-    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\ActionJump\ActionJump.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.cpp" />
     <ClCompile Include="..\Classes\Data\Animation\Animation.cpp" />
     <ClCompile Include="..\Classes\Data\Collision\Collision.cpp" />
     <ClCompile Include="..\Classes\Data\Collision\CollisionArea.cpp" />
@@ -163,6 +160,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.cpp" />
     <ClCompile Include="..\Classes\Data\Move\Move.cpp" />
     <ClCompile Include="..\Classes\Data\Physical\Physical.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp" />
     <ClCompile Include="..\Classes\Data\Status\Status.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\GamePadInputType.cpp" />
@@ -174,6 +176,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Character.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
+    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\EnemyFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\GimmickFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.cpp" />
@@ -193,24 +196,28 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Constants.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\Action.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionController.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.h" />
-    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\ActionJump\ActionJump.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h" />
     <ClInclude Include="..\Classes\Data\Animation\Animation.h" />
     <ClInclude Include="..\Classes\Data\Collision\Collision.h" />
     <ClInclude Include="..\Classes\Data\Collision\CollisionArea.h" />
     <ClInclude Include="..\Classes\Data\Effect\Effect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.h" />
+    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h" />
+    <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h" />
     <ClInclude Include="..\Classes\Data\LaunchData\LaunchData.h" />
     <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h" />
     <ClInclude Include="..\Classes\Data\Move\Move.h" />
     <ClInclude Include="..\Classes\Data\Physical\Physical.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h" />
     <ClInclude Include="..\Classes\Data\Status\Status.h" />
     <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\GamePadInputType.h" />
@@ -222,6 +229,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h" />
     <ClInclude Include="..\Classes\Model\Character\Character.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
+    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\EnemyFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\GimmickFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\GirlCharacterFactory.h" />

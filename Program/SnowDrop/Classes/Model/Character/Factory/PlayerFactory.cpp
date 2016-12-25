@@ -9,6 +9,8 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "PlayerFactory.h"
+#include "Data\StateMachine\Player\PlayerState.h"
+#include "Data\Enum\EnumPlayer.h"
 
 //================================================
 // 少年キャラクターパーツクラス工場
@@ -35,11 +37,7 @@ std::vector<CPhysical* >* CPlayerBoyPartsFactory::getPhysicals() {
 	return new std::vector<CPhysical*>();
 }
 
-//アクション群データの生成と取得
-std::vector<CAction* >* CPlayerBoyPartsFactory::getActions() {
-	//アクション群を作成
-	return new std::vector<CAction*>();
-}
+
 
 //実体データの生成と取得
 CBody* CPlayerBoyPartsFactory::getBody() {
@@ -52,6 +50,17 @@ std::vector<CCollisionArea* >* CPlayerBoyPartsFactory::getCollisionAreas() {
 	//衝突判定空間群の生成
 	return new std::vector<CCollisionArea*>();
 }
+
+/**
+*	@desc 状態遷移データの生成と取得
+*	@return 状態遷移データ
+*	@author Shinya Ueba
+*/
+CStateMachine*	CPlayerBoyPartsFactory::getStateMachine(void)
+{
+	return new CStateMachine();
+}
+
 
 //================================================
 // キャラクターの生成過程を抽象化したクラス
@@ -80,7 +89,8 @@ CPlayerCharacterBoy* CPlayerBoyFactory::create() {
 	this->settingBody(pChara);
 	//衝突判定空間群データの設定
 	this->settingCollisionArea(pChara);
-
+	//状態遷移データの設定
+	this->settingStateMachine(pChara);
 	//そのほか初期化
 	this->settingInitialize(pChara);
 
@@ -112,15 +122,15 @@ CPlayerCharacterBoy* CPlayerBoyCreateFactory::createPlayer() {
 	
 	//物理演算群の取得
 	pPlayerBoy->m_pPhysicals = factory.getPhysicals();
-
-	//アクション群の取得
-	pPlayerBoy->m_pActions = factory.getActions();
 	
 	//実体の取得
 	pPlayerBoy->m_pBody = factory.getBody();
 
 	//衝突判定空間群の取得
 	pPlayerBoy->m_pCollisionAreas = factory.getCollisionAreas();
+
+	//状態遷移データの生成と取得
+	pPlayerBoy->m_pStateMachine = factory.getStateMachine();
 
 	return pPlayerBoy;
 }
@@ -146,6 +156,8 @@ void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
+	
+	/*
 	//待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
 	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
@@ -157,7 +169,42 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//右歩行状態のアニメーションを設定（配列番号２）
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
 	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 256, 256));
+	*/
 
+	//開始時のアニメーションの状態
+	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
+
+	//右待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(1024, 768, 256, 256));
+
+	//左待機 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_LEFT]->addChipData(new CChip(0, 768, 256, 256));
+
+	//右歩行 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
+
+	//左歩行 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 512, 256, 256));
+
+	//装備する のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP]->addChipData(new CChip(768, 0, 256, 256));
+
+	//装備を外す のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP]->addChipData(new CChip(0, 0, 256, 256));
+
+	//手を掴む右向き のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(512, 1024, 256, 256));
+
+	//手を掴む左向き のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 1024, 256, 256));
 }
 
 void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
@@ -169,7 +216,14 @@ void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
-	pChara->m_pActions->push_back(new CActionJump(3.0f, 4.0f));
+
+	//ジャンプアクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//ジャンプ中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionJump(3.0f,4.0f));
+	//ジャンプアクションをマップ配列に取り付ける
+	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type(0, pActionIdle));
+
 
 }
 
@@ -217,6 +271,51 @@ void CBasePlayerBoyFactory::settingCollisionArea(CPlayerCharacterBoy* pChara) {
 	
 }
 
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
+{
+	
+	//必要な状態を作成していく
+
+	//右向き待機状態
+	CStateBase* pIdleRightState = new CPlayerIdleRightState(pChara, NULL);
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::IDLE_RIGHT, pIdleRightState);
+
+//------------------------------------------------------------------------------------------
+
+	//左向き待機状態
+	CStateBase* pIdleLeftState = new CPlayerIdleLeftState(pChara, NULL);
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::IDLE_LEFT, pIdleLeftState);
+
+//------------------------------------------------------------------------------------------
+
+	//右向き歩行状態
+	CStateBase* pWalkRightState = new CPlayerWalkRightState(pChara, NULL);
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::WALK_RIGHT, pWalkRightState);
+
+//------------------------------------------------------------------------------------------
+
+	//左向き歩行状態
+	CStateBase* pWalkLeftState = new CPlayerWalkLeftState(pChara, NULL);
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::WALK_LEFT, pWalkLeftState);
+
+//------------------------------------------------------------------------------------------
+
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)PLAYER_STATE::IDLE_RIGHT;
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState(pChara->m_state);
+}
+
 void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 	//状態の設定
 	pChara->m_playerState = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
@@ -232,6 +331,9 @@ void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 
 	//細かなタイプ別（タグ）
 	pChara->m_tag = TAG_PLAYER_1;
+
+	//キャラクター状態
+	pChara->m_state = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
 
 	/*
 	 *　計算データのままで起動すると1フレームずれが発生するので

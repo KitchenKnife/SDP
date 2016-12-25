@@ -158,6 +158,7 @@ void CTitle::callbackChangeGameMain(cocos2d::Ref* pSender)
 
 	// Œø‰Ê‰¹Ä¶I—¹Œã
 	AudioEngine::setFinishCallback(musicID, [](int musicID,const std::string) {
+		
 
 		//ƒV[ƒ“‚ğ¶¬‚·‚é
 		cocos2d::Scene* pScene = CGameMain::createScene();

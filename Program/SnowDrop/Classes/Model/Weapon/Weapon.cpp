@@ -27,20 +27,6 @@ CWeapon::~CWeapon(){
 
 	SAFE_DELETE(this->m_pBody);
 
-	for (CAction* pAction : (*m_pActions)) {
-		SAFE_DELETE(pAction);
-	}
-	SAFE_DELETE(this->m_pActions);
-
-
-	SAFE_DELETE(this->m_pMove);
-
-
-	for (CAnimation* pAnimation : (*m_pAnimations)) {
-		SAFE_DELETE(pAnimation);
-	}
-	SAFE_DELETE(this->m_pAnimations);
-
 
 	
 }

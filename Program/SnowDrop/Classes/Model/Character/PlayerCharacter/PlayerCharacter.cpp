@@ -11,6 +11,7 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "PlayerCharacter.h"
 #include "Lib/Input/InputManager.h"
+#include "Data\Enum\EnumPlayer.h"
 
 //================================================	
 //	少年クラスのメンバ関数のコードの追加はここから
@@ -35,8 +36,6 @@ bool CPlayerCharacterBoy::init() {
 	return true;
 }
 
-
-
 //移動処理
 void CPlayerCharacterBoy::moveFunc() {
 
@@ -48,9 +47,13 @@ void CPlayerCharacterBoy::moveFunc() {
 	this->inputFunc();
 
 	//アクションの更新処理
-	for (CAction* pAction : (*this->m_pActions)) {
-		pAction->update(this);
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
 	}
+
 	
 	//物理計算
 	for (CPhysical* pPhysical : (*this->m_pPhysicals)) {
@@ -65,8 +68,9 @@ void CPlayerCharacterBoy::moveFunc() {
 //アニメーション処理
 void CPlayerCharacterBoy::animationFunc() {
 
+
 	//プレイヤーアニメーション
-	(*this->m_pAnimations)[m_playerState]->update();
+	(*this->m_pAnimations)[this->m_animationState]->update();
 
 }
 
@@ -87,20 +91,30 @@ void CPlayerCharacterBoy::collisionAll() {
 }
 
 //状態チェック
-void CPlayerCharacterBoy::checkState() {
+void CPlayerCharacterBoy::checkState() 
+{
+	if (this->m_pStateMachine)
+	{
+		this->m_pStateMachine->update();
+	}
+
+	return;
+
 
 	//状態の判定
 	if (this->m_pMove->m_vel.x > 0) {
 		//右歩行状態
-		m_playerState = (int)PLAYER_STATE::WALK_RIGHT;
+//		m_playerState = (int)PLAYER_STATE::WALK_RIGHT;
+		this->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_RIGHT;
 	}
 	else if (this->m_pMove->m_vel.x < 0) {
 		//左歩行状態
-		m_playerState = (int)PLAYER_STATE::WALK_LEFT;
+//		m_playerState = (int)PLAYER_STATE::WALK_LEFT;
+		this->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_LEFT;
 	}
 	else if (this->m_pMove->m_vel.y > 0.0f) {
 		//ジャンプ状態
-		m_playerState = (int)PLAYER_STATE::JUMP;
+//		m_playerState = (int)PLAYER_STATE::JUMP;
 	}
 	else if (this->m_pMove->m_vel.y < 0.0f) {
 		//落下状態
@@ -108,7 +122,9 @@ void CPlayerCharacterBoy::checkState() {
 	}
 	else {
 		//待機状態
-		m_playerState = (int)PLAYER_STATE::STAND;
+//		m_playerState = (int)PLAYER_STATE::STAND;
+
+		this->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
 	}
 }
 
@@ -119,8 +135,10 @@ void  CPlayerCharacterBoy::applyFunc() {
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
 
+	cocos2d::log("%d",this->m_animationState);
+
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[m_playerState]->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
 }
 
 
@@ -143,12 +161,47 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
 }
 
 /**
+* @desc 手をつなげる状態かチェック
+* @param 相方（少女）
+* @tips 手をつなげる状態なら"手つなぎフラグ"を上げる
+* @author Osumi
+* @author Shinya Ueba
+*/
+void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
+	
+	/*
+	//お互いの距離
+	float length = sqrt(pow(this->m_pMove->m_pos.x - pCharacter->m_pMove->m_pos.x, 2.0) + pow(this->m_pMove->m_pos.y - pCharacter->m_pMove->m_pos.y, 2.0));
+
+	//お互いの距離がある程度近ければお互いの"手つなぎフラグを上げる"
+	if (length <= 45) {
+
+
+		this->m_playerState = 
+
+		WALK_LEFT = 1,	//左歩行
+			WALK_RIGHT = 2,	//右歩行
+
+		this->m_enableHoldHands = true;
+
+		pCharacter->m_isShakeHands = true;
+	}
+	else
+	{
+
+	}*/
+}
+
+/**
  * @desc 入力処理
  * @tips 移動処理で呼び出す
  */
 void  CPlayerCharacterBoy::inputFunc() {
+	
+	return;
 
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController(CONTROLLER_TYPE::KEYBORD);
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
 	//左へ移動（歩行）
@@ -172,6 +225,12 @@ void  CPlayerCharacterBoy::inputFunc() {
 	if (pointerInputController->getJumpFlag() == true) 
 	{
 		//ジャンプを開始させる
-		(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
+	//	(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
 	}
+
+	if (pointerInputController->getAttackFlag() == true) {
+		//攻撃を開始させる。
+	//	(*this->m_pActions)[(int)PLAYER_ACTION::ATTACK]->start();
+	}
+
 }

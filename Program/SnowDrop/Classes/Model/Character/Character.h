@@ -1,7 +1,7 @@
 /*
  * Character.h
  *
- *	2016/11/07	Osumi And Harada
+ *	2016/11/07	Osumi And Harada And Shinya Ueba
  *
  */
 
@@ -14,10 +14,10 @@
 #include "Data/Animation/Animation.h"
 #include "Data/Physical/Physical.h"
 #include "Data/ActionController/ActionController.h"
-#include "Data/ActionController/PlayerActionController/PlayerActionController.h"
 #include "Data/Collision/Collision.h"
 #include "Data/Collision/CollisionArea.h"
 #include "Data/Status/Status.h"
+#include "Data/StateMachine/StateMachine.h"
 
 //================================================
 // キャラクタータイプ
@@ -67,14 +67,18 @@ public:
 	//物理演算データ群
 	std::vector<CPhysical* >* m_pPhysicals = NULL;
 
-	//アクションデータ群
-	std::vector<CAction* >* m_pActions = NULL;
+	//アクションデータ群マップ配列
+	std::map<int, std::vector<CAction*>*> m_mapAction;
 
 	//実体データ
 	CBody* m_pBody = NULL;
 
 	//衝突判定空間データ群
 	std::vector<CCollisionArea*>* m_pCollisionAreas = NULL;
+
+	//状態遷移データ
+	CStateMachine* m_pStateMachine = NULL;
+
 
 	//有効フラグ
 	//表示・非表示関連
@@ -90,11 +94,27 @@ public:
 	//細かなタイプ別（タグ）
 	int m_tag = 0;
 
+	//キャラクターステータス
+	CStatus m_status;
+
+	//キャラクターの状態
+	int m_state = 0;
+
+	//キャラクターの移動状態
+	int m_stateMove = 0;
+
+	//キャラクターのアニメーションの状態
+	int m_animationState = 0;
+
+	//キャラクターのアクションの状態
+	int m_actionState = 0;
+
 protected:
 	//================================================ 
 	// キャラクタークラスの基本的な関数の列挙
 	//	以下の関数はすべてのキャラクター派生クラス内でオーバーライドさせる。
 	//================================================
+	
 	//移動処理
 	virtual void moveFunc() = 0;
 
@@ -248,10 +268,10 @@ public:
 	virtual std::vector<CAnimation* >* getAnimations() = 0;
 	//物理演算データ群の実体を生成して返す
 	virtual std::vector<CPhysical* >* getPhysicals() = 0;
-	//アクションデータ群の実体を生成して返す
-	virtual std::vector<CAction* >* getActions() = 0;
 	//実体データの実体を生成して返す
 	virtual CBody* getBody() = 0;
 	//衝突判定空間データ群の実体を生成して返す
 	virtual std::vector<CCollisionArea* >* getCollisionAreas() = 0;
+	//状態遷移データの生成と取得
+	virtual	CStateMachine*	getStateMachine(void) { return NULL; }
 };

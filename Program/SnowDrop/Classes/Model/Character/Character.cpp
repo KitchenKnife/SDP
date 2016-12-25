@@ -17,15 +17,39 @@
 CCharacter::CCharacter() {}
 
 //デストラクタ
+
+/**
+*	@desc デストラクタ
+*	@autor	Osumi
+*	@autor	Harada
+*	@autor	Shinya Ueba
+*/
 CCharacter::~CCharacter() {
+
+	//状態遷移データの削除
+	SAFE_DELETE(this->m_pStateMachine);
+
 	//実体データの削除
 	SAFE_DELETE(this->m_pBody);
 
 	//アクション群データの削除
-	for (CAction* pAction: (*m_pActions)) {
-		SAFE_DELETE(pAction);
+	std::map<int, std::vector<CAction*>* >::iterator itr = this->m_mapAction.begin();
+	while (itr != this->m_mapAction.end()) {
+
+		if (itr->second)
+		{
+			std::vector<CAction*>* pActions = itr->second;
+
+			for (CAction* pAction : *pActions)
+			{
+				SAFE_DELETE(pAction);
+			}
+			//クラスのインスタンスを削除
+			SAFE_DELETE(itr->second);
+		}
+		//イテレーターを更新
+		itr++;
 	}
-	SAFE_DELETE(this->m_pActions);
 
 	//物理演算群データの削除
 	for (CPhysical* pPhysical : (*m_pPhysicals)) {
@@ -36,13 +60,12 @@ CCharacter::~CCharacter() {
 	//移動データの削除
 	SAFE_DELETE(this->m_pMove);
 
+
 	//アニメーションデータ群の削除
 	for (CAnimation* pAnimation: (*m_pAnimations)) {
 		SAFE_DELETE(pAnimation);
 	}
 	SAFE_DELETE(this->m_pAnimations);
-
-	//SAFE_DELETE(this->m_pStatus);
 }
 
 //初期化処理
@@ -62,6 +85,7 @@ bool CCharacter::init() {
 
 //更新処理
 void CCharacter::update(float deltaTime) {
+
 
 	//移動処理
 	this->moveFunc();

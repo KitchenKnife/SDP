@@ -10,15 +10,17 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#include "PlayerFactory.h"
+#include "GirlCharacterFactory.h"
+#include "Data\StateMachine\Girl\GirlState.h"
 
-//================================================
+//=====================================================
 // 少年キャラクターパーツクラス工場
 //	（AbstractFactory）
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//	2016/12/23						Author	Shinya Ueba
+//=====================================================
 //アニメーション群データの生成と取得
 std::vector<CAnimation* >* CPlayerGirlPartsFactory::getAnimations() {
 	//アニメーション群の作成
@@ -37,12 +39,6 @@ std::vector<CPhysical* >* CPlayerGirlPartsFactory::getPhysicals() {
 	return new std::vector<CPhysical*>();
 }
 
-//アクション群データの生成と取得
-std::vector<CAction* >* CPlayerGirlPartsFactory::getActions() {
-	//アクション群を作成
-	return new std::vector<CAction*>();
-}
-
 //実体データの生成と取得
 CBody* CPlayerGirlPartsFactory::getBody() {
 	//実体データの作成
@@ -55,14 +51,26 @@ std::vector<CCollisionArea* >* CPlayerGirlPartsFactory::getCollisionAreas() {
 	return new std::vector<CCollisionArea*>();
 }
 
+/**
+*	@desc 状態遷移データの生成と取得
+*	@return 状態遷移データ
+*	@author Shinya Ueba
+*/
+CStateMachine*	CPlayerGirlPartsFactory::getStateMachine(void)
+{
+	return new CStateMachine();
+}
 
-//================================================
+
+
+//=====================================================
 // 女の子の生成と組み立てを担当するクラス
 //	（FactoryMethod）
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//	2016/12/23						Author	Shinya Ueba
+//=====================================================
 //プレイヤーの生成と設定
 CPlayerCharacterGirl* CPlayerGirlFactory::create() {
 
@@ -83,7 +91,8 @@ CPlayerCharacterGirl* CPlayerGirlFactory::create() {
 	this->settingBody(pChara);
 	//衝突判定空間群データの設定
 	this->settingCollisionArea(pChara);
-
+	//状態遷移データの設定
+	this->settingStateMachine(pChara);
 	//そのほか初期化
 	this->settingInitialize(pChara);
 
@@ -93,43 +102,44 @@ CPlayerCharacterGirl* CPlayerGirlFactory::create() {
 
 
 
-//================================================
+//=====================================================
 // キャラクターの生成と組み立てを担当するクラス
 //	（FactoryMethod）
 //
 //	2016/12/22
 //									Author Harada
-//================================================
+//	2016/12/23						Author	Shinya Ueba
+//=====================================================
 //プレイヤーの生成と組み立て
 CPlayerCharacterGirl* CPlayerGirlCreateFactory::createPlayer() {
 
 	//少年キャラクターの生成
-	CPlayerCharacterGirl* pPlayerBoy = CPlayerCharacterGirl::create();
+	CPlayerCharacterGirl* pPlayerGirl = CPlayerCharacterGirl::create();
 
 	//少年キャラクターパーツ工場を生成
-	CPlayerBoyPartsFactory  factory;
+	CPlayerGirlPartsFactory  factory;
 
 	//移動の取得
-	pPlayerBoy->m_pMove = factory.getMove();
+	pPlayerGirl->m_pMove = factory.getMove();
 
 	//アニメーション群の取得
-	pPlayerBoy->m_pAnimations = factory.getAnimations();
+	pPlayerGirl->m_pAnimations = factory.getAnimations();
 
 	//物理演算群の取得
-	pPlayerBoy->m_pPhysicals = factory.getPhysicals();
+	pPlayerGirl->m_pPhysicals = factory.getPhysicals();
 
-	//アクション群の取得
-	pPlayerBoy->m_pActions = factory.getActions();
 
 	//実体の取得
-	pPlayerBoy->m_pBody = factory.getBody();
+	pPlayerGirl->m_pBody = factory.getBody();
 
 	//衝突判定空間群の取得
-	pPlayerBoy->m_pCollisionAreas = factory.getCollisionAreas();
+	pPlayerGirl->m_pCollisionAreas = factory.getCollisionAreas();
+
+	//状態遷移データの取得
+	pPlayerGirl->m_pStateMachine = factory.getStateMachine();
 
 
-
-	return pPlayerBoy;
+	return pPlayerGirl;
 }
 
 //================================================
@@ -155,8 +165,11 @@ void CBasePlayerGirlFactory::settingTexture(CPlayerCharacterGirl* pChara) {
 void CBasePlayerGirlFactory::settingAnimations(CPlayerCharacterGirl* pChara) {
 	//待機状態のアニメーションを設定（配列番号０）
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
+	(*pChara->m_pAnimations)[(int)CPlayerCharacterGirl::GIRL_STATE::NONE]->addChipData(new CChip(0, 512, 256, 256));
 
+	//待機状態のアニメーションを設定（配列番号1）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
+	(*pChara->m_pAnimations)[(int)CPlayerCharacterGirl::GIRL_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
 }
 
 void CBasePlayerGirlFactory::settingPhysicals(CPlayerCharacterGirl* pChara) {
@@ -215,6 +228,26 @@ void CBasePlayerGirlFactory::settingCollisionArea(CPlayerCharacterGirl* pChara) 
 	//画面端の衝突判定を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
 
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+void CBasePlayerGirlFactory::settingStateMachine(CPlayerCharacterGirl* pChara)
+{
+	//必要な状態を作成していく
+
+	//立ち状態
+	CStateBase* pStandState = new CGirlStandState();
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)CPlayerCharacterGirl::GIRL_STATE::STAND, pStandState);
+
+
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)CPlayerCharacterGirl::GIRL_STATE::STAND);
 }
 
 

@@ -1,10 +1,9 @@
-
 /*
-* EnemyCharacter.h
-*
-*	2016/11/11	Yamasaki 
-*
-*/
+ * EnemyCharacter.h
+ *
+ *	2016/11/11	Yamasaki 
+ *
+ */
 
 #pragma once
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -12,7 +11,6 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Character/Character.h"
 #include "Model/Map/Map.h"
-#include "Data/Status/Status.h"
 
 //================================================
 // 
@@ -82,7 +80,7 @@ public:
 	};
 
 	//アニメーションの状態
-	int m_state = (int)STATE::NONE;
+	//int m_state = (int)STATE::NONE;
 
 	//敵が行えるアクション
 	enum class ACTION :int {
@@ -91,16 +89,4 @@ public:
 		IDLE	= 2,	//
 		DAMAGE	= 3,	//
 	};
-
-	//================================================
-	// 
-	// メンバーに関するコードの追加はここから
-	//		
-	//		
-	//================================================
-
-
-
-
 };
-

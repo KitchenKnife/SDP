@@ -18,7 +18,6 @@
 #include "Model/Character/Factory/EnemyFactory.h"
 
 //プレイヤーの武器アクション
-#include "Data/ActionController/PlayerActionController/PlayerWeaponActionController/PlayerWeaponActionController.h"
 
 // 入力
 #include "Lib/Input/InputManager.h"
@@ -165,6 +164,8 @@ bool CGameMain::init() {
 
 	// 少女の生成と取り付け
 	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
+	
+	
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(playerGirl);
 
@@ -272,8 +273,11 @@ void CGameMain::scroll() {
  */
 void CGameMain::update( float deltaTime_ ) {
 	
+	//入力状態の更新処理
+	CInputManager::getInstance()->update();
+
 	// esc キーを押したらゲーム終了
-	if ( CInputManager::getInstance()->getInputController(CONTROLLER_TYPE::KEYBORD)->getGameExitFlag())
+	if ( CInputManager::getInstance()->getInputController()->getGameExitFlag())
 	{
 		cocos2d::Director::getInstance()->end() ;
 	}

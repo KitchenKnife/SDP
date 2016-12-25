@@ -49,9 +49,6 @@
     <Filter Include="src\Model\Map">
       <UniqueIdentifier>{02fb3a4a-485b-431e-bd80-0873477901c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\ActionController\PlayerActionController">
-      <UniqueIdentifier>{1fb2b0b8-aeb9-4373-b9ab-03603d4a2e9c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Data\Status">
       <UniqueIdentifier>{63071aef-ea1a-4d4f-afe0-ff5324addc3b}</UniqueIdentifier>
     </Filter>
@@ -60,9 +57,6 @@
     </Filter>
     <Filter Include="src\Model\Character\EnemyCharacter">
       <UniqueIdentifier>{e593d3ee-7560-4be5-8ca5-ebd6b83c9f85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController">
-      <UniqueIdentifier>{18a3238f-3737-4662-9341-104dbea8d916}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Data\Effect">
       <UniqueIdentifier>{de81eec4-e8ed-4af9-b37f-eb56cf2a9e75}</UniqueIdentifier>
@@ -76,26 +70,11 @@
     <Filter Include="src\Model\Weapon\PlayerWeapon">
       <UniqueIdentifier>{62b38928-b3a8-4fea-ba2f-419fa6c9637b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\ActionController\PlayerActionController\PlayerWeaponActionController">
-      <UniqueIdentifier>{5b5667f8-1966-45e7-8bdc-796d9e9aa853}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Data\LaunchData">
       <UniqueIdentifier>{c523751d-1096-4943-8e50-f0ce579d8f91}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Data\LaunchTrigger">
       <UniqueIdentifier>{f2e1a8f3-2797-4420-be22-311e5b2e7a92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionAttack">
-      <UniqueIdentifier>{bf27dda4-a258-4553-a8db-60e2bc717bba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionDamage">
-      <UniqueIdentifier>{163c5200-b15a-4a1d-8b96-d9f589ec1de2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionPursuit">
-      <UniqueIdentifier>{9fd186a1-9a22-4bda-a1dc-22cac9caf9a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionIdle">
-      <UniqueIdentifier>{a7a6d17b-532d-4ca7-aece-73ed9db74426}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Scene\Title">
       <UniqueIdentifier>{df8fa0fd-891f-4bab-8c7c-249d482a6a2b}</UniqueIdentifier>
@@ -114,6 +93,36 @@
     </Filter>
     <Filter Include="src\Lib\Sound">
       <UniqueIdentifier>{2fd70ea6-5452-4ffc-aa9e-5f23716da1e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Character\StateMachine">
+      <UniqueIdentifier>{71d468cc-ef17-45f2-9c1f-d902f266dce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine">
+      <UniqueIdentifier>{60b0799c-36e8-45e6-b3d3-399aeccc2d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\EnemyState">
+      <UniqueIdentifier>{b1f6efc9-b97a-44b6-934d-93e7b5d21c72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\EnemyState\MaideadState">
+      <UniqueIdentifier>{9ffd46c1-9108-45ac-b067-0e4ae0d34368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\GirlState">
+      <UniqueIdentifier>{ad953aa0-7ad0-4888-ad7d-c62cf4c13833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\PlayerState">
+      <UniqueIdentifier>{66d2e083-bf4b-4f66-89db-263b78d85ba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Enum">
+      <UniqueIdentifier>{c533eac9-b790-4957-91e0-fae38de4abcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionMoveStraight">
+      <UniqueIdentifier>{d889f896-7c36-446a-85f0-4c3abef84c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionJump">
+      <UniqueIdentifier>{53192a7e-45d4-4a07-9cfc-acee45aeb08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionIdle">
+      <UniqueIdentifier>{737e30e7-c6fb-40e0-8782-ecaf07374424}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Scene\GameOver">
       <UniqueIdentifier>{c89468bc-b7c6-4cbe-95ac-56e937cab2db}</UniqueIdentifier>
@@ -153,17 +162,11 @@
     <ClCompile Include="..\Classes\Model\Map\Map.cpp">
       <Filter>src\Model\Map</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.cpp">
-      <Filter>src\Data\ActionController\PlayerActionController</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Data\Status\Status.cpp">
       <Filter>src\Data\Status</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp">
       <Filter>src\Model\Character\EnemyCharacter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.cpp">
-      <Filter>src\Data\ActionController\EnemyActionController</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\Effect\Effect.cpp">
       <Filter>src\Data\Effect</Filter>
@@ -179,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeapon.cpp">
       <Filter>src\Model\Weapon\PlayerWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.cpp">
-      <Filter>src\Data\ActionController\PlayerActionController\PlayerWeaponActionController</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.cpp">
       <Filter>src\Model\Weapon\PlayerWeapon</Filter>
@@ -200,18 +200,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputController.cpp">
       <Filter>src\Lib\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.cpp">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.cpp">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionDamage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.cpp">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionIdle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.cpp">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionPursuit</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\GirlCharacter\GirlCharacter.cpp">
       <Filter>src\Model\Character\GirlCharacter</Filter>
@@ -251,6 +239,36 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
       <Filter>src\Lib\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp">
+      <Filter>src\Data\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp">
+      <Filter>src\Data\StateMachine\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp">
+      <Filter>src\Data\StateMachine\GirlState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp">
+      <Filter>src\Data\StateMachine\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp">
+      <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.cpp">
+      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionJump\ActionJump.cpp">
+      <Filter>src\Data\ActionController\ActionJump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\Action.cpp">
+      <Filter>src\Data\ActionController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.cpp">
+      <Filter>src\Data\ActionController\ActionIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\GameOver\GameOver.cpp">
       <Filter>src\Scene\GameOver</Filter>
@@ -293,17 +311,11 @@
     <ClInclude Include="..\Classes\Model\Map\Map.h">
       <Filter>src\Model\Map</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerActionController.h">
-      <Filter>src\Data\ActionController\PlayerActionController</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Data\Status\Status.h">
       <Filter>src\Data\Status</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h">
       <Filter>src\Model\Character\EnemyCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionController.h">
-      <Filter>src\Data\ActionController\EnemyActionController</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\Effect\Effect.h">
       <Filter>src\Data\Effect</Filter>
@@ -320,9 +332,6 @@
     <ClInclude Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeapon.h">
       <Filter>src\Model\Weapon\PlayerWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\PlayerActionController\PlayerWeaponActionController\PlayerWeaponActionController.h">
-      <Filter>src\Data\ActionController\PlayerActionController\PlayerWeaponActionController</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Model\Weapon\PlayerWeapon\PlayerWeaponFactory.h">
       <Filter>src\Model\Weapon\PlayerWeapon</Filter>
     </ClInclude>
@@ -337,18 +346,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h">
       <Filter>src\Lib\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionAttack\EnemyActionAttack.h">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionDamage\EnemyActionDamage.h">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionDamage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionIdle\EnemyActionIdle.h">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionIdle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\EnemyActionController\EnemyActionPursuit\EnemyActionPursuit.h">
-      <Filter>src\Data\ActionController\EnemyActionController\EnemyActionPursuit</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Input\InputController.h">
       <Filter>src\Lib\Input</Filter>
@@ -391,6 +388,42 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
       <Filter>src\Lib\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h">
+      <Filter>src\Data\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h">
+      <Filter>src\Data\StateMachine\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h">
+      <Filter>src\Data\StateMachine\GirlState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h">
+      <Filter>src\Data\StateMachine\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h">
+      <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h">
+      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionJump\ActionJump.h">
+      <Filter>src\Data\ActionController\ActionJump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\Action.h">
+      <Filter>src\Data\ActionController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.h">
+      <Filter>src\Data\ActionController\ActionIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h">
+      <Filter>src\Data\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h">
+      <Filter>src\Data\Enum</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\GameOver\GameOver.h">
       <Filter>src\Scene\GameOver</Filter>

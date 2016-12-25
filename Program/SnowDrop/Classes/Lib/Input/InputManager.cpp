@@ -19,15 +19,12 @@ CInputManager* CInputManager::m_sharedInputManager = NULL ;
 
 CInputManager::CInputManager() {
 
-	// 入力フラグの生成と設定
-	//this->setInputFlag( new CKeyboardInputFlag() ) ;
-
 	//入力コントローラーデータ群の生成
 	this->m_pInputControllers = new std::vector<CInputController*>();
 	//キーボード入力コントローラーの生成と取り付け
 	this->m_pInputControllers->push_back(new CKeyboardInputController());
 	//ゲームパッド入力コントローラーの生成と取り付け
-	//this->m_pInputControllers->push_back(new CGamepadInputController());
+	this->m_pInputControllers->push_back(new CGamepadInputController());
 
 }
 
@@ -57,6 +54,126 @@ CInputManager::~CInputManager()
 void CInputManager::removeInstance() {
 
 	SAFE_DELETE( CInputManager::m_sharedInputManager ) ;
+}
+
+
+/**
+* @desc 更新処理
+*/
+void CInputManager::update(void)
+{
+	//ゲームパッドの接続状態の更新
+	this->updateGamePadConnectState();
+	//ゲームパッドの入力状態の更新
+	this->updateGamePadInputState();
+}
+
+/**
+* @desc GamePadの接続状態の更新
+*/
+HRESULT CInputManager::updateGamePadConnectState(void)
+{
+	DWORD dwResult;
+	for (DWORD i = 0; i < MAX_CONTROLLERS; i++)
+	{
+		//ゲームパッドの接続状態を取得
+		dwResult = XInputGetState(i, &this->m_controllers[i].state);
+
+		if (dwResult == ERROR_SUCCESS)
+		{
+			this->m_controllers[i].boolConnected = true;
+			this->m_controllerType = CONTROLLER_TYPE::GAMEPAD;
+		}
+		else
+		{
+			this->m_controllers[i].boolConnected = false;
+		
+			this->m_controllerType = CONTROLLER_TYPE::KEYBORD;
+		}
+	}
+	return S_OK;
+}
+
+/**
+* @desc GamePadの入力状態の更新
+*/
+void CInputManager::updateGamePadInputState(void)
+{
+	for (DWORD i = 0; i < MAX_CONTROLLERS; i++)
+	{
+		if (this->m_controllers[i].boolConnected)
+		{
+			WORD wButtons = this->m_controllers[i].state.Gamepad.wButtons;
+			/*
+			if (g_bDeadZoneOn)
+			{
+				// Zero value if thumbsticks are within the dead zone
+				if ((g_Controllers[i].state.Gamepad.sThumbLX < INPUT_DEADZONE &&
+					g_Controllers[i].state.Gamepad.sThumbLX > -INPUT_DEADZONE) &&
+					(g_Controllers[i].state.Gamepad.sThumbLY < INPUT_DEADZONE &&
+						g_Controllers[i].state.Gamepad.sThumbLY > -INPUT_DEADZONE))
+				{
+					g_Controllers[i].state.Gamepad.sThumbLX = 0;
+					g_Controllers[i].state.Gamepad.sThumbLY = 0;
+				}
+
+				if ((g_Controllers[i].state.Gamepad.sThumbRX < INPUT_DEADZONE &&
+					g_Controllers[i].state.Gamepad.sThumbRX > -INPUT_DEADZONE) &&
+					(g_Controllers[i].state.Gamepad.sThumbRY < INPUT_DEADZONE &&
+						g_Controllers[i].state.Gamepad.sThumbRY > -INPUT_DEADZONE))
+				{
+					g_Controllers[i].state.Gamepad.sThumbRX = 0;
+					g_Controllers[i].state.Gamepad.sThumbRY = 0;
+				}
+			}
+			*/
+			//全てのボタンの入力状態を確認する
+			this->changeAllBottons(wButtons);
+		}
+	}
+}
+
+
+/**
+*	@desc	全てのボタンの入力状態を確認する
+*	@param	全ボタンの入力状態
+*	@author Shinya Ueba
+*/
+void CInputManager::changeAllBottons(DWORD wBottons)
+{
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_UP,(int)GamePadInputType::DPAD_UP);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_DOWN, (int)GamePadInputType::DPAD_DOWN);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_LEFT, (int)GamePadInputType::DPAD_LEFT);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_DPAD_RIGHT, (int)GamePadInputType::DPAD_RIGHT);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_START, (int)GamePadInputType::START);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_BACK, (int)GamePadInputType::BACK);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_LEFT_THUMB, (int)GamePadInputType::LEFT_THUMB);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_RIGHT_THUMB, (int)GamePadInputType::RIGHT_THUMB);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_LEFT_SHOULDER, (int)GamePadInputType::LEFT_SHOULDER);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_RIGHT_SHOULDER, (int)GamePadInputType::RIGHT_SHOULDER);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_A, (int)GamePadInputType::A);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_B, (int)GamePadInputType::B);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_X, (int)GamePadInputType::X);
+	checkPressBotton(wBottons, XINPUT_GAMEPAD_Y, (int)GamePadInputType::Y);
+}
+
+/**
+*	@desc	ボタンの入力状態を確認する
+*	@param　全ボタンの入力状態
+*	@param	ビットマスク
+*	@param	設定するキータイプ
+*	@author Shinya Ueba
+*/void CInputManager::checkPressBotton(DWORD wBottons, DWORD mask,int setType)
+{
+	CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)CONTROLLER_TYPE::GAMEPAD]->getInputFlagInstance();
+	if (wBottons & mask)
+	{		
+		pointerInputFlag->up(setType);
+	}
+	else
+	{
+		pointerInputFlag->down(setType);
+	}
 }
 
 
@@ -172,10 +289,10 @@ void CInputManager::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode_ ) {
 /**
  *	@desc	入力フラグのクリア
  */
-void CInputManager::clearInputFlag(CONTROLLER_TYPE type) {
-	if ((*this->m_pInputControllers)[(int)type]) {
+void CInputManager::clearInputFlag(void) {
+	if ((*this->m_pInputControllers)[(int)this->m_controllerType]) {
 		
-		CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)type]->getInputFlagInstance();
+		CInputFlag* pointerInputFlag = (*this->m_pInputControllers)[(int)this->m_controllerType]->getInputFlagInstance();
 		pointerInputFlag->clear() ;
 	}
 }
@@ -185,7 +302,7 @@ void CInputManager::clearInputFlag(CONTROLLER_TYPE type) {
 *	@param	コントローラータイプ
 *	@return	入力コントローラー
 */
-CInputController* CInputManager::getInputController(CONTROLLER_TYPE type)
+CInputController* CInputManager::getInputController(void)
 {
-	return (*this->m_pInputControllers)[(int)type];
+	return (*this->m_pInputControllers)[(int)this->m_controllerType];
 }

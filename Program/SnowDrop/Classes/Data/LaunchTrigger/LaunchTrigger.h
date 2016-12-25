@@ -130,6 +130,44 @@ public:
 
 };
 
+
+//=======================================
+//
+//  エフェクト生成トリガー
+//
+//=======================================
+class CEffectLaunchTrigger :public CLaunchTrigger {
+private:
+	//エフェクト出撃データ
+	CEffectLaunchData* m_pLaunchdata = NULL;
+
+public:
+
+	/**
+	 * @desc	コンストラクタ
+	 * @param	エフェクト出撃データ
+	 * @tips	エフェクト出撃データをトリガーとして設定する
+	 */
+	CEffectLaunchTrigger(CEffectLaunchData* pLaunchdata)
+		:m_pLaunchdata(pLaunchdata) {}
+
+	//デストラクタ
+	virtual ~CEffectLaunchTrigger();
+
+	/**
+	 * @desc	イベントを行えるかどうか
+	 * @retrun	true...イベント実行可
+	 */
+	virtual bool isTrigger()override;
+
+	/**
+	 * @desc	設定されている敵出撃データを元に敵を生成する
+	 * @tips	トリガーを元にイベントを実行
+	 */
+	virtual CCharacter* action()override;
+
+};
+
 //=======================================
 //
 //  発射台

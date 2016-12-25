@@ -1,13 +1,11 @@
-
 /*
-* Map.h
-*
-*	2016/11/15	Osumi
-*
-*/
+ * Map.h
+ *
+ *	2016/11/15	Osumi
+ *
+ */
 
 #pragma once
-
 //=========================================================================
 //　追加のインクルードはここから
 //=========================================================================
@@ -23,11 +21,11 @@ class CGimmickLaunchData;
 //		新しい種類が出来たらここに増やしていく
 //=========================================================================
 enum class BLOCK_TYPE :int {
-	NONE			= 0,	//何もない
-	KURIBO = 101,
-	MAIDEAD = 102,		//メイド
-	BAT = 103,		//コウモリ
-	REDMAIDEAD = 104,		//赤クリボー
+	NONE		= 0,	//何もない
+	KURIBO		= 101,
+	MAIDEAD		= 102,	//メイド
+	BAT			= 103,	//コウモリ
+	REDMAIDEAD	= 104,	//赤クリボー
 	BLUEMAIDEAD = 105,
 
 };
@@ -51,12 +49,17 @@ enum class GIMMICK_TYPE :int {
 	NONE = -1,
 };
 
+//エフェクトの種類
+enum class EFFECT_TYPE :int {
+	BASE = 0,	//基本
+};
+
+
 //=========================================================================
 //	マップクラス
 //=========================================================================
 class CMap :public cocos2d::TMXTiledMap {
 public:
-
 	//=========================================================================
 	//	レイヤータイプ
 	//=========================================================================
@@ -96,39 +99,39 @@ public:
 	}
 
 	/**
-	* @desc		タイルの2次元配列上の座標を取得
-	* @param	左下を原点として配列上の座標位置
-	*/
+	 * @desc	タイルの2次元配列上の座標を取得
+	 * @param	左下を原点として配列上の座標位置
+	 */
 	cocos2d::Point getTileCoord(cocos2d::Point pos);
 
 
 	/**
-	* @desc		タイル位置の取得
-	* @param	左下を原点として対象の座標位置
-	*/
+	 * @desc	タイル位置の取得
+	 * @param	左下を原点として対象の座標位置
+	 */
 	cocos2d::Point getTilePosition(cocos2d::Point pos);
 
 
 	/**
-	* @desc		オブジェクト位置の取得
-	* @param	左下を原点として対象の座標位置
-	* @author	Shinya Ueba
-	*/
+	 * @desc	オブジェクト位置の取得
+	 * @param	左下を原点として対象の座標位置
+	 * @author	Shinya Ueba
+	 */
 	//cocos2d::Point getObjectPosition(cocos2d::Point pos);
 
 	/**
-	* @desc	点とマップチップの衝突判定
-	* @param 対象位置X
-	* @param 対象位置Y
-	*/
+	 * @desc	点とマップチップの衝突判定
+	 * @param	対象位置X
+	 * @param	対象位置Y
+	 */
 	bool hitTest(float posX, float posY);
 
 	/**
-	* @desc	点とオブジェクトの衝突判定
-	* @param 対象位置X
-	* @param 対象位置Y
-	* @author Shinya Ueba
-	*/
+	 * @desc	点とオブジェクトの衝突判定
+	 * @param	対象位置X
+	 * @param	対象位置Y
+	 * @author	Shinya Ueba
+	 */
 	bool hitTestObject(float posX, float posY);
 
 	/**
@@ -157,15 +160,15 @@ public:
 
 
 	/*
-	* @desc	初期化時の敵出撃判定
-	* @return	敵の出撃データ群
-	*/
+	 * @desc	初期化時の敵出撃判定
+	 * @return	敵の出撃データ群
+	 */
 	void initCheckEnemyLaunch();
 
 	/*
-	* @desc	敵出撃判定
-	* @param	メインレイヤーのアドレス
-	*/
+	 * @desc	敵出撃判定
+	 * @param	メインレイヤーのアドレス
+	 */
 	void checkEnemyLaunch(cocos2d::Point pt);
 
 	//敵出撃ライン（マップ2次元配列上のタイルのｘ位置）
@@ -173,15 +176,15 @@ public:
 	int m_launchEnemyLine = WINDOW_RIGHT/TILE_SIZE;
 
 	/*
-	* @desc	敵出撃後の敵出撃レイヤーのタイルの削除
-	* @param	敵出撃データ
-	*/
+	 * @desc	敵出撃後の敵出撃レイヤーのタイルの削除
+	 * @param	敵出撃データ
+	 */
 	void removeLaunchEnemy(CEnemyLaunchData* pLaunchData);
 
 	/*
-	* @desc	ギミック出撃判定
-	* @param	メインレイヤーのアドレス
-	*/
+	 * @desc	ギミック出撃判定
+	 * @param	メインレイヤーのアドレス
+	 */
 	void checkGimmickLaunch(cocos2d::Point pt);
 
 	//敵出撃ライン（マップ2次元配列上のタイルのｘ位置）
@@ -189,11 +192,10 @@ public:
 	int m_launchGimmickLine = 20;
 
 	/*
-	* @desc	ギミック出撃後のギミック出撃レイヤーのタイルの削除
-	* @param	ギミック出撃データ
-	*/
+	 * @desc	ギミック出撃後のギミック出撃レイヤーのタイルの削除
+	 * @param	ギミック出撃データ
+	 */
 	void removeLaunchGimmick(CGimmickLaunchData* pLaunchData);
-
 };
 
 //=========================================================================

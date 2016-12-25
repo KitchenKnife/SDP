@@ -12,7 +12,6 @@
 #include "Lib/Input/InputManager.h"
 #include "Model/Map/Map.h"
 #include "Data/ActionController/ActionController.h"
-#include "Data/ActionController/EnemyActionController/EnemyActionController.h"
 
 
 //================================================	
@@ -41,8 +40,11 @@ bool CEnemyCharacter::init() {
 //移動処理
 void CEnemyCharacter::moveFunc() {
 	// アクション
-	for (CAction* pAction : (*m_pActions)) {
-		pAction->update(this);
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
 	}
 
 	//物理計算
@@ -56,7 +58,7 @@ void CEnemyCharacter::moveFunc() {
 
 //アニメーション処理
 void CEnemyCharacter::animationFunc() {
-	(*this->m_pAnimations)[this->m_state]->update();
+	(*this->m_pAnimations)[this->m_animationState]->update();
 }
 
 //衝突判定処理
@@ -74,7 +76,11 @@ void CEnemyCharacter::collisionAll() {
 
 //状態チェック
 void CEnemyCharacter::checkState() {
-	
+	if (this->m_pStateMachine)
+	{
+		//状態遷移マシンの更新
+		this->m_pStateMachine->update();
+	}
 }
 
 //反映処理

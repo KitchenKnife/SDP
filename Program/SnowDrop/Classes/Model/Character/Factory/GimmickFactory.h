@@ -5,11 +5,8 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-#include "Model/Character/Character.h"
+#include "Model/Character/GimmickCharacter/GimmickCharacter.h"
 #include "Model/Map/Map.h"
-
-//プレイヤークラスの前方宣言
-class CGimmickCharacter;
 
 //================================================
 // ギミックパーツ製造工場
@@ -18,12 +15,11 @@ class CGimmickCharacter;
 class CGimmickPartsFactory /*:public CCharacterPartsFactory*/ {
 public:
 
-	~CGimmickPartsFactory() {}
+	virtual ~CGimmickPartsFactory() {}
 
 	std::vector<CAnimation* >* getAnimations();
 	CMove* getMove();
 	std::vector<CPhysical* >* getPhysicals();
-	std::vector<CAction* >* getActions();
 	CBody* getBody();
 	std::vector<CCollisionArea* >* getCollisionAreas();
 
@@ -37,7 +33,7 @@ public:
 class CGimmickFactory {
 public:
 
-	~CGimmickFactory() {}
+	virtual ~CGimmickFactory() {}
 
 	//ギミックの生成と組み立て
 	//派生先によって違うギミックの生成
@@ -96,6 +92,9 @@ public:
 //================================================
 class CGimmickCreateFactory :public CGimmickFactory {
 public:
+
+	//デストラクタ
+	virtual ~CGimmickCreateFactory() {}
 
 	//ギミックの生成と組み立て
 	CGimmickCharacter* createGimmick()override;
