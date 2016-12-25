@@ -166,6 +166,8 @@ void CLaunchScheduler::launchCharacter(cocos2d::Layer* pLayer) {
 
 			//キャラクターをメインレイヤーに取り付ける
 			pLayer->addChild(pChara);
+
+			CCLOG("%d", CCharacterAggregate::getInstance()->getSize());
 		}
 	}
 }

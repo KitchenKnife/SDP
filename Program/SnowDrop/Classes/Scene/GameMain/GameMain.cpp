@@ -28,6 +28,8 @@
 // ƒTƒEƒ“ƒh—p
 #include "Lib/Sound/AudioManager.h"
 
+// ƒQ[ƒ€ƒI[ƒo[ƒV[ƒ“
+#include "Scene/GameOver/GameOver.h"
 //==================================================
 // @Ã“Iƒƒ“ƒo•Ï”‚ÌŽÀ‘Ì
 //==================================================
@@ -77,11 +79,15 @@ void CGameMain::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 
 // ƒfƒXƒgƒ‰ƒNƒ^
 CGameMain::~CGameMain() {
-
-	// BGM ‚Ì’âŽ~
-	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_STAGE1));
-	
+	// ƒ}ƒbƒv‚Ìíœ
+	CMapManager::getInstance()->removeInstance();
+	// ƒLƒƒƒ‰‚Ìíœ
+	CCharacterAggregate::getInstance()->removeInstance();
+	// ƒgƒŠƒK[íœ
+	CLaunchScheduler::getInstance()->removeInstance();
 }
+
+
 
 /**
  *	@desc	‰Šú‰»
@@ -175,6 +181,39 @@ bool CGameMain::init() {
 	//Šg‘å‚É”º‚¤‰æ–ÊˆÊ’u‚ÌÝ’è
 	this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
 
+
+	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+	// ««@ƒfƒoƒbƒN—p@ƒŠƒŠ[ƒXŽžÁ‚µ‚Ü‚·
+	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+	/*
+	* @desc		ƒƒjƒ…[ƒAƒCƒeƒ€‚Ì¶¬@ƒQ[ƒ€ŠJŽnƒ{ƒ^ƒ“
+	* @param	’Êí‚Ì‰æ‘œ‚ðÝ’è
+	* @param	‰Ÿ‚³‚ê‚½Žž‚Ì‰æ‘œ‚ðÝ’è
+	* @param	‰Ÿ‚³‚ê‚½Žž‚ÉŒÄ‚Ño‚³‚ê‚éƒƒ“ƒoŠÖ”‚ÌÝ’è
+	*/
+	cocos2d::MenuItemImage* pointerStartBtnItem = cocos2d::MenuItemImage::create(
+		IMAGE_TITLE_BUTTON_END,
+		IMAGE_TITLE_BUTTON_END,
+		CC_CALLBACK_1(CGameMain::callbackChangeGameOver, this)
+	);
+
+	//ˆÊ’uÝ’è
+	pointerStartBtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.1f);
+	//ƒƒjƒ…[‚Ì¶¬‚Æƒƒjƒ…[ƒAƒCƒeƒ€‚Ì“o˜^
+	cocos2d::Menu* pointerMenu = cocos2d::Menu::create(pointerStartBtnItem, NULL);
+
+	//ˆÊ’u‚Ì‰Šú‰»
+	pointerMenu->setPosition(0.0f, 0.0f);
+	//ƒŒƒCƒ„[‚Éƒƒjƒ…[‚ð“o˜^‚·‚é
+	this->addChild(pointerMenu);
+
+	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+	// ƒfƒoƒbƒN—pªª@Á‚µ‚Ü‚·
+	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+
+
+
+
 	// BGM‚ÌÄ¶
 	int musicID = AudioEngine::play2d(SOUND_FILE_BGM_STAGE_FIRST, true, 0.0f);
 	// IDÝ’è
@@ -224,6 +263,7 @@ void CGameMain::scroll() {
 	CMapManager::getInstance()->getMap()->checkEnemyLaunch(this->m_pMainLayer->getPosition());
 	
 }
+
 
 
 /**
@@ -278,4 +318,31 @@ void CGameMain::update( float deltaTime_ ) {
 	//	‚±‚±‚Ü‚Å‚ÉXVˆ—‚ÌƒR[ƒh‚ð’Ç‰Á
 	//
 	//=========================================================================
+}
+
+
+
+
+
+/**
+* @desc		ƒQ[ƒ€ƒƒCƒ“‚É‘JˆÚ
+* @param	ƒ^ƒCƒgƒ‹ƒŒƒCƒ„[‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+* @tips		ƒXƒ^[ƒgƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½Žž‚ÉŒÄ‚Ño‚³‚ê‚é
+*/
+void CGameMain::callbackChangeGameOver(cocos2d::Ref* pSender)
+{
+	// Œø‰Ê‰¹Ä¶
+	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON);
+	//BGM’âŽ~
+	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_STAGE1));
+
+	// Œø‰Ê‰¹Ä¶I—¹Œã
+	AudioEngine::setFinishCallback(musicID, [](int musicID, const std::string) {
+
+		//ƒV[ƒ“‚ð¶¬‚·‚é
+		cocos2d::Scene* pScene = CGameOver::createScene();
+		//ƒV[ƒ“‚ðØ‚è‘Ö‚¦‚é
+		cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionShrinkGrow::create(1.0f, pScene));
+
+	});
 }

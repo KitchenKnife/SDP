@@ -115,6 +115,9 @@
     <Filter Include="src\Lib\Sound">
       <UniqueIdentifier>{2fd70ea6-5452-4ffc-aa9e-5f23716da1e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene\GameOver">
+      <UniqueIdentifier>{c89468bc-b7c6-4cbe-95ac-56e937cab2db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -248,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
       <Filter>src\Lib\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\GameOver\GameOver.cpp">
+      <Filter>src\Scene\GameOver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
       <Filter>src\Lib\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameOver\GameOver.h">
+      <Filter>src\Scene\GameOver</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

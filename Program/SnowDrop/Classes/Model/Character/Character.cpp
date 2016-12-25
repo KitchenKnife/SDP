@@ -93,7 +93,15 @@ CCharacterAggregate* CCharacterAggregate::m_pSareedAggregate = NULL;
 CCharacterAggregate::CCharacterAggregate() {}
 
 //デストラクタ
-CCharacterAggregate::~CCharacterAggregate() {}
+CCharacterAggregate::~CCharacterAggregate() {
+
+	// キャラの解放
+	for (CCharacter* pChara : (*this->m_pCharacters)) {
+		SAFE_DELETE(pChara);
+		}
+	SAFE_DELETE(this->m_pCharacters);
+
+}
 
 //共有インスタンスの取得
 CCharacterAggregate* CCharacterAggregate::getInstance() {

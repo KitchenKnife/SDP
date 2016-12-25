@@ -420,7 +420,7 @@ CMapManager* CMapManager::getInstance(){
 
 //デストラクタ
 CMapManager::~CMapManager(){
-	this->removeInstance();
+	SAFE_DELETE(this->m_pMap);
 }
 
 //破棄
