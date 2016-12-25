@@ -49,6 +49,9 @@
     <Filter Include="src\Model\Map">
       <UniqueIdentifier>{02fb3a4a-485b-431e-bd80-0873477901c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\ActionController\PlayerActionController">
+      <UniqueIdentifier>{1fb2b0b8-aeb9-4373-b9ab-03603d4a2e9c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Data\Status">
       <UniqueIdentifier>{63071aef-ea1a-4d4f-afe0-ff5324addc3b}</UniqueIdentifier>
     </Filter>
@@ -57,6 +60,9 @@
     </Filter>
     <Filter Include="src\Model\Character\EnemyCharacter">
       <UniqueIdentifier>{e593d3ee-7560-4be5-8ca5-ebd6b83c9f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController">
+      <UniqueIdentifier>{18a3238f-3737-4662-9341-104dbea8d916}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Data\Effect">
       <UniqueIdentifier>{de81eec4-e8ed-4af9-b37f-eb56cf2a9e75}</UniqueIdentifier>
@@ -70,11 +76,26 @@
     <Filter Include="src\Model\Weapon\PlayerWeapon">
       <UniqueIdentifier>{62b38928-b3a8-4fea-ba2f-419fa6c9637b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\ActionController\PlayerActionController\PlayerWeaponActionController">
+      <UniqueIdentifier>{5b5667f8-1966-45e7-8bdc-796d9e9aa853}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Data\LaunchData">
       <UniqueIdentifier>{c523751d-1096-4943-8e50-f0ce579d8f91}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Data\LaunchTrigger">
       <UniqueIdentifier>{f2e1a8f3-2797-4420-be22-311e5b2e7a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionAttack">
+      <UniqueIdentifier>{bf27dda4-a258-4553-a8db-60e2bc717bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionDamage">
+      <UniqueIdentifier>{163c5200-b15a-4a1d-8b96-d9f589ec1de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionPursuit">
+      <UniqueIdentifier>{9fd186a1-9a22-4bda-a1dc-22cac9caf9a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionIdle">
+      <UniqueIdentifier>{a7a6d17b-532d-4ca7-aece-73ed9db74426}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Scene\Title">
       <UniqueIdentifier>{df8fa0fd-891f-4bab-8c7c-249d482a6a2b}</UniqueIdentifier>
@@ -94,38 +115,35 @@
     <Filter Include="src\Lib\Sound">
       <UniqueIdentifier>{2fd70ea6-5452-4ffc-aa9e-5f23716da1e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Model\Character\StateMachine">
-      <UniqueIdentifier>{71d468cc-ef17-45f2-9c1f-d902f266dce5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\StateMachine">
-      <UniqueIdentifier>{60b0799c-36e8-45e6-b3d3-399aeccc2d06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\StateMachine\EnemyState">
-      <UniqueIdentifier>{b1f6efc9-b97a-44b6-934d-93e7b5d21c72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\StateMachine\EnemyState\MaideadState">
-      <UniqueIdentifier>{9ffd46c1-9108-45ac-b067-0e4ae0d34368}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\StateMachine\GirlState">
-      <UniqueIdentifier>{ad953aa0-7ad0-4888-ad7d-c62cf4c13833}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\StateMachine\PlayerState">
-      <UniqueIdentifier>{66d2e083-bf4b-4f66-89db-263b78d85ba0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\Enum">
-      <UniqueIdentifier>{c533eac9-b790-4957-91e0-fae38de4abcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\ActionMoveStraight">
-      <UniqueIdentifier>{d889f896-7c36-446a-85f0-4c3abef84c03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\ActionJump">
-      <UniqueIdentifier>{53192a7e-45d4-4a07-9cfc-acee45aeb08d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\ActionIdle">
-      <UniqueIdentifier>{737e30e7-c6fb-40e0-8782-ecaf07374424}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Scene\GameOver">
       <UniqueIdentifier>{c89468bc-b7c6-4cbe-95ac-56e937cab2db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine">
+      <UniqueIdentifier>{3a73ca88-abc3-46a0-ba95-6b56910a3242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy">
+      <UniqueIdentifier>{388dc58e-c42a-4d52-8010-f4c814494746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Player">
+      <UniqueIdentifier>{c84bb3dc-3192-42fb-8b39-18e909e49c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Girl">
+      <UniqueIdentifier>{86c6270d-e226-4059-ab62-2836649b150e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\Maidead">
+      <UniqueIdentifier>{41245ddb-77b3-4dde-94de-32752a9fbe3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\Enum">
+      <UniqueIdentifier>{ebf7455b-87f4-492a-a484-8c75c45eba01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionIdle">
+      <UniqueIdentifier>{ce55aa47-ff78-4803-b133-eb9d871776c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionJump">
+      <UniqueIdentifier>{3a270376-90eb-484e-a123-8307f128e89d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\ActionController\ActionMoveStraight">
+      <UniqueIdentifier>{0a313cd1-df5d-4daa-a956-1c09a86c67fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -240,26 +258,26 @@
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp">
       <Filter>src\Lib\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Scene\GameOver\GameOver.cpp">
+      <Filter>src\Scene\GameOver</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp">
       <Filter>src\Data\StateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp">
-      <Filter>src\Data\StateMachine\PlayerState</Filter>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp">
+      <Filter>src\Data\StateMachine\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp">
-      <Filter>src\Data\StateMachine\GirlState</Filter>
+      <Filter>src\Data\StateMachine\Girl</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp">
-      <Filter>src\Data\StateMachine\EnemyState</Filter>
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp">
+      <Filter>src\Data\StateMachine\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp">
-      <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
+      <Filter>src\Data\StateMachine\Enemy\Maidead</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.cpp">
-      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Data\ActionController\ActionJump\ActionJump.cpp">
-      <Filter>src\Data\ActionController\ActionJump</Filter>
+    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\Action.cpp">
       <Filter>src\Data\ActionController</Filter>
@@ -267,11 +285,11 @@
     <ClCompile Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.cpp">
       <Filter>src\Data\ActionController\ActionIdle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp">
-      <Filter>src\Model\Character\Factory</Filter>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.cpp">
+      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Scene\GameOver\GameOver.cpp">
-      <Filter>src\Scene\GameOver</Filter>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionJump\ActionJump.cpp">
+      <Filter>src\Data\ActionController\ActionJump</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,26 +407,32 @@
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h">
       <Filter>src\Lib\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameOver\GameOver.h">
+      <Filter>src\Scene\GameOver</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h">
       <Filter>src\Data\StateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h">
-      <Filter>src\Data\StateMachine\PlayerState</Filter>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h">
+      <Filter>src\Data\StateMachine\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h">
-      <Filter>src\Data\StateMachine\GirlState</Filter>
+      <Filter>src\Data\StateMachine\Girl</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h">
-      <Filter>src\Data\StateMachine\EnemyState</Filter>
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h">
+      <Filter>src\Data\StateMachine\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h">
-      <Filter>src\Data\StateMachine\EnemyState\MaideadState</Filter>
+      <Filter>src\Data\StateMachine\Enemy\Maidead</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h">
-      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
+    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\ActionController\ActionJump\ActionJump.h">
-      <Filter>src\Data\ActionController\ActionJump</Filter>
+    <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h">
+      <Filter>src\Data\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h">
+      <Filter>src\Data\Enum</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\Action.h">
       <Filter>src\Data\ActionController</Filter>
@@ -416,17 +440,11 @@
     <ClInclude Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.h">
       <Filter>src\Data\ActionController\ActionIdle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h">
-      <Filter>src\Model\Character\Factory</Filter>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionJump\ActionJump.h">
+      <Filter>src\Data\ActionController\ActionJump</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h">
-      <Filter>src\Data\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h">
-      <Filter>src\Data\Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Scene\GameOver\GameOver.h">
-      <Filter>src\Scene\GameOver</Filter>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h">
+      <Filter>src\Data\ActionController\ActionMoveStraight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
