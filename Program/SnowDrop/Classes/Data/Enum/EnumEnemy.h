@@ -49,7 +49,7 @@ enum class ENEMY_MAIDEAD_MOVE_STATE : int
 enum class ENEMY_MAIDEAD_ANIMATION_STATE :int
 {
 	IDLE = 0,//ë“ã@èÛë‘
-//	WANDERING = 1,
+	WANDERING = 1,
 //	CHASE = 2,
 };
 

@@ -95,30 +95,58 @@ void CPlayerState::toWalkLeft(void)
 }
 
 /**
-*	@desc 装備する状態へ移行
+*	@desc 右向き　装備する状態へ移行
 */
-void CPlayerState::toEquip(void)
+void CPlayerState::toEquipRight(void)
 {
-	this->m_pPlayer->m_state			= (int)PLAYER_STATE::EQUIP;
-	this->m_pPlayer->m_animationState	= (int)PLAYER_ANIMATION_STATE::EQUIP;
+	this->m_pPlayer->m_state			= (int)PLAYER_STATE::EQUIP_RIGHT;
+	this->m_pPlayer->m_animationState	= (int)PLAYER_ANIMATION_STATE::EQUIP_RIGHT;
 	this->m_pPlayer->m_actionState		= 0;
 	this->m_nextRegisterKey				= this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
 
-/*
-*	@desc 装備解除状態へ移行
+/**
+*	@desc 左向き　装備する状態へ移行
 */
-void CPlayerState::toUnEquip(void)
+void CPlayerState::toEquipLeft(void)
 {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::UN_EQUIP;
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::EQUIP_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::EQUIP_LEFT;
 	this->m_pPlayer->m_actionState = 0;
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
+
+
+/*
+*	@desc 右向き　装備解除状態へ移行
+*/
+void CPlayerState::toUnEquipRight(void)
+{
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::UN_EQUIP_RIGHT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/*
+*	@desc 左向き　装備解除状態へ移行
+*/
+void CPlayerState::toUnEquipLeft(void)
+{
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::UN_EQUIP_LEFT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
 
 /*
 *	@desc 右向き手を掴む状態へ移行
@@ -194,6 +222,15 @@ void CPlayerIdleRightState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
+	//武器を装備
+	if (pointerInputController->getAttackFlag())
+	{
+		//右向き装備状態へ移行
+		this->toEquipRight();
+		return;
+	}
+
+
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
 	{
@@ -267,7 +304,13 @@ void CPlayerIdleLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-
+	//武器を装備
+	if (pointerInputController->getAttackFlag())
+	{
+		//左向き装備状態へ移行
+		this->toEquipLeft();
+		return;
+	}
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -344,6 +387,13 @@ void CPlayerWalkRightState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	//武器を装備
+	if (pointerInputController->getEquipFlag())
+	{
+		//右向き装備状態へ移行
+		this->toEquipRight();
+		return;
+	}
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -421,7 +471,14 @@ void CPlayerWalkLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-	
+	//武器を装備
+	if (pointerInputController->getEquipFlag())
+	{
+		//左向き装備状態へ移行
+		this->toEquipLeft();
+		return;
+	}
+
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
 	{
@@ -448,6 +505,301 @@ void CPlayerWalkLeftState::onChangeEvent(void)
 	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
 
 
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerEquipRightState
+//
+// プレイヤー 右向き　装備する 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CPlayerEquipRightState::CPlayerEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CPlayerEquipRightState::~CPlayerEquipRightState(void)
+{
+
+
+}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerEquipRightState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerEquipRightState::update(void)
+{
+	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+
+	//装備アニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+
+		//装備解除
+		if (pointerInputController->getUnEquipFlag())
+		{
+			//右向き装備解除状態へ移行
+			this->toUnEquipRight();
+			return;
+		}
+
+		//右へ移動（装備状態 歩行）
+		if (pointerInputController->getRightMoveFlag())
+		{
+			//右向き装備状態　歩行状態へ移行
+			//	this->toWalkRight();
+			return;
+		}
+
+		//左へ移動（装備状態 歩行）
+		if (pointerInputController->getLeftMoveFlag())
+		{
+			//左向きに装備状態　歩行へ移行
+			//this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
+			return;
+		}
+	}
+}
+
+// 状態が変わるときの処理
+void CPlayerEquipRightState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
+
+
+//==========================================
+//
+// Class: CPlayerEquipLeftState
+//
+// プレイヤー 左向き　装備する 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CPlayerEquipLeftState::CPlayerEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CPlayerEquipLeftState::~CPlayerEquipLeftState(void)
+{
+
+
+}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerEquipLeftState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerEquipLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+
+	//装備アニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+
+		//装備解除
+		if (pointerInputController->getUnEquipFlag())
+		{
+			//左向き装備解除状態へ移行
+			this->toUnEquipLeft();
+			return;
+		}
+
+		//右へ移動（装備状態 歩行）
+		if (pointerInputController->getRightMoveFlag())
+		{
+			//右向き装備状態　歩行状態へ移行
+		//	this->toWalkRight();
+			return;
+		}
+
+		//左へ移動（装備状態 歩行）
+		if (pointerInputController->getLeftMoveFlag())
+		{
+			//左向きに装備状態　歩行へ移行
+			//this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
+			return;
+		}
+	}
+}
+
+// 状態が変わるときの処理
+void CPlayerEquipLeftState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
+
+//==========================================
+//
+// Class: CPlayerUnEquipRightState
+//
+// プレイヤー 右向き　装備解除する 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CPlayerUnEquipRightState::CPlayerUnEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CPlayerUnEquipRightState::~CPlayerUnEquipRightState(void)
+{
+
+
+}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerUnEquipRightState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerUnEquipRightState::update(void)
+{
+	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+
+	//装備アニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+		//右向き待機状態へ移行
+		this->toIdleRight();
+	}
+}
+
+// 状態が変わるときの処理
+void CPlayerUnEquipRightState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerUnEquipLeftState
+//
+// プレイヤー 左向き　装備解除する 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CPlayerUnEquipLeftState::CPlayerUnEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CPlayerUnEquipLeftState::~CPlayerUnEquipLeftState(void)
+{
+
+
+}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerUnEquipLeftState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerUnEquipLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+
+	//装備アニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+		//左向き待機状態へ移行
+		this->toIdleLeft();
+	}
+}
+
+// 状態が変わるときの処理
+void CPlayerUnEquipLeftState::onChangeEvent(void)
+{
 	this->m_isNext = false;
 }
 //EOF

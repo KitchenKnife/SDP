@@ -65,6 +65,21 @@ public:
 	virtual bool getAttackFlag(void) = 0;
 
 	/*
+	* @desc 装備入力フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	virtual bool getEquipFlag(void) = 0;
+
+	/*
+	* @desc 装備解除フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	virtual bool getUnEquipFlag(void) = 0;
+
+
+	/*
 	* @desc 手をつなぐフラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba

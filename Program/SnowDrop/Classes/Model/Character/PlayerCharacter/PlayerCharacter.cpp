@@ -135,7 +135,7 @@ void  CPlayerCharacterBoy::applyFunc() {
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
 
-	cocos2d::log("%d",this->m_animationState);
+	
 
 	//チップデータを反映
 	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
