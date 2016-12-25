@@ -60,7 +60,7 @@ bool CKeyboardInputController::getRightMoveFlag(void)
 */
 bool CKeyboardInputController::getJumpFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed((int)kInputType::UP);
+	return this->m_inputFlag.isKeyTrigger((int)kInputType::UP);
 }
 
 /*
@@ -70,8 +70,29 @@ bool CKeyboardInputController::getJumpFlag(void)
 */
 bool CKeyboardInputController::getAttackFlag(void)
 {
-	return this->m_inputFlag.isKeyPressed((int)kInputType::Z);
+	return this->m_inputFlag.isKeyTrigger((int)kInputType::Z);
 }
+
+/*
+* @desc 装備入力フラグ取得
+* @return true...入力あり　false...入力なし
+* @author Shinya Ueba
+*/
+bool CKeyboardInputController::getEquipFlag(void)
+{
+	return this->m_inputFlag.isKeyTrigger((int)kInputType::X);
+}
+
+/*
+* @desc 装備解除フラグ取得
+* @return true...入力あり　false...入力なし
+* @author Shinya Ueba
+*/
+bool CKeyboardInputController::getUnEquipFlag(void)
+{
+	return this->m_inputFlag.isKeyTrigger((int)kInputType::X);
+}
+
 
 /*
 * @desc 手をつなぐフラグ取得

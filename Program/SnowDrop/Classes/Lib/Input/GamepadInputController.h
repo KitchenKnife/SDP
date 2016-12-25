@@ -73,6 +73,21 @@ public:
 	bool getAttackFlag(void)override;
 
 	/*
+	* @desc 装備入力フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	bool getEquipFlag(void);
+
+	/*
+	* @desc 装備解除フラグ取得
+	* @return true...入力あり　false...入力なし
+	* @author Shinya Ueba
+	*/
+	bool getUnEquipFlag(void);
+
+
+	/*
 	* @desc 手をつなぐフラグ取得
 	* @return true...入力あり　false...入力なし
 	* @author Shinya Ueba

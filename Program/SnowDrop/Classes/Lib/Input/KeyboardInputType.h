@@ -32,6 +32,7 @@ enum class kInputType : int {
 	A = 9,
 	S = 10,
 	D = 11,
+	MAX_KEY_TYPE,
 };
 
 /*
@@ -39,6 +40,8 @@ enum class kInputType : int {
 */
 class CKeyboardInputFlag :public CInputFlag{
 public:
+
+	//プレス状態
 	bool m_up = false;		// 上キー
 	bool m_down = false;	// 下キー
 	bool m_left = false;	// 左キー
@@ -53,6 +56,31 @@ public:
 	bool m_a = false;		// a キー
 	bool m_s = false;		// s キー
 	bool m_d = false;		// d キー
+
+	//トリガー状態
+	bool m_upTrigger	= false;		// 上キー
+	bool m_downTrigger	= false;		// 下キー
+	bool m_leftTrigger	= false;		// 左キー
+	bool m_rightTrigger = false;		// 右キー
+	bool m_escTrigger	= false;		// ESC キー
+	bool m_spaceTrigger = false;		// スペースキー
+	bool m_zTrigger		= false;		// z キー
+	bool m_xTrigger		= false;		// x キー
+	bool m_cTrigger		= false;		// c キー
+	bool m_aTrigger		= false;		// a キー
+	bool m_sTrigger		= false;		// s キー
+	bool m_dTrigger		= false;		// d キー
+
+private:
+
+	bool m_arrayTriggerLastSate[(int)kInputType::MAX_KEY_TYPE];
+
+public:
+	/**
+	*	@desc コンストラクタ
+	*/
+	CKeyboardInputFlag();
+
 
 	/**
 	*	@desc	値のクリア
@@ -75,8 +103,15 @@ public:
 	*	@param	キータイプ
 	*	@return	true...押されている
 	*	@tips	入力のタイプによって変化
-	*			キーボードタイプでは使用する必要はない
 	*/
 	virtual bool isKeyPressed(int keyType_)override;
+
+	/**
+	*	@desc	指定したキーがトリガー入力状態を取得
+	*	@param	キータイプ
+	*	@return	true...押されている
+	*	@tips	入力のタイプによって変化
+	*/
+	virtual bool isKeyTrigger(int keyType_)override;
 };
 //EOF

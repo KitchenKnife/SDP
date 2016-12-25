@@ -61,7 +61,7 @@ bool CGamepadInputController::getRightMoveFlag(void)
 */
 bool CGamepadInputController::getJumpFlag()
 {
-	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::A);
+	return this->m_inputFlag.isKeyTrigger((int)GamePadInputType::A);
 }
 
 /*
@@ -71,8 +71,31 @@ bool CGamepadInputController::getJumpFlag()
 */
 bool CGamepadInputController::getAttackFlag()
 {
-	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::X);
+	return this->m_inputFlag.isKeyTrigger((int)GamePadInputType::X);
 }
+
+/*
+* @desc 装備入力フラグ取得
+* @return true...入力あり　false...入力なし
+* @author Shinya Ueba
+*/
+bool CGamepadInputController::getEquipFlag(void)
+{
+	return this->m_inputFlag.isKeyTrigger((int)GamePadInputType::Y);
+}
+
+/*
+* @desc 装備解除フラグ取得
+* @return true...入力あり　false...入力なし
+* @author Shinya Ueba
+*/
+bool CGamepadInputController::getUnEquipFlag(void)
+{
+	return this->m_inputFlag.isKeyTrigger((int)GamePadInputType::Y);
+}
+
+
+
 /*
 * @desc 手をつなぐフラグ取得
 * @return true...入力あり　false...入力なし
@@ -80,7 +103,7 @@ bool CGamepadInputController::getAttackFlag()
 */
 bool CGamepadInputController::getHolodHandsFlag()
 {
-	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::B);
+	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::LEFT_SHOULDER);
 }
 
 /*
@@ -90,7 +113,7 @@ bool CGamepadInputController::getHolodHandsFlag()
 */
 bool CGamepadInputController::getHugFlag()
 {
-	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::Y);
+	return this->m_inputFlag.isKeyPressed((int)GamePadInputType::RIGHT_SHOULDER);
 }
 
 /*

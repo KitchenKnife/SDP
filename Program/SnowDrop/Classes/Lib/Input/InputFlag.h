@@ -56,4 +56,12 @@ public:
 	*			キーボードタイプでは使用する必要はない
 	*/
 	virtual bool isKeyPressed(int Type_) = 0;
+
+	/**
+	*	@desc	指定したキーがトリガー入力状態を取得
+	*	@param	キータイプ
+	*	@return	true...押されている
+	*	@tips	入力のタイプによって変化
+	*/
+	virtual bool isKeyTrigger(int keyType_)=0;
 };

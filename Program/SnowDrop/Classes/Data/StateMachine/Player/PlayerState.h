@@ -66,12 +66,24 @@ public:
 	/**
 	*	@desc 装備する状態へ移行
 	*/
-	void toEquip(void);
+	void toEquipRight(void);
+
+	/**
+	*	@desc 装備する状態へ移行
+	*/
+	void toEquipLeft(void);
+
+
+	/**
+	*	@desc 装備する状態へ移行
+	*/
+	void toUnEquipRight(void);
+
 
 	/*
 	*	@desc 装備解除状態へ移行
 	*/
-	void toUnEquip(void);
+	void toUnEquipLeft(void);
 
 
 	/*
@@ -229,6 +241,156 @@ public:
 	* @desc デストラクタ
 	*/
 	~CPlayerWalkLeftState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CPlayerEquipRightState
+//
+// プレイヤー 右向き　装備する状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerEquipRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerEquipRightState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+//==========================================
+//
+// Class: CPlayerEquipLeftState
+//
+// プレイヤー 左向き　装備する 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerEquipLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerEquipLeftState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CPlayerUnEquipRightState
+//
+// プレイヤー 右向き　装備解除 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerUnEquipRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerUnEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerUnEquipRightState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+//==========================================
+//
+// Class: CPlayerUnEquipLeftState
+//
+// プレイヤー 右向き　装備解除 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerUnEquipLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerUnEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerUnEquipLeftState(void);
 
 	/**
 	* @desc 開始処理
