@@ -61,9 +61,6 @@
     <Filter Include="src\Model\Character\EnemyCharacter">
       <UniqueIdentifier>{e593d3ee-7560-4be5-8ca5-ebd6b83c9f85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController">
-      <UniqueIdentifier>{18a3238f-3737-4662-9341-104dbea8d916}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Data\Effect">
       <UniqueIdentifier>{de81eec4-e8ed-4af9-b37f-eb56cf2a9e75}</UniqueIdentifier>
     </Filter>
@@ -84,18 +81,6 @@
     </Filter>
     <Filter Include="src\Data\LaunchTrigger">
       <UniqueIdentifier>{f2e1a8f3-2797-4420-be22-311e5b2e7a92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionAttack">
-      <UniqueIdentifier>{bf27dda4-a258-4553-a8db-60e2bc717bba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionDamage">
-      <UniqueIdentifier>{163c5200-b15a-4a1d-8b96-d9f589ec1de2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionPursuit">
-      <UniqueIdentifier>{9fd186a1-9a22-4bda-a1dc-22cac9caf9a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionIdle">
-      <UniqueIdentifier>{a7a6d17b-532d-4ca7-aece-73ed9db74426}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Scene\Title">
       <UniqueIdentifier>{df8fa0fd-891f-4bab-8c7c-249d482a6a2b}</UniqueIdentifier>

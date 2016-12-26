@@ -17,6 +17,14 @@
 //ìGçHèÍ
 #include "Model/Character/Factory/EnemyFactory.h"
 
+//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+// Deback
+
+#include "Model/Character/Factory/DamageFactory.h"
+#include "Data/LaunchData/LaunchData.h"
+
+//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+
 //ÉGÉtÉFÉNÉgçHèÍ
 #include "Model/Character/Factory/EffectFactory.h"
 
@@ -38,7 +46,6 @@
 //==================================================
 // Å@ê√ìIÉÅÉìÉoïœêîÇÃé¿ëÃ
 //==================================================
-//Layer* CGameMain::m_pMainLayer = NULL;
 
 /**
  *	@desc	ÉVÅ[ÉìÇÃê∂ê¨
@@ -84,23 +91,53 @@ void CGameMain::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 
 // ÉfÉXÉgÉâÉNÉ^
 CGameMain::~CGameMain() {
-	// É}ÉbÉvÇÃçÌèú
-	CMapManager::getInstance()->removeInstance();
-	// ÉLÉÉÉâÇÃçÌèú
-	CCharacterAggregate::getInstance()->removeInstance();
-	// ÉgÉäÉKÅ[çÌèú
-	CLaunchScheduler::getInstance()->removeInstance();
+	
+	//*************************************************************************
+	//
+	// ÅIÅIÅIÅIíçà”ÅIÅIÅIÅIÉÅÉÇÉäÇÃâï˙ÇÕÅAê∂ê¨ÇµÇΩãtèáÇ≈âï˙Ç∑ÇÈÇ±Ç∆ÅIÅIÅIÅIÅI
+	//
+	//*************************************************************************
+	
+	
+	// É_ÉÅÅ[ÉWçHèÍÇÃçÌèú
+	CDamageFactoryManager::removeInstance();
+	
+	//ÉGÉtÉFÉNÉgçHèÍÇÃçÌèú
+	CEffectFactoryManager::removeInstance();
+
+
+	//ÉMÉ~ÉbÉNçHèÍÇÃçÌèú
+	CGimmickFactoryManager::removeInstance();
+	
+	//ìGê∂ê¨çHèÍÇÃçÌèú
+	CEnemyFactoryManager::removeInstance();
+	
+	//è≠èóçHèÍÇÃçÌèú
+	CPlayerGirlFactoryManager::removeInstance();
 
 	//ÉvÉåÉCÉÑÅ[çHèÍÇÃçÌèú
-	CPlayerBoyFactoryManager::getInstance()->removeInstance();
-	//è≠èóçHèÍÇÃçÌèú
-	CPlayerGirlFactoryManager::getInstance()->removeInstance();
-	//ìGê∂ê¨çHèÍÇÃçÌèú
-	CEnemyFactoryManager::getInstance()->removeInstance();
-	//ÉGÉtÉFÉNÉgçHèÍÇÃçÌèú
-	CEffectFactoryManager::getInstance()->removeInstance();
-	//ÉMÉ~ÉbÉNçHèÍÇÃçÌèú
-	CGimmickFactoryManager::getInstance()->removeInstance();
+	CPlayerBoyFactoryManager::removeInstance();
+	
+
+	// ÉgÉäÉKÅ[çÌèú
+	CLaunchScheduler::removeInstance();	
+	//èoåÇÉXÉPÉWÉÖÅ[ÉãÇÃçÌèú
+
+	if (this->m_pLaunchSchedule)
+	{
+		for (CLaunchTrigger* pTrigger : (*this->m_pLaunchSchedule))
+		{
+			SAFE_DELETE(pTrigger);
+		}
+	}
+	//èoåÇÉXÉPÉWÉÖÅ[ÉãÇÃîjä¸
+	SAFE_DELETE(this->m_pLaunchSchedule);
+
+	// ÉLÉÉÉâÇÃçÌèú
+	CCharacterAggregate::removeInstance();
+
+	// É}ÉbÉvÇÃçÌèú
+	CMapManager::removeInstance();
 }
 
 
@@ -133,7 +170,7 @@ bool CGameMain::init() {
 	//
 	//=========================================================================
 
-	//ÉLÉÉÉâÉNÉ^Å[ÇÃèWÇ‹ÇËÇÃê∂ê¨
+	////ÉLÉÉÉâÉNÉ^Å[ÇÃèWÇ‹ÇËÇÃê∂ê¨
 	this->m_pCharacters = new std::vector<CCharacter*>();
 	//ÉLÉÉÉâÉNÉ^Å[ÇÃèWÇ‹ÇËÇCCharacterAggregateÇ…ê›íËÇ∑ÇÈ
 	CCharacterAggregate::getInstance()->set(this->m_pCharacters);
@@ -143,15 +180,15 @@ bool CGameMain::init() {
 	//èoåÇÉXÉPÉWÉÖÅ[ÉãÇèoåÇÉXÉPÉWÉÖÅ[ÉâÇ…éÊÇËïtÇØÇÈ
 	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
 
-	//ÉÅÉCÉìÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
+	////ÉÅÉCÉìÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
 	this->m_pMainLayer = Layer::create();
 	this->addChild(this->m_pMainLayer);
 
-	//UIÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
+	////UIÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
 	this->m_pUILayer = Layer::create();
 	this->addChild(this->m_pUILayer,-1);
 
-	
+	//
 	//îwåiÇÃê∂ê¨Ç∆éÊÇËïtÇØ
 	this->m_pBackGround = Sprite::create();
 	this->m_pBackGround->setTexture(IMAGE_BACK_GROUND);
@@ -173,13 +210,13 @@ bool CGameMain::init() {
 	
 	// ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨
 	CCharacter* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
-	//CCharacterAggregateÇ…ÉvÉåÉCÉÑÅ[Çí«â¡
+	////CCharacterAggregateÇ…ÉvÉåÉCÉÑÅ[Çí«â¡
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
-	//éÊÇËïtÇØ
+	////éÊÇËïtÇØ
 	this->m_pMainLayer->addChild(pPlayerChara);
 
 
-	// è≠èóÇÃê∂ê¨Ç∆éÊÇËïtÇØ
+	//// è≠èóÇÃê∂ê¨Ç∆éÊÇËïtÇØ
 	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
 	
 	
@@ -192,7 +229,7 @@ bool CGameMain::init() {
 	this->m_pMainLayer->addChild(playerGirl);
 
 
-	//èâä˙âÊñ Ç…Ç¢ÇÈìGÇÃê∂ê¨
+	////èâä˙âÊñ Ç…Ç¢ÇÈìGÇÃê∂ê¨
 	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
 	//ëSëÃÇÃägëÂ
 	this->setScale(SCALE_MAIN);
@@ -230,14 +267,14 @@ bool CGameMain::init() {
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 
 
-
+	
 
 	// BGMÇÃçƒê∂
 	int musicID = AudioEngine::play2d(SOUND_FILE_BGM_STAGE_FIRST, true, 0.0f);
 	// IDê›íË
 	CAudioManager::getInstance()->setMusicID(BGM_STAGE1, musicID);
 
-
+	
 	//=========================================================================
 	//
 	//	Ç±Ç±Ç‹Ç≈Ç…èâä˙âªÅAèâä˙ê›íËÇÃÉRÅ[ÉhÇí«â¡
@@ -266,6 +303,21 @@ void CGameMain::scroll() {
 	if (pt.x > WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x) {
 		//å¥ì_Çí¥Ç¶ÇΩï™Ç…ê›íËÇ∑ÇÈ
 		pt.x = WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x;
+
+
+		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+		// É_ÉÅÅ[ÉWÉLÉÉÉâê∂ê¨ämîF
+		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+		//èoåÇÉfÅ[É^ÇçÏê¨
+		CDamageLaunchData* pLaunchData = new CDamageLaunchData(pPlayerChara, 3);
+
+		//èoåÇÉgÉäÉKÅ[Çê∂ê¨ÇµÅAÉ_ÉÅÅ[ÉWèoåÇÉfÅ[É^Çê›íË
+		CDamageLaunchTrigger* pTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+		//èoåÇÉgÉäÉKÅ[ÇèoåÇÉXÉPÉWÉÖÅ[ÉãÇ∆ÇµÇƒí«â¡Ç∑ÇÈ
+		CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
+
+		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 	}
 
 	if (pt.x < WINDOW_RIGHT * 1/3 - pPlayerChara->m_pMove->m_pos.x) {
@@ -289,7 +341,7 @@ void CGameMain::scroll() {
  *	@param	ÇPÉtÉåÅ[ÉÄåoâﬂéûä‘
  */
 void CGameMain::update( float deltaTime_ ) {
-	
+
 	//ì¸óÕèÛë‘ÇÃçXêVèàóù
 	CInputManager::getInstance()->update();
 

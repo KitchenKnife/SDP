@@ -171,8 +171,6 @@ private:
 public:
 	//デストラクタ
 	~CPlayerGirlFactoryManager() {
-		SAFE_DELETE(m_pPlayerGirlFactoryManager);
-
 		for (CPlayerGirlFactory* pFactory : this->m_factories) {
 			SAFE_DELETE(pFactory);
 		}

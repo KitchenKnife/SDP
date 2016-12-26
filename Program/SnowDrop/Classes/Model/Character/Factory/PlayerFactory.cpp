@@ -231,7 +231,7 @@ void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 	//ジャンプ中に行うアクションを生成して取りける
 	pActionIdle->push_back(new CActionJump(3.0f,4.0f));
 	//ジャンプアクションをマップ配列に取り付ける
-	pChara->m_mapAction.insert(std::map<int, std::vector<CAction*>*>::value_type(0, pActionIdle));
+	pChara->m_mapAction[0] = pActionIdle;
 
 
 }
