@@ -294,3 +294,12 @@ CPlayerGirlFactoryManager* CPlayerGirlFactoryManager::getInstance() {
 
 	return CPlayerGirlFactoryManager::m_pPlayerGirlFactoryManager;
 }
+
+//インスタンスの破棄
+void CPlayerGirlFactoryManager::removeInstance() {
+	if (CPlayerGirlFactoryManager::m_pPlayerGirlFactoryManager != NULL) {
+		//共有インスタンスの削除
+		SAFE_DELETE(CPlayerGirlFactoryManager::m_pPlayerGirlFactoryManager);
+	}
+}
+	

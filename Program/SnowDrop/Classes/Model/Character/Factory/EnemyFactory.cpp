@@ -372,3 +372,10 @@ CEnemyFactoryManager* CEnemyFactoryManager::getInstance() {
 	//共有のインスタンスを返す。
 	return CEnemyFactoryManager::m_pEnemyFactoryManager;
 }
+
+//インスタンスの破棄
+void CEnemyFactoryManager::removeInstance() {
+	if (CEnemyFactoryManager::m_pEnemyFactoryManager != NULL) {
+		SAFE_DELETE(CEnemyFactoryManager::m_pEnemyFactoryManager);
+	}
+}

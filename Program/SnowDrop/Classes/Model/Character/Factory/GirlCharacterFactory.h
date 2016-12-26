@@ -178,6 +178,8 @@ public:
 		}
 	}
 
+	//インスタンスの破棄
+	static void removeInstance();
 
 	//インスタンスの取得
 	static CPlayerGirlFactoryManager* getInstance();

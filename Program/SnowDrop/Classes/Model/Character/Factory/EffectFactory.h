@@ -153,6 +153,9 @@ public:
 	//共有インスタンスの取得
 	static CEffectFactoryManager* getInstance();
 
+	//インスタンスの削除
+	static void removeInstance();
+	
 	//エフェクト工場群
 	std::vector<CEffectFactory*> m_factories;
 

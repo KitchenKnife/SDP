@@ -64,29 +64,5 @@ public:
 	//================================================
 	//	定数に関するコードの追加はここから
 	//================================================
-	//敵の状態(アニメーション)
-	enum class STATE :int {
-		NONE		= -1,
-		STAND		= 0,
-		JUMPING		= 0,
-		WALK		= 1,
-		FALING		= 2,
-		ATTACK		= 3,
-		CHASE		= 4,
-		STAY		= 5,
-		WANDERING	= 6,	//コウモリは出現位置に向かう、それ以外はさまよい行動
-		DAMAGE		= 7,
-		DIE			= 8,
-	};
-
-	//アニメーションの状態
-	//int m_state = (int)STATE::NONE;
-
-	//敵が行えるアクション
-	enum class ACTION :int {
-		ATTACK	= 0,	//攻撃
-		PURSUIT = 1,	//
-		IDLE	= 2,	//
-		DAMAGE	= 3,	//
-	};
+	
 };
