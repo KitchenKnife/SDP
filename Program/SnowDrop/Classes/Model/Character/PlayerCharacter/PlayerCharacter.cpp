@@ -44,7 +44,7 @@ void CPlayerCharacterBoy::moveFunc() {
 		return;
 
 	//入力処理
-	this->inputFunc();
+	//this->inputFunc();
 
 	//アクションの更新処理
 	if (this->m_mapAction[this->m_actionState])
@@ -97,35 +97,6 @@ void CPlayerCharacterBoy::checkState()
 	{
 		this->m_pStateMachine->update();
 	}
-
-	return;
-
-
-	//状態の判定
-	if (this->m_pMove->m_vel.x > 0) {
-		//右歩行状態
-//		m_playerState = (int)PLAYER_STATE::WALK_RIGHT;
-		this->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_RIGHT;
-	}
-	else if (this->m_pMove->m_vel.x < 0) {
-		//左歩行状態
-//		m_playerState = (int)PLAYER_STATE::WALK_LEFT;
-		this->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_LEFT;
-	}
-	else if (this->m_pMove->m_vel.y > 0.0f) {
-		//ジャンプ状態
-//		m_playerState = (int)PLAYER_STATE::JUMP;
-	}
-	else if (this->m_pMove->m_vel.y < 0.0f) {
-		//落下状態
-		m_playerState = (int)PLAYER_STATE::FALLING;
-	}
-	else {
-		//待機状態
-//		m_playerState = (int)PLAYER_STATE::STAND;
-
-		this->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
-	}
 }
 
 
@@ -134,8 +105,6 @@ void  CPlayerCharacterBoy::applyFunc() {
 
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
-
-	
 
 	//チップデータを反映
 	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
@@ -168,28 +137,7 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
 * @author Shinya Ueba
 */
 void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
-	
-	/*
-	//お互いの距離
-	float length = sqrt(pow(this->m_pMove->m_pos.x - pCharacter->m_pMove->m_pos.x, 2.0) + pow(this->m_pMove->m_pos.y - pCharacter->m_pMove->m_pos.y, 2.0));
 
-	//お互いの距離がある程度近ければお互いの"手つなぎフラグを上げる"
-	if (length <= 45) {
-
-
-		this->m_playerState = 
-
-		WALK_LEFT = 1,	//左歩行
-			WALK_RIGHT = 2,	//右歩行
-
-		this->m_enableHoldHands = true;
-
-		pCharacter->m_isShakeHands = true;
-	}
-	else
-	{
-
-	}*/
 }
 
 /**
@@ -197,40 +145,5 @@ void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
  * @tips 移動処理で呼び出す
  */
 void  CPlayerCharacterBoy::inputFunc() {
-	
-	return;
-
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
-
-	//左へ移動（歩行）
-	if (pointerInputController->getLeftMoveFlag())
-	{
-		this->m_pMove->m_accele.x = -0.5f;
-	}
-
-	//右へ移動（歩行）
-	if (pointerInputController->getRightMoveFlag())
-	{
-		this->m_pMove->m_accele.x = 0.5f;
-	}
-
-	if (!pointerInputController->getRightMoveFlag() && 
-		!pointerInputController->getLeftMoveFlag())
-	{
-		this->m_pMove->m_accele.x = 0.0f;
-	}
-		
-	if (pointerInputController->getJumpFlag() == true) 
-	{
-		//ジャンプを開始させる
-	//	(*this->m_pActions)[(int)PLAYER_ACTION::JUMP]->start();
-	}
-
-	if (pointerInputController->getAttackFlag() == true) {
-		//攻撃を開始させる。
-	//	(*this->m_pActions)[(int)PLAYER_ACTION::ATTACK]->start();
-	}
 
 }

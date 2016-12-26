@@ -156,20 +156,6 @@ void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
-	
-	/*
-	//待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
-
-	//左歩行状態のアニメーションを設定（配列番号１）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::WALK_LEFT]->addChipData(new CChip(0, 256, 256, 256));
-
-	//右歩行状態のアニメーションを設定（配列番号２）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterBoy::PLAYER_STATE::WALK_RIGHT]->addChipData(new CChip(0, 0, 256, 256));
-	*/
 
 	//開始時のアニメーションの状態
 	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
@@ -189,6 +175,19 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//左歩行 のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 512, 256, 256));
+
+	//右攻撃（１撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 512, 256, 256));
+
+	//右攻撃（２撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 768, 256, 256));
+
+	//右攻撃（３撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTAC_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
+
 
 	//右向き装備する のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
@@ -320,6 +319,11 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 //------------------------------------------------------------------------------------------
 
 
+	//右向き攻撃状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerAttackRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
 	//右向き装備する状態
 	CStateBase* pEquipRightState = new CPlayerEquipRightState(pChara, NULL);
 	//作成した状態を登録していく
@@ -358,8 +362,6 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 }
 
 void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
-	//状態の設定
-	pChara->m_playerState = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;
@@ -374,7 +376,7 @@ void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 	pChara->m_tag = TAG_PLAYER_1;
 
 	//キャラクター状態
-	pChara->m_state = (int)CPlayerCharacterBoy::PLAYER_STATE::STAND;
+	pChara->m_state = (int)PLAYER_STATE::IDLE_RIGHT;
 
 	/*
 	 *　計算データのままで起動すると1フレームずれが発生するので

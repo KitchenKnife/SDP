@@ -93,32 +93,12 @@ public:
 	 */
 	virtual void collisionBottomCallback(int event)override {
 		//ジャンプを停止させる。
-		(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
+		//(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
 	}
 
 	//================================================ 
 	// CPlayerCharacterBoyクラス専用メンバ
 	//================================================
-	//プレイヤーのアニメーションの状態
-	enum class PLAYER_STATE : int {
-		STAND		= 0,	//待機
-		JUMP		= 0,	//ジャンプ
-		FALLING		= 0,	//落下
-		WALK_LEFT	= 1,	//左歩行
-		WALK_RIGHT	= 2,	//右歩行
-		ATTACK_1	= 3,	//攻撃　１撃目
-		ATTACK_2	= 4,	//攻撃　２撃目
-		ATTACK_3	= 5,	//攻撃　３撃目
-	};
-
-	//現在のプレイヤーの状態
-	int m_playerState;
-
-	//プレイヤーの行動
-	enum class PLAYER_ACTION : int {
-		JUMP		= 0,	//ジャンプ
-		ATTACK		= 1,	//攻撃
-	};
 
 	/**
 	 * @desc	入力処理

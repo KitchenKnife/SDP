@@ -10,10 +10,10 @@
 //=========================================================================
 //	追加のインクルードはここから
 //=========================================================================
-#include "Model/Character/EnemyCharacter/EnemyCharacter.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"
 #include "cocos2d.h"
 #include "Constants.h"
+#include <vector>
 
 /*
  *	ゲームメインレイヤー
@@ -96,7 +96,7 @@ public:
 	//=========================================================================
 	
 	//メインレイヤー
-	static Layer* m_pMainLayer;// = NULL;
+	Layer* m_pMainLayer = NULL;
 
 	//UIレイヤー
 	Layer* m_pUILayer = NULL;

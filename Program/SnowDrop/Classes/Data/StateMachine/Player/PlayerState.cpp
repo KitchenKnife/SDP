@@ -95,6 +95,42 @@ void CPlayerState::toWalkLeft(void)
 }
 
 /**
+ * @desc	右向き攻撃状態（１撃目）へ移行
+ */
+void CPlayerState::toAttackFirstRight(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	右向き攻撃状態（２撃目）へ移行
+ */
+void CPlayerState::toAttackSecondRight(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	右向き攻撃状態（３撃目）へ移行
+ */
+void CPlayerState::toAttackThirdRight(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::THURD_ATTAC_RIGHT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
 *	@desc 右向き　装備する状態へ移行
 */
 void CPlayerState::toEquipRight(void)
@@ -226,14 +262,20 @@ void CPlayerIdleRightState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
-	//武器を装備
+	/*//武器を装備
 	if (pointerInputController->getAttackFlag())
 	{
 		//右向き装備状態へ移行
 		this->toEquipRight();
 		return;
-	}
+	}*/
 
+	//右攻撃
+	if (pointerInputController->getAttackFlag()) {
+		//右攻撃状態へ移行(１撃目)
+		this->toAttackFirstRight();
+		return;
+	}
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -308,6 +350,7 @@ void CPlayerIdleLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	/*
 	//武器を装備
 	if (pointerInputController->getAttackFlag())
 	{
@@ -315,6 +358,14 @@ void CPlayerIdleLeftState::update(void)
 		this->toEquipLeft();
 		return;
 	}
+	*/
+	//右攻撃
+	if (pointerInputController->getAttackFlag()) {
+		//右攻撃状態へ移行(１撃目)
+		this->toAttackFirstRight();
+		return;
+	}
+
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -390,7 +441,7 @@ void CPlayerWalkRightState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
+	/*
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
@@ -398,6 +449,14 @@ void CPlayerWalkRightState::update(void)
 		this->toEquipRight();
 		return;
 	}
+	*/
+	//右攻撃
+	if (pointerInputController->getAttackFlag()) {
+		//右攻撃状態へ移行(１撃目)
+		this->toAttackFirstRight();
+		return;
+	}
+
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -474,12 +533,19 @@ void CPlayerWalkLeftState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
+	/*
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
 		//左向き装備状態へ移行
 		this->toEquipLeft();
+		return;
+	}*/
+
+	//右攻撃
+	if (pointerInputController->getAttackFlag()) {
+		//右攻撃状態へ移行(１撃目)
+		this->toAttackFirstRight();
 		return;
 	}
 
@@ -511,6 +577,95 @@ void CPlayerWalkLeftState::onChangeEvent(void)
 
 	this->m_isNext = false;
 }
+
+
+//==========================================
+//
+// Class: CPlayerAttackRightState
+//
+// プレイヤー 右向き　攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+/**
+ * @desc コンストラクタ
+ */
+CPlayerAttackRightState::CPlayerAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
+
+/**
+ * @desc デストラクタ
+ */
+CPlayerAttackRightState::~CPlayerAttackRightState(void){}
+
+/**
+ * @desc 開始処理
+ */
+void CPlayerAttackRightState::start(void)
+{
+	this->m_chainAttackFlag = false;
+}
+
+/**
+ * @desc 更新処理
+ */
+void CPlayerAttackRightState::update(void)
+{
+	//優先順で処理していく
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	//攻撃ボタンが押されたか
+	if (pointerInputController->getAttackFlag())
+	{
+		//攻撃連鎖フラグをtrue にする
+		this->m_chainAttackFlag = true;
+	}
+
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+		//攻撃連鎖フラグが false なら
+		if (this->m_chainAttackFlag == false) {
+			//右向き待機状態へ戻す
+			this->toIdleRight();
+			return;
+		}
+
+		//終了していたら
+		//現在のプレイヤーのアニメーション状態が１撃目なら
+		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT) {
+			
+			//２撃目に移行する。
+			this->toAttackSecondRight();
+
+			return;
+		}
+		else if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT) {
+			//３撃目に移行する
+			this->toAttackThirdRight();
+
+			return;
+		}
+		else if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::THURD_ATTAC_RIGHT) {
+			//右向き待機状態へ戻す
+			this->toIdleRight();
+			return;
+		}
+	}
+	
+}
+
+// 状態が変わるときの処理
+void CPlayerAttackRightState::onChangeEvent(void)
+{
+	this->m_chainAttackFlag = false;
+
+
+	this->m_isNext = false;
+}
+
 
 //==========================================
 //
