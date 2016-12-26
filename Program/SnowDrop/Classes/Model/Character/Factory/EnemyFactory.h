@@ -235,8 +235,6 @@ private:
 public:
 	//デストラクタ
 	~CEnemyFactoryManager() {
-		//共有インスタンスの削除
-		SAFE_DELETE(m_pEnemyFactoryManager);
 
 		//取り付けた工場群を削除
 		std::map<ENEMY_TYPE, CEnemyFactory*>::iterator itr = m_factories.begin();

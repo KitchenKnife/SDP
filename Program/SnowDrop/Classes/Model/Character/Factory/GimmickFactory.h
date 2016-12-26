@@ -149,8 +149,6 @@ private:
 public:
 	//デストラクタ
 	~CGimmickFactoryManager() {
-		SAFE_DELETE(m_pGimmickFactoryManager);
-
 		for (CGimmickFactory* pFactory : this->m_factories) {
 			SAFE_DELETE(pFactory);
 		}

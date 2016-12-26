@@ -46,7 +46,6 @@
 //==================================================
 // @Ã“Iƒƒ“ƒo•Ï”‚ÌŽÀ‘Ì
 //==================================================
-Layer* CGameMain::m_pMainLayer = NULL;
 
 /**
  *	@desc	ƒV[ƒ“‚Ì¶¬
@@ -92,25 +91,53 @@ void CGameMain::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 
 // ƒfƒXƒgƒ‰ƒNƒ^
 CGameMain::~CGameMain() {
+	
+	//*************************************************************************
+	//
+	// IIII’ˆÓIIIIƒƒ‚ƒŠ‚Ì‰ð•ú‚ÍA¶¬‚µ‚½‹t‡‚Å‰ð•ú‚·‚é‚±‚ÆIIIII
+	//
+	//*************************************************************************
+	
+	
 	// ƒ_ƒ[ƒWHê‚Ìíœ
-	CDamageFactoryManager::getInstance()->removeInstance();
-	// ƒ}ƒbƒv‚Ìíœ
-	CMapManager::getInstance()->removeInstance();
-	// ƒLƒƒƒ‰‚Ìíœ
-	CCharacterAggregate::getInstance()->removeInstance();
-	// ƒgƒŠƒK[íœ
-	CLaunchScheduler::getInstance()->removeInstance();
+	CDamageFactoryManager::removeInstance();
+	
+	//ƒGƒtƒFƒNƒgHê‚Ìíœ
+	CEffectFactoryManager::removeInstance();
+
+
+	//ƒMƒ~ƒbƒNHê‚Ìíœ
+	CGimmickFactoryManager::removeInstance();
+	
+	//“G¶¬Hê‚Ìíœ
+	CEnemyFactoryManager::removeInstance();
+	
+	//­—Hê‚Ìíœ
+	CPlayerGirlFactoryManager::removeInstance();
 
 	//ƒvƒŒƒCƒ„[Hê‚Ìíœ
-	CPlayerBoyFactoryManager::getInstance()->removeInstance();
-	//­—Hê‚Ìíœ
-	CPlayerGirlFactoryManager::getInstance()->removeInstance();
-	//“G¶¬Hê‚Ìíœ
-	CEnemyFactoryManager::getInstance()->removeInstance();
-	//ƒGƒtƒFƒNƒgHê‚Ìíœ
-	CEffectFactoryManager::getInstance()->removeInstance();
-	//ƒMƒ~ƒbƒNHê‚Ìíœ
-	CGimmickFactoryManager::getInstance()->removeInstance();
+	CPlayerBoyFactoryManager::removeInstance();
+	
+
+	// ƒgƒŠƒK[íœ
+	CLaunchScheduler::removeInstance();	
+	//oŒ‚ƒXƒPƒWƒ…[ƒ‹‚Ìíœ
+
+	if (this->m_pLaunchSchedule)
+	{
+		for (CLaunchTrigger* pTrigger : (*this->m_pLaunchSchedule))
+		{
+			SAFE_DELETE(pTrigger);
+		}
+	}
+	//oŒ‚ƒXƒPƒWƒ…[ƒ‹‚Ì”jŠü
+	SAFE_DELETE(this->m_pLaunchSchedule);
+
+	// ƒLƒƒƒ‰‚Ìíœ
+	CCharacterAggregate::removeInstance();
+
+	// ƒ}ƒbƒv‚Ìíœ
+	CMapManager::removeInstance();
 }
 
 
@@ -143,7 +170,7 @@ bool CGameMain::init() {
 	//
 	//=========================================================================
 
-	//ƒLƒƒƒ‰ƒNƒ^[‚ÌW‚Ü‚è‚Ì¶¬
+	////ƒLƒƒƒ‰ƒNƒ^[‚ÌW‚Ü‚è‚Ì¶¬
 	this->m_pCharacters = new std::vector<CCharacter*>();
 	//ƒLƒƒƒ‰ƒNƒ^[‚ÌW‚Ü‚è‚ðCCharacterAggregate‚ÉÝ’è‚·‚é
 	CCharacterAggregate::getInstance()->set(this->m_pCharacters);
@@ -153,15 +180,15 @@ bool CGameMain::init() {
 	//oŒ‚ƒXƒPƒWƒ…[ƒ‹‚ðoŒ‚ƒXƒPƒWƒ…[ƒ‰‚ÉŽæ‚è•t‚¯‚é
 	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
 
-	//ƒƒCƒ“ƒŒƒCƒ„[‚Ì¶¬‚ÆŽæ‚è•t‚¯
+	////ƒƒCƒ“ƒŒƒCƒ„[‚Ì¶¬‚ÆŽæ‚è•t‚¯
 	this->m_pMainLayer = Layer::create();
 	this->addChild(this->m_pMainLayer);
 
-	//UIƒŒƒCƒ„[‚Ì¶¬‚ÆŽæ‚è•t‚¯
+	////UIƒŒƒCƒ„[‚Ì¶¬‚ÆŽæ‚è•t‚¯
 	this->m_pUILayer = Layer::create();
 	this->addChild(this->m_pUILayer,-1);
 
-	
+	//
 	//”wŒi‚Ì¶¬‚ÆŽæ‚è•t‚¯
 	this->m_pBackGround = Sprite::create();
 	this->m_pBackGround->setTexture(IMAGE_BACK_GROUND);
@@ -183,13 +210,13 @@ bool CGameMain::init() {
 	
 	// ƒvƒŒƒCƒ„[‚Ì¶¬
 	CCharacter* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
-	//CCharacterAggregate‚ÉƒvƒŒƒCƒ„[‚ð’Ç‰Á
+	////CCharacterAggregate‚ÉƒvƒŒƒCƒ„[‚ð’Ç‰Á
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
-	//Žæ‚è•t‚¯
+	////Žæ‚è•t‚¯
 	this->m_pMainLayer->addChild(pPlayerChara);
 
 
-	// ­—‚Ì¶¬‚ÆŽæ‚è•t‚¯
+	//// ­—‚Ì¶¬‚ÆŽæ‚è•t‚¯
 	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
 	
 	
@@ -202,7 +229,7 @@ bool CGameMain::init() {
 	this->m_pMainLayer->addChild(playerGirl);
 
 
-	//‰Šú‰æ–Ê‚É‚¢‚é“G‚Ì¶¬
+	////‰Šú‰æ–Ê‚É‚¢‚é“G‚Ì¶¬
 	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
 	//‘S‘Ì‚ÌŠg‘å
 	this->setScale(SCALE_MAIN);
@@ -240,14 +267,14 @@ bool CGameMain::init() {
 	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 
 
-
+	
 
 	// BGM‚ÌÄ¶
 	int musicID = AudioEngine::play2d(SOUND_FILE_BGM_STAGE_FIRST, true, 0.0f);
 	// IDÝ’è
 	CAudioManager::getInstance()->setMusicID(BGM_STAGE1, musicID);
 
-
+	
 	//=========================================================================
 	//
 	//	‚±‚±‚Ü‚Å‚É‰Šú‰»A‰ŠúÝ’è‚ÌƒR[ƒh‚ð’Ç‰Á
@@ -314,7 +341,7 @@ void CGameMain::scroll() {
  *	@param	‚PƒtƒŒ[ƒ€Œo‰ßŽžŠÔ
  */
 void CGameMain::update( float deltaTime_ ) {
-	
+
 	//“ü—Íó‘Ô‚ÌXVˆ—
 	CInputManager::getInstance()->update();
 

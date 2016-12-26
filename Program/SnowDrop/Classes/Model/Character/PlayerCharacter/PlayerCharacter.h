@@ -93,7 +93,7 @@ public:
 	 */
 	virtual void collisionBottomCallback(int event)override {
 		//ƒWƒƒƒ“ƒv‚ð’âŽ~‚³‚¹‚éB
-		(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
+	//	(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
 	}
 
 	//================================================ 

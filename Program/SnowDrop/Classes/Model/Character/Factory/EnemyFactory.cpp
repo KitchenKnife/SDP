@@ -268,7 +268,7 @@ void CBatFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	//直立アニメーションの設定
 	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
-	(*pChara->m_pAnimations)[(int)CEnemyCharacter::STATE::STAND]->addChipData(new CChip(0, 64, 64, 64));
+	(*pChara->m_pAnimations)[(int)ENEMY_BAT_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 64, 64, 64));
 
 }
 
@@ -337,7 +337,7 @@ template <class Ty>
 void CBatFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 
 	//状態を待機状態に変更
-	pChara->m_state = (int)CEnemyCharacter::STATE::STAND;
+	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;

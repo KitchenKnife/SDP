@@ -96,7 +96,7 @@ public:
 	//=========================================================================
 	
 	//メインレイヤー
-	static Layer* m_pMainLayer;// = NULL;
+	Layer* m_pMainLayer = NULL;
 
 	//UIレイヤー
 	Layer* m_pUILayer = NULL;

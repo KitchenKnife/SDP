@@ -121,8 +121,9 @@ CCharacterAggregate::~CCharacterAggregate() {
 
 	// キャラの解放
 	for (CCharacter* pChara : (*this->m_pCharacters)) {
-		SAFE_DELETE(pChara);
-		}
+		//親のレイヤーから取り外す
+		pChara->removeFromParent();
+	}
 	SAFE_DELETE(this->m_pCharacters);
 
 }

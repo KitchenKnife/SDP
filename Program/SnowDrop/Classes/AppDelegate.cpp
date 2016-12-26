@@ -8,7 +8,10 @@
 #include "cocos2d.h"
 // サウンド用
 #include "SimpleAudioEngine.h"
-
+// サウンド用
+#include "Lib/Sound/AudioManager.h"
+//入力用
+#include "Lib\Input\InputManager.h"
 
 USING_NS_CC;
 
@@ -34,6 +37,11 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() 
 {
+	//BGM停止
+	CAudioManager::removeInstance();
+
+	//入力の解放
+	CInputManager::removeInstance();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -64,7 +72,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #ifdef _DEBUG
 		glview = GLViewImpl::createWithRect("SnowDrop", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-		glview = GLViewImpl::createWithFullScreen("SnowDrop");
+		//glview = GLViewImpl::createWithFullScreen("SnowDrop");
+		glview = GLViewImpl::createWithRect("SnowDrop", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #endif
 
 #else
@@ -107,8 +116,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-   // auto scene = CTitle::createScene();
-	auto scene = CTitle::createScene();
+ 	auto scene = CTitle::createScene();
+	//auto scene = CGameMain::createScene();
 
     // run
     director->runWithScene(scene);

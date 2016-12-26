@@ -118,7 +118,7 @@ void CPlayerCharacterBoy::checkState()
 	}
 	else if (this->m_pMove->m_vel.y < 0.0f) {
 		//óéâ∫èÛë‘
-		this->m_animationState = (int)PLAYER_ANIMATION_STATE::FALLING;
+//		this->m_animationState = (int)PLAYER_ANIMATION_STATE::FALLING;
 	}
 	else {
 		//ë“ã@èÛë‘

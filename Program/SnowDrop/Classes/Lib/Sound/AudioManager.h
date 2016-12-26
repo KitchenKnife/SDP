@@ -34,7 +34,6 @@ private:
 public:
 	// デストラクタ
 	~CAudioManager() {
-		SAFE_DELETE(m_pSharedAudioManager);
 
 		std::map<std::string, int>::iterator itr = this->m_musicID.begin();
 
@@ -56,7 +55,7 @@ public:
 	}
 
 	// 共有インスタンスの破棄
-	void removeInstance() {
+	static void removeInstance() {
 		SAFE_DELETE(CAudioManager::m_pSharedAudioManager);
 	}
 

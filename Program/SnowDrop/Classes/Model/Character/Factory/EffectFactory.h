@@ -140,9 +140,6 @@ private:
 public:
 	//デストラクタ
 	~CEffectFactoryManager() {
-		//共有インスタンスの削除
-		SAFE_DELETE(m_pEffectFactoryManager);
-
 		//エフェクト工場群の削除
 		for (CEffectFactory* pFactory : this->m_factories) {
 			SAFE_DELETE(pFactory);
