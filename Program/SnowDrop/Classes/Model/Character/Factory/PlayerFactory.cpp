@@ -386,3 +386,11 @@ CPlayerBoyFactoryManager* CPlayerBoyFactoryManager::getInstance() {
 
 	return CPlayerBoyFactoryManager::m_pPlayerBoyFactoryManager;
 }
+
+//インスタンスの破棄
+void CPlayerBoyFactoryManager::removeInstance() {
+	if (CPlayerBoyFactoryManager::m_pPlayerBoyFactoryManager != NULL) {
+		//共有インスタンスの削除
+		SAFE_DELETE(CPlayerBoyFactoryManager::m_pPlayerBoyFactoryManager);
+	}
+}

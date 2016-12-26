@@ -34,10 +34,10 @@ public:
 	//衝突判定空間群データの生成と取得
 	virtual std::vector<CCollisionArea*>* getCollisionAreas()override;
 	/**
-	 * @desc	状態遷移データの生成と取得
-	 * @return	状態遷移データ
-	 * @author	Shinya Ueba
-	 */
+	*	@desc 状態遷移データの生成と取得
+	*	@return 状態遷移データ
+	*	@author Shinya Ueba
+	*/
 	virtual	CStateMachine*	getStateMachine(void)override;
 };
 

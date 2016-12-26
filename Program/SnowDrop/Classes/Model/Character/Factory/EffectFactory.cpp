@@ -180,3 +180,10 @@ CEffectFactoryManager* CEffectFactoryManager::getInstance() {
 	//共有インスタンスを返す。
 	return CEffectFactoryManager::m_pEffectFactoryManager;
 }
+
+//インスタンスの削除
+void CEffectFactoryManager::removeInstance() {
+	if (CEffectFactoryManager::m_pEffectFactoryManager != NULL) {
+		SAFE_DELETE(CEffectFactoryManager::m_pEffectFactoryManager);
+	}
+}

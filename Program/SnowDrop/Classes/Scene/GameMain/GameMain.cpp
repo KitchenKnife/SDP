@@ -17,6 +17,12 @@
 //“GHê
 #include "Model/Character/Factory/EnemyFactory.h"
 
+//ƒGƒtƒFƒNƒgHê
+#include "Model/Character/Factory/EffectFactory.h"
+
+//ƒMƒ~ƒbƒNHê
+#include "Model/Character/Factory/GimmickFactory.h"
+
 //ƒvƒŒƒCƒ„[‚Ì•ŠíƒAƒNƒVƒ‡ƒ“
 
 // “ü—Í
@@ -84,6 +90,17 @@ CGameMain::~CGameMain() {
 	CCharacterAggregate::getInstance()->removeInstance();
 	// ƒgƒŠƒK[íœ
 	CLaunchScheduler::getInstance()->removeInstance();
+
+	//ƒvƒŒƒCƒ„[Hê‚Ìíœ
+	CPlayerBoyFactoryManager::getInstance()->removeInstance();
+	//­—Hê‚Ìíœ
+	CPlayerGirlFactoryManager::getInstance()->removeInstance();
+	//“G¶¬Hê‚Ìíœ
+	CEnemyFactoryManager::getInstance()->removeInstance();
+	//ƒGƒtƒFƒNƒgHê‚Ìíœ
+	CEffectFactoryManager::getInstance()->removeInstance();
+	//ƒMƒ~ƒbƒNHê‚Ìíœ
+	CGimmickFactoryManager::getInstance()->removeInstance();
 }
 
 
