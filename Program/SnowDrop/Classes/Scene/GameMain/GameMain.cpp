@@ -17,6 +17,14 @@
 //ìGçHèÍ
 #include "Model/Character/Factory/EnemyFactory.h"
 
+//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+// Deback
+
+#include "Model/Character/Factory/DamageFactory.h"
+#include "Data/LaunchData/LaunchData.h"
+
+//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+
 //ÉvÉåÉCÉÑÅ[ÇÃïêäÌÉAÉNÉVÉáÉì
 
 // ì¸óÕ
@@ -78,6 +86,8 @@ void CGameMain::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 
 // ÉfÉXÉgÉâÉNÉ^
 CGameMain::~CGameMain() {
+	// É_ÉÅÅ[ÉWçHèÍÇÃçÌèú
+	CDamageFactoryManager::getInstance()->removeInstance();
 	// É}ÉbÉvÇÃçÌèú
 	CMapManager::getInstance()->removeInstance();
 	// ÉLÉÉÉâÇÃçÌèú
@@ -249,6 +259,21 @@ void CGameMain::scroll() {
 	if (pt.x > WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x) {
 		//å¥ì_Çí¥Ç¶ÇΩï™Ç…ê›íËÇ∑ÇÈ
 		pt.x = WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x;
+
+
+		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+		// É_ÉÅÅ[ÉWÉLÉÉÉâê∂ê¨ämîF
+		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
+		//èoåÇÉfÅ[É^ÇçÏê¨
+		CDamageLaunchData* pLaunchData = new CDamageLaunchData(pPlayerChara, 3);
+
+		//èoåÇÉgÉäÉKÅ[Çê∂ê¨ÇµÅAÉ_ÉÅÅ[ÉWèoåÇÉfÅ[É^Çê›íË
+		CDamageLaunchTrigger* pTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+		//èoåÇÉgÉäÉKÅ[ÇèoåÇÉXÉPÉWÉÖÅ[ÉãÇ∆ÇµÇƒí«â¡Ç∑ÇÈ
+		CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
+
+		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 	}
 
 	if (pt.x < WINDOW_RIGHT * 1/3 - pPlayerChara->m_pMove->m_pos.x) {

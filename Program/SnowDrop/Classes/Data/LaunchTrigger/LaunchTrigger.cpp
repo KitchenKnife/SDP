@@ -3,7 +3,7 @@
 #include "Model/Character/Factory/EnemyFactory.h"
 #include "Model/Character/Factory/GimmickFactory.h"
 #include "Model/Character/Factory/EffectFactory.h"
-
+#include "Model/Character/Factory/DamageFactory.h"
 //=======================================
 //
 //  敵出撃トリガー
@@ -140,7 +140,48 @@ CCharacter* CEffectLaunchTrigger::action() {
 	//生成したギミックを返す。
 	return pEffectCharacter;
 }
+//=======================================
+//
+//  ダメージ生成トリガー
+//
+//=======================================
+//デストラクタ
+CDamageLaunchTrigger::~CDamageLaunchTrigger() {
+	// 出撃データの解放
+	SAFE_DELETE(this->m_pLaunchdata);
+}
 
+/**
+* @desc	イベントを行えるかどうか
+* @retrun	true...イベント実行可
+*/
+bool CDamageLaunchTrigger::isTrigger() {
+
+	if (this->m_pLaunchdata == NULL) {
+
+		return false;
+	}
+	return true;
+}
+
+/**
+* @desc	設定されている敵出撃データを元に敵を生成する
+* @tips	トリガーを元にイベントを実行
+*/
+CCharacter* CDamageLaunchTrigger::action() {
+	//ダメージの生成
+	//引数にエフェクトのタイプと出撃させる位置を渡す
+	CCharacter* pDamageCharacter = CDamageFactoryManager::getInstance()->create(
+		this->m_pLaunchdata->m_pChara,
+		this->m_pLaunchdata->m_activeFrame
+	);
+
+	//発射し終わったかどうかのフラグを立てる
+	this->m_activeFlag = false;
+
+	//生成したギミックを返す。
+	return pDamageCharacter;
+}
 //=======================================
 //
 //  出撃スケジューラー

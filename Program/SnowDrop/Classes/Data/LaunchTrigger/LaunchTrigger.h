@@ -168,6 +168,44 @@ public:
 
 };
 
+
+//=======================================
+//
+//  ダメージ生成トリガー
+//
+//=======================================
+class CDamageLaunchTrigger :public CLaunchTrigger {
+private:
+	//エフェクト出撃データ
+	CDamageLaunchData* m_pLaunchdata = NULL;
+
+public:
+
+	/**
+	* @desc	コンストラクタ
+	* @param	エフェクト出撃データ
+	* @tips	エフェクト出撃データをトリガーとして設定する
+	*/
+	CDamageLaunchTrigger(CDamageLaunchData* pLaunchdata)
+		:m_pLaunchdata(pLaunchdata) {}
+
+	//デストラクタ
+	virtual ~CDamageLaunchTrigger();
+
+	/**
+	* @desc	イベントを行えるかどうか
+	* @retrun	true...イベント実行可
+	*/
+	virtual bool isTrigger()override;
+
+	/**
+	* @desc	設定されている出撃データを元に生成する
+	* @tips	トリガーを元にイベントを実行
+	*/
+	virtual CCharacter* action()override;
+
+};
+
 //=======================================
 //
 //  発射台

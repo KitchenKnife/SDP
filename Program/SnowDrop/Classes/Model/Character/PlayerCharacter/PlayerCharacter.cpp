@@ -80,8 +80,8 @@ void CPlayerCharacterBoy::collisionAll() {
 	//空間との衝突判定を行う
 	for (CCollisionArea* pArea : (*this->m_pCollisionAreas)) {
 		pArea->collision(this);
+	
 	}
-
 	//全てのキャラクターとの衝突判定
 	std::vector<CCharacter*>* pCharacters = CCharacterAggregate::getInstance()->get();
 	for (CCharacter* pChara : (*pCharacters)) {

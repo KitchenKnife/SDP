@@ -38,7 +38,6 @@ public:
 	*/
 	virtual	CStateMachine*	getStateMachine(void)override;
 
-
 };
 
 
@@ -49,11 +48,11 @@ public:
 class CDamageFactory {
 protected:
 
-	//敵の生成と組み立て
+	//生成と組み立て
 	virtual CDamageCharacter* createDamage() = 0;
 
 	//移動データの設定
-	virtual void settingMove(CDamageCharacter* pChara, float x, float y) = 0;
+	virtual void settingMove(CDamageCharacter* pChara, CCharacter* pAttackChara) = 0;
 	//画像の設定
 	virtual void settingTexture(CDamageCharacter* pChara) = 0;
 	//アニメーション群データの設定
@@ -73,20 +72,20 @@ protected:
 	*/
 	virtual	void settingStateMachine(CDamageCharacter* pChara) = 0;
 	//その他　初期設定
-	virtual void settingInitialize(CDamageCharacter* pChara) = 0;
+	virtual void settingInitialize(CDamageCharacter* pChara,int activeFrame) = 0;
 
 public:
 	//デストラクタ
 	virtual ~CDamageFactory() {};
 
 	//敵の生成とセッティング
-	CDamageCharacter* create(float posX, float posY) {
+	CDamageCharacter* create(CCharacter* pAttackChara,int activeFrame) {
 
 		//敵の生成と組み立て
 		CDamageCharacter* pChara = this->createDamage();
 
 		//移動データ設定
-		this->settingMove(pChara, posX, posY);
+		this->settingMove(pChara, pAttackChara);
 		//画像の設定
 		this->settingTexture(pChara);
 		//アニメーション群データの設定
@@ -102,55 +101,71 @@ public:
 		//状態遷移マシンの設定
 		this->settingStateMachine(pChara);
 		//その他初期化
-		this->settingInitialize(pChara);
+		this->settingInitialize(pChara,activeFrame);
 
 		return pChara;
 	}
 };
 
+
 //================================================
-// キャラクターの生成と組み立てを担当するクラス
+// 生成と組み立てを担当するクラス
 //	（FactoryMethod）
 //================================================
-template <class Ty>
 class CDamageCreateFactory :public CDamageFactory {
 public:
+
 	//デストラクタ
 	virtual ~CDamageCreateFactory() {}
 
-protected:
-	//敵の生成と組み立て
-	virtual CDamageCharacter* createDamage()override {
+	//生成と組み立て
+	CDamageCharacter* createDamage()override;
 
-		// 敵生成
-		CDamageCharacter* pDamage = Ty::create();
-		// 敵パーツ工場生成
-		CDamagePartsFactory pDamagePartsFactory;
-
-		// パーツの設定
-		pDamage->m_pMove = pDamagePartsFactory.getMove();
-		pDamage->m_pAnimations = pDamagePartsFactory.getAnimations();
-
-		pDamage->m_pPhysicals = pDamagePartsFactory.getPhysicals();
-		pDamage->m_pBody = pDamagePartsFactory.getBody();
-		pDamage->m_pCollisionAreas = pDamagePartsFactory.getCollisionAreas();
-
-		//状態データの生成と取得
-		pDamage->m_pStateMachine = pDamagePartsFactory.getStateMachine();
-
-		//　敵返す
-		return pDamage;
-	}
 };
 
 //================================================
-// 敵工場群を管理するクラス
+// 近接ダメージ工場
+//================================================
+class CNearDamageFactory :public CDamageCreateFactory {
+public:
+	//デストラクタ
+	virtual ~CNearDamageFactory() {}
+
+	//移動データの設定
+	void settingMove(CDamageCharacter* pChara, CCharacter* pAttackChara)override;
+	//画像の設定
+	void settingTexture(CDamageCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CDamageCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CDamageCharacter* pChara)override;
+	//アクション群データの設定
+	void settingActions(CDamageCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CDamageCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CDamageCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CDamageCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CDamageCharacter* pChara,int activeFrame)override;
+
+};
+
+//================================================
+// ダメージ工場群を管理するクラス
 //	（Singleton）
 //================================================
 class CDamageFactoryManager {
 private:
 	//コンストラクタ
 	CDamageFactoryManager() {
+
+		this->m_factories = new CNearDamageFactory();
 	}
 
 	//共有のインスタンス
@@ -159,35 +174,30 @@ private:
 public:
 	//デストラクタ
 	~CDamageFactoryManager() {
-		//共有インスタンスの削除
-		SAFE_DELETE(m_pDamageFactoryManager);
+			SAFE_DELETE(this->m_factories);
+	}
 
-		//取り付けた工場群を削除
-		std::map<ENEMY_TYPE, CDamageFactory*>::iterator itr = m_factories.begin();
-		while (itr != m_factories.end()) {
-			//クラスのインスタンスを削除
-			SAFE_DELETE(itr->second);
-			//イテレーターを更新
-			itr++;
-		}
+	static void removeInstance() {
+		SAFE_DELETE(m_pDamageFactoryManager);
 	}
 
 
 	//インスタンスの取得
 	static CDamageFactoryManager* getInstance();
 
-	//敵工場群
-	std::map<ENEMY_TYPE, CDamageFactory*> m_factories;
+	//ダメージ工場（1種類のみ）
+	CDamageFactory* m_factories;
 
 	/**
-	* @desc	敵キャラクターを生成
-	* @param	出撃させる位置
-	* @param	敵のタイプ
-	* @return	生成した敵キャラクター
+	* @desc	キャラクターを生成
+	* @param	プレイヤーのm_pMove
+	* @param	存在させておくフレーム数
+	* @param	出現向き
+	* @return	生成したダメージキャラクター
 	*/
-	CDamageCharacter* create(Point pos, ENEMY_TYPE type) {
-		//敵のタイプを key として敵を生成して返す
-		return this->m_factories[type]->create(pos.x, pos.y);
+	CDamageCharacter* create(CCharacter* pAttackChara,int activeFrame) {
+
+		return this->m_factories->create(pAttackChara,activeFrame);
 	}
 
 };
