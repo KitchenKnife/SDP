@@ -26,25 +26,19 @@
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerState::CPlayerState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:m_pPlayer(pPlayer),m_pGirl(pGirl)
-{
-
-}
+	:m_pPlayer(pPlayer),m_pGirl(pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerState::~CPlayerState(void)
-{
-
-}
+ * @desc	デストラクタ 
+ */
+CPlayerState::~CPlayerState(void){}
 
 /**
-*	@desc 右向き待機状態へ移行
-*/
+ * @desc	右向き待機状態へ移行
+ */
 void CPlayerState::toIdleRight(void)
 {
 	this->m_pPlayer->m_state			= (int)PLAYER_STATE::IDLE_RIGHT;
@@ -56,8 +50,8 @@ void CPlayerState::toIdleRight(void)
 }
 
 /**
-*	@desc 左向き待機状態へ移行
-*/
+ * @desc	左向き待機状態へ移行
+ */
 void CPlayerState::toIdleLeft(void)
 {
 	this->m_pPlayer->m_state			= (int)PLAYER_STATE::IDLE_LEFT;
@@ -69,8 +63,8 @@ void CPlayerState::toIdleLeft(void)
 }
 
 /**
-*	@desc 右向き歩行状態へ移行
-*/
+ * @desc	右向き歩行状態へ移行
+ */
 void CPlayerState::toWalkRight(void)
 {
 	this->m_pPlayer->m_state			= (int)PLAYER_STATE::WALK_RIGHT;
@@ -82,8 +76,8 @@ void CPlayerState::toWalkRight(void)
 }
 
 /**
-*	@desc 左向き歩行状態へ移行
-*/
+ * @desc	左向き歩行状態へ移行
+ */
 void CPlayerState::toWalkLeft(void)
 {
 	this->m_pPlayer->m_state			= (int)PLAYER_STATE::WALK_LEFT;
@@ -131,8 +125,44 @@ void CPlayerState::toAttackThirdRight(void) {
 }
 
 /**
-*	@desc 右向き　装備する状態へ移行
-*/
+ * @desc	左向き攻撃状態（１撃目）へ移行
+ */
+void CPlayerState::toAttackFirstLeft(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_LEFT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	左向き攻撃状態（２撃目）へ移行
+ */
+void CPlayerState::toAttackSecondLeftt(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_LEFT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	左向き攻撃状態（３撃目）へ移行
+ */
+void CPlayerState::toAttackThirdLeft(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	右向き　装備する状態へ移行
+ */
 void CPlayerState::toEquipRight(void)
 {
 	this->m_pPlayer->m_state			= (int)PLAYER_STATE::EQUIP_RIGHT;
@@ -144,8 +174,8 @@ void CPlayerState::toEquipRight(void)
 }
 
 /**
-*	@desc 左向き　装備する状態へ移行
-*/
+ * @desc	左向き　装備する状態へ移行
+ */
 void CPlayerState::toEquipLeft(void)
 {
 	this->m_pPlayer->m_state = (int)PLAYER_STATE::EQUIP_LEFT;
@@ -158,8 +188,8 @@ void CPlayerState::toEquipLeft(void)
 
 
 /*
-*	@desc 右向き　装備解除状態へ移行
-*/
+ * @desc	右向き　装備解除状態へ移行
+ */
 void CPlayerState::toUnEquipRight(void)
 {
 	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP_RIGHT;
@@ -171,8 +201,8 @@ void CPlayerState::toUnEquipRight(void)
 }
 
 /*
-*	@desc 左向き　装備解除状態へ移行
-*/
+ * @desc	左向き　装備解除状態へ移行
+ */
 void CPlayerState::toUnEquipLeft(void)
 {
 	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP_LEFT;
@@ -185,8 +215,8 @@ void CPlayerState::toUnEquipLeft(void)
 
 
 /*
-*	@desc 右向き手を掴む状態へ移行
-*/
+ * @desc	右向き手を掴む状態へ移行
+ */
 void CPlayerState::toGraspRight(void)
 {
 	this->m_pPlayer->m_state = (int)PLAYER_STATE::GRASP_RIGHT;
@@ -198,8 +228,8 @@ void CPlayerState::toGraspRight(void)
 }
 
 /*
-*	@desc 左向き手を掴む状態へ移行
-*/
+ * @desc	左向き手を掴む状態へ移行
+ */
 void CPlayerState::toGraspLeft(void)
 {
 	//次の総合的なプレイヤーの状態
@@ -219,41 +249,33 @@ void CPlayerState::toGraspLeft(void)
 //
 // Class: CPlayerIdleRightState
 //
-// プレイヤー 立ち 状態 クラス
+// プレイヤー 右向き 待機 状態 クラス
 //
 // 2016/12/24
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerIdleRightState::CPlayerIdleRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer,pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer,pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerIdleRightState::~CPlayerIdleRightState(void)
-{
-	
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerIdleRightState::~CPlayerIdleRightState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerIdleRightState::start(void)
 {
-
+	
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerIdleRightState::update(void)
 {
 	//優先順で処理していく
@@ -298,7 +320,9 @@ void CPlayerIdleRightState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerIdleRightState::onChangeEvent(void)
 {
 	this->m_isNext = false;
@@ -314,35 +338,27 @@ void CPlayerIdleRightState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerIdleLeftState::CPlayerIdleLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerIdleLeftState::~CPlayerIdleLeftState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerIdleLeftState::~CPlayerIdleLeftState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerIdleLeftState::start(void)
 {
 
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerIdleLeftState::update(void)
 {
 	//優先順で処理していく
@@ -358,10 +374,10 @@ void CPlayerIdleLeftState::update(void)
 		return;
 	}
 	
-	//右攻撃
+	//左攻撃
 	if (pointerInputController->getAttackFlag()) {
-		//右攻撃状態へ移行(１撃目)
-		this->toAttackFirstRight();
+		//左攻撃状態へ移行(１撃目)
+		this->toAttackFirstLeft();
 		return;
 	}
 
@@ -384,11 +400,11 @@ void CPlayerIdleLeftState::update(void)
 		
 		//this->m_pMove->m_accele.x = -0.5f;
 	}
-
-
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerIdleLeftState::onChangeEvent(void)
 {
 	this->m_isNext = false;
@@ -399,41 +415,33 @@ void CPlayerIdleLeftState::onChangeEvent(void)
 //
 // Class: CPlayerWalkRightState
 //
-// プレイヤー 左向き　歩行 状態 クラス
+// プレイヤー 右向き　歩行 状態 クラス
 //
 // 2016/12/25
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerWalkRightState::CPlayerWalkRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerWalkRightState::~CPlayerWalkRightState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerWalkRightState::~CPlayerWalkRightState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	 開始処理
+ */
 void CPlayerWalkRightState::start(void)
 {
 
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerWalkRightState::update(void)
 {
 	//優先順で処理していく
@@ -477,7 +485,9 @@ void CPlayerWalkRightState::update(void)
 	this->toIdleRight();
 }
 
-// 状態が変わるときの処理
+/**
+ * @desk	状態が変わるときの処理
+ */
 void CPlayerWalkRightState::onChangeEvent(void)
 {
 	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
@@ -497,35 +507,27 @@ void CPlayerWalkRightState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerWalkLeftState::CPlayerWalkLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerWalkLeftState::~CPlayerWalkLeftState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerWalkLeftState::~CPlayerWalkLeftState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerWalkLeftState::start(void)
 {
 
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerWalkLeftState::update(void)
 {
 	//優先順で処理していく
@@ -541,10 +543,10 @@ void CPlayerWalkLeftState::update(void)
 		return;
 	}
 
-	//右攻撃
+	//左攻撃
 	if (pointerInputController->getAttackFlag()) {
-		//右攻撃状態へ移行(１撃目)
-		this->toAttackFirstRight();
+		//左攻撃状態へ移行(１撃目)
+		this->toAttackFirstLeft();
 		return;
 	}
 
@@ -568,7 +570,9 @@ void CPlayerWalkLeftState::update(void)
 	this->toIdleLeft();
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerWalkLeftState::onChangeEvent(void)
 {
 	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
@@ -603,6 +607,12 @@ CPlayerAttackRightState::~CPlayerAttackRightState(void){}
  */
 void CPlayerAttackRightState::start(void)
 {
+	this->m_pPlayer->setScaleX(-2.0f);
+
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
+	//連撃フラグをfalseで始める
 	this->m_chainAttackFlag = false;
 }
 
@@ -627,50 +637,142 @@ void CPlayerAttackRightState::update(void)
 	{
 		//攻撃連鎖フラグが false なら
 		if (this->m_chainAttackFlag == false) {
-			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
-
 			//右向き待機状態へ戻す
 			this->toIdleRight();
 			return;
 		}
 
+		(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
 		//終了していたら
 		//現在のプレイヤーのアニメーション状態が１撃目なら
 		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT) {
-			
-			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
-
 			//２撃目に移行する。
 			this->toAttackSecondRight();
 
 			return;
 		}
 		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT) {
-			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
-
 			//３撃目に移行する
 			this->toAttackThirdRight();
 
 			return;
 		}
 		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT) {
-			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
-			
 			//右向き待機状態へ戻す
 			this->toIdleRight();
 			return;
 		}
 	}
-	
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerAttackRightState::onChangeEvent(void)
 {
+	this->m_pPlayer->setScaleX(2.0f);
+
+	//連撃フラグをfalseに戻す
+	//startでfalseにしているが念のためここにも記述しておく
 	this->m_chainAttackFlag = false;
 
+	//次のステートへ移行することが確定しているので元に戻しておく
+	this->m_isNext = false;
+}
 
+//==========================================
+//
+// Class: CPlayerAttackLeftState
+//
+// プレイヤー 左向き　攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+ * @desc	コンストラクタ
+ */
+CPlayerAttackLeftState::CPlayerAttackLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
 
+/**
+ * @desc	デストラクタ
+ */
+CPlayerAttackLeftState::~CPlayerAttackLeftState(){}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerAttackLeftState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
+	//連撃フラグをfalseで始める
+	this->m_chainAttackFlag = false;
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerAttackLeftState::update(void)
+{
+	//優先順で処理していく
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	//攻撃ボタンが押されたか
+	if (pointerInputController->getAttackFlag())
+	{
+		//攻撃連鎖フラグをtrue にする
+		this->m_chainAttackFlag = true;
+	}
+
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+		//攻撃連鎖フラグが false なら
+		if (this->m_chainAttackFlag == false) {
+			//左向き向き待機状態へ戻す
+			this->toIdleLeft();
+			return;
+		}
+
+		(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
+		//終了していたら
+		//現在のプレイヤーのアニメーション状態が１撃目なら
+		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_LEFT) {
+			//２撃目に移行する。
+			this->toAttackSecondLeftt();
+
+			return;
+		}
+		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_LEFT) {
+			//３撃目に移行する
+			this->toAttackThirdLeft();
+
+			return;
+		}
+		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT) {
+			//右向き待機状態へ戻す
+			this->toIdleLeft();
+			return;
+		}
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerAttackLeftState::onChangeEvent(void)
+{
+	//連撃フラグをfalseに戻す
+	//startでfalseにしているが念のためここにも記述しておく
+	this->m_chainAttackFlag = false;
+
+	//次のステートへ移行することが確定しているので元に戻しておく
 	this->m_isNext = false;
 }
 
@@ -685,27 +787,19 @@ void CPlayerAttackRightState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerEquipRightState::CPlayerEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerEquipRightState::~CPlayerEquipRightState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerEquipRightState::~CPlayerEquipRightState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerEquipRightState::start(void)
 {
 	//現在のアニメーションをリセット
@@ -713,8 +807,8 @@ void CPlayerEquipRightState::start(void)
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerEquipRightState::update(void)
 {
 	//優先順で処理していく
@@ -753,7 +847,9 @@ void CPlayerEquipRightState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerEquipRightState::onChangeEvent(void)
 {
 	this->m_isNext = false;
@@ -771,27 +867,19 @@ void CPlayerEquipRightState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerEquipLeftState::CPlayerEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerEquipLeftState::~CPlayerEquipLeftState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerEquipLeftState::~CPlayerEquipLeftState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerEquipLeftState::start(void)
 {
 	//現在のアニメーションをリセット
@@ -799,8 +887,8 @@ void CPlayerEquipLeftState::start(void)
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerEquipLeftState::update(void)
 {
 	//優先順で処理していく
@@ -839,7 +927,10 @@ void CPlayerEquipLeftState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerEquipLeftState::onChangeEvent(void)
 {
 	this->m_isNext = false;
@@ -856,27 +947,19 @@ void CPlayerEquipLeftState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerUnEquipRightState::CPlayerUnEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerUnEquipRightState::~CPlayerUnEquipRightState(void)
-{
-
-
-}
+ * @desc デストラクタ
+ */
+CPlayerUnEquipRightState::~CPlayerUnEquipRightState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc 開始処理
+ */
 void CPlayerUnEquipRightState::start(void)
 {
 	//現在のアニメーションをリセット
@@ -884,8 +967,8 @@ void CPlayerUnEquipRightState::start(void)
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc 更新処理
+ */
 void CPlayerUnEquipRightState::update(void)
 {
 	//優先順で処理していく
@@ -902,7 +985,10 @@ void CPlayerUnEquipRightState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerUnEquipRightState::onChangeEvent(void)
 {
 	this->m_isNext = false;
@@ -918,27 +1004,19 @@ void CPlayerUnEquipRightState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc コンストラクタ
+ */
 CPlayerUnEquipLeftState::CPlayerUnEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerUnEquipLeftState::~CPlayerUnEquipLeftState(void)
-{
-
-
-}
+ * @desc デストラクタ
+ */
+CPlayerUnEquipLeftState::~CPlayerUnEquipLeftState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc 開始処理
+ */
 void CPlayerUnEquipLeftState::start(void)
 {
 	//現在のアニメーションをリセット
@@ -946,8 +1024,8 @@ void CPlayerUnEquipLeftState::start(void)
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc 更新処理
+ */
 void CPlayerUnEquipLeftState::update(void)
 {
 	//優先順で処理していく
@@ -964,7 +1042,10 @@ void CPlayerUnEquipLeftState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerUnEquipLeftState::onChangeEvent(void)
 {
 	this->m_isNext = false;

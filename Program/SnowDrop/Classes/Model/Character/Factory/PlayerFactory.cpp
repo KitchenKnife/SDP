@@ -152,6 +152,8 @@ void CBasePlayerBoyFactory::settingMove(CPlayerCharacterBoy* pChara){
 void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 	//テクスチャの設定
 	pChara->setTexture(IMAGE_PLAYER);
+
+	pChara->setScale(2.0f);
 	
 }
 
@@ -160,60 +162,78 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//開始時のアニメーションの状態
 	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
 
-	//右待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
+	//================================================
+	// 待機・歩行のアニメーション設定
+	//================================================
+	//右待機 のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(1024, 768, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(512, 384, 128, 128));
 
 	//左待機 のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_LEFT]->addChipData(new CChip(0, 768, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_LEFT]->addChipData(new CChip(0, 384, 128, 128));
 
 	//右歩行 のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_RIGHT]->addChipData(new CChip(0, 128, 128, 128));
 
 	//左歩行 のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 512, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 256, 128, 128));
 
+	//================================================
+	// 攻撃のアニメーション設定
+	//================================================
 	//右攻撃（１撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
 
 	//右攻撃（２撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 512, 256, 256));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
 
 	//右攻撃（３撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 11, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
 
+	//左攻撃（１撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
 
+	//左攻撃（２撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
+
+	//左攻撃（３撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
+
+	//================================================
+	// その他のアニメーション設定
+	//================================================
 	//右向き装備する のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_RIGHT]->addChipData(new CChip(384, 0, 128, 128));
 
 	//左向き装備する のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_LEFT]->addChipData(new CChip(768, 0, 256, 256));
-
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_LEFT]->addChipData(new CChip(384, 0, 128, 128));
 
 	//右向き装備を外す のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_RIGHT]->addChipData(new CChip(0, 0, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_RIGHT]->addChipData(new CChip(0, 0, 128, 128));
 
 	//左向き装備を外す のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_LEFT]->addChipData(new CChip(0, 0, 256, 256));
-
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_LEFT]->addChipData(new CChip(0, 0, 128, 128));
 	
 	//手を掴む右向き のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(512, 1024, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(256, 512, 128, 128));
 
 	//手を掴む左向き のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 1024, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 512, 128, 128));
 }
 
 void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
@@ -321,6 +341,13 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 	//右向き攻撃状態を作成した状態を登録していく
 	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerAttackRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+
+	//左向き攻撃状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::ATTACK_LEFT, new CPlayerAttackLeftState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 

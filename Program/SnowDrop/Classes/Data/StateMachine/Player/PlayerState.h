@@ -34,33 +34,33 @@ class CPlayerState : public CStateBase
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	virtual ~CPlayerState(void);
 
 	/**
-	*	@desc 右向き待機状態へ移行
-	*/
+	 *	@desc	右向き待機状態へ移行
+	 */
 	void toIdleRight(void);
 
 	/**
-	*	@desc 左向き待機状態へ移行
-	*/
+	 *	@desc	左向き待機状態へ移行
+	 */
 	void toIdleLeft(void);
 
 	/**
-	*	@desc 右向き歩行状態へ移行
-	*/
+	 *	@desc	右向き歩行状態へ移行
+	 */
 	void toWalkRight(void);
 
 	/**
-	*	@desc 左向き歩行状態へ移行
-	*/
+	 *	@desc	左向き歩行状態へ移行
+	 */
 	void toWalkLeft(void);
 
 	/**
@@ -80,37 +80,52 @@ public:
 
 
 	/**
-	*	@desc 右向き装備する状態へ移行
-	*/
+	 * @desc	左向き攻撃状態（１撃目）へ移行
+	 */
+	void toAttackFirstLeft(void);
+
+	/**
+	 * @desc	左向き攻撃状態（２撃目）へ移行
+	 */
+	void toAttackSecondLeftt(void);
+
+	/**
+	 * @desc	左向き攻撃状態（３撃目）へ移行
+	 */
+	void toAttackThirdLeft(void);
+
+	/**
+	 * @desc	右向き装備する状態へ移行
+	 */
 	void toEquipRight(void);
 
 	/**
-	*	@desc 左向き装備する状態へ移行
-	*/
+	 *	@desc	左向き装備する状態へ移行
+	 */
 	void toEquipLeft(void);
 
 
 	/**
-	*	@desc 右向き装備を解除する状態へ移行
-	*/
+	 *	@desc	右向き装備を解除する状態へ移行
+	 */
 	void toUnEquipRight(void);
 
 
 	/*
-	*	@desc 左向き装備を解除する状態へ移行
-	*/
+	 *	@desc	左向き装備を解除する状態へ移行
+	 */
 	void toUnEquipLeft(void);
 
 
 	/*
-	*	@desc 右向き手を掴む状態へ移行
-	*/
+	 *	@desc	右向き手を掴む状態へ移行
+	 */
 	void toGraspRight(void);
 
 
 	/*
-	*	@desc 左向き手を掴む状態へ移行
-	*/
+	 *	@desc	左向き手を掴む状態へ移行
+	 */
 	void toGraspLeft(void);
 
 
@@ -135,25 +150,27 @@ class CPlayerIdleRightState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerIdleRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerIdleRightState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -173,25 +190,27 @@ class CPlayerIdleLeftState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerIdleLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerIdleLeftState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -211,25 +230,28 @@ class CPlayerWalkRightState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerWalkRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerWalkRightState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -249,25 +271,27 @@ class CPlayerWalkLeftState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerWalkLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerWalkLeftState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -280,36 +304,82 @@ private:
 // プレイヤー 右向き　攻撃 状態 クラス
 //
 // 2016/12/25
-//						Author Shinya Ueba
+//						Author Harada
 //==========================================
 class CPlayerAttackRightState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerAttackRightState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
 	//連撃フラグ
-	bool m_chainAttackFlag;
+	bool m_chainAttackFlag = false;
+
+};
+
+//==========================================
+//
+// Class: CPlayerAttackLeftState
+//
+// プレイヤー 左向き　攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+class CPlayerAttackLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerAttackLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerAttackLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+	//連撃フラグ
+	bool m_chainAttackFlag = false;
 
 };
 
@@ -326,25 +396,29 @@ class CPlayerEquipRightState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerEquipRightState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -364,25 +438,29 @@ class CPlayerEquipLeftState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerEquipLeftState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -401,25 +479,28 @@ class CPlayerUnEquipRightState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerUnEquipRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerUnEquipRightState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -439,25 +520,28 @@ class CPlayerUnEquipLeftState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerUnEquipLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerUnEquipLeftState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
