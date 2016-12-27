@@ -12,9 +12,11 @@
 // ヘッダインクルード
 //==========================================
 #include "PlayerState.h"
-#include "Model\Character\PlayerCharacter\PlayerCharacter.h"
+#include "Model\Character\Factory\CharacterFactory.h"
+#include "Model\Character\CharacterAggregate.h"
 #include "Data\Enum\EnumPlayer.h"
 #include "Lib\Input\InputManager.h"
+#include "Lib\Math\CustomMath.h"
 
 //==========================================
 //
@@ -282,6 +284,40 @@ void CPlayerIdleRightState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+	//プレイヤーを取得
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+	//ガールを取得
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+
+
+	float distanceToGirl = customMath->lengthBitweenChara(pPlayer, pGirl);
+	if (distanceToGirl <= 100.0f)
+	{
+
+		if (!pPlayer->getGrapsMark())
+		{
+			cocos2d::CCParticleSystemQuad* pGrapsMark = cocos2d::CCParticleSystemQuad::create(PARTICLE_GRAPS_MARK);
+			pGrapsMark->resetSystem();
+			pPlayer->setGrapsMark(pGrapsMark);
+			pPlayer->getParent()->addChild(pGrapsMark);
+			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x + distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
+			}
+			else
+			{
+				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x - distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
+			}
+
+			if (pointerInputController->getHolodHandsFlag())
+			{
+
+				return;
+			}
+
+		}
+	}
+
 
 
 	//武器を装備
@@ -1050,4 +1086,162 @@ void CPlayerUnEquipLeftState::onChangeEvent(void)
 {
 	this->m_isNext = false;
 }
+
+
+
+
+//==========================================
+//
+// Class: CPlayerGraspRightState
+//
+// プレイヤー 右向き　手を繋ぐ 状態 クラス
+//
+// 2016/12/26
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CPlayerGraspRightState::CPlayerGraspRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CPlayerGraspRightState::~CPlayerGraspRightState(void)
+{
+
+
+}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerGraspRightState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerGraspRightState::update(void)
+{
+	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+
+	//装備アニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+
+		//右へ移動（装備状態 歩行）
+		if (pointerInputController->getRightMoveFlag())
+		{
+			//右向き装備状態　歩行状態へ移行
+			//	this->toWalkRight();
+			return;
+		}
+
+		//左へ移動（装備状態 歩行）
+		if (pointerInputController->getLeftMoveFlag())
+		{
+			//左向きに装備状態　歩行へ移行
+			//this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
+			return;
+		}
+	}
+}
+
+// 状態が変わるときの処理
+void CPlayerGraspRightState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
+
+
+//==========================================
+//
+// Class: CPlayerGraspLeftState
+//
+// プレイヤー 左向き　手を繋ぐ 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CPlayerGraspLeftState::CPlayerGraspLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl)
+{
+
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CPlayerGraspLeftState::~CPlayerGraspLeftState(void)
+{
+
+
+}
+
+/**
+* @desc 開始処理
+*/
+void CPlayerGraspLeftState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc 更新処理
+*/
+void CPlayerGraspLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+
+	//装備アニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+
+		//右へ移動（装備状態 歩行）
+		if (pointerInputController->getRightMoveFlag())
+		{
+			//右向き装備状態　歩行状態へ移行
+			//	this->toWalkRight();
+			return;
+		}
+
+		//左へ移動（装備状態 歩行）
+		if (pointerInputController->getLeftMoveFlag())
+		{
+			//左向きに装備状態　歩行へ移行
+			//this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
+			return;
+		}
+	}
+}
+
+// 状態が変わるときの処理
+void CPlayerGraspLeftState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
 //EOF

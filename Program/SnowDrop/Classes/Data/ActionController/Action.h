@@ -11,7 +11,7 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include"cocos2d.h"
 #include"Constants.h"
-#include "Lib/Math/Math.h"
+#include "Lib/Math/CustomMath.h"
 
 //================================================
 // 前方宣言に関するコードはここから書く

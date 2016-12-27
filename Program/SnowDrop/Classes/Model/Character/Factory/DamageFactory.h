@@ -10,6 +10,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Character/DamageCharacter/DamageCharacter.h"
+#include "Model\Character\Factory\CharacterFactory.h"
 #include <map>
 
 //================================================

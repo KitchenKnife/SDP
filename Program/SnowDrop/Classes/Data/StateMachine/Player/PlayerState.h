@@ -547,4 +547,81 @@ public:
 private:
 };
 
+
+
+//==========================================
+//
+// Class: CPlayerGraspRightState
+//
+// プレイヤー 右向き　装備する状態 クラス
+//
+// 2016/12/27
+//						Author Shinya Ueba
+//==========================================
+class CPlayerGraspRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerGraspRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerGraspRightState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+//==========================================
+//
+// Class: CPlayerEquipLeftState
+//
+// プレイヤー 左向き　装備する 状態 クラス
+//
+// 2016/12/27
+//						Author Shinya Ueba
+//==========================================
+class CPlayerGraspLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerGraspLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerGraspLeftState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+};
+
 //EOF

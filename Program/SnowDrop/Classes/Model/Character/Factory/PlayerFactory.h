@@ -10,6 +10,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Character/PlayerCharacter/PlayerCharacter.h"
+#include "Model\Character\Factory\CharacterFactory.h"
 
 //================================================
 // 少年キャラクターパーツ製造工場

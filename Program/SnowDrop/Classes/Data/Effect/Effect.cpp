@@ -5,6 +5,7 @@
  *
  */
 #include "Data/Effect/Effect.h"
+#include "Model\Character\CharacterAggregate.h"
 //================================================
 // 
 // エフェクトの基底クラス

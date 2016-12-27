@@ -8,6 +8,9 @@
 #include "GameMain.h"
 #include "Model/Map/Map.h"
 
+//キャラクター集合体
+#include "Model\Character\CharacterAggregate.h"
+
 //プレイヤー工場
 #include "Model/Character/Factory/PlayerFactory.h"
 
@@ -209,20 +212,21 @@ bool CGameMain::init() {
 
 	
 	// プレイヤーの生成
-	CCharacter* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
+	CPlayerCharacterBoy* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
 	////CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
+	//参照先として登録
+	CCharacterAggregate::getInstance()->setPlayer(pPlayerChara);
 	////取り付け
 	this->m_pMainLayer->addChild(pPlayerChara);
 
 
 	//// 少女の生成と取り付け
-	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
-	
-	
+	CPlayerCharacterGirl* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
 	//CCharacterAggregateにプレイヤーを追加
 	CCharacterAggregate::getInstance()->add(playerGirl);
-
+	//参照先として登録
+	CCharacterAggregate::getInstance()->setGirl(playerGirl);
 	playerGirl->m_pMove->m_pos.set(1200,500);
 
 	//取り付け
