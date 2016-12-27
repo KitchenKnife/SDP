@@ -4,6 +4,7 @@
 #include "Model/Character/Factory/GimmickFactory.h"
 #include "Model/Character/Factory/EffectFactory.h"
 #include "Model/Character/Factory/DamageFactory.h"
+#include "Model\Character\CharacterAggregate.h"
 //=======================================
 //
 //  “GoŒ‚ƒgƒŠƒK[

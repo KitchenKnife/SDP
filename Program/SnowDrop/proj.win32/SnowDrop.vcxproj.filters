@@ -303,8 +303,14 @@
     <ClCompile Include="..\Classes\Model\Character\Factory\DamageFactory.cpp">
       <Filter>src\Model\Character\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Lib\Math\Math.cpp">
+    <ClCompile Include="..\Classes\Lib\Math\CustomMath.cpp">
       <Filter>src\Lib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\Factory\CharacterFactory.cpp">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\CharacterAggregate.cpp">
+      <Filter>src\Model\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -467,8 +473,14 @@
     <ClInclude Include="..\Classes\Model\Character\Factory\DamageFactory.h">
       <Filter>src\Model\Character\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Lib\Math\Math.h">
+    <ClInclude Include="..\Classes\Lib\Math\CustomMath.h">
       <Filter>src\Lib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\Factory\CharacterFactory.h">
+      <Filter>src\Model\Character\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\CharacterAggregate.h">
+      <Filter>src\Model\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

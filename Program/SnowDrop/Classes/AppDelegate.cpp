@@ -12,6 +12,8 @@
 #include "Lib/Sound/AudioManager.h"
 //入力用
 #include "Lib\Input\InputManager.h"
+//計算用
+#include "Lib\Math\CustomMath.h"
 
 USING_NS_CC;
 
@@ -42,6 +44,9 @@ AppDelegate::~AppDelegate()
 
 	//入力の解放
 	CInputManager::removeInstance();
+
+	//計算の解放
+	CCustomMath::removeInstance();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
