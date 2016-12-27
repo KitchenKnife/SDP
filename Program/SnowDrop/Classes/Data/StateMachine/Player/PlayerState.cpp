@@ -227,7 +227,7 @@ void CPlayerIdleRightState::update(void)
 
 
 	//•Ší‚ð‘•”õ
-	if (pointerInputController->getAttackFlag())
+	if (pointerInputController->getEquipFlag())
 	{
 		//‰EŒü‚«‘•”õó‘Ô‚ÖˆÚs
 		this->toEquipRight();
@@ -309,7 +309,7 @@ void CPlayerIdleLeftState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 	//•Ší‚ð‘•”õ
-	if (pointerInputController->getAttackFlag())
+	if (pointerInputController->getEquipFlag())
 	{
 		//¶Œü‚«‘•”õó‘Ô‚ÖˆÚs
 		this->toEquipLeft();
