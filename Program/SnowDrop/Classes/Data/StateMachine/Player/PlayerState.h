@@ -64,24 +64,40 @@ public:
 	void toWalkLeft(void);
 
 	/**
-	*	@desc 装備する状態へ移行
+	 * @desc	右向き攻撃状態（１撃目）へ移行
+	 */
+	void toAttackFirstRight(void);
+
+	/**
+	 * @desc	右向き攻撃状態（２撃目）へ移行
+	 */
+	void toAttackSecondRight(void);
+
+	/**
+	 * @desc	右向き攻撃状態（３撃目）へ移行
+	 */
+	void toAttackThirdRight(void);
+
+
+	/**
+	*	@desc 右向き装備する状態へ移行
 	*/
 	void toEquipRight(void);
 
 	/**
-	*	@desc 装備する状態へ移行
+	*	@desc 左向き装備する状態へ移行
 	*/
 	void toEquipLeft(void);
 
 
 	/**
-	*	@desc 装備する状態へ移行
+	*	@desc 右向き装備を解除する状態へ移行
 	*/
 	void toUnEquipRight(void);
 
 
 	/*
-	*	@desc 装備解除状態へ移行
+	*	@desc 左向き装備を解除する状態へ移行
 	*/
 	void toUnEquipLeft(void);
 
@@ -255,6 +271,46 @@ public:
 	void onChangeEvent(void)override;
 
 private:
+};
+
+//==========================================
+//
+// Class: CPlayerAttackRightState
+//
+// プレイヤー 右向き　攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerAttackRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CPlayerAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc デストラクタ
+	*/
+	~CPlayerAttackRightState(void);
+
+	/**
+	* @desc 開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc 更新処理
+	*/
+	void update(void)override;
+
+	// 状態が変わるときの処理
+	void onChangeEvent(void)override;
+
+private:
+	//連撃フラグ
+	bool m_chainAttackFlag;
+
 };
 
 //==========================================

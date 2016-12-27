@@ -93,13 +93,13 @@ public:
 	 */
 	virtual void collisionBottomCallback(int event)override {
 		//ジャンプを停止させる。
-	//	(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
+		//(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
 	}
 
 	//================================================ 
 	// CPlayerCharacterBoyクラス専用メンバ
 	//================================================
-	
+
 	/**
 	 * @desc	入力処理
 	 * @tips	移動処理で呼び出す

@@ -176,6 +176,19 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 512, 256, 256));
 
+	//右攻撃（１撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
+
+	//右攻撃（２撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 768, 256, 256));
+
+	//右攻撃（３撃目）のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
+
+
 	//右向き装備する のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
@@ -306,6 +319,11 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 //------------------------------------------------------------------------------------------
 
 
+	//右向き攻撃状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerAttackRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
 	//右向き装備する状態
 	CStateBase* pEquipRightState = new CPlayerEquipRightState(pChara, NULL);
 	//作成した状態を登録していく
@@ -357,6 +375,8 @@ void CBasePlayerBoyFactory::settingInitialize(CPlayerCharacterBoy* pChara){
 	//細かなタイプ別（タグ）
 	pChara->m_tag = TAG_PLAYER_1;
 
+	//キャラクター状態
+	pChara->m_state = (int)PLAYER_STATE::IDLE_RIGHT;
 
 	/*
 	 *　計算データのままで起動すると1フレームずれが発生するので

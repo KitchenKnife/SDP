@@ -10,10 +10,10 @@
 //=========================================================================
 //	追加のインクルードはここから
 //=========================================================================
-#include "Model/Character/EnemyCharacter/EnemyCharacter.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"
 #include "cocos2d.h"
 #include "Constants.h"
+#include <vector>
 
 /*
  *	ゲームメインレイヤー
