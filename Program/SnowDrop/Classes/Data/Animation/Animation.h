@@ -74,7 +74,7 @@ public:
 	* @atuhr	Shinya Ueba
 	*/
 	void reset(void) {
-		int m_counter = 0;
+		this->m_counter = 0;
 		this->m_currentFrame = 0;
 		this->m_isEnd = false;
 	}

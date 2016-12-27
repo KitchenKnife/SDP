@@ -123,7 +123,7 @@ void CPlayerState::toAttackSecondRight(void) {
  */
 void CPlayerState::toAttackThirdRight(void) {
 	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::THURD_ATTAC_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT;
 	this->m_pPlayer->m_actionState = 0;
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
@@ -637,18 +637,24 @@ void CPlayerAttackRightState::update(void)
 		//現在のプレイヤーのアニメーション状態が１撃目なら
 		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT) {
 			
+			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
 			//２撃目に移行する。
 			this->toAttackSecondRight();
 
 			return;
 		}
-		else if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT) {
+		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT) {
+			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
 			//３撃目に移行する
 			this->toAttackThirdRight();
 
 			return;
 		}
-		else if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::THURD_ATTAC_RIGHT) {
+		if (this->m_pPlayer->m_animationState == (int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT) {
+			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+			
 			//右向き待機状態へ戻す
 			this->toIdleRight();
 			return;
@@ -661,6 +667,7 @@ void CPlayerAttackRightState::update(void)
 void CPlayerAttackRightState::onChangeEvent(void)
 {
 	this->m_chainAttackFlag = false;
+
 
 
 	this->m_isNext = false;

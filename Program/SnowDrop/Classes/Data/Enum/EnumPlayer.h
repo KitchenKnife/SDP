@@ -58,7 +58,7 @@ enum class PLAYER_ANIMATION_STATE :int
 	WALK_LEFT			= 3,	//左歩行
 	FIRST_ATTACK_RIGHT	= 4,	//右向き攻撃（１撃目）
 	SECOND_ATTACK_RIGHT	= 5,	//右向き攻撃（２撃目）
-	THURD_ATTAC_RIGHT	= 6,	//右向き攻撃（３撃目）
+	THURD_ATTACK_RIGHT	= 6,	//右向き攻撃（３撃目）
 	EQUIP_RIGHT			= 7,	//装備する		右向き
 	EQUIP_LEFT			= 8,	//装備する		左向き
 	UN_EQUIP_RIGHT		= 9,	//装備を外す	右向き	

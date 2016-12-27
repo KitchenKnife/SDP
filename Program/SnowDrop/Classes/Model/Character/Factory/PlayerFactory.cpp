@@ -178,15 +178,15 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 
 	//右攻撃（１撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 512, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
 
 	//右攻撃（２撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 768, 256, 256));
 
 	//右攻撃（３撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTAC_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
 
 
 	//右向き装備する のアニメーションを設定

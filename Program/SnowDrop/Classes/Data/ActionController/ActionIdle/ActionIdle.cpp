@@ -47,7 +47,9 @@ void CActionIdle::start(void)
 */
 void CActionIdle::update(CCharacter* pChara)
 {
-
+	if (this->m_inAction == true) {
+		CCLOG("test");
+	}
 }
 
 /**
