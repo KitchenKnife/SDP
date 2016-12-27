@@ -161,7 +161,7 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
 
 	//右待機・ジャンプ。落下状態のアニメーションを設定（配列番号０）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(1024, 768, 256, 256));
 
 	//左待機 のアニメーションを設定
@@ -182,10 +182,10 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 
 	//右攻撃（２撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 768, 256, 256));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 512, 256, 256));
 
 	//右攻撃（３撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 11, false));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(768, 0, 256, 256));
 
 

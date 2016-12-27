@@ -627,6 +627,8 @@ void CPlayerAttackRightState::update(void)
 	{
 		//攻撃連鎖フラグが false なら
 		if (this->m_chainAttackFlag == false) {
+			(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
 			//右向き待機状態へ戻す
 			this->toIdleRight();
 			return;

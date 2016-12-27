@@ -37,6 +37,9 @@ protected:
 	//現在のフレーム
 	int m_currentFrame = 0;
 
+	//フレームの開始
+	int m_startFrame = 0;
+
 	//ループするかどうかのフラグ
 	//true...ループする
 	bool m_isLoop = false;
@@ -47,8 +50,8 @@ protected:
 
 public:
 	//コンストラクタ
-	CAnimation(int interval, int number, bool isLoop = false) :
-		m_interval(interval), m_number(number), m_isLoop(isLoop) {}
+	CAnimation(int interval, int number,bool isLoop = false, int startFrame = 0) :
+		m_interval(interval), m_number(number), m_startFrame(startFrame), m_isLoop(isLoop) {}
 
 	//デストラクタ
 	virtual ~CAnimation() {}
@@ -143,8 +146,8 @@ protected:
 	CChip* m_pChip = NULL;
 
 public:
-	CChipAnimation(int interval, int number, bool isLoop = false) :
-		CAnimation(interval, number, isLoop) {}
+	CChipAnimation(int interval, int number, bool isLoop = false, int startFrame = 0) :
+		CAnimation(interval, number, isLoop, startFrame) {}
 
 	virtual ~CChipAnimation() {}
 
@@ -164,7 +167,7 @@ public:
 	virtual CChip getCurrentChip() override {
 		CChip chip
 		(
-			this->m_pChip->size.width * this->m_currentFrame,
+			this->m_pChip->size.width * (this->m_currentFrame + this->m_startFrame),
 			this->m_pChip->origin.y,
 			this->m_pChip->size.width,
 			this->m_pChip->size.height
@@ -190,7 +193,7 @@ public:
 //========================================================================
 class CChipNotAnimation :public CChipAnimation {
 public:
-	CChipNotAnimation():CChipAnimation(0,0,false){}
+	CChipNotAnimation(int startFrame = 0):CChipAnimation(0,0,false,startFrame){}
 	~CChipNotAnimation(){}
 
 	/**
@@ -223,7 +226,7 @@ protected:
 	std::vector<CChip*>m_chipList;
 
 public:
-	CChipListAnimation(int interval, bool isLoop = false) :CAnimation(interval, 0, isLoop) {}
+	CChipListAnimation(int interval, bool isLoop = false,int startFrame = 0) :CAnimation(interval, 0, isLoop, startFrame) {}
 
 	~CChipListAnimation() {
 		//チップの解放
