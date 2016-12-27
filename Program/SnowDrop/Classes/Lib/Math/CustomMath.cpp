@@ -1,6 +1,7 @@
-#include "Math.h"
+#include "CustomMath.h"
 #include "Model/Character/Character.h"
 #include "Model/Character/Enemycharacter/EnemyCharacter.h"
+#include "Model\Character\CharacterAggregate.h"
 
 //コンストラクタ
 CCustomMath::CCustomMath(){}
