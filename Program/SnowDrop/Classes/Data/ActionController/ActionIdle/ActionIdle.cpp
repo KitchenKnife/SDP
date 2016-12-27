@@ -47,7 +47,7 @@ void CActionIdle::start(void)
 */
 void CActionIdle::update(CCharacter* pChara)
 {
-
+	
 }
 
 /**
