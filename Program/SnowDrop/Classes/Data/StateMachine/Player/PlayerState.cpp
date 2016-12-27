@@ -592,18 +592,18 @@ void CPlayerWalkLeftState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
- * @desc コンストラクタ
+ * @desc	コンストラクタ
  */
 CPlayerAttackRightState::CPlayerAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
 	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
- * @desc デストラクタ
+ * @desc	デストラクタ
  */
 CPlayerAttackRightState::~CPlayerAttackRightState(void){}
 
 /**
- * @desc 開始処理
+ * @desc	開始処理
  */
 void CPlayerAttackRightState::start(void)
 {
@@ -617,7 +617,7 @@ void CPlayerAttackRightState::start(void)
 }
 
 /**
- * @desc 更新処理
+ * @desc	更新処理
  */
 void CPlayerAttackRightState::update(void)
 {
@@ -702,8 +702,8 @@ CPlayerAttackLeftState::CPlayerAttackLeftState(CPlayerCharacterBoy* const pPlaye
 CPlayerAttackLeftState::~CPlayerAttackLeftState(){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerAttackLeftState::start(void)
 {
 	//現在のアニメーションをリセット
@@ -714,8 +714,8 @@ void CPlayerAttackLeftState::start(void)
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerAttackLeftState::update(void)
 {
 	//優先順で処理していく
@@ -764,8 +764,8 @@ void CPlayerAttackLeftState::update(void)
 }
 
 /**
-* @desc	状態が変わるときの処理
-*/
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerAttackLeftState::onChangeEvent(void)
 {
 	//連撃フラグをfalseに戻す

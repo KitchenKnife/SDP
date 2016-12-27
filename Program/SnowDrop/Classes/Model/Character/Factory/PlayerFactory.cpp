@@ -190,11 +190,11 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 
 	//右攻撃（２撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 768, 128, 128));
 
 	//右攻撃（３撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(0, 896, 128, 128));
 
 	//左攻撃（１撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
@@ -202,11 +202,11 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 
 	//左攻撃（２撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_LEFT]->addChipData(new CChip(0, 768, 128, 128));
 
 	//左攻撃（３撃目）のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT]->addChipData(new CChip(0, 896, 128, 128));
 
 	//================================================
 	// その他のアニメーション設定
