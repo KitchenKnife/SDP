@@ -262,13 +262,13 @@ void CPlayerIdleRightState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
-	/*//武器を装備
-	if (pointerInputController->getAttackFlag())
+	//武器を装備
+	if (pointerInputController->getEquipFlag())
 	{
 		//右向き装備状態へ移行
 		this->toEquipRight();
 		return;
-	}*/
+	}
 
 	//右攻撃
 	if (pointerInputController->getAttackFlag()) {
@@ -350,15 +350,14 @@ void CPlayerIdleLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-	/*
 	//武器を装備
-	if (pointerInputController->getAttackFlag())
+	if (pointerInputController->getEquipFlag())
 	{
 		//左向き装備状態へ移行
 		this->toEquipLeft();
 		return;
 	}
-	*/
+	
 	//右攻撃
 	if (pointerInputController->getAttackFlag()) {
 		//右攻撃状態へ移行(１撃目)
@@ -441,7 +440,7 @@ void CPlayerWalkRightState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-	/*
+
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
@@ -449,7 +448,7 @@ void CPlayerWalkRightState::update(void)
 		this->toEquipRight();
 		return;
 	}
-	*/
+	
 	//右攻撃
 	if (pointerInputController->getAttackFlag()) {
 		//右攻撃状態へ移行(１撃目)
@@ -533,14 +532,14 @@ void CPlayerWalkLeftState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-	/*
+
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
 		//左向き装備状態へ移行
 		this->toEquipLeft();
 		return;
-	}*/
+	}
 
 	//右攻撃
 	if (pointerInputController->getAttackFlag()) {
