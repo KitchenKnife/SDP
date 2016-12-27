@@ -12,6 +12,7 @@
 #include "PlayerCharacter.h"
 #include "Lib/Input/InputManager.h"
 #include "Data\Enum\EnumPlayer.h"
+#include "Model\Character\CharacterAggregate.h"
 
 //================================================	
 //	少年クラスのメンバ関数のコードの追加はここから
@@ -72,6 +73,20 @@ void CPlayerCharacterBoy::animationFunc() {
 	//プレイヤーアニメーション
 	(*this->m_pAnimations)[this->m_animationState]->update();
 
+
+
+	//パーティクルアニメーション
+	if (this->m_pGrapsMark)
+	{
+		this->m_counterGrapsMark--;
+
+		if (this->m_counterGrapsMark <= 0)
+		{
+			this->m_pGrapsMark->removeFromParent();
+
+			this->m_pGrapsMark = NULL;
+		}
+	}
 }
 
 
@@ -102,6 +117,11 @@ void CPlayerCharacterBoy::checkState()
 
 //反映処理
 void  CPlayerCharacterBoy::applyFunc() {
+
+
+	
+
+
 
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
@@ -146,4 +166,28 @@ void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
  */
 void  CPlayerCharacterBoy::inputFunc() {
 
+}
+
+/**
+*	@desc 手つなぎ可能マークの設定
+*	@param パーティクルインスタンス
+*	@author	Shinya Ueba
+*/
+void CPlayerCharacterBoy::setGrapsMark(cocos2d::CCParticleSystemQuad* const pGrapsMark)
+{
+	this->m_pGrapsMark = pGrapsMark;
+
+	this->m_durationGrapsMark = 1.0f;
+	this->m_pGrapsMark->setDuration(this->m_durationGrapsMark);
+	this->m_counterGrapsMark = this->m_durationGrapsMark * 60;
+}
+
+/**
+*	@desc 手つなぎ可能マークの設定
+*	@param パーティクルインスタンス
+*	@author	Shinya Ueba
+*/
+cocos2d::CCParticleSystemQuad* CPlayerCharacterBoy::getGrapsMark(void)
+{
+	return this->m_pGrapsMark;
 }

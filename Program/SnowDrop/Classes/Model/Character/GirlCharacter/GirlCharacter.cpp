@@ -1,4 +1,6 @@
 #include "GirlCharacter.h"
+#include "Model\Character\Factory\CharacterFactory.h"
+#include "Model\Character\CharacterAggregate.h"
 
 //====================================================
 // 少女クラスのメンバ関数定義
