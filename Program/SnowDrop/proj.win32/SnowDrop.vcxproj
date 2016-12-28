@@ -179,7 +179,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model\Character\CharacterAggregate.cpp" />
     <ClCompile Include="..\Classes\Model\Character\DamageCharacter\DamageCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
-    <ClCompile Include="..\Classes\Model\Character\Factory\CharacterFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\DamageFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\EnemyFactory.cpp" />
@@ -213,6 +212,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h" />
+    <ClInclude Include="..\Classes\Data\Enum\EnumGirl.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h" />
     <ClInclude Include="..\Classes\Data\LaunchData\LaunchData.h" />
     <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h" />
@@ -237,7 +237,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model\Character\CharacterAggregate.h" />
     <ClInclude Include="..\Classes\Model\Character\DamageCharacter\DamageCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
-    <ClInclude Include="..\Classes\Model\Character\Factory\CharacterFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\DamageFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\EnemyFactory.h" />
