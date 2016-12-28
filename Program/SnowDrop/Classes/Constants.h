@@ -68,8 +68,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define IMAGE_SAMPLE_WEAPON		"Images/slash_sample.png"
 
 //è≠èó
-//#define IMAGE_PLAYER_GIRL		"Images/shoujo.png"
-#define IMAGE_PLAYER_GIRL       "Images/1s.png"
+#define IMAGE_PLAYER_GIRL       "Images/Girl/1s.png"
 
 //ìG
 //#define IMAGE_ENEMY			"Images/kuribo.png"

@@ -61,9 +61,6 @@
     <Filter Include="src\Model\Character\EnemyCharacter">
       <UniqueIdentifier>{e593d3ee-7560-4be5-8ca5-ebd6b83c9f85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController">
-      <UniqueIdentifier>{18a3238f-3737-4662-9341-104dbea8d916}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Data\Effect">
       <UniqueIdentifier>{de81eec4-e8ed-4af9-b37f-eb56cf2a9e75}</UniqueIdentifier>
     </Filter>
@@ -84,18 +81,6 @@
     </Filter>
     <Filter Include="src\Data\LaunchTrigger">
       <UniqueIdentifier>{f2e1a8f3-2797-4420-be22-311e5b2e7a92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionAttack">
-      <UniqueIdentifier>{bf27dda4-a258-4553-a8db-60e2bc717bba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionDamage">
-      <UniqueIdentifier>{163c5200-b15a-4a1d-8b96-d9f589ec1de2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionPursuit">
-      <UniqueIdentifier>{9fd186a1-9a22-4bda-a1dc-22cac9caf9a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Data\ActionController\EnemyActionController\EnemyActionIdle">
-      <UniqueIdentifier>{a7a6d17b-532d-4ca7-aece-73ed9db74426}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Scene\Title">
       <UniqueIdentifier>{df8fa0fd-891f-4bab-8c7c-249d482a6a2b}</UniqueIdentifier>
@@ -149,7 +134,7 @@
       <UniqueIdentifier>{0f118784-82fe-4e2d-bfa6-67628d964102}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Lib\Math">
-      <UniqueIdentifier>{286bef67-6bdf-4ab7-b737-c1487524bd38}</UniqueIdentifier>
+      <UniqueIdentifier>{0ac02718-e26d-43b0-932c-d58755c2a3d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,14 +288,11 @@
     <ClCompile Include="..\Classes\Model\Character\Factory\DamageFactory.cpp">
       <Filter>src\Model\Character\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Lib\Math\CustomMath.cpp">
-      <Filter>src\Lib\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Model\Character\Factory\CharacterFactory.cpp">
-      <Filter>src\Model\Character\Factory</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\CharacterAggregate.cpp">
       <Filter>src\Model\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Lib\Math\CustomMath.cpp">
+      <Filter>src\Lib\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -473,14 +455,14 @@
     <ClInclude Include="..\Classes\Model\Character\Factory\DamageFactory.h">
       <Filter>src\Model\Character\Factory</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Lib\Math\CustomMath.h">
-      <Filter>src\Lib\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Model\Character\Factory\CharacterFactory.h">
-      <Filter>src\Model\Character\Factory</Filter>
+    <ClInclude Include="..\Classes\Data\Enum\EnumGirl.h">
+      <Filter>src\Data\Enum</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\CharacterAggregate.h">
       <Filter>src\Model\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Lib\Math\CustomMath.h">
+      <Filter>src\Lib\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
