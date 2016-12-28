@@ -295,7 +295,28 @@ void CBasePlayerGirlFactory::settingStateMachine(CPlayerCharacterGirl* pChara)
 	//左向き
 	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_LEFT, new CGirlGraspLeftState(pChara));
 
-	
+
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 手を繋いで待機状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_IDLE_RIGHT, new CGirlGraspIdleRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_IDLE_LEFT, new CGirlGraspIdleLeftState(pChara));
+
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 手を繋いで歩く状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_WALK_RIGHT, new CGirlGraspWalkRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_WALK_LEFT, new CGirlGraspWalkLeftState(pChara));
+
+
 
 	//最後に最初の状態を設定する！！！！！
 	pChara->m_state = (int)GIRL_STATE::IDLE_LEFT;

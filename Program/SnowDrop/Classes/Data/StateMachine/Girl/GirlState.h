@@ -252,4 +252,167 @@ private:
 };
 
 
+//==========================================
+//
+// Class: CGirlGraspIdleRightState
+//
+// プレイヤー 右向き　手を繋ぐ待機 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+class CGirlGraspIdleRightState :public CGirlState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CGirlGraspIdleRightState(CPlayerCharacterGirl* const pOwner);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CGirlGraspIdleRightState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+//==========================================
+//
+// Class: CGirlGraspIdleLeftState
+//
+// プレイヤー 左向き　手を繋ぐ待機 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+class CGirlGraspIdleLeftState :public CGirlState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CGirlGraspIdleLeftState(CPlayerCharacterGirl* const pOwner);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CGirlGraspIdleLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+
+//==========================================
+//
+// Class: CGirlGraspWalkRightState
+//
+// プレイヤー 右向き　歩行 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+class CGirlGraspWalkRightState :public CGirlState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CGirlGraspWalkRightState(CPlayerCharacterGirl* const pOwner);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CGirlGraspWalkRightState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+//==========================================
+//
+// Class: CGirlGraspWalkLeftState
+//
+// プレイヤー 左向き　歩行 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+class CGirlGraspWalkLeftState :public CGirlState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CGirlGraspWalkLeftState(CPlayerCharacterGirl* const pOwner);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CGirlGraspWalkLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
 //EOF

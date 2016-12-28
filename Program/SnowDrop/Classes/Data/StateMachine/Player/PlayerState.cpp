@@ -1303,8 +1303,6 @@ void CPlayerGraspLeftState::onChangeEvent(void)
 }
 
 
-
-
 //==========================================
 //
 // Class: CPlayerGraspIdleRightState
@@ -1318,7 +1316,7 @@ void CPlayerGraspLeftState::onChangeEvent(void)
 * @desc	コンストラクタ
 */
 CPlayerGraspIdleRightState::CPlayerGraspIdleRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+	:CPlayerState::CPlayerState(pPlayer,pGirl) {}
 
 /**
 * @desc	デストラクタ
@@ -1340,22 +1338,21 @@ void CPlayerGraspIdleRightState::update(void)
 {
 	//優先順で処理していく
 
+
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	//プレイヤーを取得
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
 
 	//手が離されたら
 	if (!pointerInputController->getHolodHandsFlag())
 	{
+		pGirl->setHoldHandsFlag(false);
+
+
 		//右向き待機状態へ移行
 		this->toIdleRight();
-		return;
-	}
-
-
-	//左攻撃
-	if (pointerInputController->getAttackFlag()) {
-		//左攻撃状態へ移行(１撃目)
-	//	this->toAttackFirstLeft();
 		return;
 	}
 
@@ -1365,14 +1362,19 @@ void CPlayerGraspIdleRightState::update(void)
 	{
 		//右向き歩行状態へ移行
 		this->toGraspWalkRight();
+		return;
 	}
+
 
 	//左へ移動（歩行）
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//左向き歩行状態へ移行
 		this->toGraspWalkLeft();
+		return;
 	}
+
+
 }
 
 /**
@@ -1387,7 +1389,7 @@ void CPlayerGraspIdleRightState::onChangeEvent(void)
 //
 // Class: CPlayerGraspIdleLeftState
 //
-// プレイヤー 左向き　手を繋ぐ 待機 状態 クラス
+//	プレイヤー 左向き　手を繋ぐ 待機 状態 クラス
 //
 // 2016/12/28
 //						Author Shinya Ueba
@@ -1396,7 +1398,7 @@ void CPlayerGraspIdleRightState::onChangeEvent(void)
 * @desc	コンストラクタ
 */
 CPlayerGraspIdleLeftState::CPlayerGraspIdleLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+	:CPlayerState::CPlayerState(pPlayer,pGirl) {}
 
 /**
 * @desc	デストラクタ
@@ -1417,45 +1419,42 @@ void CPlayerGraspIdleLeftState::start(void)
 void CPlayerGraspIdleLeftState::update(void)
 {
 	//優先順で処理していく
-
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	//プレイヤーを取得
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
 
 	//手が離されたら
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-		//右向き待機状態へ移行
+		pGirl->setHoldHandsFlag(false);
+
+
+		//左向き待機状態へ移行
 		this->toIdleLeft();
 		return;
 	}
-
-
-	//左攻撃
-	if (pointerInputController->getAttackFlag()) {
-		//左攻撃状態へ移行(１撃目)
-	//	this->toAttackFirstLeft();
-		return;
-	}
-
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
 	{
 		//右向き歩行状態へ移行
 		this->toGraspWalkRight();
-
-		//this->m_pMove->m_accele.x = 0.5f;
+		return;
 	}
+
 
 	//左へ移動（歩行）
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//左向き歩行状態へ移行
 		this->toGraspWalkLeft();
-
-
-		//this->m_pMove->m_accele.x = -0.5f;
+		return;
 	}
+
+
+
 }
 
 /**
@@ -1480,7 +1479,7 @@ void CPlayerGraspIdleLeftState::onChangeEvent(void)
 * @desc	コンストラクタ
 */
 CPlayerGraspWalkRightState::CPlayerGraspWalkRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+	:CPlayerState::CPlayerState(pPlayer,pGirl) {}
 
 /**
 * @desc	デストラクタ
@@ -1488,7 +1487,7 @@ CPlayerGraspWalkRightState::CPlayerGraspWalkRightState(CPlayerCharacterBoy* cons
 CPlayerGraspWalkRightState::~CPlayerGraspWalkRightState(void) {}
 
 /**
-* @desc	 開始処理
+* @desc	開始処理
 */
 void CPlayerGraspWalkRightState::start(void)
 {
@@ -1505,22 +1504,19 @@ void CPlayerGraspWalkRightState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	//プレイヤーを取得
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
 
 	//手が離されたら
 	if (!pointerInputController->getHolodHandsFlag())
 	{
+		pGirl->setHoldHandsFlag(false);
+
+
 		//右向き待機状態へ移行
 		this->toIdleRight();
 		return;
 	}
-
-	//右攻撃
-	if (pointerInputController->getAttackFlag()) {
-		//右  手を繋ぐ攻撃状態へ移行
-		//this->toAttackFirstRight();
-		return;
-	}
-
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -1532,11 +1528,12 @@ void CPlayerGraspWalkRightState::update(void)
 
 	//左へ移動（歩行）
 	if (pointerInputController->getLeftMoveFlag())
-	{
+	{	
 		//左向き歩行状態へ移行
-		this->toGraspWalkLeft();
+		this->toWalkLeft();
 		return;
 	}
+
 
 	//右向き待機状態へ移行
 	this->toGraspIdleRight();
@@ -1556,7 +1553,7 @@ void CPlayerGraspWalkRightState::onChangeEvent(void)
 
 //==========================================
 //
-// Class: CPlayerWalkLeftState
+// Class: CPlayerGraspWalkLeftState
 //
 // プレイヤー 左向き　歩行 状態 クラス
 //
@@ -1567,7 +1564,7 @@ void CPlayerGraspWalkRightState::onChangeEvent(void)
 * @desc	コンストラクタ
 */
 CPlayerGraspWalkLeftState::CPlayerGraspWalkLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+	:CPlayerState::CPlayerState(pPlayer,pGirl) {}
 
 /**
 * @desc	デストラクタ
@@ -1592,26 +1589,25 @@ void CPlayerGraspWalkLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	//プレイヤーを取得
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+
 	//手が離されたら
 	if (!pointerInputController->getHolodHandsFlag())
 	{
+		pGirl->setHoldHandsFlag(false);
+
+
 		//左向き待機状態へ移行
 		this->toIdleLeft();
-		return;
-	}
-
-	//左攻撃
-	if (pointerInputController->getAttackFlag()) {
-		//左攻撃状態へ移行(１撃目)
-		//this->toAttackFirstLeft();
 		return;
 	}
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
 	{
-		//右向き歩行状態へ移行
-		this->toGraspWalkRight();
+		//右向きに歩行状態へ移行
+		this->toWalkRight();
 		return;
 	}
 
@@ -1619,11 +1615,13 @@ void CPlayerGraspWalkLeftState::update(void)
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//左向きに歩行する
+		this->toWalkRight();
+		
 		this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
 		return;
 	}
 
-	//左向き待機状態へ移行
+	//右向き待機状態へ移行
 	this->toGraspIdleLeft();
 }
 
@@ -1634,10 +1632,6 @@ void CPlayerGraspWalkLeftState::onChangeEvent(void)
 {
 	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
 
-
 	this->m_isNext = false;
 }
-
-
-
 //EOF
