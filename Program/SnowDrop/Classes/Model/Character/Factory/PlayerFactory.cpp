@@ -228,7 +228,7 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_LEFT]->addChipData(new CChip(0, 0, 128, 128));
 	
 	//Žè‚ð’Í‚Þ‰EŒü‚« ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false,2));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(256, 512, 128, 128));
 
 	//Žè‚ð’Í‚Þ¶Œü‚« ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
@@ -379,6 +379,46 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::UN_EQUIP_LEFT, pUnEquipLeftState);
 
 //------------------------------------------------------------------------------------------
+
+
+	//‰EŒü‚«Žè‚ðŒq‚®ó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_RIGHT, new CPlayerGraspRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//¶Œü‚«Žè‚ðŒq‚®ó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_LEFT, new CPlayerGraspLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+	//‰EŒü‚«Žè‚ðŒq‚¢‚Å‘Ò‹@‚·‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_IDLE_RIGHT, new CPlayerGraspIdleRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//¶Œü‚«Žè‚ðŒq‚¢‚Å‘Ò‹@‚·‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_IDLE_LEFT, new CPlayerGraspIdleLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//‰EŒü‚«Žè‚ðŒq‚¢‚Å•às‚·‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_WALK_RIGHT, new CPlayerGraspWalkRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//¶Œü‚«Žè‚ðŒq‚¢‚Å•às‚·‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_WALK_LEFT, new CPlayerGraspWalkLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
 
 
 

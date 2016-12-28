@@ -41,6 +41,10 @@ enum class PLAYER_STATE :int
 	UN_EQUIP_LEFT	= 9,	//装備を外す	左向き
 	GRASP_RIGHT		= 10,	//手を掴む　右向き
 	GRASP_LEFT		= 11,	//手を掴む　左向き
+	GRASP_IDLE_RIGHT	= 12,	//手を掴みながら待機　	右向き
+	GRASP_IDLE_LEFT		= 13,	//手を掴みながら待機	左向き
+	GRASP_WALK_RIGHT	= 14,	//手を掴みながら歩く　	右向き
+	GRASP_WALK_LEFT		= 15,	//手を掴みながら歩く	左向き
 };
 
 //---------------------------------------------------------
