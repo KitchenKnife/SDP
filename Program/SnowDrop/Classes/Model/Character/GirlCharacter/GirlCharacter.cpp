@@ -57,7 +57,7 @@ void CPlayerCharacterGirl::moveFunc() {
 void CPlayerCharacterGirl::animationFunc() {
 
 	//プレイヤーアニメーション
-	(*this->m_pAnimations)[this->m_state]->update();
+	(*this->m_pAnimations)[this->m_animationState]->update();
 
 }
 
@@ -100,7 +100,7 @@ void  CPlayerCharacterGirl::applyFunc() {
 	this->setPosition(this->m_pMove->m_pos);
 
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[this->m_state]->getCurrentChip());
+	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
 }
 
 
@@ -121,3 +121,23 @@ bool  CPlayerCharacterGirl::collision(CCharacter* pChara) {
 void CPlayerCharacterGirl::hits(CCharacter* pChara) {
 
 }
+
+
+/**
+*	@desc 手を繋ぐ状態フラグ設定
+*	@param true...手を繋いでる false...手を離す
+*/
+void CPlayerCharacterGirl::setHoldHandsFlag(bool flag)
+{
+	this->m_flagHoldHands = flag;
+}
+
+/**
+*	@desc 手を繋ぐ状態フラグ取得
+*	@return true...手を繋いでる false...手を離す
+*/
+bool CPlayerCharacterGirl::getHoldHandsFlag(void)
+{
+	return this->m_flagHoldHands;
+}
+
