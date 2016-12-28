@@ -79,11 +79,15 @@ class CDamageLaunchData {
 public:
 	//攻撃を行うキャラクター（ダメージを出現させるキャラ）
 	CCharacter* m_pChara;
+
+	//出現させる位置
+	cocos2d::Point m_pos;
+
 	// 何フレーム存在させるか
 	int m_activeFrame;
 
 	//コンストラクタ
-	CDamageLaunchData(CCharacter* pChara,int activeFrame)
-		:m_pChara(pChara) ,m_activeFrame(activeFrame){}
+	CDamageLaunchData(CCharacter* pChara,cocos2d::Point pos,int activeFrame)
+		:m_pChara(pChara) ,m_pos(pos) ,m_activeFrame(activeFrame){}
 
 };

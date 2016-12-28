@@ -61,6 +61,8 @@ public:
 	*/
 	void hits(CCharacter* pChara)override;
 
+	//ダメージキャラクターを出したキャラクタークラス
+	CCharacter* m_pChara = NULL;
 
 	// 有効フレーム数(何フレーム存在しておくか)
 	int m_activeFrame;
