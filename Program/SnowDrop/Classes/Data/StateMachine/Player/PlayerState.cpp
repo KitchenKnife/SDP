@@ -384,6 +384,11 @@ void CPlayerIdleRightState::update(void)
 
 		if (pointerInputController->getHolodHandsFlag())
 		{
+
+			//手を繋ぐ
+			pGirl->setHoldHandsFlag(true);
+
+
 			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
 			{
 				//手を繋ぐ右状態へ移行
@@ -1222,28 +1227,8 @@ void CPlayerGraspRightState::update(void)
 	//装備アニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
-		if (!pointerInputController->getHolodHandsFlag())
-		{
-			//右向き待機状態へ移行
-			this->toIdleRight();
-		}
-
-
-		//右へ移動（装備状態 歩行）
-		if (pointerInputController->getRightMoveFlag())
-		{
-			//右向き装備状態　歩行状態へ移行
-			//	this->toWalkRight();
-			return;
-		}
-
-		//左へ移動（装備状態 歩行）
-		if (pointerInputController->getLeftMoveFlag())
-		{
-			//左向きに装備状態　歩行へ移行
-			//this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
-			return;
-		}
+		//右向き待機状態へ移行
+		this->toGraspIdleRight();
 	}
 }
 
@@ -1306,28 +1291,8 @@ void CPlayerGraspLeftState::update(void)
 	//装備アニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
-		if (!pointerInputController->getHolodHandsFlag())
-		{
-			//左向き待機状態へ移行
-			this->toIdleLeft();
-		}
-
-
-		//右へ移動（装備状態 歩行）
-		if (pointerInputController->getRightMoveFlag())
-		{
-			//右向き装備状態　歩行状態へ移行
-			//	this->toWalkRight();
-			return;
-		}
-
-		//左へ移動（装備状態 歩行）
-		if (pointerInputController->getLeftMoveFlag())
-		{
-			//左向きに装備状態　歩行へ移行
-			//this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
-			return;
-		}
+		//左向き待機状態へ移行
+		this->toGraspIdleLeft();
 	}
 }
 
@@ -1336,6 +1301,8 @@ void CPlayerGraspLeftState::onChangeEvent(void)
 {
 	this->m_isNext = false;
 }
+
+
 
 
 //==========================================
@@ -1376,18 +1343,19 @@ void CPlayerGraspIdleRightState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-	//武器を装備
-	if (pointerInputController->getEquipFlag())
+	//手が離されたら
+	if (!pointerInputController->getHolodHandsFlag())
 	{
-		//左向き装備状態へ移行
-		this->toEquipLeft();
+		//右向き待機状態へ移行
+		this->toIdleRight();
 		return;
 	}
+
 
 	//左攻撃
 	if (pointerInputController->getAttackFlag()) {
 		//左攻撃状態へ移行(１撃目)
-		this->toAttackFirstLeft();
+	//	this->toAttackFirstLeft();
 		return;
 	}
 
@@ -1396,19 +1364,14 @@ void CPlayerGraspIdleRightState::update(void)
 	if (pointerInputController->getRightMoveFlag())
 	{
 		//右向き歩行状態へ移行
-		this->toWalkRight();
-
-		//this->m_pMove->m_accele.x = 0.5f;
+		this->toGraspWalkRight();
 	}
 
 	//左へ移動（歩行）
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//左向き歩行状態へ移行
-		this->toWalkLeft();
-
-
-		//this->m_pMove->m_accele.x = -0.5f;
+		this->toGraspWalkLeft();
 	}
 }
 
@@ -1458,18 +1421,19 @@ void CPlayerGraspIdleLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-	//武器を装備
-	if (pointerInputController->getEquipFlag())
+	//手が離されたら
+	if (!pointerInputController->getHolodHandsFlag())
 	{
-		//左向き装備状態へ移行
-		this->toEquipLeft();
+		//右向き待機状態へ移行
+		this->toIdleLeft();
 		return;
 	}
+
 
 	//左攻撃
 	if (pointerInputController->getAttackFlag()) {
 		//左攻撃状態へ移行(１撃目)
-		this->toAttackFirstLeft();
+	//	this->toAttackFirstLeft();
 		return;
 	}
 
@@ -1478,7 +1442,7 @@ void CPlayerGraspIdleLeftState::update(void)
 	if (pointerInputController->getRightMoveFlag())
 	{
 		//右向き歩行状態へ移行
-		this->toWalkRight();
+		this->toGraspWalkRight();
 
 		//this->m_pMove->m_accele.x = 0.5f;
 	}
@@ -1487,7 +1451,7 @@ void CPlayerGraspIdleLeftState::update(void)
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//左向き歩行状態へ移行
-		this->toWalkLeft();
+		this->toGraspWalkLeft();
 
 
 		//this->m_pMove->m_accele.x = -0.5f;
@@ -1575,7 +1539,7 @@ void CPlayerGraspWalkRightState::update(void)
 	}
 
 	//右向き待機状態へ移行
-	this->toIdleRight();
+	this->toGraspIdleRight();
 }
 
 /**
@@ -1628,18 +1592,18 @@ void CPlayerGraspWalkLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-	//武器を装備
-	if (pointerInputController->getEquipFlag())
+	//手が離されたら
+	if (!pointerInputController->getHolodHandsFlag())
 	{
-		//左向き装備状態へ移行
-		this->toEquipLeft();
+		//左向き待機状態へ移行
+		this->toIdleLeft();
 		return;
 	}
 
 	//左攻撃
 	if (pointerInputController->getAttackFlag()) {
 		//左攻撃状態へ移行(１撃目)
-		this->toAttackFirstLeft();
+		//this->toAttackFirstLeft();
 		return;
 	}
 
@@ -1647,7 +1611,7 @@ void CPlayerGraspWalkLeftState::update(void)
 	if (pointerInputController->getRightMoveFlag())
 	{
 		//右向き歩行状態へ移行
-		this->toWalkRight();
+		this->toGraspWalkRight();
 		return;
 	}
 
@@ -1660,7 +1624,7 @@ void CPlayerGraspWalkLeftState::update(void)
 	}
 
 	//左向き待機状態へ移行
-	this->toIdleLeft();
+	this->toGraspIdleLeft();
 }
 
 /**
