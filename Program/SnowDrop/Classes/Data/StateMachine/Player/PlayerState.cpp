@@ -17,6 +17,7 @@
 #include "Data\Enum\EnumPlayer.h"
 #include "Lib\Input\InputManager.h"
 #include "Lib\Math\CustomMath.h"
+#include "Data/LaunchTrigger/LaunchTrigger.h"
 
 //==========================================
 //
@@ -650,6 +651,16 @@ void CPlayerAttackRightState::start(void)
 
 	//連撃フラグをfalseで始める
 	this->m_chainAttackFlag = false;
+
+	//ダメージキャラクター生成データを作成
+	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
+															cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_right, this->m_pPlayer->m_pMove->m_pos.y),
+															30);
+	//ダメージキャラクター生成トリガーを作成
+	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+	//作成したトリガーをスケジューラーに登録
+	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
 }
 
 /**
@@ -747,6 +758,16 @@ void CPlayerAttackLeftState::start(void)
 
 	//連撃フラグをfalseで始める
 	this->m_chainAttackFlag = false;
+
+	//ダメージキャラクター生成データを作成
+	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
+															cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_left, this->m_pPlayer->m_pMove->m_pos.y),
+															30);
+	//ダメージキャラクター生成トリガーを作成
+	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+	//作成したトリガーをスケジューラーに登録
+	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
 }
 
 /**
@@ -1100,27 +1121,19 @@ void CPlayerUnEquipLeftState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerGraspRightState::CPlayerGraspRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerGraspRightState::~CPlayerGraspRightState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerGraspRightState::~CPlayerGraspRightState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerGraspRightState::start(void)
 {
 	//現在のアニメーションをリセット
@@ -1128,8 +1141,8 @@ void CPlayerGraspRightState::start(void)
 }
 
 /**
-* @desc 更新処理
-*/
+ * @desc	更新処理
+ */
 void CPlayerGraspRightState::update(void)
 {
 	//優先順で処理していく
@@ -1160,7 +1173,9 @@ void CPlayerGraspRightState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerGraspRightState::onChangeEvent(void)
 {
 	this->m_isNext = false;
@@ -1178,36 +1193,28 @@ void CPlayerGraspRightState::onChangeEvent(void)
 //						Author Shinya Ueba
 //==========================================
 /**
-* @desc コンストラクタ
-*/
+ * @desc	コンストラクタ
+ */
 CPlayerGraspLeftState::CPlayerGraspLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl)
-{
-
-
-}
+	:CPlayerState::CPlayerState(pPlayer, pGirl){}
 
 /**
-* @desc デストラクタ
-*/
-CPlayerGraspLeftState::~CPlayerGraspLeftState(void)
-{
-
-
-}
+ * @desc	デストラクタ
+ */
+CPlayerGraspLeftState::~CPlayerGraspLeftState(void){}
 
 /**
-* @desc 開始処理
-*/
+ * @desc	開始処理
+ */
 void CPlayerGraspLeftState::start(void)
 {
 	//現在のアニメーションをリセット
 	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
 }
 
-/**
-* @desc 更新処理
-*/
+ /**
+ * @desc	更新処理
+ */
 void CPlayerGraspLeftState::update(void)
 {
 	//優先順で処理していく
@@ -1238,7 +1245,9 @@ void CPlayerGraspLeftState::update(void)
 	}
 }
 
-// 状態が変わるときの処理
+/**
+ * @desc	状態が変わるときの処理
+ */
 void CPlayerGraspLeftState::onChangeEvent(void)
 {
 	this->m_isNext = false;

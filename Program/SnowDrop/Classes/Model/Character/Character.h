@@ -4,9 +4,6 @@
  *	2016/11/07	Osumi And Harada And Shinya Ueba
  *
  */
-
-/*collision(CCharacter )*/
-
 #pragma once
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから

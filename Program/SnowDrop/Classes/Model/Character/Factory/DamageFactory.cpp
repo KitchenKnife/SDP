@@ -79,22 +79,9 @@ CDamageCharacter* CDamageCreateFactory::createDamage() {
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
-void CNearDamageFactory::settingMove(CDamageCharacter* pCharacter,CCharacter* pAttackChara) {
-
-	// キャラの前方に出現
-	if (pAttackChara->m_pMove->m_vel.x > 0) {
-		// →
-		//初期位置の設定
-		pCharacter->m_pMove->m_pos.set(pAttackChara->m_pMove->m_pos.x + pAttackChara->m_pBody->m_right ,
-										pAttackChara->m_pMove->m_pos.y);
-
-	}
-	else if(pAttackChara->m_pMove->m_vel.x < 0) {
-		// ←
-		//初期位置の設定
-		pCharacter->m_pMove->m_pos.set(pAttackChara->m_pMove->m_pos.x + pAttackChara->m_pBody->m_left,
-										pAttackChara->m_pMove->m_pos.y);
-	}
+void CNearDamageFactory::settingMove(CDamageCharacter* pCharacter,cocos2d::Point pos) {
+	//位置の設定
+	pCharacter->m_pMove->m_pos.set(pos);
 
 }
 void CNearDamageFactory::settingTexture(CDamageCharacter* pCharacter) {
@@ -135,25 +122,28 @@ void CNearDamageFactory::settingStateMachine(CDamageCharacter* pCharacter) {
 
 }
 
-void CNearDamageFactory::settingInitialize(CDamageCharacter* pCharacter,int activeFrame) {
+void CNearDamageFactory::settingInitialize(CDamageCharacter* pChara, CCharacter* pAttackChara, int activeFrame) {
 
 	//状態の設定
-	pCharacter->m_state = 0;
+	pChara->m_state = 0;
 
 	//有効フラグを立てる
-	pCharacter->m_activeFlag = true;
+	pChara->m_activeFlag = true;
 
 	//生きているフラグを立てる
-	pCharacter->m_isAlive = true;
+	pChara->m_isAlive = true;
+
+	//ダメージキャラクターを出現させたキャラクター
+	pChara->m_pChara = pAttackChara;
 
 	// 存在させておくフレーム数
-	pCharacter->m_activeFrame = activeFrame;
+	pChara->m_activeFrame = activeFrame;
 
 	/*
 	*　計算データのままで起動すると1フレームずれが発生するので
 	*　初期化時に最後に値をSpriteに反映する
 	*/
-	pCharacter->applyFunc();
+	pChara->applyFunc();
 
 }
 

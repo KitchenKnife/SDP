@@ -53,7 +53,7 @@ protected:
 	virtual CDamageCharacter* createDamage() = 0;
 
 	//移動データの設定
-	virtual void settingMove(CDamageCharacter* pChara, CCharacter* pAttackChara) = 0;
+	virtual void settingMove(CDamageCharacter* pChara, cocos2d::Point pos) = 0;
 	//画像の設定
 	virtual void settingTexture(CDamageCharacter* pChara) = 0;
 	//アニメーション群データの設定
@@ -73,20 +73,20 @@ protected:
 	*/
 	virtual	void settingStateMachine(CDamageCharacter* pChara) = 0;
 	//その他　初期設定
-	virtual void settingInitialize(CDamageCharacter* pChara,int activeFrame) = 0;
+	virtual void settingInitialize(CDamageCharacter* pChara,CCharacter* pAttackChara,int activeFrame) = 0;
 
 public:
 	//デストラクタ
 	virtual ~CDamageFactory() {};
 
 	//敵の生成とセッティング
-	CDamageCharacter* create(CCharacter* pAttackChara,int activeFrame) {
+	CDamageCharacter* create(CCharacter* pAttackChara, cocos2d::Point pos,int activeFrame) {
 
 		//敵の生成と組み立て
 		CDamageCharacter* pChara = this->createDamage();
 
 		//移動データ設定
-		this->settingMove(pChara, pAttackChara);
+		this->settingMove(pChara, pos);
 		//画像の設定
 		this->settingTexture(pChara);
 		//アニメーション群データの設定
@@ -102,7 +102,7 @@ public:
 		//状態遷移マシンの設定
 		this->settingStateMachine(pChara);
 		//その他初期化
-		this->settingInitialize(pChara,activeFrame);
+		this->settingInitialize(pChara, pAttackChara,activeFrame);
 
 		return pChara;
 	}
@@ -133,7 +133,7 @@ public:
 	virtual ~CNearDamageFactory() {}
 
 	//移動データの設定
-	void settingMove(CDamageCharacter* pChara, CCharacter* pAttackChara)override;
+	void settingMove(CDamageCharacter* pChara, cocos2d::Point pos)override;
 	//画像の設定
 	void settingTexture(CDamageCharacter* pChara)override;
 	//アニメーション群データの設定
@@ -153,7 +153,7 @@ public:
 	*/
 	void settingStateMachine(CDamageCharacter* pChara)override;
 	//その他初期設定
-	void settingInitialize(CDamageCharacter* pChara,int activeFrame)override;
+	void settingInitialize(CDamageCharacter* pChara, CCharacter* pAttackChara, int activeFrame)override;
 
 };
 
@@ -190,15 +190,14 @@ public:
 	CDamageFactory* m_factories;
 
 	/**
-	* @desc	キャラクターを生成
-	* @param	プレイヤーのm_pMove
+	* @desc	ダメーッジキャラクターを生成
+	* @param	出現させる位置
 	* @param	存在させておくフレーム数
-	* @param	出現向き
 	* @return	生成したダメージキャラクター
 	*/
-	CDamageCharacter* create(CCharacter* pAttackChara,int activeFrame) {
+	CDamageCharacter* create(CCharacter* pAttackChara, cocos2d::Point pos,int activeFrame) {
 
-		return this->m_factories->create(pAttackChara,activeFrame);
+		return this->m_factories->create(pAttackChara,pos,activeFrame);
 	}
 
 };

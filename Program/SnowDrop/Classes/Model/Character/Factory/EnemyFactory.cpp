@@ -236,6 +236,8 @@ void CMaideadFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 	//生死フラグを立てる
 	pChara->m_isAlive = true;
 
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
 	//ステータスを設定する
 	pChara->m_status.set(3,3,1,1);
 	
@@ -338,6 +340,8 @@ void CBatFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 
 	//状態を待機状態に変更
 	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;

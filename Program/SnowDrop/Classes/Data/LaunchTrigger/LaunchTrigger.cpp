@@ -174,6 +174,7 @@ CCharacter* CDamageLaunchTrigger::action() {
 	//引数にエフェクトのタイプと出撃させる位置を渡す
 	CCharacter* pDamageCharacter = CDamageFactoryManager::getInstance()->create(
 		this->m_pLaunchdata->m_pChara,
+		this->m_pLaunchdata->m_pos,
 		this->m_pLaunchdata->m_activeFrame
 	);
 
