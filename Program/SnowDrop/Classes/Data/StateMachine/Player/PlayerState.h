@@ -143,6 +143,14 @@ public:
 	*/
 	void toGraspWalkLeft(void);
 
+
+//ここらから共通関数
+	/**
+	*	@desc 手を繋ぐ状態に移行するか確認する
+	*	@true...移行する false...しない
+	*/
+	bool checkGrasp(void);
+
 protected:
 	//参照するプレイヤーキャラクター
 	CPlayerCharacterBoy* m_pPlayer = NULL;

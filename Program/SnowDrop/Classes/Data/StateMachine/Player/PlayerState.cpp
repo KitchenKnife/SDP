@@ -317,6 +317,61 @@ void CPlayerState::toGraspWalkLeft(void)
 
 }
 
+/**
+*	@desc 手を繋ぐ状態に移行するか確認する
+*	@true...移行する false...しない
+*/
+bool CPlayerState::checkGrasp(void)
+{
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+	//プレイヤーを取得
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+	//ガールを取得
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+
+
+	float distanceToGirl = customMath->lengthBitweenChara(pPlayer, pGirl);
+	if (distanceToGirl <= 100.0f)
+	{
+
+		if (!pPlayer->getGrapsMark())
+		{
+			cocos2d::CCParticleSystemQuad* pGrapsMark = cocos2d::CCParticleSystemQuad::create(PARTICLE_GRAPS_MARK);
+			pGrapsMark->resetSystem();
+			pPlayer->setGrapsMark(pGrapsMark);
+			pPlayer->getParent()->addChild(pGrapsMark);
+			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x + distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
+			}
+			else
+			{
+				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x - distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
+			}
+		}
+
+		if (pointerInputController->getHolodHandsFlag())
+		{
+			//手を繋ぐ
+			pGirl->setHoldHandsFlag(true);
+			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				//手を繋ぐ右状態へ移行
+				this->toGraspRight();
+			}
+			else
+			{
+				//手を繋ぐ左状態へ移行
+				this->toGraspLeft();
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+
 
 
 //==========================================
@@ -356,52 +411,11 @@ void CPlayerIdleRightState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-	//プレイヤーを取得
-	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
-	//ガールを取得
-	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
-
-
-	float distanceToGirl = customMath->lengthBitweenChara(pPlayer, pGirl);
-	if (distanceToGirl <= 100.0f)
+	
+	//手を繋ぐ状態に移行するか
+	if (this->checkGrasp())
 	{
-
-		if (!pPlayer->getGrapsMark())
-		{
-			cocos2d::CCParticleSystemQuad* pGrapsMark = cocos2d::CCParticleSystemQuad::create(PARTICLE_GRAPS_MARK);
-			pGrapsMark->resetSystem();
-			pPlayer->setGrapsMark(pGrapsMark);
-			pPlayer->getParent()->addChild(pGrapsMark);
-			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
-			{
-				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x + distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
-			}
-			else
-			{
-				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x - distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
-			}
-		}
-
-		if (pointerInputController->getHolodHandsFlag())
-		{
-
-			//手を繋ぐ
-			pGirl->setHoldHandsFlag(true);
-
-
-			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
-			{
-				//手を繋ぐ右状態へ移行
-				this->toGraspRight();
-			}
-			else
-			{
-				//手を繋ぐ左状態へ移行
-				this->toGraspLeft();
-			}
-			return;
-		}
-
+		return;
 	}
 
 
@@ -411,7 +425,7 @@ void CPlayerIdleRightState::update(void)
 	{
 		//右向き装備状態へ移行
 	//	this->toEquipRight();
-		return;
+	//	return;
 	}
 
 	//右攻撃
@@ -488,12 +502,19 @@ void CPlayerIdleLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+
+	//手を繋ぐ状態に移行するか
+	if (this->checkGrasp())
+	{
+		return;
+	}
+
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
 		//左向き装備状態へ移行
-		this->toEquipLeft();
-		return;
+	//	this->toEquipLeft();
+	//	return;
 	}
 	
 	//左攻撃
@@ -571,12 +592,21 @@ void CPlayerWalkRightState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+
+	//手を繋ぐ状態に移行するか
+	if (this->checkGrasp())
+	{
+		return;
+	}
+
+
+
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
 		//右向き装備状態へ移行
-		this->toEquipRight();
-		return;
+	//	this->toEquipRight();
+	//	return;
 	}
 	
 	//右攻撃
@@ -657,12 +687,19 @@ void CPlayerWalkLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	//手を繋ぐ状態に移行するか
+	if (this->checkGrasp())
+	{
+		return;
+	}
+
+
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
 	{
 		//左向き装備状態へ移行
-		this->toEquipLeft();
-		return;
+	//	this->toEquipLeft();
+	//	return;
 	}
 
 	//左攻撃
@@ -1224,7 +1261,7 @@ void CPlayerGraspRightState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
-	//装備アニメーションが終わったら
+	//手を繋ぐアニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
 		//右向き待機状態へ移行
@@ -1288,7 +1325,7 @@ void CPlayerGraspLeftState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 
-	//装備アニメーションが終わったら
+	//手を繋ぐアニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
 		//左向き待機状態へ移行
@@ -1530,7 +1567,7 @@ void CPlayerGraspWalkRightState::update(void)
 	if (pointerInputController->getLeftMoveFlag())
 	{	
 		//左向き歩行状態へ移行
-		this->toWalkLeft();
+		this->toGraspWalkLeft();
 		return;
 	}
 
@@ -1607,7 +1644,7 @@ void CPlayerGraspWalkLeftState::update(void)
 	if (pointerInputController->getRightMoveFlag())
 	{
 		//右向きに歩行状態へ移行
-		this->toWalkRight();
+		this->toGraspWalkRight();
 		return;
 	}
 
@@ -1615,8 +1652,6 @@ void CPlayerGraspWalkLeftState::update(void)
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//左向きに歩行する
-		this->toWalkRight();
-		
 		this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
 		return;
 	}

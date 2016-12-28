@@ -600,6 +600,7 @@ void CGirlGraspWalkRightState::start(void)
 void CGirlGraspWalkRightState::update(void)
 {
 	//—Dæ‡‚Åˆ—‚µ‚Ä‚¢‚­
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 
 	//Žè‚ª—£‚³‚ê‚½‚ç
 	if (!this->m_pGirl->getHoldHandsFlag())
@@ -609,8 +610,13 @@ void CGirlGraspWalkRightState::update(void)
 		return;
 	}
 
-	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
-	this->m_pGirl->m_pMove->m_pos.set(pPlayer->m_pMove->m_pos);
+	if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_IDLE_RIGHT)
+	{
+		this->toGraspIdleRight();
+		return;
+	}
+
+	this->m_pGirl->m_pMove->m_pos.set(pPlayer->m_pMove->m_pos.x - 35.0f, pPlayer->m_pMove->m_pos.y);
 }
 
 /**
@@ -657,6 +663,7 @@ void CGirlGraspWalkLeftState::start(void)
 void CGirlGraspWalkLeftState::update(void)
 {
 	//—Dæ‡‚Åˆ—‚µ‚Ä‚¢‚­
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 
 	//Žè‚ª—£‚³‚ê‚½‚ç
 	if (!this->m_pGirl->getHoldHandsFlag())
@@ -666,8 +673,13 @@ void CGirlGraspWalkLeftState::update(void)
 		return;
 	}
 
-	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
-	this->m_pGirl->m_pMove->m_pos.set(pPlayer->m_pMove->m_pos);
+	if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_IDLE_LEFT)
+	{
+		this->toGraspIdleLeft();
+		return;
+	}
+
+	this->m_pGirl->m_pMove->m_pos.set(pPlayer->m_pMove->m_pos.x + 35.0f, pPlayer->m_pMove->m_pos.y);
 }
 
 /**
