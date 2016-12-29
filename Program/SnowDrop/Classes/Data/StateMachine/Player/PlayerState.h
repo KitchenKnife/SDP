@@ -63,6 +63,28 @@ public:
 	 */
 	void toWalkLeft(void);
 
+
+	/**
+	 *	@desc	右向きジャンプ状態へ移行
+	 */
+	void toJumpRight(void);
+
+	/**
+	 *	@desc	左向き落下状態へ移行
+	 */
+	void toJumpLeft(void);
+
+
+	/**
+ 	 *	@desc	右向き落下状態へ移行
+	 */
+	void toFallRight(void);
+
+	/**
+	 *	@desc	左向き落下状態へ移行
+	 */
+	void toFallLeft(void);
+
 	/**
 	 * @desc	右向き攻撃状態（１撃目）へ移行
 	 */
@@ -158,7 +180,6 @@ protected:
 	CGirlCharacter*		m_pGirl = NULL;
 };
 
-
 //==========================================
 //
 // Class: CPlayerIdleRightState
@@ -198,7 +219,6 @@ public:
 private:
 };
 
-
 //==========================================
 //
 // Class: CPlayerIdleLeftState
@@ -237,7 +257,6 @@ public:
 
 private:
 };
-
 
 //==========================================
 //
@@ -279,7 +298,6 @@ public:
 private:
 };
 
-
 //==========================================
 //
 // Class: CPlayerWalkLeftState
@@ -314,6 +332,162 @@ public:
 	/**
 	 * @desc	状態が変わるときの処理
 	 */
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CPlayerJumpRightState
+//
+// プレイヤー 右向き　ジャンプ 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerJumpRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerJumpRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerJumpRightState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CPlayerJumpLeftState
+//
+// プレイヤー 左向き　ジャンプ 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerJumpLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerJumpLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerJumpLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CPlayerFallRightState
+//
+// プレイヤー 右向き　落下 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerFallRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerFallRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerFallRightState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CPlayerFallLeftState
+//
+// プレイヤー 左向き　落下 状態 クラス
+//
+// 2016/12/25
+//						Author Shinya Ueba
+//==========================================
+class CPlayerFallLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerFallLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerFallLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
 	void onChangeEvent(void)override;
 
 private:
@@ -445,7 +619,6 @@ public:
 
 private:
 };
-
 
 //==========================================
 //

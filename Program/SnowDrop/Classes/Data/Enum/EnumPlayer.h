@@ -29,22 +29,26 @@
 //---------------------------------------------------------
 enum class PLAYER_STATE :int
 {
-	IDLE_RIGHT		= 0,	//右待機状態
-	IDLE_LEFT		= 1,	//左待機状態
-	WALK_RIGHT		= 2,	//右歩行
-	WALK_LEFT		= 3,	//左歩行
-	ATTACK_RIGHT	= 4,	//右向き攻撃
-	ATTACK_LEFT		= 5,	//左向き攻撃
-	EQUIP_RIGHT		= 6,	//装備する		右向き
-	EQUIP_LEFT		= 7,	//装備する		左向き
-	UN_EQUIP_RIGHT	= 8,	//装備を外す	右向き	
-	UN_EQUIP_LEFT	= 9,	//装備を外す	左向き
-	GRASP_RIGHT		= 10,	//手を掴む　右向き
-	GRASP_LEFT		= 11,	//手を掴む　左向き
-	GRASP_IDLE_RIGHT	= 12,	//手を掴みながら待機　	右向き
-	GRASP_IDLE_LEFT		= 13,	//手を掴みながら待機	左向き
-	GRASP_WALK_RIGHT	= 14,	//手を掴みながら歩く　	右向き
-	GRASP_WALK_LEFT		= 15,	//手を掴みながら歩く	左向き
+	IDLE_RIGHT			= 0,	//右待機状態
+	IDLE_LEFT			= 1,	//左待機状態
+	WALK_RIGHT			= 2,	//右歩行
+	WALK_LEFT			= 3,	//左歩行
+	JUMP_RIGHT			= 4,	//右向きジャンプ
+	JUMP_LEFT			= 5,	//左向きジャンプ
+	FALL_RIGHT			= 6,	//右向き落下
+	FALL_LEFT			= 7,	//左向き落下
+	ATTACK_RIGHT		= 8,	//右向き攻撃
+	ATTACK_LEFT			= 9,	//左向き攻撃
+	EQUIP_RIGHT			= 10,	//装備する		右向き
+	EQUIP_LEFT			= 11,	//装備する		左向き
+	UN_EQUIP_RIGHT		= 12,	//装備を外す	右向き	
+	UN_EQUIP_LEFT		= 13,	//装備を外す	左向き
+	GRASP_RIGHT			= 14,	//手を掴む　右向き
+	GRASP_LEFT			= 15,	//手を掴む　左向き
+	GRASP_IDLE_RIGHT	= 16,	//手を掴みながら待機　	右向き
+	GRASP_IDLE_LEFT		= 17,	//手を掴みながら待機	左向き
+	GRASP_WALK_RIGHT	= 18,	//手を掴みながら歩く　	右向き
+	GRASP_WALK_LEFT		= 19,	//手を掴みながら歩く	左向き
 };
 
 //---------------------------------------------------------
@@ -60,18 +64,22 @@ enum class PLAYER_ANIMATION_STATE :int
 	IDLE_LEFT			= 1,	//左待機状態
 	WALK_RIGHT			= 2,	//右歩行
 	WALK_LEFT			= 3,	//左歩行
-	FIRST_ATTACK_RIGHT	= 4,	//右向き攻撃（１撃目）
-	SECOND_ATTACK_RIGHT	= 5,	//右向き攻撃（２撃目）
-	THURD_ATTACK_RIGHT	= 6,	//右向き攻撃（３撃目）
-	FIRST_ATTACK_LEFT	= 7,	//左向き攻撃（１撃目）
-	SECOND_ATTACK_LEFT	= 8,	//左向き攻撃（２撃目）
-	THURD_ATTACK_LEFT	= 9,	//左向き攻撃（３撃目）
-	EQUIP_RIGHT			= 10,	//装備する		右向き
-	EQUIP_LEFT			= 11,	//装備する		左向き
-	UN_EQUIP_RIGHT		= 12,	//装備を外す	右向き	
-	UN_EQUIP_LEFT		= 13,	//装備を外す	左向き
-	GRASP_RIGHT			= 14,	//手を掴む　右向き
-	GRASP_LEFT			= 15,	//手を掴む　左向き
+	JUMP_RIGHT			= 4,	//右向きジャンプ
+	JUMP_LEFT			= 5,	//左向きジャンプ
+	FALL_RIGHT			= 6,	//右向き落下
+	FALL_LEFT			= 7,	//左向き落下
+	FIRST_ATTACK_RIGHT	= 8,	//右向き攻撃（１撃目）
+	SECOND_ATTACK_RIGHT	= 9,	//右向き攻撃（２撃目）
+	THURD_ATTACK_RIGHT	= 10,	//右向き攻撃（３撃目）
+	FIRST_ATTACK_LEFT	= 11,	//左向き攻撃（１撃目）
+	SECOND_ATTACK_LEFT	= 12,	//左向き攻撃（２撃目）
+	THURD_ATTACK_LEFT	= 13,	//左向き攻撃（３撃目）
+	EQUIP_RIGHT			= 14,	//装備する		右向き
+	EQUIP_LEFT			= 15,	//装備する		左向き
+	UN_EQUIP_RIGHT		= 16,	//装備を外す	右向き	
+	UN_EQUIP_LEFT		= 17,	//装備を外す	左向き
+	GRASP_RIGHT			= 18,	//手を掴む　右向き
+	GRASP_LEFT			= 19,	//手を掴む　左向き
 };
 
 //---------------------------------------------------------
@@ -84,8 +92,9 @@ enum class PLAYER_ANIMATION_STATE :int
 enum class PLAYER_ACTION_STATE :int
 {
 	IDLE = 0,//待機状態
-	WANDERING = 1,
-	//	CHASE = 2,
+	JUMP = 1,//ジャンプ
+	WANDERING = 2,
+	//	CHASE = 3,
 };
 
 /********************************************************************

@@ -91,6 +91,60 @@ void CPlayerState::toWalkLeft(void)
 	this->m_isNext = true;
 }
 
+
+/**
+ * @desc	右向きジャンプ状態へ移行
+ */
+void CPlayerState::toJumpRight(void)
+{
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::JUMP_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::JUMP_RIGHT;
+	this->m_pPlayer->m_actionState = (int)PLAYER_ACTION_STATE::JUMP;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	左向きジャンプ状態へ移行
+ */
+void CPlayerState::toJumpLeft(void)
+{
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::JUMP_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::JUMP_LEFT;
+	this->m_pPlayer->m_actionState = (int)PLAYER_ACTION_STATE::JUMP;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+
+/**
+ * @desc	右向き落下状態へ移行
+ */
+void CPlayerState::toFallRight(void)
+{
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::FALL_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::FALL_RIGHT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+* @desc	左向き落下状態へ移行
+*/
+void CPlayerState::toFallLeft(void)
+{
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::FALL_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::FALL_LEFT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
 /**
  * @desc	右向き攻撃状態（１撃目）へ移行
  */
@@ -436,6 +490,13 @@ void CPlayerIdleRightState::update(void)
 		return;
 	}
 
+	//右向きジャンプ
+	if (pointerInputController->getJumpFlag()) {
+		//右向きジャンプ状態へ移行
+		this->toJumpRight();
+		return;
+	}
+
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
 	{
@@ -525,6 +586,12 @@ void CPlayerIdleLeftState::update(void)
 		return;
 	}
 
+	//左向きジャンプ
+	if (pointerInputController->getJumpFlag()) {
+		//左向きジャンプ状態へ移行
+		this->toJumpLeft();
+		return;
+	}
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -617,6 +684,12 @@ void CPlayerWalkRightState::update(void)
 		return;
 	}
 
+	//右向きジャンプ
+	if (pointerInputController->getJumpFlag()) {
+		//右向きジャンプ状態へ移行
+		this->toJumpRight();
+		return;
+	}
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -710,6 +783,13 @@ void CPlayerWalkLeftState::update(void)
 		return;
 	}
 
+	//左向きジャンプ
+	if (pointerInputController->getJumpFlag()) {
+		//左向きジャンプ状態へ移行
+		this->toJumpLeft();
+		return;
+	}
+
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
 	{
@@ -734,6 +814,244 @@ void CPlayerWalkLeftState::update(void)
  * @desc	状態が変わるときの処理
  */
 void CPlayerWalkLeftState::onChangeEvent(void)
+{
+	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+
+
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerJumpRightState
+//
+// プレイヤー 右向き ジャンプ 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+ * @desc	コンストラクタ
+ */
+CPlayerJumpRightState::CPlayerJumpRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerJumpRightState::~CPlayerJumpRightState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerJumpRightState::start(void)
+{
+	//ジャンプアクションのスタート関数を開始
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->start();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerJumpRightState::update(void)
+{
+	//優先順で処理していく
+
+	//プレイヤーが下へ移動していたら
+	if (this->m_pPlayer->m_pMove->m_vel.y < 0.0f) {
+		//落下状態へ移行する
+		this->toFallRight();
+
+		return;
+	}
+	//左向きジャンプ
+	if (CInputManager::getInstance()->getInputController()->getJumpFlag()) {
+		//開始処理を再起動する
+		this->start();
+		return;
+	}
+	
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerJumpRightState::onChangeEvent(void)
+{
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->restart(this->m_pPlayer);
+
+
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerJumpRightState
+//
+// プレイヤー 左向き ジャンプ 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerJumpLeftState::CPlayerJumpLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerJumpLeftState::~CPlayerJumpLeftState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerJumpLeftState::start(void)
+{
+	//ジャンプアクションのスタート関数を開始
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->start();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerJumpLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//プレイヤーが下へ移動していたら
+	if (this->m_pPlayer->m_pMove->m_vel.y < 0.0f) {
+		//落下状態へ移行する
+		this->toFallLeft();
+
+		return;
+	}
+	//左向きジャンプ
+	if (CInputManager::getInstance()->getInputController()->getJumpFlag()) {
+		//開始処理を再起動する
+		this->start();
+		return;
+	}
+
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerJumpLeftState::onChangeEvent(void)
+{
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->restart(this->m_pPlayer);
+
+
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerFallRightState
+//
+// プレイヤー 右向き 落下 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerFallRightState::CPlayerFallRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerFallRightState::~CPlayerFallRightState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerFallRightState::start(void)
+{
+
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerFallRightState::update(void)
+{
+	//優先順で処理していく
+
+	//プレイヤーが下へ移動していたら
+	if (this->m_pPlayer->m_pMove->m_vel.y == 0.0f) {
+		//落下状態へ移行する
+		this->toIdleRight();
+
+		return;
+	}
+
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerFallRightState::onChangeEvent(void)
+{
+	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+
+
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerFallLeftState
+//
+// プレイヤー 左向き 落下 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerFallLeftState::CPlayerFallLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerFallLeftState::~CPlayerFallLeftState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerFallLeftState::start(void)
+{
+
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerFallLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//プレイヤーが下へ移動していたら
+	if (this->m_pPlayer->m_pMove->m_vel.y == 0.0f) {
+		//落下状態へ移行する
+		this->toIdleLeft();
+
+		return;
+	}
+
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerFallLeftState::onChangeEvent(void)
 {
 	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
 
