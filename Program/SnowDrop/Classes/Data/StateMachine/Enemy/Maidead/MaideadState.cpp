@@ -12,6 +12,7 @@
 // ヘッダインクルード
 //==========================================
 #include "MaideadState.h"
+#include "Model\Character\CharacterAggregate.h"
 #include "Model\Character\EnemyCharacter\EnemyCharacter.h"
 #include "Data\Enum\EnumEnemy.h"
 
@@ -83,6 +84,34 @@ void CMaideadState::toChase(void)
 }
 
 
+/**
+* @desc 攻撃を受けている状態へ移行
+*/
+void CMaideadState::toUnderAttack(void)
+{
+	this->m_pOwner->m_state = (int)ENEMY_MAIDEAD_STATE::UNDER_ATTACK;
+	this->m_pOwner->m_animationState = (int)ENEMY_MAIDEAD_ANIMATION_STATE::IDLE;
+	this->m_pOwner->m_actionState = (int)ENEMY_MAIDEAD_ACTION_STATE::UNDER_ATTACK;
+	this->m_nextRegisterKey = this->m_pOwner->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+
+/**
+* @desc 死亡状態へ移行
+*/
+void CMaideadState::toDead(void)
+{
+	this->m_pOwner->m_state = (int)ENEMY_MAIDEAD_STATE::DEAD;
+	this->m_pOwner->m_animationState = (int)ENEMY_MAIDEAD_ANIMATION_STATE::DAED;
+	this->m_pOwner->m_actionState = (int)ENEMY_MAIDEAD_ACTION_STATE::IDLE;
+	this->m_nextRegisterKey = this->m_pOwner->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+
 //==========================================
 //
 // Class: CMaideadIdleState
@@ -132,7 +161,16 @@ void CMaideadIdleState::update(void)
 	//カウンターをインクリメント
 	this->m_actionCounter++;
 
-	
+
+	//攻撃を受けたか？
+	if (this->m_pOwner->m_underAttack)
+	{
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+		return;
+	}
+
+
 
 
 	//カウンターがインターバル以上なら
@@ -142,6 +180,7 @@ void CMaideadIdleState::update(void)
 		
 		//さまよい行動に移行
 		this->toWandering();
+		return;
 	}
 }
 
@@ -205,6 +244,7 @@ void CMaideadWanderingState::start(void)
 		}
 		//待機状態に移行
 		this->toIdle();
+		return;
 	}
 
 	//速さを設定
@@ -234,6 +274,15 @@ void CMaideadWanderingState::update(void)
 	{
 		return;
 	}
+
+	//攻撃を受けたか？
+	if (this->m_pOwner->m_underAttack)
+	{
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+		return;
+	}
+
 		
 	//カウンターをインクリメント
 	this->m_actionCounter++;
@@ -260,5 +309,170 @@ void CMaideadWanderingState::onChangeEvent(void)
 	this->m_isNext = false;
 }
 
+
+
+//==========================================
+//
+// Class: CMaideadUnderAttackState
+//
+// Maidead 攻撃を受けた 状態 クラス
+//
+// 2016/12/30
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CMaideadUnderAttackState::CMaideadUnderAttackState(CEnemyCharacter* const pOwner,
+	CPlayerCharacterBoy* const pPlayer,
+	CGirlCharacter* const pGirl)
+	:CMaideadState::CMaideadState(pOwner, pPlayer, pGirl)
+{
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CMaideadUnderAttackState::~CMaideadUnderAttackState()
+{
+
+}
+
+/**
+* @desc	開始処理
+*/
+void CMaideadUnderAttackState::start(void)
+{
+	//ジャンプアクションのスタート関数を開始
+	(*this->m_pOwner->m_mapAction[(int)this->m_pOwner->m_actionState])[0]->start();
+
+
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+
+	if (this->m_pOwner->m_pMove->m_pos.x >= pPlayer->m_pMove->m_pos.x)
+	{
+		this->m_vec = 1;
+	}
+	else
+	{
+		this->m_vec = -1;
+	}
+}
+
+/**
+* @desc 更新処理
+*/
+void CMaideadUnderAttackState::update(void)
+{
+
+	//死亡したか？
+	if (!this->m_pOwner->m_isAlive)
+	{
+		this->toDead();
+		return;
+	}
+
+	if (this->m_pOwner->m_pMove->m_vel.y == 0.0f)
+	{
+		//攻撃受けている状態を下ろす
+		this->m_pOwner->m_underAttack = false;
+
+		//待機状態へ
+		this->toIdle();
+		return;
+	}
+
+	//速さを設定
+	this->m_pOwner->m_pMove->m_vel.x = 6.0f * this->m_vec;
+}
+
+/**
+* @desc 状態が変わるときの処理
+*/
+void CMaideadUnderAttackState::onChangeEvent(void)
+{
+	//速さを０に
+	this->m_pOwner->m_pMove->m_vel.set(0.0f, 0.0f);
+
+	//アクションリセット
+	(*this->m_pOwner->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::UNDER_ATTACK])[0]->restart(this->m_pOwner);
+
+	//待機動作を終了
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CMaideadDeadState
+//
+// Maidead 攻撃を受けた 状態 クラス
+//
+// 2016/12/30
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CMaideadDeadState::CMaideadDeadState(CEnemyCharacter* const pOwner,
+	CPlayerCharacterBoy* const pPlayer,
+	CGirlCharacter* const pGirl)
+	:CMaideadState::CMaideadState(pOwner, pPlayer, pGirl)
+{
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CMaideadDeadState::~CMaideadDeadState()
+{
+
+}
+
+/**
+* @desc	開始処理
+*/
+void CMaideadDeadState::start(void)
+{
+	//消滅カウンターを設定
+	this->m_disappearanceCounter = 300;
+}
+
+/**
+* @desc 更新処理
+*/
+void CMaideadDeadState::update(void)
+{
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->isEnd())
+	{
+		if(this->m_pOwner->getNumberOfRunningActions()<=0 && 
+			this->m_disappearanceCounter <= 120)
+		{ 
+
+			this->m_pOwner->setOpacity(50);
+			this->m_pOwner->runAction(CCBlink::create((float)3.0f, (int)15));
+		}
+
+		//時間経過で消滅
+		if (this->m_disappearanceCounter <= 0)
+		{
+			//有効フラグを下げる
+			this->m_pOwner->m_activeFlag = false;
+		}
+
+		this->m_disappearanceCounter--;
+	}
+}
+
+/**
+* @desc 状態が変わるときの処理
+*/
+void CMaideadDeadState::onChangeEvent(void)
+{
+	//待機動作を終了
+	this->m_isNext = false;
+}
 
 //EOF

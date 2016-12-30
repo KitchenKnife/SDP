@@ -81,6 +81,11 @@ void CMaideadFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, true));
 	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 0, 256, 256));
 
+
+	//死亡のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 768, 256, 256));
+
 }
 
 template <class Ty>
@@ -121,12 +126,32 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//
 	//--------------------------------------------------------------------
 
-		//移動アクションの生成
+	//移動アクションの生成
 	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
 	//移動アクション中に行うアクションを生成して取りける
 	pActionStraight->push_back(new CActionMoveStraight());
 	//移動アクションをマップ配列に取り付ける
 	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
 
 	//--------------------------------------------------------------------
 	//
@@ -221,6 +246,28 @@ void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 //	ここまで
 //
 //--------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------
+//
+//	攻撃を受けた状態を設定する ここから
+//
+//--------------------------------------------------------------------
+
+	//待機状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::UNDER_ATTACK, new CMaideadUnderAttackState(pChara, NULL, NULL));
+
+//--------------------------------------------------------------------
+//
+//	死亡状態を設定する ここから
+//
+//--------------------------------------------------------------------
+
+	//死亡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::DEAD, new CMaideadDeadState(pChara, NULL, NULL));
+
 
 	//最後に最初の状態を設定する！！！！！
 	pChara->m_pStateMachine->setStartState((int)ENEMY_MAIDEAD_STATE::IDLE);
@@ -356,6 +403,119 @@ void CBatFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 	pChara->applyFunc();
 
 }
+
+
+//================================================
+// マリス工場
+//	（FactoryMethod）
+//================================================
+//各々のパーツのセッティング
+template <class Ty>
+void CMaliceFactory<Ty>::settingMove(CEnemyCharacter* pChara, float x, float y) {
+	//初期位置の設定
+	pChara->m_pMove->m_pos.set(x, y);
+	//初期速度
+	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
+}
+
+template <class Ty>
+void CMaliceFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
+	//テクスチャの設定
+	pChara->setTexture(IMAGE_BAT);
+}
+
+template <class Ty>
+void CMaliceFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
+	//直立アニメーションの設定
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	//直立アニメーションに設定する為のチップデータの設定
+	(*pChara->m_pAnimations)[(int)ENEMY_BAT_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 64, 64, 64));
+
+}
+
+template <class Ty>
+void CMaliceFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
+
+}
+
+template <class Ty>
+void CMaliceFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
+
+
+}
+
+template <class Ty>
+void CMaliceFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-32.0f, 32.0f, 32.0f, -32.0f);
+}
+
+//衝突判定空間の設定
+template <class Ty>
+void CMaliceFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
+
+	//画面端衝突空間の生成
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+
+	//マップ衝突空間の生成
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 32.0f);
+
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pMapArea);
+
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+template <class Ty>
+void CMaliceFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
+{
+
+}
+
+template <class Ty>
+void CMaliceFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 3);
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
+
+}
+
 
 //================================================
 // パーツセッティングクラスを管理するクラス

@@ -1129,7 +1129,7 @@ void CPlayerAttackRightState::start(void)
 	//ダメージキャラクター生成データを作成
 	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
 															cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_right, this->m_pPlayer->m_pMove->m_pos.y),
-															30);
+															1);
 	//ダメージキャラクター生成トリガーを作成
 	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
 
@@ -1236,7 +1236,7 @@ void CPlayerAttackLeftState::start(void)
 	//ダメージキャラクター生成データを作成
 	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
 															cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_left, this->m_pPlayer->m_pMove->m_pos.y),
-															30);
+															1);
 	//ダメージキャラクター生成トリガーを作成
 	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
 

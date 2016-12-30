@@ -22,7 +22,7 @@
  *		初めはこの部分に全てを書いていく
  *
  */
-class CGameMain : public cocos2d::Layer
+class CGameMain : public cocos2d::CCLayerColor
 {
 public:
 	//=========================================================================
@@ -96,10 +96,10 @@ public:
 	//=========================================================================
 	
 	//メインレイヤー
-	Layer* m_pMainLayer = NULL;
+	LayerColor* m_pMainLayer = NULL;
 
 	//UIレイヤー
-	Layer* m_pUILayer = NULL;
+	LayerColor* m_pUILayer = NULL;
 
 	//キャラクターの集まり
 	std::vector<CCharacter*>* m_pCharacters = NULL;

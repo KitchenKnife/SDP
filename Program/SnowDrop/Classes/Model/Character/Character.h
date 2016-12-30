@@ -106,6 +106,10 @@ public:
 	//キャラクターのアクションの状態
 	int m_actionState = 0;
 
+	//攻撃を受けているかどうかのフラグ
+	//true...受けている　false...受けていない
+	bool m_underAttack = false;
+
 protected:
 	//================================================ 
 	// キャラクタークラスの基本的な関数の列挙
@@ -140,6 +144,25 @@ public:
 	 * @param	キャラクターのアドレス
 	 */
 	virtual void hits(CCharacter* pChara) = 0;
+
+	/**
+	*	@desc ＨＰの減少
+	*	@param 減少する値（相手の攻撃力）
+	*	@author		Shinya Ueba
+	*/
+	void decreaseHP(int attackPt);
+
+	/**
+	*	@desc ＨＰの全回復
+	*	@author		Shinya Ueba
+	*/
+	void recoveryHp(void);
+
+	/**
+	*	@desc ＨＰの１回復
+	*	@author		Shinya Ueba
+	*/
+	void cureHp(int hp);
 
 	
 

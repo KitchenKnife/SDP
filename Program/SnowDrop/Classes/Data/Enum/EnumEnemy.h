@@ -27,11 +27,13 @@
 //
 //
 //---------------------------------------------------------
-enum class ENEMY_MAIDEAD_STATE :int 
+enum class ENEMY_MAIDEAD_STATE :int
 {
 	IDLE = 0,//‘Ò‹@ó‘Ô
 	WANDERING = 1,
 	CHASE = 2,
+	UNDER_ATTACK = 3,	//UŒ‚‚ðŽó‚¯‚Ä‚¢‚éó‘Ô
+	DEAD = 4,			//Ž€–Só‘Ô
 };
 
 //---------------------------------------------------------
@@ -50,14 +52,14 @@ enum class ENEMY_MAIDEAD_ANIMATION_STATE :int
 {
 	IDLE = 0,//‘Ò‹@ó‘Ô
 	WANDERING = 1,
-//	CHASE = 2,
+	DAED = 2,
 };
 
 enum class ENEMY_MAIDEAD_ACTION_STATE :int
 {
 	IDLE = 0,//‘Ò‹@ó‘Ô
 	WANDERING = 1,
-//	CHASE = 2,
+	UNDER_ATTACK = 2,//UŒ‚Žó‚¯‚½
 };
 
 

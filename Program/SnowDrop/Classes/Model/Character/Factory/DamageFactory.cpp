@@ -139,6 +139,9 @@ void CNearDamageFactory::settingInitialize(CDamageCharacter* pChara, CCharacter*
 	// 存在させておくフレーム数
 	pChara->m_activeFrame = activeFrame;
 
+	//ステータスを設定
+	pChara->m_status.set(1,1,1,1);
+
 	/*
 	*　計算データのままで起動すると1フレームずれが発生するので
 	*　初期化時に最後に値をSpriteに反映する
