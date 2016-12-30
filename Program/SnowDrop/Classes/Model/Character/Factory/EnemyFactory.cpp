@@ -126,12 +126,32 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//
 	//--------------------------------------------------------------------
 
-		//移動アクションの生成
+	//移動アクションの生成
 	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
 	//移動アクション中に行うアクションを生成して取りける
 	pActionStraight->push_back(new CActionMoveStraight());
 	//移動アクションをマップ配列に取り付ける
 	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
 
 	//--------------------------------------------------------------------
 	//

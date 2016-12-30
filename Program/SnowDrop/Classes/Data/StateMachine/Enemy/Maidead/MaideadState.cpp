@@ -12,6 +12,7 @@
 // ヘッダインクルード
 //==========================================
 #include "MaideadState.h"
+#include "Model\Character\CharacterAggregate.h"
 #include "Model\Character\EnemyCharacter\EnemyCharacter.h"
 #include "Data\Enum\EnumEnemy.h"
 
@@ -90,7 +91,7 @@ void CMaideadState::toUnderAttack(void)
 {
 	this->m_pOwner->m_state = (int)ENEMY_MAIDEAD_STATE::UNDER_ATTACK;
 	this->m_pOwner->m_animationState = (int)ENEMY_MAIDEAD_ANIMATION_STATE::IDLE;
-	this->m_pOwner->m_actionState = (int)ENEMY_MAIDEAD_ACTION_STATE::IDLE;
+	this->m_pOwner->m_actionState = (int)ENEMY_MAIDEAD_ACTION_STATE::UNDER_ATTACK;
 	this->m_nextRegisterKey = this->m_pOwner->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
@@ -166,6 +167,7 @@ void CMaideadIdleState::update(void)
 	{
 		//攻撃を受けた状態へ移行
 		this->toUnderAttack();
+		return;
 	}
 
 
@@ -178,6 +180,7 @@ void CMaideadIdleState::update(void)
 		
 		//さまよい行動に移行
 		this->toWandering();
+		return;
 	}
 }
 
@@ -241,6 +244,7 @@ void CMaideadWanderingState::start(void)
 		}
 		//待機状態に移行
 		this->toIdle();
+		return;
 	}
 
 	//速さを設定
@@ -276,6 +280,7 @@ void CMaideadWanderingState::update(void)
 	{
 		//攻撃を受けた状態へ移行
 		this->toUnderAttack();
+		return;
 	}
 
 		
@@ -339,7 +344,20 @@ CMaideadUnderAttackState::~CMaideadUnderAttackState()
 */
 void CMaideadUnderAttackState::start(void)
 {
+	//ジャンプアクションのスタート関数を開始
+	(*this->m_pOwner->m_mapAction[(int)this->m_pOwner->m_actionState])[0]->start();
 
+
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+
+	if (this->m_pOwner->m_pMove->m_pos.x >= pPlayer->m_pMove->m_pos.x)
+	{
+		this->m_vec = 1;
+	}
+	else
+	{
+		this->m_vec = -1;
+	}
 }
 
 /**
@@ -352,7 +370,21 @@ void CMaideadUnderAttackState::update(void)
 	if (!this->m_pOwner->m_isAlive)
 	{
 		this->toDead();
+		return;
 	}
+
+	if (this->m_pOwner->m_pMove->m_vel.y == 0.0f)
+	{
+		//攻撃受けている状態を下ろす
+		this->m_pOwner->m_underAttack = false;
+
+		//待機状態へ
+		this->toIdle();
+		return;
+	}
+
+	//速さを設定
+	this->m_pOwner->m_pMove->m_vel.x = 6.0f * this->m_vec;
 }
 
 /**
@@ -360,6 +392,12 @@ void CMaideadUnderAttackState::update(void)
 */
 void CMaideadUnderAttackState::onChangeEvent(void)
 {
+	//速さを０に
+	this->m_pOwner->m_pMove->m_vel.set(0.0f, 0.0f);
+
+	//アクションリセット
+	(*this->m_pOwner->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::UNDER_ATTACK])[0]->restart(this->m_pOwner);
+
 	//待機動作を終了
 	this->m_isNext = false;
 }

@@ -59,7 +59,7 @@ enum class ENEMY_MAIDEAD_ACTION_STATE :int
 {
 	IDLE = 0,//ë“ã@èÛë‘
 	WANDERING = 1,
-//	CHASE = 2,
+	UNDER_ATTACK = 2,//çUåÇéÛÇØÇΩ
 };
 
 

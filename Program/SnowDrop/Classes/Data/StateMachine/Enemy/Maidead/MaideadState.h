@@ -207,7 +207,8 @@ public:
 	void onChangeEvent(void);
 
 private:
-	
+	//‚Á”ò‚Ô•ûŒü
+	int m_vec = 1;
 };
 
 
