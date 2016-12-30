@@ -181,6 +181,22 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 256, 128, 128));
 
+	//右ジャンプ のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_RIGHT]->addChipData(new CChip(0, 384, 128, 128));
+
+	//左ジャンプ のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_LEFT]->addChipData(new CChip(512, 384, 128, 128));
+
+	//右落下 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_RIGHT]->addChipData(new CChip(0, 384, 128, 128));
+
+	//左落下 のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_LEFT]->addChipData(new CChip(512, 384, 128, 128));
+
 	//================================================
 	// 攻撃のアニメーション設定
 	//================================================
@@ -246,14 +262,20 @@ void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
 
 void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 
-	//ジャンプアクションの生成
+	//待機中のアクション群の実体を生成
 	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
-	//ジャンプ中に行うアクションを生成して取りける
-	pActionIdle->push_back(new CActionJump(3.0f,4.0f));
+	//待機中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)PLAYER_ACTION_STATE::IDLE] = pActionIdle;
+
+
+	//ジャンプ中のアクション群の実体を生成
+	std::vector<CAction*>* pActionJump = new std::vector<CAction*>();
+	//ジャンプ中に行うアクションを生成して取り付ける
+	pActionJump->push_back(new CActionJump(3.0f, 4.0f));
 	//ジャンプアクションをマップ配列に取り付ける
-	pChara->m_mapAction[0] = pActionIdle;
-
-
+	pChara->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP] = pActionJump;
 }
 
 void CBasePlayerBoyFactory::settingBody(CPlayerCharacterBoy* pChara){
@@ -338,6 +360,28 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 //------------------------------------------------------------------------------------------
 
+
+	//右向きジャンプ状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::JUMP_RIGHT, new CPlayerJumpRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+	//左向きジャンプ状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::JUMP_LEFT, new CPlayerJumpLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//右向き落下状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::FALL_RIGHT, new CPlayerFallRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+	//左向き落下状態を作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::FALL_LEFT, new CPlayerFallLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
 
 	//右向き攻撃状態を作成した状態を登録していく
 	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerAttackRightState(pChara, NULL));
