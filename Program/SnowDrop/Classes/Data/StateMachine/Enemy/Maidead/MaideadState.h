@@ -33,7 +33,8 @@ public:
 	*/
 	CMaideadState(	CEnemyCharacter* const pOwner,
 					CPlayerCharacterBoy* const pPlayer,
-					CGirlCharacter* const pGirl);
+					CGirlCharacter* const pGirl
+		);
 
 	/**
 	* @desc デストラクタ
@@ -75,7 +76,8 @@ public:
 	*/
 	CMaideadIdleState(	CEnemyCharacter* const pOwner,
 						CPlayerCharacterBoy* const pPlayer,
-						CGirlCharacter* const pGirl);
+						CGirlCharacter* const pGirl
+		);
 
 	/**
 	* @desc デストラクタ
@@ -122,7 +124,9 @@ public:
 	*/
 	CMaideadWanderingState(	CEnemyCharacter* const pOwner,
 							CPlayerCharacterBoy* const pPlayer,
-							CGirlCharacter* const pGirl);
+							CGirlCharacter* const pGirl
+	
+	);
 
 	/**
 	* @desc デストラクタ
@@ -154,5 +158,49 @@ private:
 	//うろうろする方向
 	int m_vec = 1;
 };
+
+//==========================================
+//
+// Class: CMaideadChaseState
+//
+// Maidead 追跡 状態 クラス
+//
+//						Author Osumi
+// 2016/12/27
+//==========================================
+class CMaideadChaseState : public CMaideadState
+{
+public:
+	/**
+	* @desc コンストラクタ
+	*/
+	CMaideadChaseState(CEnemyCharacter* const pOwner,
+		CPlayerCharacterBoy* const pPlayer,
+		CGirlCharacter* const pGirl
+	);
+
+	/**
+	* @desc デストラクタ
+	*/
+	virtual ~CMaideadChaseState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void);
+
+	/**
+	* @desc 更新処理
+	*/
+	void update(void);
+
+	/**
+	* @desc 状態が変わるときの処理
+	*/
+	void onChangeEvent(void);
+
+};
+
+
 
 //EOF

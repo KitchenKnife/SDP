@@ -122,7 +122,6 @@ void CStateMachine::update(void)
 		//現在のステートの終了処理を行う
 		this->m_pNowState->onChangeEvent();
 
-
 		std::map<int, CStateBase* >::iterator itr = this->m_mapState.find(this->m_pNowState->getNextKey());
 		if (itr == this->m_mapState.end())
 		{

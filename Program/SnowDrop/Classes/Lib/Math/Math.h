@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "cocos2d.h"
 #include "Constants.h"
+#include "Data/Enum/EnumEnemy.h"
 
 //=================================
 //　前方宣言
@@ -27,14 +28,6 @@ private:
 public:
 	//デストラクタ
 	~CCustomMath();
-
-	//ターゲットの種類
-	enum class TARGET_TYPE :int {
-		NONE,
-		BOY,
-		GIRL,
-		BOTH
-	};
 
 	//インスタンスの取得
 	static CCustomMath* getInstance();
@@ -68,11 +61,12 @@ public:
 	virtual bool seachAndSelectTarget(CCharacter* pChara);
 
 	/*
-	* @desc ターゲットが間合いにいるかどうかのか確認と追跡状態への移行
+	* @desc ターゲットとの間合いの確認
 	* @param アクションを行うキャラクター
 	* @param ターゲットのタイプ
+	* @return ターゲットとの間合い
 	*/
-	virtual void checkTargetAndSwitchChase(CCharacter* pChara, TARGET_TYPE type);
+	virtual float checkTargetRange(CCharacter* pChara, TARGET_TYPE type);
 
 	/*
 	* @desc キャラからターゲットへのX方向の正規化ベクトルを求めて水平移動速度を設定

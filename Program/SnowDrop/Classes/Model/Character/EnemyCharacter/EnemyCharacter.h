@@ -61,8 +61,23 @@ public:
 	 */
 	void hits(CCharacter* pChara)override;
 
+
 	//================================================
 	//	定数に関するコードの追加はここから
 	//================================================
+
 	
+
+	//主なターゲット
+	TARGET_TYPE m_targetType = TARGET_TYPE::NONE;
+
+	//現在の優先攻撃対象
+	CCharacter* m_currentTarget = NULL;
+
+	//プレイヤーを感知、追跡する範囲
+	float m_chaseRange = 0;
+
+	//攻撃範囲
+	float m_attackRange = 0;
+
 };
