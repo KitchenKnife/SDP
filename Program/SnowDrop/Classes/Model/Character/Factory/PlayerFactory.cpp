@@ -56,8 +56,8 @@ std::vector<CCollisionArea* >* CPlayerBoyPartsFactory::getCollisionAreas() {
 *	@return 状態遷移データ
 *	@author Shinya Ueba
 */
-CStateMachine*	CPlayerBoyPartsFactory::getStateMachine(void)
-{
+CStateMachine*	CPlayerBoyPartsFactory::getStateMachine(void){
+	//ステートマシーンデータの作成
 	return new CStateMachine();
 }
 
@@ -461,10 +461,6 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	pChara->m_pStateMachine->registerState((int)PLAYER_STATE::GRASP_WALK_LEFT, new CPlayerGraspWalkLeftState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
-
-
-
-
 
 	//状態を待機状態に変更
 	pChara->m_state = (int)PLAYER_STATE::IDLE_RIGHT;
