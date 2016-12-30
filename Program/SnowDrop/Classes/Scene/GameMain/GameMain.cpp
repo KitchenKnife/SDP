@@ -152,7 +152,7 @@ CGameMain::~CGameMain() {
 bool CGameMain::init() {
 
 	// êeÉåÉCÉÑÅ[ÇÃèâä˙âª
-	if ( Layer::init() == false ) {
+	if ( CCLayerColor::initWithColor(ccc4(51, 75, 112, 255)) == false ) {
 		return false ;
 	}
 
@@ -167,6 +167,8 @@ bool CGameMain::init() {
 	this->scheduleUpdate() ;
 	
 	
+
+
 	//=========================================================================
 	//
 	//	Ç±Ç±Ç©ÇÁèâä˙âªÅAèâä˙ê›íËÇÃÉRÅ[ÉhÇí«â¡
@@ -266,10 +268,14 @@ bool CGameMain::init() {
 	//ÉåÉCÉÑÅ[Ç…ÉÅÉjÉÖÅ[Çìoò^Ç∑ÇÈ
 	this->addChild(pointerMenu);
 
+
+	//GLProgramState* pGl = GLProgramState::getOrCreateWithGLProgram();
+
+	
+
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 	// ÉfÉoÉbÉNópÅ™Å™Å@è¡ÇµÇ‹Ç∑
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
-
 
 	
 

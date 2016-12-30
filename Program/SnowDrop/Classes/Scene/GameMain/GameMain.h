@@ -22,7 +22,7 @@
  *		‰‚ß‚Í‚±‚Ì•”•ª‚É‘S‚Ä‚ğ‘‚¢‚Ä‚¢‚­
  *
  */
-class CGameMain : public cocos2d::Layer
+class CGameMain : public cocos2d::CCLayerColor
 {
 public:
 	//=========================================================================
