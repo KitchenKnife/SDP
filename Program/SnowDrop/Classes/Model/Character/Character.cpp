@@ -103,3 +103,37 @@ void CCharacter::update(float deltaTime) {
 	this->applyFunc();
 }
 
+/**
+*	@desc ‚g‚o‚ÌŒ¸­
+*	@param Œ¸­‚·‚é’li‘ŠŽè‚ÌUŒ‚—Íj
+*	@author		Shinya Ueba
+*/
+
+void CCharacter::decreaseHP(int attackPt) {
+	this->m_status.decreaseHP(attackPt);
+
+	if (this->m_status.getHp() <= 0)
+	{
+		this->m_isAlive = false;
+	}
+}
+
+/**
+*	@desc ‚g‚o‚Ì‘S‰ñ•œ
+*	@author		Shinya Ueba
+*/
+
+void CCharacter::recoveryHp() {
+
+	this->m_status.recoveryHp();
+}
+
+/**
+*	@desc ‚g‚o‚Ì‚P‰ñ•œ
+*	@author		Shinya Ueba
+*/
+void CCharacter::cureHp(int hp) {
+	this->m_status.CureHp(hp);
+}
+
+//EOF

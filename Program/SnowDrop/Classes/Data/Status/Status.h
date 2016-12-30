@@ -75,6 +75,11 @@ public:
 
 	void decreaseHP(int attackPt) {
 		this->m_hp -= attackPt;
+
+		if (this->m_hp < 0)
+		{
+			this->m_hp = 0;
+		}
 	}
 
 	/**

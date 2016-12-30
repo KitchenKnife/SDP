@@ -52,8 +52,16 @@ void CDamageCharacter::collisionAll() {
 		for (CCharacter* pChara : (*pCharacters)) {
 			if (pChara->m_charaType == (int)CHARACTER_TYPE::ENEMY)
 			{
-				if (this->collision(pChara)) {
-					pChara->m_activeFlag = false;
+				//¶‚«‚Ä‚¢‚½‚ç
+				if (pChara->m_isAlive)
+				{
+					if (this->collision(pChara)) {
+
+						//UŒ‚—Í•ª‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚é
+						pChara->decreaseHP(this->m_status.getAttackPt());
+						//UŒ‚‚ğó‚¯‚Ä‚¢‚éó‘Ôƒtƒ‰ƒO‚ğã‚°‚é
+						pChara->m_underAttack = true;
+					}
 				}
 			}
 		}

@@ -64,8 +64,8 @@ void CEnemyCharacter::animationFunc() {
 //衝突判定処理
 void CEnemyCharacter::collisionAll() {
 
-	//死んでいたら飛ばす
-	if (this->m_isAlive == false)
+	//有効フラグが立っていたら
+	if (this->m_activeFlag == false)
 		return;
 
 	//空間との衝突判定を行う

@@ -81,6 +81,11 @@ void CMaideadFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, true));
 	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 0, 256, 256));
 
+
+	//Ž€–S‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 768, 256, 256));
+
 }
 
 template <class Ty>
@@ -221,6 +226,28 @@ void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 //	‚±‚±‚Ü‚Å
 //
 //--------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------
+//
+//	UŒ‚‚ðŽó‚¯‚½ó‘Ô‚ðÝ’è‚·‚é ‚±‚±‚©‚ç
+//
+//--------------------------------------------------------------------
+
+	//‘Ò‹@ó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::UNDER_ATTACK, new CMaideadUnderAttackState(pChara, NULL, NULL));
+
+//--------------------------------------------------------------------
+//
+//	Ž€–Só‘Ô‚ðÝ’è‚·‚é ‚±‚±‚©‚ç
+//
+//--------------------------------------------------------------------
+
+	//Ž€–Só‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::DEAD, new CMaideadDeadState(pChara, NULL, NULL));
+
 
 	//ÅŒã‚ÉÅ‰‚Ìó‘Ô‚ðÝ’è‚·‚éIIIII
 	pChara->m_pStateMachine->setStartState((int)ENEMY_MAIDEAD_STATE::IDLE);
