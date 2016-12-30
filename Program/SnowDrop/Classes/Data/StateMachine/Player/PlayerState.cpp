@@ -667,6 +667,13 @@ void CPlayerWalkRightState::update(void)
 		return;
 	}
 
+	//プレイヤーが下へ移動していたら
+	if (this->m_pPlayer->m_pMove->m_vel.y < 0.0f) {
+		//落下状態へ移行する
+		this->toFallRight();
+
+		return;
+	}
 
 
 	//武器を装備
@@ -767,6 +774,14 @@ void CPlayerWalkLeftState::update(void)
 		return;
 	}
 
+	//プレイヤーが下へ移動していたら
+	if (this->m_pPlayer->m_pMove->m_vel.y < 0.0f) {
+		//落下状態へ移行する
+		this->toFallRight();
+
+		return;
+	}
+
 
 	//武器を装備
 	if (pointerInputController->getEquipFlag())
@@ -848,6 +863,8 @@ void CPlayerJumpRightState::start(void)
 {
 	//ジャンプアクションのスタート関数を開始
 	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->start();
+
+	this->m_velX = this->m_pPlayer->m_pMove->m_vel.x;
 }
 
 /**
@@ -857,8 +874,11 @@ void CPlayerJumpRightState::update(void)
 {
 	//優先順で処理していく
 
+	//プレイヤーの速度を維持させる
+	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
+
 	//プレイヤーが下へ移動していたら
-	if (this->m_pPlayer->m_pMove->m_vel.y < 0.0f) {
+	if (this->m_pPlayer->m_pMove->m_vel.y <= 0.0f) {
 		//落下状態へ移行する
 		this->toFallRight();
 
@@ -911,6 +931,8 @@ void CPlayerJumpLeftState::start(void)
 {
 	//ジャンプアクションのスタート関数を開始
 	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->start();
+
+	this->m_velX = this->m_pPlayer->m_pMove->m_vel.x;
 }
 
 /**
@@ -920,8 +942,12 @@ void CPlayerJumpLeftState::update(void)
 {
 	//優先順で処理していく
 
+
+	//プレイヤーの速度を維持させる
+	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
+
 	//プレイヤーが下へ移動していたら
-	if (this->m_pPlayer->m_pMove->m_vel.y < 0.0f) {
+	if (this->m_pPlayer->m_pMove->m_vel.y <= 0.0f) {
 		//落下状態へ移行する
 		this->toFallLeft();
 
@@ -972,7 +998,7 @@ CPlayerFallRightState::~CPlayerFallRightState(void) {}
 */
 void CPlayerFallRightState::start(void)
 {
-
+	this->m_velX = this->m_pPlayer->m_pMove->m_vel.x;
 }
 
 /**
@@ -981,6 +1007,10 @@ void CPlayerFallRightState::start(void)
 void CPlayerFallRightState::update(void)
 {
 	//優先順で処理していく
+
+
+	//プレイヤーの速度を維持させる
+	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
 
 	//プレイヤーが下へ移動していたら
 	if (this->m_pPlayer->m_pMove->m_vel.y == 0.0f) {
@@ -997,7 +1027,7 @@ void CPlayerFallRightState::update(void)
 */
 void CPlayerFallRightState::onChangeEvent(void)
 {
-	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+	this->m_pPlayer->m_pMove->m_vel.x = 0.0f;
 
 
 	this->m_isNext = false;
@@ -1028,7 +1058,7 @@ CPlayerFallLeftState::~CPlayerFallLeftState(void) {}
 */
 void CPlayerFallLeftState::start(void)
 {
-
+	this->m_velX = this->m_pPlayer->m_pMove->m_vel.x;
 }
 
 /**
@@ -1037,6 +1067,9 @@ void CPlayerFallLeftState::start(void)
 void CPlayerFallLeftState::update(void)
 {
 	//優先順で処理していく
+
+	//プレイヤーの速度を維持させる
+	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
 
 	//プレイヤーが下へ移動していたら
 	if (this->m_pPlayer->m_pMove->m_vel.y == 0.0f) {
@@ -1053,7 +1086,7 @@ void CPlayerFallLeftState::update(void)
 */
 void CPlayerFallLeftState::onChangeEvent(void)
 {
-	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+	this->m_pPlayer->m_pMove->m_vel.x = 0.0f;
 
 
 	this->m_isNext = false;
@@ -1067,7 +1100,7 @@ void CPlayerFallLeftState::onChangeEvent(void)
 // プレイヤー 右向き　攻撃 状態 クラス
 //
 // 2016/12/25
-//						Author Shinya Ueba
+//						Author Harada
 //==========================================
 /**
  * @desc	コンストラクタ

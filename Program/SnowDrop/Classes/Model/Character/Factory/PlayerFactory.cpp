@@ -190,12 +190,12 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_LEFT]->addChipData(new CChip(512, 384, 128, 128));
 
 	//右落下 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_RIGHT]->addChipData(new CChip(0, 256, 128, 128));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_RIGHT]->addChipData(new CChip(0, 384, 128, 128));
 
 	//左落下 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_LEFT]->addChipData(new CChip(0, 128, 128, 128));
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_LEFT]->addChipData(new CChip(512, 384, 128, 128));
 
 	//================================================
 	// 攻撃のアニメーション設定

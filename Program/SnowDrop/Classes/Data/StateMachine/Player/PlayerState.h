@@ -373,6 +373,9 @@ public:
 	*/
 	void onChangeEvent(void)override;
 
+	//ジャンプ中のX軸速度
+	float m_velX;
+
 private:
 };
 
@@ -411,6 +414,9 @@ public:
 	* @desc	状態が変わるときの処理
 	*/
 	void onChangeEvent(void)override;
+
+	//ジャンプ中のX軸速度
+	float m_velX;
 
 private:
 };
@@ -451,6 +457,9 @@ public:
 	*/
 	void onChangeEvent(void)override;
 
+	//ジャンプ中のX軸速度
+	float m_velX;
+
 private:
 };
 
@@ -489,6 +498,9 @@ public:
 	* @desc	状態が変わるときの処理
 	*/
 	void onChangeEvent(void)override;
+
+	//ジャンプ中のX軸速度
+	float m_velX;
 
 private:
 };
