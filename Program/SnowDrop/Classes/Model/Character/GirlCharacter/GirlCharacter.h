@@ -82,10 +82,23 @@ public:
 		FREE	= 0,	//なにもなし
 	};
 
-	
 
-	//少女の状態
-	int m_state = (int)GIRL_STATE::STAND;
+	/**
+	*	@desc 手を繋ぐ状態フラグ設定
+	*	@param true...手を繋いでる false...手を離す
+	*/
+	void setHoldHandsFlag(bool flag);
 
+	/**
+	*	@desc 手を繋ぐ状態フラグ取得
+	*	@return true...手を繋いでる false...手を離す
+	*/
+	bool getHoldHandsFlag(void);
+
+
+private:
+
+	//手を繋ぎフラグ
+	bool m_flagHoldHands = false;
 
 };

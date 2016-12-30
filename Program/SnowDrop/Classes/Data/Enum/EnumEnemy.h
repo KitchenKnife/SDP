@@ -38,11 +38,13 @@ enum class TARGET_TYPE :int {
 //
 //
 //---------------------------------------------------------
-enum class ENEMY_MAIDEAD_STATE :int 
+enum class ENEMY_MAIDEAD_STATE :int
 {
 	IDLE = 0,//ë“ã@èÛë‘
 	WANDERING = 1,
 	CHASE = 2,
+	UNDER_ATTACK = 3,	//çUåÇÇéÛÇØÇƒÇ¢ÇÈèÛë‘
+	DEAD = 4,			//éÄñSèÛë‘
 };
 
 //---------------------------------------------------------
@@ -62,6 +64,7 @@ enum class ENEMY_MAIDEAD_ANIMATION_STATE :int
 	IDLE = 0,//ë“ã@èÛë‘
 	WANDERING = 1,
 	CHASE = 2,
+	DAED = 3,
 };
 
 enum class ENEMY_MAIDEAD_ACTION_STATE :int
@@ -69,6 +72,7 @@ enum class ENEMY_MAIDEAD_ACTION_STATE :int
 	IDLE = 0,//ë“ã@èÛë‘
 	WANDERING = 1,
 	CHASE = 2,
+	UNDER_ATTACK = 3,//çUåÇéÛÇØÇΩ
 };
 
 

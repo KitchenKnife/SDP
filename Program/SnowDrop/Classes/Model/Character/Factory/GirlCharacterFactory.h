@@ -1,5 +1,6 @@
 #pragma once
 #include "Model/Character/GirlCharacter/GirlCharacter.h"
+#include "Model\Character\Factory\CharacterFactory.h"
 
 //=============================================================
 // 少女キャラクターパーツ製造工場

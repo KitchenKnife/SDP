@@ -8,6 +8,9 @@
 #include "GameMain.h"
 #include "Model/Map/Map.h"
 
+//ÉLÉÉÉâÉNÉ^Å[èWçáëÃ
+#include "Model\Character\CharacterAggregate.h"
+
 //ÉvÉåÉCÉÑÅ[çHèÍ
 #include "Model/Character/Factory/PlayerFactory.h"
 
@@ -149,7 +152,7 @@ CGameMain::~CGameMain() {
 bool CGameMain::init() {
 
 	// êeÉåÉCÉÑÅ[ÇÃèâä˙âª
-	if ( Layer::init() == false ) {
+	if ( CCLayerColor::initWithColor(ccc4(51, 75, 112, 255)) == false ) {
 		return false ;
 	}
 
@@ -164,6 +167,8 @@ bool CGameMain::init() {
 	this->scheduleUpdate() ;
 	
 	
+
+
 	//=========================================================================
 	//
 	//	Ç±Ç±Ç©ÇÁèâä˙âªÅAèâä˙ê›íËÇÃÉRÅ[ÉhÇí«â¡
@@ -181,11 +186,11 @@ bool CGameMain::init() {
 	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
 
 	////ÉÅÉCÉìÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
-	this->m_pMainLayer = Layer::create();
+	this->m_pMainLayer = LayerColor::create(ccc4(51, 75, 112, 255));
 	this->addChild(this->m_pMainLayer);
 
 	////UIÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
-	this->m_pUILayer = Layer::create();
+	this->m_pUILayer = LayerColor::create();
 	this->addChild(this->m_pUILayer,-1);
 
 	//
@@ -209,20 +214,21 @@ bool CGameMain::init() {
 
 	
 	// ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨
-	CCharacter* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
+	CPlayerCharacterBoy* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
 	////CCharacterAggregateÇ…ÉvÉåÉCÉÑÅ[Çí«â¡
 	CCharacterAggregate::getInstance()->add(pPlayerChara);
+	//éQè∆êÊÇ∆ÇµÇƒìoò^
+	CCharacterAggregate::getInstance()->setPlayer(pPlayerChara);
 	////éÊÇËïtÇØ
 	this->m_pMainLayer->addChild(pPlayerChara);
 
 
 	//// è≠èóÇÃê∂ê¨Ç∆éÊÇËïtÇØ
-	CCharacter* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
-	
-	
+	CPlayerCharacterGirl* playerGirl = CPlayerGirlFactoryManager::getInstance()->create((int)GIRL_TYPE::BASE);
 	//CCharacterAggregateÇ…ÉvÉåÉCÉÑÅ[Çí«â¡
 	CCharacterAggregate::getInstance()->add(playerGirl);
-
+	//éQè∆êÊÇ∆ÇµÇƒìoò^
+	CCharacterAggregate::getInstance()->setGirl(playerGirl);
 	playerGirl->m_pMove->m_pos.set(1200,500);
 
 	//éÊÇËïtÇØ
@@ -231,10 +237,10 @@ bool CGameMain::init() {
 
 	////èâä˙âÊñ Ç…Ç¢ÇÈìGÇÃê∂ê¨
 	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
-	//ëSëÃÇÃägëÂ
-	this->setScale(SCALE_MAIN);
-	//ägëÂÇ…î∫Ç§âÊñ à íuÇÃê›íË
-	this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
+	////ëSëÃÇÃägëÂ
+	//this->setScale(SCALE_MAIN);
+	////ägëÂÇ…î∫Ç§âÊñ à íuÇÃê›íË
+	//this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
 
 
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
@@ -262,10 +268,14 @@ bool CGameMain::init() {
 	//ÉåÉCÉÑÅ[Ç…ÉÅÉjÉÖÅ[Çìoò^Ç∑ÇÈ
 	this->addChild(pointerMenu);
 
+
+	//GLProgramState* pGl = GLProgramState::getOrCreateWithGLProgram();
+	this->m_pMainLayer->runAction(CCTintTo::create(1.0, 255, 0, 0));
+	
+
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 	// ÉfÉoÉbÉNópÅ™Å™Å@è¡ÇµÇ‹Ç∑
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
-
 
 	
 
@@ -303,21 +313,6 @@ void CGameMain::scroll() {
 	if (pt.x > WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x) {
 		//å¥ì_Çí¥Ç¶ÇΩï™Ç…ê›íËÇ∑ÇÈ
 		pt.x = WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x;
-
-
-		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
-		// É_ÉÅÅ[ÉWÉLÉÉÉâê∂ê¨ämîF
-		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
-		//èoåÇÉfÅ[É^ÇçÏê¨
-		CDamageLaunchData* pLaunchData = new CDamageLaunchData(pPlayerChara, 3);
-
-		//èoåÇÉgÉäÉKÅ[Çê∂ê¨ÇµÅAÉ_ÉÅÅ[ÉWèoåÇÉfÅ[É^Çê›íË
-		CDamageLaunchTrigger* pTrigger = new CDamageLaunchTrigger(pLaunchData);
-
-		//èoåÇÉgÉäÉKÅ[ÇèoåÇÉXÉPÉWÉÖÅ[ÉãÇ∆ÇµÇƒí«â¡Ç∑ÇÈ
-		CLaunchScheduler::getInstance()->m_pLauncher->add(pTrigger);
-
-		//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
 	}
 
 	if (pt.x < WINDOW_RIGHT * 1/3 - pPlayerChara->m_pMove->m_pos.x) {

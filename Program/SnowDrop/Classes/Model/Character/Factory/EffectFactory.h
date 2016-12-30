@@ -1,5 +1,6 @@
 #pragma once
 #include "Data/Effect/Effect.h"
+#include "Model\Character\Factory\CharacterFactory.h"
 
 //================================================
 // エフェクトパーツ製造工場

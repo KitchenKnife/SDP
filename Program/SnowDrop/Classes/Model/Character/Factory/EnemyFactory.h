@@ -10,6 +10,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Character/EnemyCharacter/EnemyCharacter.h"
+#include "Model\Character\Factory\CharacterFactory.h"
 #include <map>
 
 //================================================
@@ -215,6 +216,41 @@ public:
 };
 
 //================================================
+//　マリス工場
+//================================================
+template <class Ty>
+class CMaliceFactory :public CEnemyCreateFactory<Ty> {
+public:
+	//デストラクタ
+	~CMaliceFactory() {}
+
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
+	//画像の設定
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CEnemyCharacter* pCharacter)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
+
+};
+
+
+//================================================
 // 敵工場群を管理するクラス
 //	（Singleton）
 //================================================
@@ -227,6 +263,9 @@ private:
 
 		//コウモリ生成工場を生成し [key : BAT] に取り付ける
 		m_factories[ENEMY_TYPE::BAT] = new CBatFactory<CEnemyCharacter>();
+
+		//コウモリ生成工場を生成し [key : BAT] に取り付ける
+		m_factories[ENEMY_TYPE::MALICE] = new CMaliceFactory<CEnemyCharacter>();
 	}
 
 	//共有のインスタンス

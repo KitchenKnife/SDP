@@ -59,7 +59,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 
 // プレイヤー
 //#define IMAGE_PLAYER			"Images/player.png"
-#define IMAGE_PLAYER			"Images/Boy/1knight1ss.png"
+#define IMAGE_PLAYER			"Images/Boy/ProvisionalKnight_2.png"
 
 //消失エフェクト
 #define IMAGE_DIAPPEAR_EFFECT	"Images/bakuhatsuM01.png"
@@ -68,8 +68,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define IMAGE_SAMPLE_WEAPON		"Images/slash_sample.png"
 
 //少女
-//#define IMAGE_PLAYER_GIRL		"Images/shoujo.png"
-#define IMAGE_PLAYER_GIRL       "Images/1s.png"
+#define IMAGE_PLAYER_GIRL       "Images/Girl/1s.png"
 
 //敵
 //#define IMAGE_ENEMY			"Images/kuribo.png"
@@ -84,6 +83,12 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 // 
 #define IMAGE_BACK_GROUND		"Images/castle_exit.jpg"
 #define IMAGE_BACK_HORIZON		"Images/gaikan_map.png"
+
+//=========================================================================
+//	パーティクルファイルのマクロはここから書く
+//=========================================================================
+#define PARTICLE_GRAPS_MARK		"Particle/circle.plist"
+
 
 //=========================================================================
 //	タグ
@@ -132,7 +137,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //	その他の外部ファイルのマクロはここから書く
 //=========================================================================
 //#define MAP_DATA_SAMPLE "MapData/sampleMapData.tmx"
-#define MAP_DATA_SAMPLE "MapData/MapData.tmx"
+#define MAP_DATA_SAMPLE "MapData/st1Map.tmx"
 //#define MAP_DATA_SAMPLE "MapData/ST02_2.tmx"
 
 /**

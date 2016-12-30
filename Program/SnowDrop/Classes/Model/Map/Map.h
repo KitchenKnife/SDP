@@ -39,7 +39,7 @@ enum class ENEMY_TYPE :int {
 	KURIBO		= 101,	//通常クリボー
 	MAIDEAD		= 102,	//メイド
 	BAT			= 103,	//コウモリ
-	REDMAIDEAD	= 104,	//赤クリボー
+	MALICE		= 104,	//マリス
 	BLUEMAIDEAD = 105,	//青クリボー
 
 };

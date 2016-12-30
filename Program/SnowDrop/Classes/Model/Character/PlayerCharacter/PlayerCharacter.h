@@ -106,8 +106,29 @@ public:
 	 */
 	void inputFunc();
 
+	/**
+	*	@desc 手つなぎ可能マークの設定
+	*	@param パーティクルインスタンス
+	*	@author	Shinya Ueba
+	*/
+	void setGrapsMark(cocos2d::CCParticleSystemQuad* const pGrapsMark);
+
+	/**
+	*	@desc 手つなぎ可能マークの設定
+	*	@param パーティクルインスタンス
+	*	@author	Shinya Ueba
+	*/
+	cocos2d::CCParticleSystemQuad* getGrapsMark(void);
+
+
 private:
 	//手をつなぐことが可能かどうか true...可能 false 無理
 	bool m_enableHoldHands = false;
+
+	//手繋ぎ可能マークのインスタンス
+	cocos2d::CCParticleSystemQuad* m_pGrapsMark = NULL;
+	//
+	int m_durationGrapsMark = 0;
+	int m_counterGrapsMark = 0;
 
 };

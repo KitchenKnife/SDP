@@ -12,6 +12,7 @@
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "GirlCharacterFactory.h"
 #include "Data\StateMachine\Girl\GirlState.h"
+#include "Data\Enum\EnumGirl.h"
 
 //=====================================================
 // 少年キャラクターパーツクラス工場
@@ -163,13 +164,37 @@ void CBasePlayerGirlFactory::settingTexture(CPlayerCharacterGirl* pChara) {
 }
 
 void CBasePlayerGirlFactory::settingAnimations(CPlayerCharacterGirl* pChara) {
-	//待機状態のアニメーションを設定（配列番号０）
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterGirl::GIRL_STATE::NONE]->addChipData(new CChip(0, 512, 256, 256));
 
-	//待機状態のアニメーションを設定（配列番号1）
+	
+	//開始時のアニメーションの状態
+	pChara->m_animationState = (int)GIRL_ANIMATION_STATE::IDLE_LEFT;
+
+
+	//右向き待機状態のアニメーションを設定（配列番号０）
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
-	(*pChara->m_pAnimations)[(int)CPlayerCharacterGirl::GIRL_STATE::STAND]->addChipData(new CChip(0, 512, 256, 256));
+	(*pChara->m_pAnimations)[(int)GIRL_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(0, 768, 256, 256));
+
+	//左向き待機状態のアニメーションを設定（配列番号1）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, true));
+	(*pChara->m_pAnimations)[(int)GIRL_ANIMATION_STATE::IDLE_LEFT]->addChipData(new CChip(0, 512, 256, 256));
+
+	//右向き歩行状態のアニメーションを設定（配列番号2）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
+	(*pChara->m_pAnimations)[(int)GIRL_ANIMATION_STATE::WALK_RIGHT]->addChipData(new CChip(0, 256, 256, 256));
+
+	//左向き歩行状態状態のアニメーションを設定（配列番号3）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
+	(*pChara->m_pAnimations)[(int)GIRL_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 0, 256, 256));
+
+	//右向き待機状態のアニメーションを設定（配列番号4）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false,2));
+	(*pChara->m_pAnimations)[(int)GIRL_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(512, 1536, 256, 256));
+
+	//左向き待機状態のアニメーションを設定（配列番号5）
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
+	(*pChara->m_pAnimations)[(int)GIRL_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 1536, 256, 256));
+	
+
 }
 
 void CBasePlayerGirlFactory::settingPhysicals(CPlayerCharacterGirl* pChara) {
@@ -239,22 +264,67 @@ void CBasePlayerGirlFactory::settingStateMachine(CPlayerCharacterGirl* pChara)
 {
 	//必要な状態を作成していく
 
-	//立ち状態
-	CStateBase* pStandState = new CGirlStandState();
-	//作成した状態を登録していく
-	pChara->m_pStateMachine->registerState((int)CPlayerCharacterGirl::GIRL_STATE::STAND, pStandState);
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 待機状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::IDLE_RIGHT, new CGirlIdleRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::IDLE_LEFT, new CGirlIdleLeftState(pChara));
+
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 歩行状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	//pChara->m_pStateMachine->registerState((int)GIRL_STATE::WALK_RIGHT, new CGirlIdleRightState(pChara));
+	//左向き
+	//pChara->m_pStateMachine->registerState((int)GIRL_STATE::WALK_LEFT, new CGirlIdleLeftState(pChara));
+
+
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 手を繋ぐ状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_RIGHT, new CGirlGraspRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_LEFT, new CGirlGraspLeftState(pChara));
+
+
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 手を繋いで待機状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_IDLE_RIGHT, new CGirlGraspIdleRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_IDLE_LEFT, new CGirlGraspIdleLeftState(pChara));
+
+//---------------------------------------------------------------------------------------------------------------------
+//
+// 手を繋いで歩く状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_WALK_RIGHT, new CGirlGraspWalkRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_WALK_LEFT, new CGirlGraspWalkLeftState(pChara));
 
 
 
 	//最後に最初の状態を設定する！！！！！
-	pChara->m_pStateMachine->setStartState((int)CPlayerCharacterGirl::GIRL_STATE::STAND);
+	pChara->m_state = (int)GIRL_STATE::IDLE_LEFT;
+	pChara->m_pStateMachine->setStartState(pChara->m_state);
 }
 
 
 void CBasePlayerGirlFactory::settingInitialize(CPlayerCharacterGirl* pChara) {
-	//状態の設定
-	pChara->m_state = (int)CPlayerCharacterGirl::GIRL_STATE::STAND;
-
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;
 

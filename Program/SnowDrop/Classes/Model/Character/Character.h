@@ -4,9 +4,6 @@
  *	2016/11/07	Osumi And Harada And Shinya Ueba
  *
  */
-
-/*collision(CCharacter )*/
-
 #pragma once
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //　追加のインクルードはここから
@@ -109,6 +106,10 @@ public:
 	//キャラクターのアクションの状態
 	int m_actionState = 0;
 
+	//攻撃を受けているかどうかのフラグ
+	//true...受けている　false...受けていない
+	bool m_underAttack = false;
+
 protected:
 	//================================================ 
 	// キャラクタークラスの基本的な関数の列挙
@@ -144,6 +145,25 @@ public:
 	 */
 	virtual void hits(CCharacter* pChara) = 0;
 
+	/**
+	*	@desc ＨＰの減少
+	*	@param 減少する値（相手の攻撃力）
+	*	@author		Shinya Ueba
+	*/
+	void decreaseHP(int attackPt);
+
+	/**
+	*	@desc ＨＰの全回復
+	*	@author		Shinya Ueba
+	*/
+	void recoveryHp(void);
+
+	/**
+	*	@desc ＨＰの１回復
+	*	@author		Shinya Ueba
+	*/
+	void cureHp(int hp);
+
 	
 
 	//================================================ 
@@ -172,106 +192,4 @@ public:
 	virtual void collisionLeftCallback(int event) {}
 };
 
-//=============================================
-// キャラクターの集合体
-//	シングルトン化させてほかのファイルで扱えるようにしておくこと
-//
-//	2016/12/22
-//									Author Harada
-//=============================================
-class CCharacterAggregate {
-private:
-	//=============================================
-	// シングルトン設定はここから
-	//=============================================
-	//共有インスタンス
-	static CCharacterAggregate* m_pSareedAggregate;
-
-	//コンストラクタ
-	CCharacterAggregate();
-
-public:
-	//デストラクタ
-	~CCharacterAggregate();
-
-	//共有インスタンスの取得
-	static CCharacterAggregate* getInstance();
-	//共有インスタンスの破棄
-	static void removeInstance();
-	//=============================================
-	// シングルトン設定はここまで
-	//=============================================
-
-private:
-	//=============================================
-	// Aggregate設定はここから
-	//=============================================
-	//キャラクターの集まり
-	std::vector<CCharacter*>* m_pCharacters = NULL;
-
-public:
-	/**
-	 * @desc	キャラタクーの集まりの参照を設定
-	 * @param	設定するキャラクターの集まりのアドレス
-	 */
-	void set(std::vector<CCharacter*>* pCharacters);
-
-	/**
-	 * @desc	キャラタクーの集まりのを取得
-	 * @return	キャラクターの集まり
-	 */
-	std::vector<CCharacter*>* get();
-
-	/**
-	 * @desc	配列番号から指定したキャラタクー１体を取得
-	 * @param	添え字番号
-	 * @return	キャラクター
- 	 */
-	CCharacter* getAt(int index);
-
-	/**
-	 * @desc	タグから指定したキャラタクー１体を取得
-	 * @param	タグ
-	 * @return	キャラクター
-	 * @tips	存在しなければNULLを返す
-	 */
-	CCharacter* getAtTag(int tag);
-
-	/**
-	 * @desc	キャラクターの追加
-	 * @param	追加するキャラクター
-	 */
-	void add(CCharacter* pCharacter);
-
-	/**
-	 * @desc	キャラタクーの集まりの取り付けられている数を取得
-	 * @param	取り付けられている数
-	 */
-	int getSize();
-};
-
-//================================================
-// キャラクターパーツクラス工場
-//	（AbstractFactory）
-//
-//	2016/12/22
-//									Author Harada
-//================================================
-class CCharacterPartsFactory {
-public:
-	//デストラクタ
-	virtual ~CCharacterPartsFactory() {}
-
-	//移動データの実体を生成して返す
-	virtual CMove* getMove() = 0;
-	//アニメーションデータ群の実体を生成して返す
-	virtual std::vector<CAnimation* >* getAnimations() = 0;
-	//物理演算データ群の実体を生成して返す
-	virtual std::vector<CPhysical* >* getPhysicals() = 0;
-	//実体データの実体を生成して返す
-	virtual CBody* getBody() = 0;
-	//衝突判定空間データ群の実体を生成して返す
-	virtual std::vector<CCollisionArea* >* getCollisionAreas() = 0;
-	//状態遷移データの生成と取得
-	virtual	CStateMachine*	getStateMachine(void) { return NULL; }
-};
+//EOF

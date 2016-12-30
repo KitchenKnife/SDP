@@ -1,10 +1,10 @@
 /**
-*
-* ActionController.cpp
-*
-*	2016 / 11 / 07	Osumi
-*
-*/
+ *
+ * ActionController.cpp
+ *
+ * 	2016 / 11 / 07	Osumi
+ *
+ */
 #include "ActionJump.h"
 #include "Model/Character/Character.h"
 

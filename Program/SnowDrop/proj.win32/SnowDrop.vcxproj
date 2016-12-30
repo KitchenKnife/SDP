@@ -173,9 +173,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Lib\Input\InputManager.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputController.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\KeyboardInputType.cpp" />
-    <ClCompile Include="..\Classes\Lib\Math\Math.cpp" />
+    <ClCompile Include="..\Classes\Lib\Math\CustomMath.cpp" />
     <ClCompile Include="..\Classes\Lib\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Character.cpp" />
+    <ClCompile Include="..\Classes\Model\Character\CharacterAggregate.cpp" />
     <ClCompile Include="..\Classes\Model\Character\DamageCharacter\DamageCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\DamageFactory.cpp" />
@@ -211,6 +212,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h" />
+    <ClInclude Include="..\Classes\Data\Enum\EnumGirl.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h" />
     <ClInclude Include="..\Classes\Data\LaunchData\LaunchData.h" />
     <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h" />
@@ -229,9 +231,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Lib\Input\InputManager.h" />
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputController.h" />
     <ClInclude Include="..\Classes\Lib\Input\KeyboardInputType.h" />
-    <ClInclude Include="..\Classes\Lib\Math\Math.h" />
+    <ClInclude Include="..\Classes\Lib\Math\CustomMath.h" />
     <ClInclude Include="..\Classes\Lib\Sound\AudioManager.h" />
     <ClInclude Include="..\Classes\Model\Character\Character.h" />
+    <ClInclude Include="..\Classes\Model\Character\CharacterAggregate.h" />
     <ClInclude Include="..\Classes\Model\Character\DamageCharacter\DamageCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\DamageFactory.h" />
