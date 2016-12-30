@@ -137,7 +137,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //	その他の外部ファイルのマクロはここから書く
 //=========================================================================
 //#define MAP_DATA_SAMPLE "MapData/sampleMapData.tmx"
-#define MAP_DATA_SAMPLE "MapData/MapData.tmx"
+#define MAP_DATA_SAMPLE "MapData/st1Map.tmx"
 //#define MAP_DATA_SAMPLE "MapData/ST02_2.tmx"
 
 /**

@@ -186,11 +186,11 @@ bool CGameMain::init() {
 	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
 
 	////ÉÅÉCÉìÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
-	this->m_pMainLayer = Layer::create();
+	this->m_pMainLayer = LayerColor::create(ccc4(51, 75, 112, 255));
 	this->addChild(this->m_pMainLayer);
 
 	////UIÉåÉCÉÑÅ[ÇÃê∂ê¨Ç∆éÊÇËïtÇØ
-	this->m_pUILayer = Layer::create();
+	this->m_pUILayer = LayerColor::create();
 	this->addChild(this->m_pUILayer,-1);
 
 	//
@@ -237,10 +237,10 @@ bool CGameMain::init() {
 
 	////èâä˙âÊñ Ç…Ç¢ÇÈìGÇÃê∂ê¨
 	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
-	//ëSëÃÇÃägëÂ
-	this->setScale(SCALE_MAIN);
-	//ägëÂÇ…î∫Ç§âÊñ à íuÇÃê›íË
-	this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
+	////ëSëÃÇÃägëÂ
+	//this->setScale(SCALE_MAIN);
+	////ägëÂÇ…î∫Ç§âÊñ à íuÇÃê›íË
+	//this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
 
 
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
@@ -270,7 +270,7 @@ bool CGameMain::init() {
 
 
 	//GLProgramState* pGl = GLProgramState::getOrCreateWithGLProgram();
-
+	this->m_pMainLayer->runAction(CCTintTo::create(1.0, 255, 0, 0));
 	
 
 	//ÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅPÅP
