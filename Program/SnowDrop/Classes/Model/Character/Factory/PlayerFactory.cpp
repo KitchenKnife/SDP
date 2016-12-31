@@ -257,7 +257,7 @@ void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
 	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 
 	//–€ŽC‚ðÝ’è
-	pChara->m_pPhysicals->push_back(new CPhysicalFriction(4.0f, 0.45f));
+	pChara->m_pPhysicals->push_back(new CPhysicalFriction(5.0f, 0.45f));
 }
 
 void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){

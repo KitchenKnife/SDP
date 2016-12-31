@@ -81,7 +81,6 @@ void CMaideadFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, true));
 	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 0, 256, 256));
 
-
 	//死亡のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
 	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 768, 256, 256));
@@ -150,7 +149,7 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//追跡アクションの生成
 	std::vector<CAction*>* pActionChase = new std::vector<CAction*>();
 	//追跡アクション中に行うアクションを生成して取りける
-	pActionStraight->push_back(new CActionChase(false));
+	pActionChase->push_back(new CActionChase(false));
 	//追跡アクションをマップ配列に取り付ける
 	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::CHASE] = pActionChase;
 
