@@ -108,9 +108,9 @@ void CPlayerCharacterBoy::collisionAll() {
 //状態チェック
 void CPlayerCharacterBoy::checkState() 
 {
-	if (this->m_pStateMachine)
+	if (this->m_pStateMachines)
 	{
-		this->m_pStateMachine->update();
+		(*this->m_pStateMachines)[this->m_playerAndGirlState]->update();
 	}
 }
 
@@ -157,14 +157,6 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
 * @author Shinya Ueba
 */
 void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
-
-}
-
-/**
- * @desc 入力処理
- * @tips 移動処理で呼び出す
- */
-void  CPlayerCharacterBoy::inputFunc() {
 
 }
 

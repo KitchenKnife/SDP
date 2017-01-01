@@ -481,11 +481,11 @@ void CGirlGraspIdleRightState::update(void)
 
 	//プレイヤーを取得
 	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
-	if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_WALK_RIGHT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT)
 	{
 		this->toGraspWalkRight();
 	}
-	else if(pPlayer->m_state == (int)PLAYER_STATE::GRASP_WALK_LEFT)
+	else if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_LEFT)
 	{
 		this->toGraspWalkLeft();
 	}
@@ -545,11 +545,11 @@ void CGirlGraspIdleLeftState::update(void)
 
 	//プレイヤーを取得
 	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
-	if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_WALK_RIGHT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT)
 	{
 		this->toGraspWalkRight();
 	}
-	else if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_WALK_LEFT)
+	else if  (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_LEFT)
 	{
 		this->toGraspWalkLeft();
 	}
@@ -610,7 +610,7 @@ void CGirlGraspWalkRightState::update(void)
 		return;
 	}
 
-	if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_IDLE_RIGHT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::IDLE_RIGHT)
 	{
 		this->toGraspIdleRight();
 		return;
@@ -673,7 +673,7 @@ void CGirlGraspWalkLeftState::update(void)
 		return;
 	}
 
-	if (pPlayer->m_state == (int)PLAYER_STATE::GRASP_IDLE_LEFT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::IDLE_LEFT)
 	{
 		this->toGraspIdleLeft();
 		return;

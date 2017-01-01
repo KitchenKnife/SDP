@@ -82,29 +82,9 @@ public:
 	*/
 	void checkHoldHands(CPlayerCharacterGirl* pGirl);
 
-
-	//================================================ 
-	// イベントコールバック専用関数の列挙	
-	//================================================
-	/**
-	 * @desc	下領域と衝突した際のイベントコールバック
-	 * @param	マップチップID
-	 *			画面下の際は0
-	 */
-	virtual void collisionBottomCallback(int event)override {
-		//ジャンプを停止させる。
-		//(*this->m_mapAction[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP])[(int)CPlayerCharacterBoy::PLAYER_ACTION::JUMP]->stop();
-	}
-
 	//================================================ 
 	// CPlayerCharacterBoyクラス専用メンバ
 	//================================================
-
-	/**
-	 * @desc	入力処理
-	 * @tips	移動処理で呼び出す
-	 */
-	void inputFunc();
 
 	/**
 	*	@desc 手つなぎ可能マークの設定
@@ -119,6 +99,12 @@ public:
 	*	@author	Shinya Ueba
 	*/
 	cocos2d::CCParticleSystemQuad* getGrapsMark(void);
+
+	//プレイヤー専用のステートマシーンデータ群
+	std::map<int, CStateMachine*>* m_pStateMachines = NULL;
+
+	//プレイヤーと少女の状態
+	int m_playerAndGirlState = 0;
 
 
 private:
