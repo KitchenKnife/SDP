@@ -49,6 +49,8 @@ enum class PLAYER_STATE :int
 	GRASP_IDLE_LEFT		= 17,	//手を掴みながら待機	左向き
 	GRASP_WALK_RIGHT	= 18,	//手を掴みながら歩く　	右向き
 	GRASP_WALK_LEFT		= 19,	//手を掴みながら歩く	左向き
+	GRASP_ATTACK_RAIGHT	= 20,	//手を掴みながら攻撃	右向き
+	GRASP_ATTACK_LEFT	= 21,	//手を掴みながら攻撃	左向き
 };
 
 //---------------------------------------------------------
@@ -94,7 +96,6 @@ enum class PLAYER_ACTION_STATE :int
 	IDLE = 0,//待機状態
 	JUMP = 1,//ジャンプ
 	WANDERING = 2,
-	//	CHASE = 3,
 };
 
 /********************************************************************

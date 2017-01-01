@@ -38,6 +38,9 @@ bool CDamageCharacter::init() {
 
 //移動処理
 void CDamageCharacter::moveFunc() {
+
+	//ダメージキャラクターは常に所有者の画像右端に着いていくように移動する。
+	this->m_pMove->m_pos.set(this->m_pChara->m_pMove->m_pos.x + this->m_pBody->m_right, this->m_pChara->m_pMove->m_pos.y);
 }
 
 //アニメーション処理

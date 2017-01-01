@@ -817,7 +817,7 @@ void CPlayerWalkLeftState::update(void)
 	if (pointerInputController->getLeftMoveFlag())
 	{
 		//¶Œü‚«‚É•às‚·‚é
-		this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
+		this->m_pPlayer->m_pMove->m_accele.x = -1.0f;
 		return;
 	}
 
