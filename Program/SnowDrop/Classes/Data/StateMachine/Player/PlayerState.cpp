@@ -218,6 +218,30 @@ void CPlayerState::toAttackThirdLeft(void) {
 }
 
 /**
+ * @desc	右向きジャンプ攻撃へ移行
+ */
+void CPlayerState::toJumpAttackRight(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::JUMP_ATTACK_RIGHT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::JUMP_ATTACK_RIGHT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+ * @desc	左向きジャンプ攻撃へ移行
+ */
+void CPlayerState::toJumpAttackLeft(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::JUMP_ATTACK_LEFT;
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::JUMP_ATTACK_LEFT;
+	this->m_pPlayer->m_actionState = 0;
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
  * @desc	右向き　装備する状態へ移行
  */
 void CPlayerState::toEquipRight(void)
@@ -802,6 +826,14 @@ void CPlayerJumpRightState::start(void)
 void CPlayerJumpRightState::update(void)
 {
 	//優先順で処理していく
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	if (pointerInputController->getAttackFlag()) {
+		//右ジャンプ攻撃状態へ移行する
+		this->toJumpAttackRight();
+		return;
+	}
 
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
@@ -870,7 +902,14 @@ void CPlayerJumpLeftState::start(void)
 void CPlayerJumpLeftState::update(void)
 {
 	//優先順で処理していく
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	if (pointerInputController->getAttackFlag()) {
+		//左ジャンプ攻撃状態へ移行する
+		this->toJumpAttackLeft();
+		return;
+	}
 
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
@@ -937,6 +976,14 @@ void CPlayerFallRightState::update(void)
 {
 	//優先順で処理していく
 
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	if (pointerInputController->getAttackFlag()) {
+		//右ジャンプ攻撃状態へ移行する
+		this->toJumpAttackRight();
+		return;
+	}
 
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
@@ -996,6 +1043,15 @@ void CPlayerFallLeftState::start(void)
 void CPlayerFallLeftState::update(void)
 {
 	//優先順で処理していく
+
+	//入力コントローラーの取得
+	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	if (pointerInputController->getAttackFlag()) {
+		//左ジャンプ攻撃状態へ移行する
+		this->toJumpAttackLeft();
+		return;
+	}
 
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
@@ -1236,6 +1292,148 @@ void CPlayerAttackLeftState::onChangeEvent(void)
 	this->m_isNext = false;
 }
 
+//==========================================
+//
+// Class: CPlayerJumpAttackRightState
+//
+// プレイヤー 右向き　ジャンプ攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+ * @desc	コンストラクタ
+ */
+CPlayerJumpAttackRightState::CPlayerJumpAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+ * @desc	デストラクタ
+ */
+CPlayerJumpAttackRightState::~CPlayerJumpAttackRightState(){}
+
+/**
+ * @desc	開始処理
+ */
+void CPlayerJumpAttackRightState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+	
+	//プレイヤーのジャンプアクションを停止させる。
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->stop();
+
+	//プレイヤーのｙ軸移動速度を０に戻す
+	this->m_pPlayer->m_pMove->m_vel.y = 0.0f;
+
+
+	//ダメージキャラクター生成データを作成
+	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
+		cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_right, this->m_pPlayer->m_pMove->m_pos.y),
+		1);
+	//ダメージキャラクター生成トリガーを作成
+	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+	//作成したトリガーをスケジューラーに登録
+	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
+
+	this->m_pPlayer->setScaleX(-2.0f);
+}
+
+/**
+ * @desc	更新処理
+ */
+void CPlayerJumpAttackRightState::update(void)
+{
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd() && this->m_pPlayer->m_pMove->m_vel.y == 0.0f)
+	{
+		//右向き待機状態へ戻す
+		this->toIdleRight();
+		return;
+	}
+}
+
+/**
+ * @desc	状態が変わるときの処理
+ */
+void CPlayerJumpAttackRightState::onChangeEvent(void)
+{
+	this->m_pPlayer->setScaleX(2.0f);
+
+	//次のステートへ移行することが確定しているので元に戻しておく
+	this->m_isNext = false;
+}
+
+
+//==========================================
+//
+// Class: CPlayerJumpAttackLeftState
+//
+// プレイヤー 左向き　ジャンプ攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerJumpAttackLeftState::CPlayerJumpAttackLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerJumpAttackLeftState::~CPlayerJumpAttackLeftState() {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerJumpAttackLeftState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+
+	//プレイヤーのジャンプアクションを停止させる。
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP])[0]->stop();
+
+	//プレイヤーのｙ軸移動速度を０に戻す
+	this->m_pPlayer->m_pMove->m_vel.y = 0.0f;
+
+
+	//ダメージキャラクター生成データを作成
+	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
+		cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_left, this->m_pPlayer->m_pMove->m_pos.y),
+		1);
+	//ダメージキャラクター生成トリガーを作成
+	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+	//作成したトリガーをスケジューラーに登録
+	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerJumpAttackLeftState::update(void)
+{
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd() && this->m_pPlayer->m_pMove->m_vel.y >= 0.0f)
+	{
+		//右向き待機状態へ戻す
+		this->toIdleLeft();
+		return;
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerJumpAttackLeftState::onChangeEvent(void)
+{
+	//次のステートへ移行することが確定しているので元に戻しておく
+	this->m_isNext = false;
+}
 
 //==========================================
 //

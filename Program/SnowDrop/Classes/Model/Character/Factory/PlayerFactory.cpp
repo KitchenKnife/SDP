@@ -234,6 +234,14 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT]->addChipData(new CChip(0, 896, 128, 128));
 
+	//右ジャンプ攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(5, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
+
+	//左ジャンプ攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(5, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
+
 	//================================================
 	// その他のアニメーション設定
 	//================================================
@@ -291,7 +299,7 @@ void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 	//ジャンプ中のアクション群の実体を生成
 	std::vector<CAction*>* pActionJump = new std::vector<CAction*>();
 	//ジャンプ中に行うアクションを生成して取り付ける
-	pActionJump->push_back(new CActionJump(3.0f, 4.0f));
+	pActionJump->push_back(new CActionJump(5.0f, 4.0f));
 	//ジャンプアクションをマップ配列に取り付ける
 	pChara->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP] = pActionJump;
 }
@@ -412,6 +420,16 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 	//左向き攻撃状態を作成した状態を登録していく
 	pStateMachine->registerState((int)PLAYER_STATE::ATTACK_LEFT, new CPlayerAttackLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//右向きジャンプ攻撃状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::JUMP_ATTACK_RIGHT, new CPlayerJumpAttackRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//左向きジャンプ攻撃状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::JUMP_ATTACK_LEFT, new CPlayerJumpAttackLeftState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 

@@ -116,6 +116,16 @@ public:
 	void toAttackThirdLeft(void);
 
 	/**
+	 * @desc	右向きジャンプ攻撃へ移行
+	 */
+	void toJumpAttackRight(void);
+
+	/**
+	 * @desc	左向きジャンプ攻撃へ移行
+	 */
+	void toJumpAttackLeft(void);
+
+	/**
 	 * @desc	右向き装備する状態へ移行
 	 */
 	void toEquipRight(void);
@@ -549,6 +559,88 @@ public:
 	* @desc	デストラクタ
 	*/
 	~CPlayerAttackLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+	//連撃フラグ
+	bool m_chainAttackFlag = false;
+
+};
+
+//==========================================
+//
+// Class: CPlayerJumpAttackRightState
+//
+// プレイヤー 右向き　ジャンプ攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+class CPlayerJumpAttackRightState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerJumpAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerJumpAttackRightState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+};
+
+//==========================================
+//
+// Class: CPlayerJumpAttackLeftState
+//
+// プレイヤー 左向き　ジャンプ攻撃 状態 クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+class CPlayerJumpAttackLeftState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerJumpAttackLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerJumpAttackLeftState(void);
 
 	/**
 	* @desc	開始処理
