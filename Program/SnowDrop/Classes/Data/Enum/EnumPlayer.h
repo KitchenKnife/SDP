@@ -90,6 +90,8 @@ enum class PLAYER_ANIMATION_STATE :int
 	UN_EQUIP_LEFT		= 17,	//装備を外す	左向き
 	GRASP_RIGHT			= 18,	//手を掴む　右向き
 	GRASP_LEFT			= 19,	//手を掴む　左向き
+	GRAPS_ATTACK_RIGHT	= 20,	//手を掴んだ状態での攻撃	右向き
+	GRAPS_ATTACK_LEFT	= 21,	//手を掴んだ状態での攻撃	左向き
 };
 
 //---------------------------------------------------------

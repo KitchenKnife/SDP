@@ -260,6 +260,14 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//Žè‚ð’Í‚Þ¶Œü‚« ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 512, 128, 128));
+
+	//Žè‚ð’Í‚ñ‚¾ó‘Ô‚Å‚Ì‰EUŒ‚‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_RIGHT]->addChipData(new CChip(0, 896, 128, 128));
+
+	//Žè‚ð’Í‚ñ‚¾ó‘Ô‚Å‚Ì¶UŒ‚‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_LEFT]->addChipData(new CChip(0, 896, 128, 128));
 }
 
 void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
@@ -482,6 +490,18 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	//¶Œü‚«Žè‚ðŒq‚¢‚Å•às‚·‚éó‘Ô
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachineGrips->registerState((int)PLAYER_STATE::WALK_LEFT, new CPlayerGraspWalkLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+	//¶Œü‚«Žè‚ðŒq‚¢‚ÅUŒ‚‚·‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pStateMachineGrips->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerGrapsAttackRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+	//¶Œü‚«Žè‚ðŒq‚¢‚ÅUŒ‚‚·‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pStateMachineGrips->registerState((int)PLAYER_STATE::ATTACK_LEFT, new CPlayerGrapsAttackLeftState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
