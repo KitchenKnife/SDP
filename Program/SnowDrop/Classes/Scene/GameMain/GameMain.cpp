@@ -202,7 +202,9 @@ bool CGameMain::init() {
 	
 
 	//マップの生成と取り付け
-	this->m_pMainLayer->addChild(CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE));
+	CMap* pMap = CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE);
+	pMap->setVisible(false);
+	this->m_pMainLayer->addChild(pMap);
 
 	
 	//地平線の生成と取り付け

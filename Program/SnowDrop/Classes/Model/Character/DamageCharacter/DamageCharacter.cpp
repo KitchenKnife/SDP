@@ -57,6 +57,8 @@ void CDamageCharacter::collisionAll() {
 				{
 					if (this->collision(pChara)) {
 
+						
+
 						//攻撃力分のダメージを与える
 						pChara->decreaseHP(this->m_status.getAttackPt());
 						//攻撃を受けている状態フラグを上げる
