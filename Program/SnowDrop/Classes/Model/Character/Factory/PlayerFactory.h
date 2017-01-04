@@ -40,6 +40,13 @@ public:
 	 * @author	Shinya Ueba
 	 */
 	virtual	CStateMachine*	getStateMachine(void)override;
+
+	/**
+	 * @desc	ó‘Ô‘JˆÚƒf[ƒ^ŒQ‚Ì¶¬‚Ææ“¾
+	 * @return	ó‘Ô‘JˆÚƒf[ƒ^ŒQ
+	 * @author	Harada
+	 */
+	virtual std::map<int, CStateMachine*>* getStateMachines(void);
 };
 
 

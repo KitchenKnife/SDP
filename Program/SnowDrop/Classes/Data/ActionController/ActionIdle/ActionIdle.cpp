@@ -58,3 +58,5 @@ void CActionIdle::stop(void)
 	//アクション終了
 	this->m_inAction = false;
 }
+
+

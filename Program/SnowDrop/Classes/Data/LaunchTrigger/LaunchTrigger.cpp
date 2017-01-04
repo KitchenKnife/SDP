@@ -242,6 +242,8 @@ void CLaunchScheduler::launchCharacter(cocos2d::Layer* pLayer) {
 	std::shared_ptr<CLauncher::CLaunchTriggerIterator>itr = this->m_pLauncher->iterator();
 	//次の起動可能な出撃トリガーがあるかどうかをチェック
 	while (itr->hasNext() == true) {
+		
+
 		//起動可能な出撃トリガーを取得して出撃トリガーイテレーターを次へ進める
 		CLaunchTrigger* pTrigger = itr->next();
 

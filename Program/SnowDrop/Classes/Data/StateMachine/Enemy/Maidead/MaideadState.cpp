@@ -30,7 +30,8 @@
 */
 CMaideadState::CMaideadState(	CEnemyCharacter* const pOwner,
 								CPlayerCharacterBoy* const pPlayer,
-								CGirlCharacter* const pGirl)
+								CGirlCharacter* const pGirl
+	)
 	:CEnemyState::CEnemyState(pOwner, pPlayer, pGirl)
 {
 
@@ -75,9 +76,9 @@ void CMaideadState::toWandering(void)
 */
 void CMaideadState::toChase(void)
 {
-	this->m_pOwner->m_state				= (int)ENEMY_MAIDEAD_STATE::IDLE;
-	this->m_pOwner->m_animationState	= (int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING;
-	this->m_pOwner->m_actionState		= (int)ENEMY_MAIDEAD_ACTION_STATE::IDLE;
+	this->m_pOwner->m_state				= (int)ENEMY_MAIDEAD_STATE::CHASE;
+	this->m_pOwner->m_animationState	= (int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING;	//アニメーションはワンダリングと同じ
+	this->m_pOwner->m_actionState		= (int)ENEMY_MAIDEAD_ACTION_STATE::CHASE;
 	this->m_nextRegisterKey				= this->m_pOwner->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
@@ -127,7 +128,8 @@ void CMaideadState::toDead(void)
 */
 CMaideadIdleState::CMaideadIdleState(	CEnemyCharacter* const pOwner,
 										CPlayerCharacterBoy* const pPlayer,
-										CGirlCharacter* const pGirl)
+										CGirlCharacter* const pGirl
+	)
 	:CMaideadState::CMaideadState(pOwner,pPlayer,pGirl)
 {
 
@@ -146,6 +148,10 @@ CMaideadIdleState::~CMaideadIdleState()
 */
 void CMaideadIdleState::start(void)
 {
+	//オーナーのアクションのstartを呼ぶ
+	CAction* pAction = (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState])[0];
+	pAction->start();
+
 	//ランダムでアクション時間を設定(30~60)
 	this->m_actionInterval = rand() % 30 + 31;
 }
@@ -155,9 +161,6 @@ void CMaideadIdleState::start(void)
 */
 void CMaideadIdleState::update(void)
 {
-	// ターゲットが間合いにいるかどうかのか確認と追跡状態への移行
-	//this->checkTargetAndSwitchChase(pChara, this->m_defaultTarget);
-
 	//カウンターをインクリメント
 	this->m_actionCounter++;
 
@@ -182,6 +185,13 @@ void CMaideadIdleState::update(void)
 		this->toWandering();
 		return;
 	}
+
+	// ターゲットが間合いにいるかどうかのか確認
+	float length = customMath->checkTargetRange(this->m_pOwner, this->m_pOwner->m_targetType);
+	//もし追跡範囲内なら
+	if (length <= this->m_pOwner->m_chaseRange) {
+		this->toChase();
+	}
 }
 
 /**
@@ -189,7 +199,11 @@ void CMaideadIdleState::update(void)
 */
 void CMaideadIdleState::onChangeEvent(void)
 {
-	int m_actionInterval = 45;
+	//オーナーのアクションのstopを呼ぶ
+	CAction* pAction = (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState])[0];
+	pAction->stop();
+	
+	this->m_actionInterval = 45;
 
 	this->m_actionCounter = 0;
 
@@ -213,7 +227,8 @@ void CMaideadIdleState::onChangeEvent(void)
 */
 CMaideadWanderingState::CMaideadWanderingState(	CEnemyCharacter* const pOwner,
 												CPlayerCharacterBoy* const pPlayer,
-												CGirlCharacter* const pGirl)
+												CGirlCharacter* const pGirl
+	)
 	:CMaideadState::CMaideadState(pOwner, pPlayer, pGirl)
 {
 
@@ -232,8 +247,15 @@ CMaideadWanderingState::~CMaideadWanderingState()
 */
 void CMaideadWanderingState::start(void)
 {
+	
+	//オーナーのアクションのstartを呼ぶ
+	CAction* pAction = (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState])[0];
+	pAction->start();
+
 	//ランダムで歩く向きを設定
 	this->m_vec = (rand() % 3) - 1;
+	//ランダムでアクション時間を設定(30~60)
+	this->m_actionInterval = rand() % 30 + 31;
 
 	if (this->m_vec == 0)
 	{
@@ -250,9 +272,6 @@ void CMaideadWanderingState::start(void)
 	//速さを設定
 	this->m_pOwner->m_pMove->m_vel.set(this->m_pOwner->m_status.getSpeed()*this->m_vec,0.0f);
 
-	//ランダムでアクション時間を設定(30~60)
-	this->m_actionInterval = rand() % 30 + 31;
-
 	if (this->m_pOwner->m_pMove->m_vel.x > 0)
 	{
 		this->m_pOwner->setScaleX(1.0);
@@ -261,7 +280,6 @@ void CMaideadWanderingState::start(void)
 	{
 		this->m_pOwner->setScaleX(-1.0);
 	}
-	
 	
 }
 
@@ -294,8 +312,13 @@ void CMaideadWanderingState::update(void)
 		this->start();
 	}
 
-	// ターゲットが間合いにいるかどうかのか確認と追跡状態への移行
-	//this->checkTargetAndSwitchChase(pChara, this->m_defaultTarget);
+	// ターゲットが間合いにいるかどうかのか確認
+	float length = customMath->checkTargetRange(this->m_pOwner, this->m_pOwner->m_targetType);
+	//もし追跡範囲内なら
+	if (length <= this->m_pOwner->m_chaseRange) {
+		this->toChase();
+	}
+
 }
 
 /**
@@ -402,6 +425,79 @@ void CMaideadUnderAttackState::onChangeEvent(void)
 	this->m_isNext = false;
 }
 
+//==========================================
+//
+// Class: CMaideadChaseState
+//
+// Maidead 追跡 状態 クラス
+//
+//						Author Osumi
+// 2016/12/27
+//==========================================
+/**
+* @desc コンストラクタ
+*/
+CMaideadChaseState::CMaideadChaseState(CEnemyCharacter* const pOwner,
+	CPlayerCharacterBoy* const pPlayer,
+	CGirlCharacter* const pGirl
+)
+	:CMaideadState::CMaideadState(pOwner, pPlayer, pGirl)
+{
+
+}
+
+/**
+* @desc デストラクタ
+*/
+CMaideadChaseState::~CMaideadChaseState()
+{
+
+}
+
+/**
+* @desc	開始処理
+*/
+void CMaideadChaseState::start(void)
+{
+	//オーナーのアクションのstartを呼ぶ
+	CAction* pAction = (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState])[0];
+	pAction->start();
+
+}
+
+/**
+* @desc 更新処理
+*/
+void CMaideadChaseState::update(void)
+{
+	if (this->isNext())
+	{
+		return;
+	}
+
+	//敵がある程度離れたらワンダリング状態に移行する
+	float length = customMath->checkTargetRange(this->m_pOwner, this->m_pOwner->m_targetType);
+	//もし追跡範囲内なら
+	if (length > this->m_pOwner->m_chaseRange) {
+		this->toWandering();
+	}
+
+}
+
+/**
+* @desc 状態が変わるときの処理
+*/
+void CMaideadChaseState::onChangeEvent(void)
+{
+	//オーナーのアクションのstopを呼ぶ
+	CAction* pAction = (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState])[0];
+	pAction->stop();
+
+	this->m_pOwner->m_pMove->m_vel.set(0.0f, 0.0f);
+
+	//待機動作を終了
+	this->m_isNext = false;
+}
 //==========================================
 //
 // Class: CMaideadDeadState

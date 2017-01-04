@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp" />
     <ClCompile Include="..\Classes\Data\Status\Status.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp" />
@@ -222,6 +223,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h" />
     <ClInclude Include="..\Classes\Data\Status\Status.h" />
     <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h" />

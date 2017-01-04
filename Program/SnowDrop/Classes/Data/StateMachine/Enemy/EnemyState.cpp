@@ -28,10 +28,15 @@
 
 /**
 * @desc コンストラクタ
+* @param 騎士のアドレス
+* @param 少女のアドレス
+* @param ターゲットの種類 
+*
 */
 CEnemyState::CEnemyState(	CEnemyCharacter* const pOwner,
 							CPlayerCharacterBoy* const pPlayer,
-							CGirlCharacter* const pGirl)
+							CGirlCharacter* const pGirl
+	)
 	:m_pOwner(pOwner),m_pPlayer(pPlayer),m_pGirl(pGirl)
 {
 

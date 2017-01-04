@@ -294,6 +294,9 @@
     <ClCompile Include="..\Classes\Lib\Math\CustomMath.cpp">
       <Filter>src\Lib\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.cpp">
+      <Filter>src\Data\StateMachine\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -463,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Lib\Math\CustomMath.h">
       <Filter>src\Lib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.h">
+      <Filter>src\Data\StateMachine\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

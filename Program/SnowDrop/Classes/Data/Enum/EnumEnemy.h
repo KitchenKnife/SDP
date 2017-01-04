@@ -9,6 +9,17 @@
 //						Author Shinya Ueba
 //==========================================
 
+//==========================================================================
+// ターゲットの種類
+//==========================================================================
+enum class TARGET_TYPE :int {
+	NONE,
+	BOY,
+	BOY_ONLY,
+	GIRL,
+	GIRL_ONLY,
+	BOTH
+};
 
 
 /********************************************************************
@@ -52,6 +63,7 @@ enum class ENEMY_MAIDEAD_ANIMATION_STATE :int
 {
 	IDLE = 0,//待機状態
 	WANDERING = 1,
+	//CHASE = 2,
 	DAED = 2,
 };
 
@@ -59,7 +71,8 @@ enum class ENEMY_MAIDEAD_ACTION_STATE :int
 {
 	IDLE = 0,//待機状態
 	WANDERING = 1,
-	UNDER_ATTACK = 2,//攻撃受けた
+	CHASE = 2,
+	UNDER_ATTACK = 3,//攻撃受けた
 };
 
 

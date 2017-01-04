@@ -81,10 +81,12 @@ void CMaideadFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, true));
 	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 0, 256, 256));
 
-
 	//死亡のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
 	(*pChara->m_pAnimations)[(int)ENEMY_MAIDEAD_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 768, 256, 256));
+
+	//追跡アニメーション
+	//※歩行アニメーションと同じ
 
 }
 
@@ -118,8 +120,6 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	//
 	//--------------------------------------------------------------------
 
-
-
 	//--------------------------------------------------------------------
 	//
 	//	移動アクションを設定する ここから
@@ -132,6 +132,26 @@ void CMaideadFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
 	pActionStraight->push_back(new CActionMoveStraight());
 	//移動アクションをマップ配列に取り付ける
 	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+
+	//--------------------------------------------------------------------
+	//
+	//	追跡アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//追跡アクションの生成
+	std::vector<CAction*>* pActionChase = new std::vector<CAction*>();
+	//追跡アクション中に行うアクションを生成して取りける
+	pActionChase->push_back(new CActionChase(false));
+	//追跡アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MAIDEAD_ACTION_STATE::CHASE] = pActionChase;
 
 	//--------------------------------------------------------------------
 	//
@@ -250,6 +270,24 @@ void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 
 //--------------------------------------------------------------------
 //
+//	追跡状態を設定する ここから
+//
+//--------------------------------------------------------------------
+
+//追跡状態
+CStateBase* pChaseState = new CMaideadChaseState(pChara, NULL, NULL);
+//作成した状態を登録していく
+pChara->m_pStateMachine->registerState((int)ENEMY_MAIDEAD_STATE::CHASE, pChaseState);
+
+//--------------------------------------------------------------------
+//
+//	ここまで
+//
+//-------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------
+//
 //	攻撃を受けた状態を設定する ここから
 //
 //--------------------------------------------------------------------
@@ -276,6 +314,17 @@ void CMaideadFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
 template <class Ty>
 void CMaideadFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 
+	//主なターゲット
+	pChara->m_targetType = TARGET_TYPE::BOTH;
+
+	//現在の優先攻撃対象
+	pChara->m_currentTarget = NULL;
+
+	//プレイヤーを感知、追跡する範囲
+	float m_chaseRange = 400;
+
+	//攻撃範囲
+	float m_attackRange = 80;
 
 	//有効フラグを立てる
 	pChara->m_activeFlag = true;

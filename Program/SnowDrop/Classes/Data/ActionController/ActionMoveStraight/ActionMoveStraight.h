@@ -39,7 +39,6 @@ public:
 	CActionMoveStraight();
 
 
-
 	/**
 	* @desc アクション開始
 	*/

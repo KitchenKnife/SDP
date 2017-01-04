@@ -49,7 +49,7 @@ float CCustomMath::length(cocos2d::Point pt1, cocos2d::Point pt2) {
 */
 float CCustomMath::lengthBitweenChara(CCharacter* pChara1, CCharacter* pChara2) {
 
-	float length = this->length(pChara1->m_pMove->m_pos, pChara2->m_pMove->m_pos);
+	float length = (CCustomMath::m_pSharedCustomMath)->length(pChara1->m_pMove->m_pos, pChara2->m_pMove->m_pos);
 
 	return length;
 }
@@ -65,62 +65,65 @@ bool CCustomMath::seachAndSelectTarget(CCharacter* pChara) {
 	CCharacter* pGirl = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_2);
 
 	//敵と少年の距離
-	float lemgthFromBoy = this->lengthBitweenChara(pChara, pBoy);
+	float lemgthFromBoy = (CCustomMath::m_pSharedCustomMath)->lengthBitweenChara(pChara, pBoy);
 	//敵と少女の距離
-	float lemgthFromGirl = this->lengthBitweenChara(pChara, pGirl);
+	float lemgthFromGirl = (CCustomMath::m_pSharedCustomMath)->lengthBitweenChara(pChara, pGirl);
 
 	CEnemyCharacter* pEne = (CEnemyCharacter*)pChara;
 
 	//近い方が敵の追跡範囲内なら、近い方を敵のターゲットに設定
-	/*
 	if ((lemgthFromBoy < lemgthFromGirl) && lemgthFromBoy <= pEne->m_chaseRange) {
-		pEne->setTarget(pBoy);
+		pEne->m_currentTarget = (pBoy);
 		return true;
 	}
 	else if ((lemgthFromBoy >= lemgthFromGirl) && lemgthFromGirl <= pEne->m_chaseRange) {
-		pEne->setTarget(pGirl);
+		pEne->m_currentTarget = (pGirl);
 		return true;
 	}
-	*/
-
+	
 	return false;
 }
 
 /*
-* @desc ターゲットが間合いにいるかどうかのか確認と追跡状態への移行
+* @desc ターゲットとの間合いの確認
 * @param アクションを行うキャラクター
 * @param ターゲットのタイプ
+* @return ターゲットとの間合い
 */
-void CCustomMath::checkTargetAndSwitchChase(CCharacter* pChara, TARGET_TYPE type) {
+float CCustomMath::checkTargetRange(CCharacter* pChara, TARGET_TYPE type) {
 
 	CEnemyCharacter* pEne = (CEnemyCharacter*)pChara;
 
-	//優先ターゲットが両方でなければ
+	//優先ターゲットが決定していれば
 	if (type != TARGET_TYPE::BOTH) {
-		/*
-		//ターゲットとの距離が追跡範囲内なら
-		if (pEne->m_chaseRange >= this->lengthBitweenChara(pEne, pEne->m_currentTarget)) {
-			//動作を停止
-			this->stop();
-			//敵を追跡状態に移行
-			pEne->m_state = CEnemyCharacter::STATE::CHASE;
-			pEne->m_pActions[pEne->m_state]->start();
-		}
-		*/
+
+		return (CCustomMath::m_pSharedCustomMath)->lengthBitweenChara(pEne, pEne->m_currentTarget);
+		
 	}
 	//両方なら
 	else {
-		/*
-		//ターゲットの検索と設定
-		if (seachAndSelectTarget(pEne) == true) {
-			//動作を停止
-			this->stop();
-			//敵を追跡状態に移行
-			pEne->m_state = CEnemyCharacter::STATE::CHASE;
-			pEne->m_pActions[pEne->m_state]->start();
+		
+		CCharacter* pBoy = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
+		CCharacter* pGirl = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_2);
+
+		//敵と少年の距離
+		float lemgthFromBoy = (CCustomMath::m_pSharedCustomMath)->lengthBitweenChara(pChara, pBoy);
+		//敵と少女の距離
+		float lemgthFromGirl = (CCustomMath::m_pSharedCustomMath)->lengthBitweenChara(pChara, pGirl);
+
+		//近い方が敵の追跡範囲内なら、近い方を敵のターゲットに設定
+		if ((lemgthFromBoy < lemgthFromGirl)) {
+			pEne->m_currentTarget = (pBoy);
+			return lemgthFromBoy;
 		}
-		*/
+		else if ((lemgthFromBoy >= lemgthFromGirl)) {
+			pEne->m_currentTarget = (pGirl);
+			return lemgthFromGirl;
+		}
+		
 	}
+
+	return 0;
 }
 
 /*
@@ -143,7 +146,7 @@ void CCustomMath::normalizeVel_X(CCharacter* pChara, cocos2d::Point pt) {
 void CCustomMath::normalizeVel(CCharacter* pChara, cocos2d::Point pt) {
 
 	//ターゲットまでの距離を求める
-	float length = this->length(pChara->m_pMove->m_pos, pt);
+	float length = (CCustomMath::m_pSharedCustomMath)->length(pChara->m_pMove->m_pos, pt);
 	float lengthX = pt.x - pChara->m_pMove->m_pos.x;
 	float lengthY = pt.y - pChara->m_pMove->m_pos.y;
 

@@ -34,23 +34,28 @@ class CGirlCharacter;
 class CEnemyState : public CStateBase
 {
 public:
+
 	/**
 	* @desc コンストラクタ
+	* @param 騎士のアドレス
+	* @param 少女のアドレス
+	* @param ターゲットの種類 
 	*/
 	CEnemyState(CEnemyCharacter* const pOwner,
 				CPlayerCharacterBoy* const pPlayer,
-				CGirlCharacter* const pGirl);
+				CGirlCharacter* const pGirl
+		);
 
 	/**
 	* @desc デストラクタ
 	*/
 	virtual ~CEnemyState(void);
-
+	
 protected:
 	//この状態を保有するキャラクター
 	CEnemyCharacter* m_pOwner = NULL;
 
-	//参照するプレイヤーキャラクター
+	//参照するプレイヤーキャラクターr
 	CPlayerCharacterBoy* m_pPlayer = NULL;
 	//参照するガールキャラクター
 	CGirlCharacter*		m_pGirl = NULL;
