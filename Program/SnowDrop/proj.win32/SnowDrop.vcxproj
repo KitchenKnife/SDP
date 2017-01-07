@@ -147,6 +147,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\Action.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionController.cpp" />
+    <ClCompile Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionJump\ActionJump.cpp" />
     <ClCompile Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.cpp" />
@@ -165,6 +166,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateHold.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\StateMachine.cpp" />
     <ClCompile Include="..\Classes\Data\Status\Status.cpp" />
     <ClCompile Include="..\Classes\Lib\Input\GamepadInputController.cpp" />
@@ -203,6 +205,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Constants.h" />
     <ClInclude Include="..\Classes\Data\ActionController\Action.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionController.h" />
+    <ClInclude Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionIdle\ActionIdle.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionJump\ActionJump.h" />
     <ClInclude Include="..\Classes\Data\ActionController\ActionMoveStraight\ActionMoveStraight.h" />
@@ -224,6 +227,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateHold.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\StateMachine.h" />
     <ClInclude Include="..\Classes\Data\Status\Status.h" />
     <ClInclude Include="..\Classes\Lib\Input\GamepadInputController.h" />

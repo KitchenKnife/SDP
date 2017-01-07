@@ -70,7 +70,7 @@ public:
 	void toJumpRight(void);
 
 	/**
-	 *	@desc	左向き落下状態へ移行
+	 *	@desc	左向きジャンプ状態へ移行
 	 */
 	void toJumpLeft(void);
 
@@ -155,13 +155,16 @@ public:
 	 */
 	void toGraspLeft(void);
 
+	/*
+	 *	@desc	右向きお姫様抱っこ状態へ移行
+	 */
+	void toHoldRight(void);
 
-//ここらから共通関数
-	/**
-	*	@desc 手を繋ぐ状態に移行するか確認する
-	*	@true...移行する false...しない
-	*/
-	bool checkGrasp(void);
+	/*
+	 *	@desc	左向きお姫様抱っこ状態へ移行
+	 */
+	void toHoldLeft(void);
+
 
 protected:
 	//参照するプレイヤーキャラクター
@@ -841,25 +844,28 @@ class CPlayerGraspRightState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc	コンストラクタ
+	 */
 	CPlayerGraspRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc	デストラクタ
+	 */
 	~CPlayerGraspRightState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc	開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc	更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
 	void onChangeEvent(void)override;
 
 private:
@@ -879,25 +885,111 @@ class CPlayerGraspLeftState :public CPlayerState
 {
 public:
 	/**
-	* @desc コンストラクタ
-	*/
+	 * @desc コンストラクタ
+	 */
 	CPlayerGraspLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
-	* @desc デストラクタ
-	*/
+	 * @desc デストラクタ
+	 */
 	~CPlayerGraspLeftState(void);
 
 	/**
-	* @desc 開始処理
-	*/
+	 * @desc 開始処理
+	 */
 	void start(void)override;
+	
 	/**
-	* @desc 更新処理
-	*/
+	 * @desc 更新処理
+	 */
 	void update(void)override;
 
-	// 状態が変わるときの処理
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+
+//==========================================
+//
+// Class: CPlayerHoldRightState
+//
+// プレイヤー 右向き お姫様抱っこ待機 状態クラス
+//
+// 2017/ 1/ 5
+//						Author Harada
+//==========================================
+class CPlayerHoldRightState :public CPlayerState
+{
+public:
+	/**
+	 * @desc	コンストラクタ
+	 */
+	CPlayerHoldRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	 * @desc	デストラクタ
+	 */
+	~CPlayerHoldRightState(void);
+
+	/**
+	 * @desc	開始処理
+	 */
+	void start(void)override;
+
+	/**
+	 * @desc	更新処理
+	 */
+	void update(void)override;
+
+	/**
+	 * @desc	状態が変わるときの処理
+	 */
+	void onChangeEvent(void)override;
+
+private:
+};
+
+
+//==========================================
+//
+// Class: CPlayerHoldLeftState
+//
+// プレイヤー 左向き お姫様抱っこ待機 状態クラス
+//
+// 2017/ 1/ 5
+//						Author Harada
+//==========================================
+class CPlayerHoldLeftState :public CPlayerState
+{
+public:
+	/**
+	 * @desc	コンストラクタ
+	 */
+	CPlayerHoldLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	 * @desc	デストラクタ
+	 */
+	~CPlayerHoldLeftState(void);
+
+	/**
+	 * @desc	開始処理
+	 */
+	void start(void)override;
+	
+	/**
+	 * @desc	更新処理
+	 */
+	void update(void)override;
+
+	/**
+	 * @desc	状態が変わる時の処理
+	 */
 	void onChangeEvent(void)override;
 
 private:

@@ -246,7 +246,6 @@ void CPlayerGraspIdleRightState::update(void)
 	//Žè‚ª—£‚³‚ê‚½‚ç
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-		pGirl->setHoldHandsFlag(false);
 
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 
@@ -333,8 +332,6 @@ void CPlayerGraspIdleLeftState::update(void)
 	//Žè‚ª—£‚³‚ê‚½‚ç
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-		pGirl->setHoldHandsFlag(false);
-
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 
 		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);
@@ -423,9 +420,6 @@ void CPlayerGraspWalkRightState::update(void)
 	//Žè‚ª—£‚³‚ê‚½‚ç
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-		pGirl->setHoldHandsFlag(false);
-
-
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 
 		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
@@ -517,8 +511,6 @@ void CPlayerGraspWalkLeftState::update(void)
 	//Žè‚ª—£‚³‚ê‚½‚ç
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-		pGirl->setHoldHandsFlag(false);
-
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 
 		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);

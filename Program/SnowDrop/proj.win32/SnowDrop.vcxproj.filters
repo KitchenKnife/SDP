@@ -136,6 +136,9 @@
     <Filter Include="src\Lib\Math">
       <UniqueIdentifier>{0ac02718-e26d-43b0-932c-d58755c2a3d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\ActionController\ActionGirl">
+      <UniqueIdentifier>{1064317c-b67c-43b5-831d-4ae2c6778bf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -296,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.cpp">
       <Filter>src\Data\StateMachine\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateHold.cpp">
+      <Filter>src\Data\StateMachine\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.cpp">
+      <Filter>src\Data\ActionController\ActionGirl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +478,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.h">
       <Filter>src\Data\StateMachine\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateHold.h">
+      <Filter>src\Data\StateMachine\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.h">
+      <Filter>src\Data\ActionController\ActionGirl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

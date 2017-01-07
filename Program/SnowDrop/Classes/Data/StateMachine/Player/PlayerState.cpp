@@ -325,62 +325,39 @@ void CPlayerState::toGraspLeft(void)
 	this->m_isNext = true;
 }
 
-/**
-*	@desc 手を繋ぐ状態に移行するか確認する
-*	@true...移行する false...しない
-*/
-bool CPlayerState::checkGrasp(void)
+/*
+ *	@desc	右向きお姫様抱っこ状態へ移行
+ */
+void CPlayerState::toHoldRight(void)
 {
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-	//プレイヤーを取得
-	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
-	//ガールを取得
-	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
-
-
-	float distanceToGirl = customMath->lengthBitweenChara(pPlayer, pGirl);
-	if (distanceToGirl <= 100.0f)
-	{
-
-		if (!pPlayer->getGrapsMark())
-		{
-			cocos2d::CCParticleSystemQuad* pGrapsMark = cocos2d::CCParticleSystemQuad::create(PARTICLE_GRAPS_MARK);
-			pGrapsMark->resetSystem();
-			pPlayer->setGrapsMark(pGrapsMark);
-			pPlayer->getParent()->addChild(pGrapsMark);
-			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
-			{
-				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x + distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
-			}
-			else
-			{
-				pGrapsMark->setPosition(pPlayer->m_pMove->m_pos.x - distanceToGirl*0.5f, pPlayer->m_pMove->m_pos.y - 10.0f);
-			}
-		}
-
-		if (pointerInputController->getHolodHandsFlag())
-		{
-			//手を繋ぐ
-			pGirl->setHoldHandsFlag(true);
-			if (pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
-			{
-				//手を繋ぐ右状態へ移行
-				this->toGraspRight();
-			}
-			else
-			{
-				//手を繋ぐ左状態へ移行
-				this->toGraspLeft();
-			}
-			return true;
-		}
-	}
-	return false;
+	//次の総合的なプレイヤーの状態
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::HOLD_RIGHT;
+	//現在のプレイヤーのアニメーション状態
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::HOLD_RIGHT;
+	//現在のプレイヤーのアクション状態
+	this->m_pPlayer->m_actionState = 0;
+	//次の総合的なプレイヤーの状態を次に行くステートとして指定
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
 }
 
-
-
+/*
+ *	@desc	左向きお姫様抱っこ状態へ移行
+ */
+void CPlayerState::toHoldLeft(void)
+{
+	//次の総合的なプレイヤーの状態
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::HOLD_LEFT;
+	//現在のプレイヤーのアニメーション状態
+	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::HOLD_LEFT;
+	//現在のプレイヤーのアクション状態
+	this->m_pPlayer->m_actionState = 0;
+	//次の総合的なプレイヤーの状態を次に行くステートとして指定
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
 
 //==========================================
 //
@@ -420,12 +397,30 @@ void CPlayerIdleRightState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 	
-	//手を繋ぐ状態に移行するか
-	if (this->checkGrasp())
-	{
-		return;
-	}
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+	
+	//少女にマークパーティクルが出現しているか確認
+	if (pGirl->getPlayerAndGirlActionMark()) {
+		//出現していたら
+		//手を握る　お姫様抱っこ　のキーが押されているかチェック
+		if (pointerInputController->getHolodHandsFlag()) {
+			if (this->m_pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				//手を繋ぐ右状態へ移行
+				this->toGraspRight();
+			}
+			else
+			{
+				//手を繋ぐ左状態へ移行
+				this->toGraspLeft();
+			}
+			return;
+		}
+		if (pointerInputController->getHugFlag()) {
+			this->toHoldRight();
+		}
 
+	}
 
 
 	//武器を装備
@@ -517,11 +512,29 @@ void CPlayerIdleLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
 
-	//手を繋ぐ状態に移行するか
-	if (this->checkGrasp())
-	{
-		return;
+	//少女にマークパーティクルが出現しているか確認
+	if (pGirl->getPlayerAndGirlActionMark()) {
+		//出現していたら
+		//手を握る　お姫様抱っこ　のキーが押されているかチェック
+		if (pointerInputController->getHolodHandsFlag()) {
+			if (this->m_pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				//手を繋ぐ右状態へ移行
+				this->toGraspRight();
+			}
+			else
+			{
+				//手を繋ぐ左状態へ移行
+				this->toGraspLeft();
+			}
+			return;
+			return;
+		}
+		if (pointerInputController->getHugFlag()) {
+			this->toHoldLeft();
+		}
 	}
 
 	//武器を装備
@@ -613,11 +626,29 @@ void CPlayerWalkRightState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
 
-	//手を繋ぐ状態に移行するか
-	if (this->checkGrasp())
-	{
-		return;
+	//少女にマークパーティクルが出現しているか確認
+	if (pGirl->getPlayerAndGirlActionMark()) {
+		//出現していたら
+		//手を握る　お姫様抱っこ　のキーが押されているかチェック
+		if (pointerInputController->getHolodHandsFlag()) {
+			if (this->m_pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				//手を繋ぐ右状態へ移行
+				this->toGraspRight();
+			}
+			else
+			{
+				//手を繋ぐ左状態へ移行
+				this->toGraspLeft();
+			}
+			return;
+		}
+		if (pointerInputController->getHugFlag()) {
+			this->toHoldRight();
+		}
+
 	}
 
 	//プレイヤーが下へ移動していたら
@@ -721,10 +752,28 @@ void CPlayerWalkLeftState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
-	//手を繋ぐ状態に移行するか
-	if (this->checkGrasp())
-	{
-		return;
+	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+
+	//少女にマークパーティクルが出現しているか確認
+	if (pGirl->getPlayerAndGirlActionMark()) {
+		//出現していたら
+		//手を握る　お姫様抱っこ　のキーが押されているかチェック
+		if (pointerInputController->getHolodHandsFlag()) {
+			if (this->m_pPlayer->m_pMove->m_pos.x <= pGirl->m_pMove->m_pos.x)
+			{
+				//手を繋ぐ右状態へ移行
+				this->toGraspRight();
+			}
+			else
+			{
+				//手を繋ぐ左状態へ移行
+				this->toGraspLeft();
+			}
+			return;
+		}
+		if (pointerInputController->getHugFlag()) {
+			this->toHoldLeft();
+		}
 	}
 
 	//プレイヤーが下へ移動していたら
@@ -1719,7 +1768,7 @@ void CPlayerUnEquipLeftState::onChangeEvent(void)
 // プレイヤー 右向き　手を繋ぐ 状態 クラス
 //
 // 2016/12/26
-//						Author Shinya Ueba
+//						Author Harada 
 //==========================================
 /**
  * @desc	コンストラクタ
@@ -1748,10 +1797,6 @@ void CPlayerGraspRightState::update(void)
 {
 	//優先順で処理していく
 
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
-
 	//手を繋ぐアニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
@@ -1779,7 +1824,7 @@ void CPlayerGraspRightState::onChangeEvent(void)
 // プレイヤー 左向き　手を繋ぐ 状態 クラス
 //
 // 2016/12/25
-//						Author Shinya Ueba
+//						Author Harada
 //==========================================
 /**
  * @desc	コンストラクタ
@@ -1808,10 +1853,6 @@ void CPlayerGraspLeftState::update(void)
 {
 	//優先順で処理していく
 
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
-
 	//手を繋ぐアニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
@@ -1830,6 +1871,111 @@ void CPlayerGraspLeftState::onChangeEvent(void)
 	this->m_isNext = false;
 }
 
+//==========================================
+//
+// Class: CPlayerHoldRightState
+//
+// プレイヤー 右向き お姫様抱っこ待機 状態クラス
+//
+// 2017/ 1/ 5
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerHoldRightState::CPlayerHoldRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
 
+/**
+* @desc	デストラクタ
+*/
+CPlayerHoldRightState::~CPlayerHoldRightState(void) {}
 
+/**
+* @desc	開始処理
+*/
+void CPlayerHoldRightState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerHoldRightState::update(void)
+{
+	//優先順で処理していく
+
+	//手を繋ぐアニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+		//右向き待機状態へ移行
+		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS;
+
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerHoldRightState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerHoldLeftState
+//
+// プレイヤー 左向き お姫様抱っこ待機 状態クラス
+//
+// 2017/ 1/ 5
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerHoldLeftState::CPlayerHoldLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerHoldLeftState::~CPlayerHoldLeftState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerHoldLeftState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerHoldLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//手を繋ぐアニメーションが終わったら
+	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	{
+		//左向き待機状態へ移行
+		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS;
+
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerHoldLeftState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
 //EOF

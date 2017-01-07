@@ -134,7 +134,7 @@ void CGirlState::toGraspIdleRight(void)
 	//現在のプレイヤーのアニメーション状態
 	this->m_pGirl->m_animationState = (int)GIRL_ANIMATION_STATE::IDLE_RIGHT;
 	//現在のプレイヤーのアクション状態
-	this->m_pGirl->m_actionState = 0;
+	this->m_pGirl->m_actionState = (int)GIRL_ACTION_STATE::GRAPS_HAND;
 	//次の総合的なプレイヤーの状態を次に行くステートとして指定
 	this->m_nextRegisterKey = this->m_pGirl->m_state;
 	//待機動作を終了
@@ -151,7 +151,7 @@ void CGirlState::toGraspIdleLeft(void)
 	//現在のプレイヤーのアニメーション状態
 	this->m_pGirl->m_animationState = (int)GIRL_ANIMATION_STATE::IDLE_LEFT;
 	//現在のプレイヤーのアクション状態
-	this->m_pGirl->m_actionState = 0;
+	this->m_pGirl->m_actionState = (int)GIRL_ACTION_STATE::GRAPS_HAND;
 	//次の総合的なプレイヤーの状態を次に行くステートとして指定
 	this->m_nextRegisterKey = this->m_pGirl->m_state;
 	//待機動作を終了
@@ -169,7 +169,7 @@ void CGirlState::toGraspWalkRight(void)
 	//現在のプレイヤーのアニメーション状態
 	this->m_pGirl->m_animationState = (int)GIRL_ANIMATION_STATE::WALK_RIGHT;
 	//現在のプレイヤーのアクション状態
-	this->m_pGirl->m_actionState = 0;
+	this->m_pGirl->m_actionState = (int)GIRL_ACTION_STATE::GRAPS_HAND;
 	//次の総合的なプレイヤーの状態を次に行くステートとして指定
 	this->m_nextRegisterKey = this->m_pGirl->m_state;
 	//待機動作を終了
@@ -187,12 +187,44 @@ void CGirlState::toGraspWalkLeft(void)
 	//現在のプレイヤーのアニメーション状態
 	this->m_pGirl->m_animationState = (int)GIRL_ANIMATION_STATE::WALK_LEFT;
 	//現在のプレイヤーのアクション状態
-	this->m_pGirl->m_actionState = 0;
+	this->m_pGirl->m_actionState = (int)GIRL_ACTION_STATE::GRAPS_HAND;
 	//次の総合的なプレイヤーの状態を次に行くステートとして指定
 	this->m_nextRegisterKey = this->m_pGirl->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 
+}
+
+/**
+* @desc	右向きお姫様抱っこ状態へ移行
+*/
+void CGirlState::toHoldRight(void) {
+	//次の総合的なプレイヤーの状態
+	this->m_pGirl->m_state = (int)GIRL_STATE::HOLD_RIGHT;
+	//現在のプレイヤーのアニメーション状態
+	this->m_pGirl->m_animationState = (int)GIRL_ANIMATION_STATE::IDLE_RIGHT;
+	//現在のプレイヤーのアクション状態
+	this->m_pGirl->m_actionState = (int)GIRL_ACTION_STATE::HOLD_THE_PRINCESS;
+	//次の総合的なプレイヤーの状態を次に行くステートとして指定
+	this->m_nextRegisterKey = this->m_pGirl->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
+}
+
+/**
+* @desc	左向きお姫様抱っこ状態へ移行
+*/
+void CGirlState::toHoldLeft(void) {
+	//次の総合的なプレイヤーの状態
+	this->m_pGirl->m_state = (int)GIRL_STATE::HOLD_LEFT;
+	//現在のプレイヤーのアニメーション状態
+	this->m_pGirl->m_animationState = (int)GIRL_ANIMATION_STATE::IDLE_LEFT;
+	//現在のプレイヤーのアクション状態
+	this->m_pGirl->m_actionState = (int)GIRL_ACTION_STATE::HOLD_THE_PRINCESS;
+	//次の総合的なプレイヤーの状態を次に行くステートとして指定
+	this->m_nextRegisterKey = this->m_pGirl->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
 }
 
 //==========================================
@@ -234,7 +266,7 @@ void CGirlIdleRightState::update(void)
 	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 	
 
-	if (this->m_pGirl->getHoldHandsFlag())
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS)
 	{
 		if (pPlayer->m_pMove->m_pos.x <= this->m_pGirl->m_pMove->m_pos.x)
 		{
@@ -244,7 +276,11 @@ void CGirlIdleRightState::update(void)
 		{
 			this->toGraspRight();
 		}
-	}	
+	}
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS) {
+		this->toHoldRight();
+		return;
+	}
 }
 
 /**
@@ -293,7 +329,7 @@ void CGirlIdleLeftState::update(void)
 	//プレイヤーを取得
 	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 
-	if (this->m_pGirl->getHoldHandsFlag())
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS)
 	{
 		if (pPlayer->m_pMove->m_pos.x <= this->m_pGirl->m_pMove->m_pos.x)
 		{
@@ -303,6 +339,10 @@ void CGirlIdleLeftState::update(void)
 		{
 			this->toGraspRight();
 		}
+	}
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS) {
+		this->toHoldLeft();
+		return;
 	}
 }
 
@@ -470,17 +510,17 @@ void CGirlGraspIdleRightState::update(void)
 {
 	//優先順で処理していく
 
+	//プレイヤーを取得
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+
 	//手が離されたら
-	if (!this->m_pGirl->getHoldHandsFlag())
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE)
 	{
 		//右向き待機状態へ移行
 		this->toIdleRight();
 		return;
 	}
 
-
-	//プレイヤーを取得
-	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT)
 	{
 		this->toGraspWalkRight();
@@ -535,16 +575,17 @@ void CGirlGraspIdleLeftState::update(void)
 {
 	//優先順で処理していく
 
+	//プレイヤーを取得
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+
 	//手が離されたら
-	if (!this->m_pGirl->getHoldHandsFlag())
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE)
 	{
 		//左向き待機状態へ移行
 		this->toIdleLeft();
 		return;
 	}
 
-	//プレイヤーを取得
-	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT)
 	{
 		this->toGraspWalkRight();
@@ -603,7 +644,7 @@ void CGirlGraspWalkRightState::update(void)
 	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 
 	//手が離されたら
-	if (!this->m_pGirl->getHoldHandsFlag())
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE)
 	{
 		//右向き待機状態へ移行
 		this->toIdleRight();
@@ -615,8 +656,6 @@ void CGirlGraspWalkRightState::update(void)
 		this->toGraspIdleRight();
 		return;
 	}
-
-	this->m_pGirl->m_pMove->m_pos.set(pPlayer->m_pMove->m_pos.x - 35.0f, pPlayer->m_pMove->m_pos.y);
 }
 
 /**
@@ -633,7 +672,7 @@ void CGirlGraspWalkRightState::onChangeEvent(void)
 //
 // Class: CGirlGraspWalkLeftState
 //
-// プレイヤー 左向き　歩行 状態 クラス
+// プレイヤー 手握り 左向き 歩行 状態クラス
 //
 // 2016/12/25
 //						Author Shinya Ueba
@@ -666,7 +705,7 @@ void CGirlGraspWalkLeftState::update(void)
 	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 
 	//手が離されたら
-	if (!this->m_pGirl->getHoldHandsFlag())
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE)
 	{
 		//右向き待機状態へ移行
 		this->toIdleLeft();
@@ -678,8 +717,6 @@ void CGirlGraspWalkLeftState::update(void)
 		this->toGraspIdleLeft();
 		return;
 	}
-
-	this->m_pGirl->m_pMove->m_pos.set(pPlayer->m_pMove->m_pos.x + 35.0f, pPlayer->m_pMove->m_pos.y);
 }
 
 /**
@@ -690,5 +727,121 @@ void CGirlGraspWalkLeftState::onChangeEvent(void)
 	this->m_isNext = false;
 }
 
+
+//==========================================
+//
+// Class: CGirlHoldIdleRightState
+//
+// プレイヤー 右向き　お姫様抱っこ待機 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CGirlHoldIdleRightState::CGirlHoldIdleRightState(CPlayerCharacterGirl* const pOwner)
+	:CGirlState::CGirlState(pOwner) {}
+
+/**
+* @desc	デストラクタ
+*/
+CGirlHoldIdleRightState::~CGirlHoldIdleRightState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CGirlHoldIdleRightState::start(void)
+{
+
+}
+
+/**
+* @desc	更新処理
+*/
+void CGirlHoldIdleRightState::update(void)
+{
+	//優先順で処理していく
+
+	//プレイヤーを取得
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+
+
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE)
+	{
+		//フリーの右向きの待機状態へ移行
+		this->toIdleRight();
+	}
+	if (pPlayer->m_state == (int)PLAYER_STATE::WALK_LEFT) {
+		//左向きへ移行
+		this->toHoldLeft();
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CGirlHoldIdleRightState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
+
+
+//==========================================
+//
+// Class: CGirlHoldIdleLeftState
+//
+// プレイヤー 左向き　手を繋ぐ待機 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CGirlHoldIdleLeftState::CGirlHoldIdleLeftState(CPlayerCharacterGirl* const pOwner)
+	:CGirlState::CGirlState(pOwner) {}
+
+/**
+* @desc	デストラクタ
+*/
+CGirlHoldIdleLeftState::~CGirlHoldIdleLeftState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CGirlHoldIdleLeftState::start(void)
+{
+
+}
+
+/**
+* @desc	更新処理
+*/
+void CGirlHoldIdleLeftState::update(void)
+{
+	//優先順で処理していく
+
+	//プレイヤーを取得
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
+
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE)
+	{
+		//左向き待機状態へ移行
+		this->toIdleLeft();
+	}
+	if (pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT) {
+		//左向きへ移行
+		this->toHoldRight();
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CGirlHoldIdleLeftState::onChangeEvent(void)
+{
+	this->m_isNext = false;
+}
 
 //EOF

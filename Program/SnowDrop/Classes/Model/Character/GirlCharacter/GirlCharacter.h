@@ -1,6 +1,8 @@
 #pragma once
 #include "Model/Character/Character.h"
 
+class CPlayerCharacterBoy;
+
 //================================================
 // 少女クラス
 //
@@ -59,46 +61,34 @@ public:
 	//================================================ 
 	// CPlayerCharacterGirlクラス専用メンバ
 	//================================================
-	//少女の状態
-	enum class GIRL_STATE :int {
-		NONE		= 0,	//何もなし
-		STAND		= 1,	//待機
-		WASTE		= 2,	//暇
-		HOLD_HANDS	= 3,	//手を繋ぐ
-		HUG			= 4,	//お姫様だっこ　（キャー(^q^)）
-	};
+	//プレイヤー（少年）のアドレス
+	CPlayerCharacterBoy* m_pPlayerChara;
 
-	//少女のイベント
-	enum class GIRL_EVENT :int {
-		NONE		=	0,	//何もなし
-		STAND		=	1,	//待機
-		WASTE		=	2,	//暇
-		HOLD_HANDS	=	3,	//手を繋ぐ
-		HUG			=	4,	//お姫様だっこ　（キャー(^q^)）
-	};
-
-	//プレイヤーと少女の状態
-	enum class PAYER_GIRL_STATE : int{
-		FREE	= 0,	//なにもなし
-	};
-
+	//手繋ぎ可能マークのインスタンス
+	cocos2d::CCParticleSystemQuad* m_pActionMark = NULL;
+	
+	//マークのパーティクル速度...1.0fで通常速度
+	int m_durationMark = 0;
+	
+	//マークのパーティクルを表示するカウンター
+	int m_counterActionMark = 0;
 
 	/**
-	*	@desc 手を繋ぐ状態フラグ設定
-	*	@param true...手を繋いでる false...手を離す
-	*/
-	void setHoldHandsFlag(bool flag);
+	 * @desc	プレイヤーと少女のアクション可能マークを出現させるかチェックする
+	 */
+	void checkPlayerAndGirlActionMark(void);
 
 	/**
-	*	@desc 手を繋ぐ状態フラグ取得
-	*	@return true...手を繋いでる false...手を離す
-	*/
-	bool getHoldHandsFlag(void);
+	 * @desc	プレイヤーと少女のアクション可能マークが出ているか取得
+	 * @author	Shinya Ueba
+	 */
+	void setPlayerAndGirlActionMark(void);
 
-
-private:
-
-	//手を繋ぎフラグ
-	bool m_flagHoldHands = false;
+	/**
+	 * @desc	プレイヤーと少女のアクション可能マークを作成してガールに取り付ける
+	 * @return	true...マークが出現している。
+	 * @author	Shinya Ueba
+	 */
+	bool getPlayerAndGirlActionMark(void);
 
 };

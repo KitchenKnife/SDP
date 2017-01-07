@@ -72,21 +72,6 @@ void CPlayerCharacterBoy::animationFunc() {
 
 	//プレイヤーアニメーション
 	(*this->m_pAnimations)[this->m_animationState]->update();
-
-
-
-	//パーティクルアニメーション
-	if (this->m_pGrapsMark)
-	{
-		this->m_counterGrapsMark--;
-
-		if (this->m_counterGrapsMark <= 0)
-		{
-			this->m_pGrapsMark->removeFromParent();
-
-			this->m_pGrapsMark = NULL;
-		}
-	}
 }
 
 
@@ -117,12 +102,6 @@ void CPlayerCharacterBoy::checkState()
 
 //反映処理
 void  CPlayerCharacterBoy::applyFunc() {
-
-
-	
-
-
-
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
 
@@ -149,37 +128,3 @@ void CPlayerCharacterBoy::hits(CCharacter* pChara) {
 
 }
 
-/**
-* @desc 手をつなげる状態かチェック
-* @param 相方（少女）
-* @tips 手をつなげる状態なら"手つなぎフラグ"を上げる
-* @author Osumi
-* @author Shinya Ueba
-*/
-void CPlayerCharacterBoy::checkHoldHands(CPlayerCharacterGirl* pGirl) {
-
-}
-
-/**
-*	@desc 手つなぎ可能マークの設定
-*	@param パーティクルインスタンス
-*	@author	Shinya Ueba
-*/
-void CPlayerCharacterBoy::setGrapsMark(cocos2d::CCParticleSystemQuad* const pGrapsMark)
-{
-	this->m_pGrapsMark = pGrapsMark;
-
-	this->m_durationGrapsMark = 1.0f;
-	this->m_pGrapsMark->setDuration(this->m_durationGrapsMark);
-	this->m_counterGrapsMark = this->m_durationGrapsMark * 60;
-}
-
-/**
-*	@desc 手つなぎ可能マークの設定
-*	@param パーティクルインスタンス
-*	@author	Shinya Ueba
-*/
-cocos2d::CCParticleSystemQuad* CPlayerCharacterBoy::getGrapsMark(void)
-{
-	return this->m_pGrapsMark;
-}

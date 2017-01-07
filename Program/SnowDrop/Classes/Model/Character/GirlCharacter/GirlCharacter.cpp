@@ -1,6 +1,8 @@
 #include "GirlCharacter.h"
 #include "Model\Character\Factory\CharacterFactory.h"
 #include "Model\Character\CharacterAggregate.h"
+#include "Data/Enum/EnumPlayer.h"
+#include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 
 //====================================================
 // 少女クラスのメンバ関数定義
@@ -85,6 +87,30 @@ void CPlayerCharacterGirl::collisionAll() {
 */
 void CPlayerCharacterGirl::checkState() {
 
+	//プレイヤーと少女の状態がフリーだったら
+	if (this->m_pPlayerChara->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::FREE) {
+		//プレイヤーとの距離を計測してパーティクルを生成するか判定する
+		this->checkPlayerAndGirlActionMark();
+	}
+
+	//パーティクルアニメーション
+	//パーティクルが存在していれば
+	if (this->m_pActionMark)
+	{
+		//カウンター更新
+		this->m_counterActionMark--;
+
+		//カウンターが０以下になれば
+		if (this->m_counterActionMark <= 0)
+		{
+			//パーティクルを外す
+			this->m_pActionMark->removeFromParent();
+
+			//パーティクル保管用変数にNULLを代入
+			this->m_pActionMark = NULL;
+		}
+	}
+
 	if(this->m_pStateMachine)
 	{
 		//状態遷移マシンの更新
@@ -94,7 +120,7 @@ void CPlayerCharacterGirl::checkState() {
 
 
 //反映処理
-void  CPlayerCharacterGirl::applyFunc() {
+void CPlayerCharacterGirl::applyFunc() {
 
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
@@ -109,7 +135,7 @@ void  CPlayerCharacterGirl::applyFunc() {
  * @param	キャラクターのアドレス
  * @return	true...衝突した
  */
-bool  CPlayerCharacterGirl::collision(CCharacter* pChara) {
+bool CPlayerCharacterGirl::collision(CCharacter* pChara) {
 
 	return true;
 }
@@ -122,22 +148,66 @@ void CPlayerCharacterGirl::hits(CCharacter* pChara) {
 
 }
 
-
 /**
-*	@desc 手を繋ぐ状態フラグ設定
-*	@param true...手を繋いでる false...手を離す
-*/
-void CPlayerCharacterGirl::setHoldHandsFlag(bool flag)
-{
-	this->m_flagHoldHands = flag;
+ * @desc	プレイヤーと少女のアクション可能マークを出現させるかチェックする
+ */
+void CPlayerCharacterGirl::checkPlayerAndGirlActionMark(void) {
+	//すでにマークが出現していたら処理しない
+	if (this->m_pActionMark) {
+		return;
+	}
+	//プレイヤーと少女の距離を計測
+	float distanceToGirl = customMath->lengthBitweenChara(this->m_pPlayerChara, this);
+	
+	//距離が１００以下なら
+	if (distanceToGirl <= 100.0f)
+	{
+		//パーティクルを生成し設定する。
+		this->setPlayerAndGirlActionMark();
+	}
 }
 
 /**
-*	@desc 手を繋ぐ状態フラグ取得
-*	@return true...手を繋いでる false...手を離す
-*/
-bool CPlayerCharacterGirl::getHoldHandsFlag(void)
+ * @desc	プレイヤーと少女のアクション可能マークが出ているか取得
+ * @author	Shinya Ueba
+ */
+void CPlayerCharacterGirl::setPlayerAndGirlActionMark(void)
 {
-	return this->m_flagHoldHands;
+	//マークのパーティクルを生成
+	cocos2d::CCParticleSystemQuad* pGrapsMark = cocos2d::CCParticleSystemQuad::create(PARTICLE_GRAPS_MARK);
+	//パーティクルを始めっから再生させる
+	pGrapsMark->resetSystem();
+	//少女のパーティクル保管変数に代入
+	this->m_pActionMark = pGrapsMark;
+
+	//
+	this->m_durationMark = 1.0f;
+	this->m_pActionMark->setDuration(this->m_durationMark);
+	this->m_counterActionMark = this->m_durationMark * 60;
+
+
+	this->getParent()->addChild(this->m_pActionMark);
+	if (this->m_pPlayerChara->m_pMove->m_pos.x <= this->m_pMove->m_pos.x)
+	{
+		this->m_pActionMark->setPosition(this->m_pMove->m_pos.x + this->m_pBody->m_left * 0.2f,this->m_pMove->m_pos.y);
+	}
+	else
+	{
+		this->m_pActionMark->setPosition(this->m_pMove->m_pos.x + this->m_pBody->m_right * 0.2f, this->m_pMove->m_pos.y);
+	}
 }
 
+/**
+ * @desc	プレイヤーと少女のアクション可能マークを作成してガールに取り付ける
+ * @return	true...マークが出現している。
+ * @author	Shinya Ueba
+ */
+bool CPlayerCharacterGirl::getPlayerAndGirlActionMark(void)
+{
+	if (this->m_pActionMark) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

@@ -13,6 +13,8 @@
 #include "GirlCharacterFactory.h"
 #include "Data\StateMachine\Girl\GirlState.h"
 #include "Data\Enum\EnumGirl.h"
+#include "Model/Character/CharacterAggregate.h"
+#include "Data/ActionController/ActionGirl/ActionGirl.h"
 
 //=====================================================
 // 少年キャラクターパーツクラス工場
@@ -206,7 +208,26 @@ void CBasePlayerGirlFactory::settingPhysicals(CPlayerCharacterGirl* pChara) {
 }
 
 void CBasePlayerGirlFactory::settingActions(CPlayerCharacterGirl* pChara) {
-	
+	//待機中のアクション群の実体を生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)GIRL_ACTION_STATE::IDLE] = pActionIdle;
+
+	//手を繋いだ状態でのアクション群の実体を生成
+	std::vector<CAction*>* pActionGraspHand = new std::vector<CAction*>();
+	//手を繋いだ状態でのアクションを生成して取り付ける
+	pActionGraspHand->push_back(new CGirlActionGraspHand(CCharacterAggregate::getInstance()->getPlayer()));
+	//手を繋いだ状態のアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)GIRL_ACTION_STATE::GRAPS_HAND] = pActionGraspHand;
+
+	//お姫様抱っこ状態でのアクション群の実体を生成
+	std::vector<CAction*>* pActionHoldAction = new std::vector<CAction*>();
+	//お姫様抱っこ状態でのアクションを生成して取り付ける
+	pActionHoldAction->push_back(new CGirlActionHoldThePrincess(CCharacterAggregate::getInstance()->getPlayer()));
+	//お姫様抱っこ状態のアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)GIRL_ACTION_STATE::HOLD_THE_PRINCESS] = pActionHoldAction;
 
 }
 
@@ -317,6 +338,16 @@ void CBasePlayerGirlFactory::settingStateMachine(CPlayerCharacterGirl* pChara)
 	pChara->m_pStateMachine->registerState((int)GIRL_STATE::GRASP_WALK_LEFT, new CGirlGraspWalkLeftState(pChara));
 
 
+//---------------------------------------------------------------------------------------------------------------------
+//
+// お姫様抱っこ状態
+//
+//---------------------------------------------------------------------------------------------------------------------
+	//右向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::HOLD_RIGHT, new CGirlHoldIdleRightState(pChara));
+	//左向き
+	pChara->m_pStateMachine->registerState((int)GIRL_STATE::HOLD_LEFT, new CGirlHoldIdleLeftState(pChara));
+
 
 	//最後に最初の状態を設定する！！！！！
 	pChara->m_state = (int)GIRL_STATE::IDLE_LEFT;
@@ -336,6 +367,8 @@ void CBasePlayerGirlFactory::settingInitialize(CPlayerCharacterGirl* pChara) {
 
 	//細かなタイプ別（タグ）
 	pChara->m_tag = TAG_PLAYER_2;
+
+	pChara->m_pPlayerChara = CCharacterAggregate::getInstance()->getPlayer();
 
 	/*
 	*　計算データのままで起動すると1フレームずれが発生するので

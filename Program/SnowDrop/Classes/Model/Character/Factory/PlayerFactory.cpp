@@ -11,6 +11,7 @@
 #include "PlayerFactory.h"
 #include "Data\StateMachine\Player\PlayerState.h"
 #include "Data/StateMachine/Player/PlayerStateGraps.h"
+#include "Data/StateMachine/Player/PlayerStateHold.h"
 #include "Data\Enum\EnumPlayer.h"
 
 //================================================
@@ -276,6 +277,14 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//手を掴んだ状態での左攻撃のアニメーションを設定
 	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
 	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_LEFT]->addChipData(new CChip(0, 896, 128, 128));
+
+	//右向きお姫様抱っこ状態のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::HOLD_RIGHT]->addChipData(new CChip(256, 512, 128, 128));
+
+	//左向きお姫様抱っこ状態のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
+	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::HOLD_LEFT]->addChipData(new CChip(0, 512, 128, 128));
 }
 
 void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
@@ -474,6 +483,18 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	pStateMachine->registerState((int)PLAYER_STATE::GRASP_LEFT, new CPlayerGraspLeftState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
+
+	//右向き手を繋ぐ状態
+	//作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::HOLD_RIGHT, new CPlayerHoldRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//左向き手を繋ぐ状態
+	//作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::HOLD_LEFT, new CPlayerHoldLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
 	
 	//プレイヤーに作成したステートマシーンを取り付ける
 	(*pChara->m_pStateMachines)[(int)PLAYER_AND_GIRL_STATE::FREE] = pStateMachine;
@@ -525,6 +546,66 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 	//プレイヤーに作成したステートマシーンを取り付ける
 	(*pChara->m_pStateMachines)[(int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS] = pStateMachineGrips;
+
+	//===============================================================================
+	// 少女との関係がお姫様抱っこ状態のステートマシーン設定はここから
+	//===============================================================================
+	//取り付けるステートマシーンを生成する
+	CStateMachine* pStateMachineHold = new CStateMachine();
+
+
+	//右向きお姫様抱っこで待機する状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::IDLE_RIGHT, new CPlayerHoldIdleRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//左向きお姫様抱っこで待機する状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::IDLE_LEFT, new CPlayerHoldIdleLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//右向きお姫様抱っこで歩行する状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::WALK_RIGHT, new CPlayerHoldWalkRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//左向きお姫様抱っこで歩行する状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::WALK_LEFT, new CPlayerHoldWalkLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+	//右向きお姫様抱っこでジャンプする状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::JUMP_RIGHT, new CPlayerHoldJumpRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+	//左向きお姫様抱っこでジャンプする状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::JUMP_LEFT, new CPlayerHoldJumpLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//右向きお姫様抱っこで落下する状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::FALL_RIGHT, new CPlayerHoldFallRightState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+
+	//左向きお姫様抱っこで落下する状態
+	//作成した状態を登録していく
+	pStateMachineHold->registerState((int)PLAYER_STATE::FALL_LEFT, new CPlayerHoldFallLeftState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//プレイヤーに作成したステートマシーンを取り付ける
+	(*pChara->m_pStateMachines)[(int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS] = pStateMachineHold;
+
 
 
 	//少女との状態をFREEに変更

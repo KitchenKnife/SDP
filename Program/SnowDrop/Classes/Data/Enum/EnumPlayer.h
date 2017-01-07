@@ -28,8 +28,9 @@
 //---------------------------------------------------------
 enum class PLAYER_AND_GIRL_STATE :int
 {
-	FREE			= 0,	//少女となにもしていない状態
-	GRAPS_HANDS		= 1,	//少女と手を握っている状態
+	FREE				= 0,	//少女となにもしていない状態
+	GRAPS_HANDS			= 1,	//少女と手を握っている状態
+	HOLD_THE_PRINCESS	= 2,	//少女をお姫様抱っこしている状態
 
 };
 
@@ -60,7 +61,8 @@ enum class PLAYER_STATE :int
 	UN_EQUIP_LEFT		= 15,	//装備を外す	左向き
 	GRASP_RIGHT			= 16,	//手を掴む・離す　右向き
 	GRASP_LEFT			= 17,	//手を掴む・離す　左向き
-
+	HOLD_RIGHT			= 18,	//お姫様抱っこ	右向き
+	HOLD_LEFT			= 19,	//お姫様抱っこ	左向き
 };
 
 //---------------------------------------------------------
@@ -96,6 +98,8 @@ enum class PLAYER_ANIMATION_STATE :int
 	GRASP_LEFT			= 21,	//手を掴む　左向き
 	GRAPS_ATTACK_RIGHT	= 22,	//手を掴んだ状態での攻撃	右向き
 	GRAPS_ATTACK_LEFT	= 23,	//手を掴んだ状態での攻撃	左向き
+	HOLD_RIGHT			= 24,	//お姫様抱っこ	右向き
+	HOLD_LEFT			= 25,	//お姫様抱っこ	左向き
 };
 
 //---------------------------------------------------------
@@ -109,7 +113,6 @@ enum class PLAYER_ACTION_STATE :int
 {
 	IDLE = 0,//待機状態
 	JUMP = 1,//ジャンプ
-	WANDERING = 2,
 };
 
 /********************************************************************

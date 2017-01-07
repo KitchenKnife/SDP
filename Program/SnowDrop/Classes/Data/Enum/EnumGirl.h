@@ -39,6 +39,8 @@ enum class GIRL_STATE :int
 	GRASP_IDLE_LEFT = 7,	//手を掴みながら待機	左向き
 	GRASP_WALK_RIGHT = 8,	//手を掴みながら歩く　	右向き
 	GRASP_WALK_LEFT = 9,	//手を掴みながら歩く	左向き
+	HOLD_RIGHT		= 10,
+	HOLD_LEFT		= 11,
 };
 
 //---------------------------------------------------------
@@ -68,7 +70,8 @@ enum class GIRL_ANIMATION_STATE :int
 enum class GIRL_ACTION_STATE :int
 {
 	IDLE = 0,//待機状態
-	WANDERING = 1,
+	GRAPS_HAND = 1,
+	HOLD_THE_PRINCESS	= 2,
 	//	CHASE = 2,
 };
 

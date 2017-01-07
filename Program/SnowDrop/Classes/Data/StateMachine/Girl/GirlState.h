@@ -92,6 +92,16 @@ public:
 	*/
 	void toGraspWalkLeft(void);
 
+	/**
+	 * @desc	右向きお姫様抱っこ状態へ移行
+	 */
+	void toHoldRight(void);
+
+	/**
+	 * @desc	左向きお姫様抱っこ状態へ移行
+	 */
+	void toHoldLeft(void);
+
 protected:
 	CPlayerCharacterGirl* m_pGirl = NULL;
 };
@@ -414,5 +424,83 @@ public:
 private:
 };
 
+//==========================================
+//
+// Class: CGirlHoldIdleRightState
+//
+// プレイヤー 右向き　お姫様抱っこ待機 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+class CGirlHoldIdleRightState :public CGirlState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CGirlHoldIdleRightState(CPlayerCharacterGirl* const pOwner);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CGirlHoldIdleRightState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
+
+//==========================================
+//
+// Class: CGirlHoldIdleLeftState
+//
+// プレイヤー 左向き　手を繋ぐ待機 状態 クラス
+//
+// 2016/12/28
+//						Author Shinya Ueba
+//==========================================
+class CGirlHoldIdleLeftState :public CGirlState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CGirlHoldIdleLeftState(CPlayerCharacterGirl* const pOwner);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CGirlHoldIdleLeftState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+};
 
 //EOF
