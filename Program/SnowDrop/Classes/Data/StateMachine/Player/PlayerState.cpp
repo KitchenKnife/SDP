@@ -451,7 +451,6 @@ void CPlayerIdleRightState::update(void)
 		//右向き歩行状態へ移行
 		this->toWalkRight();
 		return;
-		//this->m_pMove->m_accele.x = 0.5f;
 	}
 
 
@@ -461,8 +460,6 @@ void CPlayerIdleRightState::update(void)
 		//左向き歩行状態へ移行
 		this->toWalkLeft();
 		return;
-		
-		//this->m_pMove->m_accele.x = -0.5f;
 	}
 }
 
