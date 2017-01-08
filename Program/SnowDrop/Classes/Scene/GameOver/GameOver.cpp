@@ -136,7 +136,7 @@ void CGameOver::update(float deltaTime)
 void CGameOver::callbackChangeTitle(cocos2d::Ref* pSender)
 {
 	// Œø‰Ê‰¹Ä¶
-	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON);
+	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON, false, CAudioManager::getInstance()->getSEVolume());
 	//BGM’âŽ~
 	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_TITLE));
 

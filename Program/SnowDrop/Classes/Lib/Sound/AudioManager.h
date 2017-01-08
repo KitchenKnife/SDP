@@ -31,6 +31,11 @@ private:
 	// 対象音楽ID
 	std::map<std::string, int> m_musicID;
 
+	// BGMの音量
+	float m_BGMVolume;
+	// 効果音の音量
+	float m_SEVolume;
+
 public:
 	// デストラクタ
 	~CAudioManager() {
@@ -60,7 +65,29 @@ public:
 	}
 
 	/*
-	*	@desc	対象音楽IDの設定
+	*	@desc	BGMの音量設定
+	*	@param　任意の音量
+	*/
+	void setBGMVolume(float volume) {
+		this->m_BGMVolume = volume;
+	}
+	/*
+	*	@desc	効果音の音量設定
+	*	@param　任意の音量
+	*/
+	void setSEVolume(float volume) {
+		this->m_SEVolume = volume;
+	}
+	/*
+	*	@desc	効果音の音量の取得
+	*/
+	float getSEVolume() {
+		return this->m_SEVolume;
+	}
+
+	/*
+	*	@desc	対象音楽IDの登録
+	*	@param	登録する音楽の名称
 	*	@param	扱いたい音楽のID
 	*/
 	void setMusicID(std::string musicName, int musicID) {

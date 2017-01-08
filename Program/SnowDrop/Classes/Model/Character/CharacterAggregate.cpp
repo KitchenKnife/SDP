@@ -55,6 +55,27 @@ void CCharacterAggregate::set(std::vector<CCharacter*>* pCharacters) {
 	//設定されていなければ引数のキャラクター群のアドレスを登録する
 	this->m_pCharacters = pCharacters;
 }
+/**
+* @desc	キャラタクーの集まりの参照を変更
+* @param	設定するキャラクターの集まりのアドレス
+*/
+void CCharacterAggregate::change(std::vector<CCharacter*>* pCharacters) {
+
+	std::vector<CCharacter*>::iterator itr = (*this->m_pCharacters).begin();
+	
+	while (itr != (*this->m_pCharacters).end()) {
+		
+		(*itr)->removeFromParent();
+
+		itr = (*this->m_pCharacters).erase(itr);
+
+	}
+	SAFE_DELETE(this->m_pCharacters);
+
+	//設定されていなければ引数のキャラクター群のアドレスを登録する
+	this->m_pCharacters = pCharacters;
+
+}
 
 /**
 * @desc	キャラタクーの集まりのを取得

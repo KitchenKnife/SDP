@@ -99,6 +99,10 @@ bool CTitle::init()
 	this->addChild(pointerMenu);
 
 
+	// BGM‰¹—Ê’²®
+	CAudioManager::getInstance()->setBGMVolume(0.1f);
+	// Œø‰Ê‰¹‚Ì‰¹—Ê’²®
+	CAudioManager::getInstance()->setSEVolume(0.1f);
 	// ƒ^ƒCƒgƒ‹BGM‚ÌÄ¶
 	int musicID = AudioEngine::play2d(SOUND_FILE_BGM_TITLE, true,0.0f);
 	// IDÝ’è
@@ -152,7 +156,7 @@ void CTitle::update(float deltaTime)
 void CTitle::callbackChangeGameMain(cocos2d::Ref* pSender)
 {
 	// Œø‰Ê‰¹Ä¶
-	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON);
+	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON,false,CAudioManager::getInstance()->getSEVolume());
 	//BGM’âŽ~
 	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_TITLE));
 

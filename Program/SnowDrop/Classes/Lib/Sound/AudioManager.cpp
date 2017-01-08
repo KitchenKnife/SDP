@@ -30,7 +30,7 @@ void CAudioManager::fadeIn(std::string musicName) {
 	float volume = AudioEngine::getVolume(musicID);
 
 	// MAX Volume o‚È‚¯‚ê‚Î‘«‚·
-	if (volume < 1.0f) {
+	if (volume < this->m_BGMVolume) {
 		AudioEngine::setVolume(musicID, volume + 0.01f);
 	}
 

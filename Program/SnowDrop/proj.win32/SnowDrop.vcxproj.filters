@@ -139,6 +139,9 @@
     <Filter Include="src\Data\ActionController\ActionGirl">
       <UniqueIdentifier>{1064317c-b67c-43b5-831d-4ae2c6778bf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene\GameMain2">
+      <UniqueIdentifier>{1240ebfd-27cb-4e2d-969e-fe8f3c6d81e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -305,6 +308,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.cpp">
       <Filter>src\Data\ActionController\ActionGirl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\GameMain2\GameMain2.cpp">
+      <Filter>src\Scene\GameMain2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.h">
       <Filter>src\Data\ActionController\ActionGirl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameMain2\GameMain2.h">
+      <Filter>src\Scene\GameMain2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
