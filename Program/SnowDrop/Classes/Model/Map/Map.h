@@ -27,6 +27,9 @@ enum class BLOCK_TYPE :int {
 	BAT			= 103,	//コウモリ
 	REDMAIDEAD	= 104,	//赤クリボー
 	BLUEMAIDEAD = 105,
+	NUTCRACKER = 106,
+	BARON = 107,
+	MOUSEKING = 108,
 
 };
 
@@ -41,7 +44,9 @@ enum class ENEMY_TYPE :int {
 	BAT			= 103,	//コウモリ
 	MALICE		= 104,	//マリス
 	BLUEMAIDEAD = 105,	//青クリボー
-
+	NUTCRACKER = 106,
+	BARON = 107,
+	MOUSEKING = 108,
 };
 
 //ギミックの種類

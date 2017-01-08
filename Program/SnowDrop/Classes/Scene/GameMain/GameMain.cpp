@@ -203,7 +203,7 @@ bool CGameMain::init() {
 
 	//マップの生成と取り付け
 	CMap* pMap = CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE);
-	pMap->setVisible(false);
+	//pMap->setVisible(false);
 	this->m_pMainLayer->addChild(pMap);
 
 	

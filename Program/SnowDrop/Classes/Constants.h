@@ -75,6 +75,10 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define IMAGE_ENEMY				"Images/Enemy/kari.png"
 #define IMAGE_MEIDEAD			"Images/Enemy/Maidead/meid.png"
 #define IMAGE_BAT				"Images/Enemy/Bat/bat.png"
+#define IMAGE_NUTCRACKER		"Images/Enemy/NutCracker/kurumi.png"
+#define IMAGE_BARON				"Images/Enemy/Baron/baron.png"
+#define IMAGE_MOUSEKING			"Images/Enemy/MouseKing/king.png"
+
 
 // 敵武器もち
 #define IMAGE_ENEMY_WEAPON		"Images/kari_weapon.png"
@@ -137,7 +141,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 //	その他の外部ファイルのマクロはここから書く
 //=========================================================================
 //#define MAP_DATA_SAMPLE "MapData/sampleMapData.tmx"
-#define MAP_DATA_SAMPLE "MapData/st1Map.tmx"
+#define MAP_DATA_SAMPLE "MapData/st2Map.tmx"
 //#define MAP_DATA_SAMPLE "MapData/ST02_2.tmx"
 
 /**
