@@ -221,7 +221,7 @@ public:
 	//破棄
 	static void removeInstance();
 	//デストラクタ
-	~CMapManager();
+	virtual ~CMapManager();
 
 private:
 	//マップ

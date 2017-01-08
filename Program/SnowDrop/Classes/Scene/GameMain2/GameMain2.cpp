@@ -96,9 +96,6 @@ void CGameMain2::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 // デストラクタ
 CGameMain2::~CGameMain2() {
 
-	// マップの取り外し
-	CMapManager::getInstance()->removeMap();
-
 	//出撃スケジュールの削除
 	if (this->m_pLaunchSchedule)
 	{
@@ -110,17 +107,21 @@ CGameMain2::~CGameMain2() {
 	//出撃スケジュールの破棄
 	SAFE_DELETE(this->m_pLaunchSchedule);
 
+	//キャラクターの集まりを削除
+	if (this->m_pCharacters) {
+		// キャラの解放
+		for (CCharacter* pChara : (*this->m_pCharacters)) {
 
-	//キャラクターの集まりの削除
-	if (this->m_pCharacters)
-	{
-		for (CCharacter* pChara : (*this->m_pCharacters))
-		{
 			SAFE_DELETE(pChara);
 		}
 	}
-	//キャラクターの集まりの破棄
 	SAFE_DELETE(this->m_pCharacters);
+
+	SAFE_DELETE(this->m_pBackGround);
+	SAFE_DELETE(this->m_pRoom);
+	SAFE_DELETE(this->m_pUI);
+	SAFE_DELETE(this->m_pMainLayer);
+	SAFE_DELETE(this->m_pUILayer);
 }
 
 

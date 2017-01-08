@@ -420,13 +420,18 @@ CMapManager* CMapManager::getInstance(){
 
 //デストラクタ
 CMapManager::~CMapManager(){
-	this->m_pMap->removeFromParent();
+	if (this->m_pMap != NULL) {
+		//SAFE_DELETE(this->m_pMap);
+	}
 }
 
 //破棄
 void CMapManager::removeInstance() {
-	SAFE_DELETE(CMapManager::m_pSharedMapManager);
+	if (CMapManager::m_pSharedMapManager != NULL) {
+		SAFE_DELETE(CMapManager::m_pSharedMapManager);
+	}
 }
+	
 
 //マップ生成
 CMap* CMapManager::createMap(const std::string& fileName_) {

@@ -41,7 +41,7 @@ enum class PLAYER_AND_GIRL_STATE :int
 //
 //
 //---------------------------------------------------------
-enum class PLAYER_AND_GIRL_STATE :int
+enum class PLAYER_SWORD_STATE :int
 {
 	RETURN	= 0,	//”[“ó‘Ô
 	DRAWN	= 1,	//”²“ó‘Ô
