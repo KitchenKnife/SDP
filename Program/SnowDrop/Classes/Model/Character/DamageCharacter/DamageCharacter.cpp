@@ -17,7 +17,10 @@
 //	ダメージキャラクターのメンバ関数のコードの追加はここから
 //================================================
 //コンストラクタ
-CDamageCharacter::CDamageCharacter() {}
+CDamageCharacter::CDamageCharacter() {
+	this->m_charaType = (int)CHARACTER_TYPE::DAMAGE;
+
+}
 
 //デストラクタ
 CDamageCharacter::~CDamageCharacter() {}
@@ -42,6 +45,14 @@ void CDamageCharacter::moveFunc() {
 	//ダメージキャラクターは常に所有者の画像右端に着いていくように移動する。
 	//this->m_pMove->m_pos.set(this->m_pChara->m_pMove->m_pos.x + this->m_pBody->m_right, this->m_pChara->m_pMove->m_pos.y);
 
+	// アクション
+	if (this->m_mapAction[this->m_actionState])
+	{
+		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+			pAction->update(this);
+		}
+	}
+
 	//移動計算
 	this->m_pMove->moveBy();
 }
@@ -57,7 +68,8 @@ void CDamageCharacter::collisionAll() {
 		std::vector<CCharacter*>* pCharacters = CCharacterAggregate::getInstance()->get();
 
 		for (CCharacter* pChara : (*pCharacters)) {
-			if (pChara->m_charaType == (int)CHARACTER_TYPE::ENEMY)
+			if (pChara->m_charaType == (int)CHARACTER_TYPE::ENEMY ||
+				pChara->m_charaType == (int)CHARACTER_TYPE::DAMAGE)
 			{
 				//生きていたら
 				if (pChara->m_isAlive)
