@@ -40,11 +40,15 @@ bool CDamageCharacter::init() {
 void CDamageCharacter::moveFunc() {
 
 	//ダメージキャラクターは常に所有者の画像右端に着いていくように移動する。
-	this->m_pMove->m_pos.set(this->m_pChara->m_pMove->m_pos.x + this->m_pBody->m_right, this->m_pChara->m_pMove->m_pos.y);
+	//this->m_pMove->m_pos.set(this->m_pChara->m_pMove->m_pos.x + this->m_pBody->m_right, this->m_pChara->m_pMove->m_pos.y);
+
+	//移動計算
+	this->m_pMove->moveBy();
 }
 
 //アニメーション処理
 void CDamageCharacter::animationFunc() {
+	(*this->m_pAnimations)[this->m_animationState]->update();
 }
 
 //衝突判定処理
@@ -89,6 +93,11 @@ void CDamageCharacter::collisionAll() {
 
 //状態チェック
 void CDamageCharacter::checkState() {
+	if (this->m_pStateMachine)
+	{
+		//状態遷移マシンの更新
+		this->m_pStateMachine->update();
+	}
 }
 
 //反映処理
@@ -96,6 +105,10 @@ void CDamageCharacter::applyFunc() {
 
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
+
+	//チップデータを反映
+	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
+
 
 	// 有効期限の更新
 	this->m_activeFrame--;

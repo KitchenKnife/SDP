@@ -142,6 +142,15 @@
     <Filter Include="src\Data\StateMachine\Enemy\NutCracker">
       <UniqueIdentifier>{268d6f5f-2225-416b-a79d-97626186db3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\Baron">
+      <UniqueIdentifier>{0be8819b-fe32-455a-a138-75f9bc1e1eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Damage">
+      <UniqueIdentifier>{64c81c47-0493-4e42-a76b-b54e9dc1ed67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Damage\Smoke">
+      <UniqueIdentifier>{16bb9fa7-4787-4179-b6dc-7a5af84116ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -311,6 +320,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.cpp">
       <Filter>src\Data\StateMachine\Enemy\NutCracker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Baron\BaronState.cpp">
+      <Filter>src\Data\StateMachine\Enemy\Baron</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Damage\Smoke\SmokeState.cpp">
+      <Filter>src\Data\StateMachine\Damage\Smoke</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Damage\DamageState.cpp">
+      <Filter>src\Data\StateMachine\Damage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +511,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.h">
       <Filter>src\Data\StateMachine\Enemy\NutCracker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Baron\BaronState.h">
+      <Filter>src\Data\StateMachine\Enemy\Baron</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Damage\Smoke\SmokeState.h">
+      <Filter>src\Data\StateMachine\Damage\Smoke</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Damage\DamageState.h">
+      <Filter>src\Data\StateMachine\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\Enum\EnumDamage.h">
+      <Filter>src\Data\Enum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

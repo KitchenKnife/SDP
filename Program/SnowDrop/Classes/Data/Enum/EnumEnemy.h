@@ -235,11 +235,9 @@ enum class ENEMY_NUTCRACKER_ACTION_STATE :int
 enum class ENEMY_BARON_STATE :int
 {
 	IDLE = 0,			//‘Ò‹@ó‘Ô
-	WANDERING = 1,		//œpœjó‘Ô
-	CHASE = 2,			//’Ç‚¢‚©‚¯‚éó‘Ô
-	ATTACK = 3,			//UŒ‚ó‘Ô
-	UNDER_ATTACK = 4,	//UŒ‚‚ðŽó‚¯‚Ä‚¢‚éó‘Ô
-	DEAD = 5,			//Ž€–Só‘Ô
+	ATTACK = 1,			//UŒ‚ó‘Ô
+	UNDER_ATTACK = 2,	//UŒ‚‚ðŽó‚¯‚Ä‚¢‚éó‘Ô
+	DEAD = 3,			//Ž€–Só‘Ô
 };
 
 
@@ -266,9 +264,7 @@ enum class ENEMY_BARON_ANIMATION_STATE :int
 enum class ENEMY_BARON_ACTION_STATE :int
 {
 	IDLE = 0,//‘Ò‹@ó‘Ô
-	WANDERING = 1,
-	CHASE = 2,
-	UNDER_ATTACK = 3,//UŒ‚Žó‚¯‚½
+	UNDER_ATTACK = 1,//UŒ‚Žó‚¯‚½
 };
 
 /********************************************************************
