@@ -107,24 +107,9 @@ CGameMain::~CGameMain() {
 	//出撃スケジュールの破棄
 	SAFE_DELETE(this->m_pLaunchSchedule);
 
-	//キャラクターの集まりを削除
-	if (this->m_pCharacters) {
-		// キャラの解放
-		for (CCharacter* pChara : (*this->m_pCharacters)) {
-			
-			SAFE_DELETE(pChara);
-		}
-	}
+
 
 	SAFE_DELETE(this->m_pCharacters);
-	
-	SAFE_DELETE(this->m_pBackGround);
-
-	SAFE_DELETE(this->m_pHrizon);
-
-	SAFE_DELETE(this->m_pMainLayer);
-	
-	SAFE_DELETE(this->m_pUILayer);
 }
 
 
@@ -430,7 +415,7 @@ void CGameMain::callbackChangeStage2(cocos2d::Ref* pSender) {
 		//シーンを生成する
 		cocos2d::Scene* pScene = CGameMain2::createScene();
 		//シーンを切り替える
-		cocos2d::Director::getInstance()->replaceScene(pScene);
+		cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionShrinkGrow::create(1.0f, pScene));
 
 	});
 }
