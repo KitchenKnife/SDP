@@ -163,6 +163,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\Physical\Physical.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.cpp" />
@@ -224,6 +225,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Physical\Physical.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.h" />

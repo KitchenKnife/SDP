@@ -59,9 +59,6 @@ void CDamageCharacter::collisionAll() {
 				if (pChara->m_isAlive)
 				{
 					if (this->collision(pChara)) {
-
-						
-
 						//攻撃力分のダメージを与える
 						pChara->decreaseHP(this->m_status.getAttackPt());
 						//攻撃を受けている状態フラグを上げる
@@ -71,6 +68,23 @@ void CDamageCharacter::collisionAll() {
 			}
 		}
 	}
+
+	//ダメージを出したのが敵だったら
+	if (this->m_pChara->m_charaType == (int)CHARACTER_TYPE::ENEMY) {
+
+		CCharacter* pTarget = CCharacterAggregate::getInstance()->getPlayer();
+		if (pTarget->m_isAlive)
+		{
+			if (this->collision(pTarget)) {
+				//攻撃力分のダメージを与える
+			//	pTarget->decreaseHP(this->m_status.getAttackPt());
+				//攻撃を受けている状態フラグを上げる
+				pTarget->m_underAttack = true;
+			}
+		}
+	}
+
+
 }
 
 //状態チェック
