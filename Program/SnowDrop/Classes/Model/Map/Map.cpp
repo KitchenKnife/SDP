@@ -419,11 +419,7 @@ CMapManager* CMapManager::getInstance(){
 
 
 //デストラクタ
-CMapManager::~CMapManager(){
-	if (this->m_pMap != NULL) {
-		//SAFE_DELETE(this->m_pMap);
-	}
-}
+CMapManager::~CMapManager(){}
 
 //破棄
 void CMapManager::removeInstance() {
@@ -489,6 +485,7 @@ CMap* CMapManager::changeMap(const std::string& fileName_) {
 void CMapManager::removeMap() {
 	// 取り外し
 	this->m_pMap->removeFromParent();
+
 	// 削除
 	this->m_pMap = NULL;
 }
