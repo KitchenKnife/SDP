@@ -39,22 +39,8 @@ void CCharacterAggregate::removeInstance() {
 * @param	設定するキャラクターの集まりのアドレス
 */
 void CCharacterAggregate::set(std::vector<CCharacter*>* pCharacters) {
-	//既に設定されていたら設定しないようにしておく
-	if (this->m_pCharacters != NULL)
-		return;
-
-	//設定されていなければ引数のキャラクター群のアドレスを登録する
+	//引数のキャラクター群のアドレスを登録する
 	this->m_pCharacters = pCharacters;
-}
-/**
-* @desc	キャラタクーの集まりの参照を変更
-* @param	設定するキャラクターの集まりのアドレス
-*/
-void CCharacterAggregate::change(std::vector<CCharacter*>* pCharacters) {
-
-	//設定されていなければ引数のキャラクター群のアドレスを登録する
-	this->m_pCharacters = pCharacters;
-
 }
 
 /**

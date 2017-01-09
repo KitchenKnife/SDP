@@ -432,13 +432,6 @@ void CMapManager::removeInstance() {
 //マップ生成
 CMap* CMapManager::createMap(const std::string& fileName_) {
 
-	//既に生成されていたら生成されているものを返す
-	if (this->m_pMap != NULL) {
-		CCLOG("既に生成されています");
-
-		return this->m_pMap;
-	}
-
 	//マップクラスの生成
 	this->m_pMap = CMap::create(fileName_);
 
@@ -464,28 +457,4 @@ CMap* CMapManager::createMap(const std::string& fileName_) {
 //マップの取得
 CMap* CMapManager::getMap() {
 	return this->m_pMap;
-}
-
-
-/*
-*	@desc	マップの変更
-*	@param	マップファイル
-*/
-CMap* CMapManager::changeMap(const std::string& fileName_) {
-
-	// マップの削除
-	this->removeMap();
-
-	// マップの生成
-	return this->createMap(fileName_);
-	
-}
-
-// マップ取り外し
-void CMapManager::removeMap() {
-	// 取り外し
-	this->m_pMap->removeFromParent();
-
-	// 削除
-	this->m_pMap = NULL;
 }

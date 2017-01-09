@@ -142,12 +142,12 @@ bool CGameMain2::init() {
 	////キャラクターの集まりの生成
 	this->m_pCharacters = new std::vector<CCharacter*>();
 	//キャラクターの集まりをCCharacterAggregateに設定する
-	CCharacterAggregate::getInstance()->change(this->m_pCharacters);
+	CCharacterAggregate::getInstance()->set(this->m_pCharacters);
 
 	//出撃スケジュールの生成
 	this->m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
 	//出撃スケジュールを出撃スケジューラに取り付ける
-	CLaunchScheduler::getInstance()->changeLauncher(this->m_pLaunchSchedule);
+	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
 
 	////メインレイヤーの生成と取り付け
 	this->m_pMainLayer = LayerColor::create(ccc4(51, 75, 112, 255));
@@ -171,7 +171,7 @@ bool CGameMain2::init() {
 	this->m_pMainLayer->addChild(this->m_pRoom);
 
 	//部屋マップの生成と取り付け
-	CMap* pMap = CMapManager::getInstance()->changeMap(MAP_DATA_SAMPLE);
+	CMap* pMap = CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE);
 	pMap->setVisible(false);
 	this->m_pMainLayer->addChild(pMap);
 
