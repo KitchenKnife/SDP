@@ -80,4 +80,7 @@ public:
 	//UŒ‚”ÍˆÍ
 	float m_attackRange = 0;
 
+	//UŒ‚ŠÔŠu
+	int m_attackInterval = 0;
+
 };

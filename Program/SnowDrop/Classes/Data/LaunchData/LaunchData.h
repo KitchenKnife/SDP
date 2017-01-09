@@ -10,6 +10,7 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "Model/Map/Map.h"
+#include "Model\Character\DamageCharacter\DamageCharacter.h"
 
 using namespace cocos2d;
 
@@ -86,8 +87,11 @@ public:
 	// 何フレーム存在させるか
 	int m_activeFrame;
 
+	//ダメージタイプ
+	DAMAGE_TYPE m_type;
+
 	//コンストラクタ
-	CDamageLaunchData(CCharacter* pChara,cocos2d::Point pos,int activeFrame)
-		:m_pChara(pChara) ,m_pos(pos) ,m_activeFrame(activeFrame){}
+	CDamageLaunchData(CCharacter* pChara,cocos2d::Point pos,int activeFrame, DAMAGE_TYPE type = DAMAGE_TYPE::NONE)
+		:m_pChara(pChara) ,m_pos(pos) ,m_activeFrame(activeFrame),m_type(type){}
 
 };

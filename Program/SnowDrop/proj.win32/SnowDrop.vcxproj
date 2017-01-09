@@ -161,8 +161,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.cpp" />
     <ClCompile Include="..\Classes\Data\Move\Move.cpp" />
     <ClCompile Include="..\Classes\Data\Physical\Physical.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Damage\DamageState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Damage\Smoke\SmokeState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Baron\BaronState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\EnemyState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.cpp" />
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Girl\GirlState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerState.cpp" />
     <ClCompile Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.cpp" />
@@ -216,6 +220,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\Effect\Effect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffect.h" />
     <ClInclude Include="..\Classes\Data\Effect\PlayerEffect\PlayerEffectFactory.h" />
+    <ClInclude Include="..\Classes\Data\Enum\EnumDamage.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumEnemy.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumGirl.h" />
     <ClInclude Include="..\Classes\Data\Enum\EnumPlayer.h" />
@@ -223,8 +228,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Data\LaunchTrigger\LaunchTrigger.h" />
     <ClInclude Include="..\Classes\Data\Move\Move.h" />
     <ClInclude Include="..\Classes\Data\Physical\Physical.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Damage\DamageState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Damage\Smoke\SmokeState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Baron\BaronState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\EnemyState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Maidead\MaideadState.h" />
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Girl\GirlState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerState.h" />
     <ClInclude Include="..\Classes\Data\StateMachine\Player\PlayerStateGraps.h" />

@@ -175,7 +175,8 @@ CCharacter* CDamageLaunchTrigger::action() {
 	CCharacter* pDamageCharacter = CDamageFactoryManager::getInstance()->create(
 		this->m_pLaunchdata->m_pChara,
 		this->m_pLaunchdata->m_pos,
-		this->m_pLaunchdata->m_activeFrame
+		this->m_pLaunchdata->m_activeFrame,
+		this->m_pLaunchdata->m_type
 	);
 
 	//発射し終わったかどうかのフラグを立てる
@@ -270,8 +271,6 @@ void CLaunchScheduler::launchCharacter(cocos2d::Layer* pLayer) {
 
 			//キャラクターをメインレイヤーに取り付ける
 			pLayer->addChild(pChara);
-
-			CCLOG("%d", CCharacterAggregate::getInstance()->getSize());
 		}
 	}
 }

@@ -4,6 +4,8 @@
 #include "EnemyFactory.h"
 #include "Data\Enum\EnumEnemy.h"
 #include "Data\StateMachine\Enemy\Maidead\MaideadState.h"
+#include "Data\StateMachine\Enemy\NutCracker\NutCrackerState.h"
+#include "Data\StateMachine\Enemy\Baron\BaronState.h"
 
 //================================================
 // キャラクターパーツクラス工場
@@ -565,6 +567,597 @@ void CMaliceFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 
 }
 
+//================================================
+// NutCracker工場
+//	（FactoryMethod）
+//================================================
+//各々のパーツのセッティング
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingMove(CEnemyCharacter* pChara, float x, float y) {
+	//初期位置の設定
+	pChara->m_pMove->m_pos.set(x, y);
+}
+
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
+	//テクスチャの設定
+	pChara->setTexture(IMAGE_NUTCRACKER);
+}
+
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
+	//直立アニメーションの設定
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	//直立アニメーションに設定する為のチップデータの設定
+	(*pChara->m_pAnimations)[(int)ENEMY_NUTCRACKER_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 0, 128, 128));
+
+	//攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_NUTCRACKER_ANIMATION_STATE::ATTACK]->addChipData(new CChip(0, 128, 128, 128));
+
+	//死亡のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_NUTCRACKER_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 0, 128, 128));
+
+	//最初のアニメーションを設定
+	pChara->m_animationState = (int)ENEMY_NUTCRACKER_ANIMATION_STATE::IDLE;
+}
+
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
+	//歩行キャラには重力つける
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+}
+
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
+
+	//開始時のアクションの状態
+	int m_actionState = (int)ENEMY_NUTCRACKER_ACTION_STATE::IDLE;
+
+	//--------------------------------------------------------------------
+	//
+	//	待機アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//待機状態アクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機状態中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機状態アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_NUTCRACKER_ACTION_STATE::IDLE] = pActionIdle;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	//
+	//	移動アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//移動アクションの生成
+	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
+	//移動アクション中に行うアクションを生成して取りける
+	pActionStraight->push_back(new CActionMoveStraight());
+	//移動アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_NUTCRACKER_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+
+	//--------------------------------------------------------------------
+	//
+	//	追跡アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//追跡アクションの生成
+	std::vector<CAction*>* pActionChase = new std::vector<CAction*>();
+	//追跡アクション中に行うアクションを生成して取りける
+	pActionChase->push_back(new CActionChase(false));
+	//追跡アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_NUTCRACKER_ACTION_STATE::CHASE] = pActionChase;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_NUTCRACKER_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+}
+
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-64.0f, 64.0f, 64.0f, -64.0f);
+}
+
+//衝突判定空間の設定
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
+
+	//画面端衝突空間の生成
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+
+	//マップ衝突空間の生成
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 64.0f);
+
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pMapArea);
+
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
+{
+	//--------------------------------------------------------------------
+	//
+	//	待機状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//待機状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_NUTCRACKER_STATE::IDLE, new CNutCrackerIdleState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	徘徊状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//徘徊状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_NUTCRACKER_STATE::WANDERING, new CNutCrackerWanderingState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	追跡状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//追跡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_NUTCRACKER_STATE::CHASE, new CNutCrackerChaseState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_NUTCRACKER_STATE::ATTACK, new CNutCrackerAttackState(pChara, NULL, NULL));
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃を受けた状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃を受けた状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_NUTCRACKER_STATE::UNDER_ATTACK, new CNutCrackerUnderAttackState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	死亡状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//死亡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_NUTCRACKER_STATE::DEAD, new CNutCrackerDeadState(pChara, NULL, NULL));
+
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)ENEMY_NUTCRACKER_STATE::IDLE);
+
+}
+
+template <class Ty>
+void CNutCrackerFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 1);
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
+
+}
+
+
+//================================================
+// Baron工場
+//	（FactoryMethod）
+//================================================
+//各々のパーツのセッティング
+template <class Ty>
+void CBaronFactory<Ty>::settingMove(CEnemyCharacter* pChara, float x, float y) {
+	//初期位置の設定
+	pChara->m_pMove->m_pos.set(x, y);
+	//初期速度
+	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
+}
+
+template <class Ty>
+void CBaronFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
+	//テクスチャの設定
+	pChara->setTexture(IMAGE_BARON);
+}
+
+template <class Ty>
+void CBaronFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
+	//直立アニメーションの設定
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	//直立アニメーションに設定する為のチップデータの設定
+	(*pChara->m_pAnimations)[(int)ENEMY_BARON_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 0, 256, 256));
+
+	//攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 9, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_BARON_ANIMATION_STATE::ATTACK]->addChipData(new CChip(0, 256, 256, 256));
+
+	//死亡のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 13, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_BARON_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 0, 256, 256));
+
+	//最初のアニメーションを設定
+	pChara->m_animationState = (int)ENEMY_BARON_ANIMATION_STATE::IDLE;
+
+}
+
+template <class Ty>
+void CBaronFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
+	//歩行キャラには重力つける
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+}
+
+template <class Ty>
+void CBaronFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
+
+
+	//開始時のアクションの状態
+	int m_actionState = (int)ENEMY_BARON_ACTION_STATE::IDLE;
+
+	//--------------------------------------------------------------------
+	//
+	//	待機アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//待機状態アクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機状態中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機状態アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_BARON_ACTION_STATE::IDLE] = pActionIdle;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_BARON_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
+
+	//--------------------------------------------------------------------
+	//
+	//	ここまで
+	//
+	//--------------------------------------------------------------------
+}
+
+template <class Ty>
+void CBaronFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-128.0f, 128.0f, 128.0f, -128.0f);
+}
+
+//衝突判定空間の設定
+template <class Ty>
+void CBaronFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
+
+	//画面端衝突空間の生成
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+
+	//マップ衝突空間の生成
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 64.0f, 128.0f);
+
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pMapArea);
+
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+template <class Ty>
+void CBaronFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
+{
+	//--------------------------------------------------------------------
+	//
+	//	待機状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//待機状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_BARON_STATE::IDLE, new CBaronIdleState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_BARON_STATE::ATTACK, new CBaronAttackState(pChara, NULL, NULL));
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃を受けた状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃を受けた状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_BARON_STATE::UNDER_ATTACK, new CBaronUnderAttackState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	死亡状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//死亡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_BARON_STATE::DEAD, new CBaronDeadState(pChara, NULL, NULL));
+
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)ENEMY_BARON_STATE::IDLE);
+}
+
+template <class Ty>
+void CBaronFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 3);
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
+
+}
+
+//================================================
+// MouseKing工場
+//	（FactoryMethod）
+//================================================
+//各々のパーツのセッティング
+template <class Ty>
+void CMouseKingFactory<Ty>::settingMove(CEnemyCharacter* pChara, float x, float y) {
+	//初期位置の設定
+	pChara->m_pMove->m_pos.set(x, y);
+	//初期速度
+	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
+}
+
+template <class Ty>
+void CMouseKingFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
+	//テクスチャの設定
+	pChara->setTexture(IMAGE_MOUSEKING);
+}
+
+template <class Ty>
+void CMouseKingFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
+	//直立アニメーションの設定
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	//直立アニメーションに設定する為のチップデータの設定
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSEKING_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 128, 128, 128));
+
+	//攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSEKING_ANIMATION_STATE::ATTACK]->addChipData(new CChip(0, 128, 128, 128));
+
+	//死亡のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSEKING_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 0, 128, 128));
+
+	//最初のアニメーションを設定
+	pChara->m_animationState = (int)ENEMY_MOUSEKING_ANIMATION_STATE::IDLE;
+}
+
+template <class Ty>
+void CMouseKingFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
+	//歩行キャラには重力つける
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+}
+
+template <class Ty>
+void CMouseKingFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
+
+
+}
+
+template <class Ty>
+void CMouseKingFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-64.0f, 64.0f, 64.0f, -64.0f);
+}
+
+//衝突判定空間の設定
+template <class Ty>
+void CMouseKingFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
+
+	//画面端衝突空間の生成
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+
+	//マップ衝突空間の生成
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 64.0f);
+
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pMapArea);
+
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+template <class Ty>
+void CMouseKingFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
+{
+
+}
+
+template <class Ty>
+void CMouseKingFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 3);
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
+
+}
 
 //================================================
 // パーツセッティングクラスを管理するクラス

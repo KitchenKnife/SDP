@@ -249,6 +249,109 @@ public:
 
 };
 
+//================================================
+//　NutCracker工場
+//================================================
+template <class Ty>
+class CNutCrackerFactory :public CEnemyCreateFactory<Ty> {
+public:
+	//デストラクタ
+	~CNutCrackerFactory() {}
+
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
+	//画像の設定
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CEnemyCharacter* pCharacter)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
+
+};
+
+//================================================
+//　Baron工場
+//================================================
+template <class Ty>
+class CBaronFactory :public CEnemyCreateFactory<Ty> {
+public:
+	//デストラクタ
+	~CBaronFactory() {}
+
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
+	//画像の設定
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CEnemyCharacter* pCharacter)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
+
+};
+
+
+//================================================
+//　MouseKing工場
+//================================================
+template <class Ty>
+class CMouseKingFactory :public CEnemyCreateFactory<Ty> {
+public:
+	//デストラクタ
+	~CMouseKingFactory() {}
+
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
+	//画像の設定
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CEnemyCharacter* pCharacter)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
+
+};
+
 
 //================================================
 // 敵工場群を管理するクラス
@@ -266,6 +369,17 @@ private:
 
 		//コウモリ生成工場を生成し [key : BAT] に取り付ける
 		m_factories[ENEMY_TYPE::MALICE] = new CMaliceFactory<CEnemyCharacter>();
+
+		//NutCracker生成工場を生成し [key : NutCracker] に取り付ける
+		m_factories[ENEMY_TYPE::NUTCRACKER] = new CNutCrackerFactory<CEnemyCharacter>();
+
+		//Baron生成工場を生成し [key : Baron] に取り付ける
+		m_factories[ENEMY_TYPE::BARON] = new CBaronFactory<CEnemyCharacter>();
+
+		//MouseKing生成工場を生成し [key : NutCracker] に取り付ける
+		m_factories[ENEMY_TYPE::MOUSEKING] = new CMouseKingFactory<CEnemyCharacter>();
+
+
 	}
 
 	//共有のインスタンス
