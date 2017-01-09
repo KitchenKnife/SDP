@@ -113,8 +113,8 @@ bool CBaronState::checkEnableAttack(void)
 
 	if (this->m_pOwner->m_attackInterval <= 0)
 	{
-		if (customMath->lengthBitweenChara(this->m_pOwner, pPlayer) <= 128.0f ||
-			customMath->lengthBitweenChara(this->m_pOwner, pGirl) <= 128.0f)
+		if (customMath->lengthBitweenChara(this->m_pOwner, pPlayer) <= 768.0f ||
+			customMath->lengthBitweenChara(this->m_pOwner, pGirl) <= 768.0f)
 		{
 			return true;
 		}
@@ -248,7 +248,7 @@ CBaronAttackState::~CBaronAttackState()
 */
 void CBaronAttackState::start(void)
 {
-	this->m_pOwner->m_attackInterval = 60;
+	this->m_pOwner->m_attackInterval = 120;
 
 	//アニメーションをリセット
 	(*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->reset();
@@ -259,33 +259,27 @@ void CBaronAttackState::start(void)
 */
 void CBaronAttackState::update(void)
 {
-	//攻撃を生成するアニメーションフレームの確認
-	if ((*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->getCurrentFrame() == 2)
+	//攻撃を受けたか？
+	if (this->m_pOwner->m_underAttack)
 	{
-		//ダメージキャラクター生成データを作成
-		CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pOwner,
-			cocos2d::Point(this->m_pOwner->m_pMove->m_pos.x + this->m_pOwner->m_pBody->m_right, this->m_pOwner->m_pMove->m_pos.y),
-			300,DAMAGE_TYPE::SMOKE);
-		//ダメージキャラクター生成トリガーを作成
-		CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
-
-		//作成したトリガーをスケジューラーに登録
-		CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
-	}
-	else
-	{
-		//攻撃を受けたか？
-		if (this->m_pOwner->m_underAttack)
-		{
-			//攻撃を受けた状態へ移行
-			this->toUnderAttack();
-			return;
-		}
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+		return;
 	}
 
 	//アニメーションが終了したかどうかのフラグ
 	if ((*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->isEnd())
 	{
+		//ダメージキャラクター生成データを作成
+		CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pOwner,
+			cocos2d::Point(this->m_pOwner->m_pMove->m_pos.x + this->m_pOwner->m_pBody->m_right, this->m_pOwner->m_pMove->m_pos.y),
+			300, DAMAGE_TYPE::SMOKE);
+		//ダメージキャラクター生成トリガーを作成
+		CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+		//作成したトリガーをスケジューラーに登録
+		CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
+
 		//待機状態へ移行
 		this->toIdle();
 	}

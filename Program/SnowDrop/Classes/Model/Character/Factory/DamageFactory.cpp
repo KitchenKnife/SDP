@@ -161,6 +161,9 @@ void CNearDamageFactory::settingInitialize(CDamageCharacter* pChara, CCharacter*
 //================================================
 //各々のパーツのセッティング
 void CSmokeDamageFactory::settingMove(CDamageCharacter* pCharacter, cocos2d::Point pos) {
+	
+	pCharacter->m_status.setSpeed(3);
+	
 	//位置の設定
 	pCharacter->m_pMove->m_pos.set(pos);
 }
@@ -274,7 +277,7 @@ void CSmokeDamageFactory::settingInitialize(CDamageCharacter* pChara, CCharacter
 	pChara->m_activeFrame = activeFrame;
 
 	//ステータスを設定
-	pChara->m_status.set(1, 1, 1, 1);
+	pChara->m_status.set(1, 1, 1, 3);
 
 	/*
 	*　計算データのままで起動すると1フレームずれが発生するので

@@ -26,6 +26,7 @@ enum class CHARACTER_TYPE :int {
 	ENEMY		= 2,	//敵
 	BULLET		= 3,	//弾
 	GIMMICK		= 4,	//ギミック
+	DAMAGE		= 5,	//ダメージ
 };
 
 //================================================
