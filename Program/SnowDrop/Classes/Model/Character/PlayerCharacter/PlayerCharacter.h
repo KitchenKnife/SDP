@@ -82,6 +82,8 @@ public:
 	//ƒvƒŒƒCƒ„[‚Æ­—‚Ìó‘Ô
 	int m_playerAndGirlState = 0;
 
+	
+
 
 private:
 };

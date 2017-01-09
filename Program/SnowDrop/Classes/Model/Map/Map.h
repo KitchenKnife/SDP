@@ -226,7 +226,7 @@ public:
 	//破棄
 	static void removeInstance();
 	//デストラクタ
-	~CMapManager();
+	virtual ~CMapManager();
 
 private:
 	//マップ
@@ -238,6 +238,15 @@ public:
 
 	//マップ取得
 	CMap* getMap();
+
+	/*
+	*	@desc	マップの変更
+	*	@param	マップファイル
+	*/
+	CMap* changeMap(const std::string& fileName_);
+
+	// マップ取り外し
+	void removeMap();
 
 };
 

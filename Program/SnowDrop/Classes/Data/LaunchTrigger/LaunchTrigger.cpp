@@ -232,6 +232,18 @@ void CLaunchScheduler::createLauncher(std::vector<CLaunchTrigger*>* pLaunchSched
 		this->m_pLauncher = new CLauncher(pLaunchSchedule);
 	}
 }
+/**
+* @desc	発射台の変更
+* @param	発射台に設定する出撃スケジュールのアドレス
+*/
+void CLaunchScheduler::changeLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule) {
+	// 発射台削除
+	SAFE_DELETE(this->m_pLauncher);
+
+	//発射台を生成
+	this->m_pLauncher = new CLauncher(pLaunchSchedule);
+}
+
 
 /**
  * @desc	キャラクターの出撃

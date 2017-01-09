@@ -268,17 +268,6 @@ void CPlayerGraspIdleRightState::update(void)
 		this->toWalkRight();
 		return;
 	}
-
-
-	//左へ移動（歩行）
-	if (pointerInputController->getLeftMoveFlag())
-	{
-		//左向き歩行状態へ移行
-		this->toWalkLeft();
-		return;
-	}
-
-
 }
 
 /**
@@ -345,15 +334,6 @@ void CPlayerGraspIdleLeftState::update(void)
 		this->toAttackLeft();
 		return;
 	}
-
-	//右へ移動（歩行）
-	if (pointerInputController->getRightMoveFlag())
-	{
-		//右向き歩行状態へ移行
-		this->toWalkRight();
-		return;
-	}
-
 
 	//左へ移動（歩行）
 	if (pointerInputController->getLeftMoveFlag())
@@ -442,15 +422,6 @@ void CPlayerGraspWalkRightState::update(void)
 		return;
 	}
 
-	//左へ移動（歩行）
-	if (pointerInputController->getLeftMoveFlag())
-	{
-		//左向き歩行状態へ移行
-		this->toWalkLeft();
-		return;
-	}
-
-
 	//右向き待機状態へ移行
 	this->toIdleRight();
 }
@@ -522,14 +493,6 @@ void CPlayerGraspWalkLeftState::update(void)
 	if (pointerInputController->getAttackFlag()) {
 		//左向き攻撃状態へ移行
 		this->toAttackLeft();
-		return;
-	}
-
-	//右へ移動（歩行）
-	if (pointerInputController->getRightMoveFlag())
-	{
-		//右向きに歩行状態へ移行
-		this->toWalkRight();
 		return;
 	}
 

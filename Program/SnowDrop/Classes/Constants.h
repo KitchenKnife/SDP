@@ -83,10 +83,18 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 // 敵武器もち
 #define IMAGE_ENEMY_WEAPON		"Images/kari_weapon.png"
 
-//背景
-// 
+
+//=======================================
+// ステージ背景
+//=======================================
+// ステージ１
 #define IMAGE_BACK_GROUND		"Images/castle_exit.jpg"
 #define IMAGE_BACK_HORIZON		"Images/gaikan_map.png"
+
+// ステージ２
+#define IMAGE_BACK_STAGE2_BACKGROUND	"Images/black.png"
+#define IMAGE_BACK_STAGE2_ROOM			"Images/all.png"
+#define IMAGE_BACK_STAGE2_FRONT			"Images/1_front.png"
 
 //=========================================================================
 //	パーティクルファイルのマクロはここから書く

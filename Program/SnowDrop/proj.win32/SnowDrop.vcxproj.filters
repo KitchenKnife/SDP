@@ -139,6 +139,9 @@
     <Filter Include="src\Data\ActionController\ActionGirl">
       <UniqueIdentifier>{1064317c-b67c-43b5-831d-4ae2c6778bf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene\GameMain2">
+      <UniqueIdentifier>{1240ebfd-27cb-4e2d-969e-fe8f3c6d81e9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Data\StateMachine\Enemy\NutCracker">
       <UniqueIdentifier>{268d6f5f-2225-416b-a79d-97626186db3a}</UniqueIdentifier>
     </Filter>
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.cpp">
       <Filter>src\Data\ActionController\ActionGirl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene\GameMain2\GameMain2.cpp">
+      <Filter>src\Scene\GameMain2</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.cpp">
       <Filter>src\Data\StateMachine\Enemy\NutCracker</Filter>
@@ -508,6 +514,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Data\ActionController\ActionGirl\ActionGirl.h">
       <Filter>src\Data\ActionController\ActionGirl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene\GameMain2\GameMain2.h">
+      <Filter>src\Scene\GameMain2</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\NutCracker\NutCrackerState.h">
       <Filter>src\Data\StateMachine\Enemy\NutCracker</Filter>

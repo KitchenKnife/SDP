@@ -15,6 +15,29 @@
 //計算用
 #include "Lib\Math\CustomMath.h"
 
+#include "Scene/GameMain2/GameMain2.h"
+#include "Model/Map/Map.h"
+
+//キャラクター集合体
+#include "Model\Character\CharacterAggregate.h"
+
+//プレイヤー工場
+#include "Model/Character/Factory/PlayerFactory.h"
+
+//少女工場
+#include "Model/Character/Factory/GirlCharacterFactory.h"
+
+//敵工場
+#include "Model/Character/Factory/EnemyFactory.h"
+
+#include "Model/Character/Factory/DamageFactory.h"
+
+//エフェクト工場
+#include "Model/Character/Factory/EffectFactory.h"
+
+//ギミック工場
+#include "Model/Character/Factory/GimmickFactory.h"
+
 USING_NS_CC;
 
 //デバイスの解像度を取得
@@ -39,6 +62,41 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() 
 {
+
+	//*************************************************************************
+	//
+	// ！！！！注意！！！！メモリの解放は、生成した逆順で解放すること！！！！！
+	//
+	//*************************************************************************
+
+
+	// ダメージ工場の削除
+	CDamageFactoryManager::removeInstance();
+
+	//エフェクト工場の削除
+	CEffectFactoryManager::removeInstance();
+
+
+	//ギミック工場の削除
+	CGimmickFactoryManager::removeInstance();
+
+	//敵生成工場の削除
+	CEnemyFactoryManager::removeInstance();
+
+	//少女工場の削除
+	CPlayerGirlFactoryManager::removeInstance();
+
+	//プレイヤー工場の削除
+	CPlayerBoyFactoryManager::removeInstance();
+
+	// トリガー削除
+	CLaunchScheduler::removeInstance();
+	// キャラの削除
+	CCharacterAggregate::removeInstance();
+
+	// マップの削除
+	CMapManager::removeInstance();
+
 	//BGM停止
 	CAudioManager::removeInstance();
 

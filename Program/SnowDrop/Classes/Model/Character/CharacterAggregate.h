@@ -66,6 +66,12 @@ public:
 	* @param	設定するキャラクターの集まりのアドレス
 	*/
 	void set(std::vector<CCharacter*>* pCharacters);
+	/**
+	* @desc	キャラタクーの集まりの参照を変更
+	* @param	設定するキャラクターの集まりのアドレス
+	*/
+	void change(std::vector<CCharacter*>* pCharacters);
+
 
 	/**
 	* @desc	キャラタクーの集まりのを取得

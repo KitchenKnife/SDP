@@ -240,7 +240,6 @@ public:
 	void add(CLaunchTrigger* pLaunchTrigger) {
 		this->m_pLaunchSchedule->push_back(pLaunchTrigger);
 	}
-
 	/**
 	 * @desc	出撃スケジュールのサイズを取得
 	 * @return	取り付けられている数
@@ -371,6 +370,13 @@ public:
 	 * @param	発射台に設定する出撃スケジュールのアドレス
 	 */
 	void createLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule);
+	/**
+	* @desc	発射台の変更
+	* @param	発射台に設定する出撃スケジュールのアドレス
+	*/
+	void changeLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule);
+
+
 
 	/**
 	 * @desc	キャラクターの出撃

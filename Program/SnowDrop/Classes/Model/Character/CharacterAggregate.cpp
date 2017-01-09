@@ -17,16 +17,7 @@ CCharacterAggregate* CCharacterAggregate::m_pSareedAggregate = NULL;
 CCharacterAggregate::CCharacterAggregate() {}
 
 //デストラクタ
-CCharacterAggregate::~CCharacterAggregate() {
-
-	// キャラの解放
-	for (CCharacter* pChara : (*this->m_pCharacters)) {
-		//親のレイヤーから取り外す
-		pChara->removeFromParent();
-	}
-	SAFE_DELETE(this->m_pCharacters);
-
-}
+CCharacterAggregate::~CCharacterAggregate() {}
 
 //共有インスタンスの取得
 CCharacterAggregate* CCharacterAggregate::getInstance() {
@@ -54,6 +45,16 @@ void CCharacterAggregate::set(std::vector<CCharacter*>* pCharacters) {
 
 	//設定されていなければ引数のキャラクター群のアドレスを登録する
 	this->m_pCharacters = pCharacters;
+}
+/**
+* @desc	キャラタクーの集まりの参照を変更
+* @param	設定するキャラクターの集まりのアドレス
+*/
+void CCharacterAggregate::change(std::vector<CCharacter*>* pCharacters) {
+
+	//設定されていなければ引数のキャラクター群のアドレスを登録する
+	this->m_pCharacters = pCharacters;
+
 }
 
 /**

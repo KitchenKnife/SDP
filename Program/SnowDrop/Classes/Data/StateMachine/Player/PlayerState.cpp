@@ -451,7 +451,6 @@ void CPlayerIdleRightState::update(void)
 		//右向き歩行状態へ移行
 		this->toWalkRight();
 		return;
-		//this->m_pMove->m_accele.x = 0.5f;
 	}
 
 
@@ -461,8 +460,6 @@ void CPlayerIdleRightState::update(void)
 		//左向き歩行状態へ移行
 		this->toWalkLeft();
 		return;
-		
-		//this->m_pMove->m_accele.x = -0.5f;
 	}
 }
 
@@ -529,7 +526,6 @@ void CPlayerIdleLeftState::update(void)
 				//手を繋ぐ左状態へ移行
 				this->toGraspLeft();
 			}
-			return;
 			return;
 		}
 		if (pointerInputController->getHugFlag()) {
@@ -1803,7 +1799,7 @@ void CPlayerGraspRightState::update(void)
 		//右向き待機状態へ移行
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS;
 
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);
 	}
 }
 
@@ -1859,7 +1855,7 @@ void CPlayerGraspLeftState::update(void)
 		//左向き待機状態へ移行
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS;
 
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
 	}
 }
 
@@ -1910,7 +1906,7 @@ void CPlayerHoldRightState::update(void)
 	//手を繋ぐアニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
-		//右向き待機状態へ移行
+		//左向き待機状態へ移行
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS;
 
 		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
@@ -1964,7 +1960,7 @@ void CPlayerHoldLeftState::update(void)
 	//手を繋ぐアニメーションが終わったら
 	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
 	{
-		//左向き待機状態へ移行
+		//右向き待機状態へ移行
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS;
 
 		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);

@@ -5,8 +5,8 @@
 *
 */
 
-#include "GameMain.h"
-#include "Scene/GameMain2/GameMain2.h"
+#include "Scene/GameMain/GameMain.h"
+#include "GameMain2.h"
 #include "Model/Map/Map.h"
 
 //キャラクター集合体
@@ -52,49 +52,49 @@
 //==================================================
 
 /**
- *	@desc	シーンの生成
- *	@return	CMain レイヤーを内包したシーンクラスインスタンス
- *	@tips	静的メンバ関数
- */
-cocos2d::Scene* CGameMain::createScene() {
-	
+*	@desc	シーンの生成
+*	@return	CMain レイヤーを内包したシーンクラスインスタンス
+*	@tips	静的メンバ関数
+*/
+cocos2d::Scene* CGameMain2::createScene() {
+
 	// シーンの生成
 	cocos2d::Scene* pScene = cocos2d::Scene::create();
-	
+
 	// GameMain レイヤーの生成
-	CGameMain* pLayer = CGameMain::create() ;
-	
+	CGameMain2* pLayer = CGameMain2::create();
+
 	// CMain レイヤーをシーンに取り付ける
-	pScene->addChild( pLayer, 0, TAG_GAME_MAIN ) ;
-	
+	pScene->addChild(pLayer, 0, TAG_GAME_MAIN);
+
 	// 生成したシーンを返す
-	return pScene ;
+	return pScene;
 }
 
 /**
- *	@desc	キーボードのキーを押した際のイベント
- *	@param	キーコード
- *	@param	イベント
- */
-void CGameMain::onKeyPressed( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event ) {
+*	@desc	キーボードのキーを押した際のイベント
+*	@param	キーコード
+*	@param	イベント
+*/
+void CGameMain2::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
 
 	// 入力管理に入力処理を委託
-	CInputManager::getInstance()->onKeyPressed( keyCode ) ;
+	CInputManager::getInstance()->onKeyPressed(keyCode);
 }
 
 /**
- *	@desc	キーボードのキーを離した際のイベント
- *	@param	キーコード
- *	@param	イベント
- */
-void CGameMain::onKeyReleased( cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* unused_event ) {
+*	@desc	キーボードのキーを離した際のイベント
+*	@param	キーコード
+*	@param	イベント
+*/
+void CGameMain2::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* unused_event) {
 
 	// 入力管理に入力処理を委託
-	CInputManager::getInstance()->onKeyReleased( keyCode ) ;
+	CInputManager::getInstance()->onKeyReleased(keyCode);
 }
 
 // デストラクタ
-CGameMain::~CGameMain() {
+CGameMain2::~CGameMain2() {
 
 	//出撃スケジュールの削除
 	if (this->m_pLaunchSchedule)
@@ -111,43 +111,40 @@ CGameMain::~CGameMain() {
 	if (this->m_pCharacters) {
 		// キャラの解放
 		for (CCharacter* pChara : (*this->m_pCharacters)) {
-			
+
 			SAFE_DELETE(pChara);
 		}
 	}
 	SAFE_DELETE(this->m_pCharacters);
 
 	SAFE_DELETE(this->m_pBackGround);
-	SAFE_DELETE(this->m_pHrizon);
+	SAFE_DELETE(this->m_pRoom);
+	SAFE_DELETE(this->m_pUI);
 	SAFE_DELETE(this->m_pMainLayer);
 	SAFE_DELETE(this->m_pUILayer);
 }
 
 
-
 /**
- *	@desc	初期化
- *	@return	true...成功	false...失敗
- */
-bool CGameMain::init() {
+*	@desc	初期化
+*	@return	true...成功	false...失敗
+*/
+bool CGameMain2::init() {
 
 	// 親レイヤーの初期化
-	if ( CCLayerColor::initWithColor(ccc4(51, 75, 112, 255)) == false ) {
-		return false ;
+	if (CCLayerColor::initWithColor(ccc4(51, 75, 112, 255)) == false) {
+		return false;
 	}
 
 	// 乱数生成
-	srand( (unsigned int)time( NULL ) ) ;
-	
+	srand((unsigned int)time(NULL));
+
 	// キーボード入力イベント受け取り設定
-	this->setKeyboardEnabled(true) ;
-	
+	this->setKeyboardEnabled(true);
+
 	// update 関数 ( 更新処理関数 ) 呼び出し設定
 	// この部分を消したりコメントアウトすると update 関数が呼ばれなくなるので注意
-	this->scheduleUpdate() ;
-	
-	
-
+	this->scheduleUpdate();
 
 	//=========================================================================
 	//
@@ -158,12 +155,12 @@ bool CGameMain::init() {
 	////キャラクターの集まりの生成
 	this->m_pCharacters = new std::vector<CCharacter*>();
 	//キャラクターの集まりをCCharacterAggregateに設定する
-	CCharacterAggregate::getInstance()->set(this->m_pCharacters);
+	CCharacterAggregate::getInstance()->change(this->m_pCharacters);
 
 	//出撃スケジュールの生成
 	this->m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
 	//出撃スケジュールを出撃スケジューラに取り付ける
-	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
+	CLaunchScheduler::getInstance()->changeLauncher(this->m_pLaunchSchedule);
 
 	////メインレイヤーの生成と取り付け
 	this->m_pMainLayer = LayerColor::create(ccc4(51, 75, 112, 255));
@@ -171,30 +168,35 @@ bool CGameMain::init() {
 
 	////UIレイヤーの生成と取り付け
 	this->m_pUILayer = LayerColor::create();
-	this->addChild(this->m_pUILayer,-1);
+	this->addChild(this->m_pUILayer, -1);
 
-	//
-	//背景の生成と取り付け
+	
+	//背景画像の生成と取り付け
 	this->m_pBackGround = Sprite::create();
-	this->m_pBackGround->setTexture(IMAGE_BACK_GROUND);
+	this->m_pBackGround->setTexture(IMAGE_BACK_STAGE2_BACKGROUND);
 	this->m_pBackGround->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
 	this->m_pMainLayer->addChild(this->m_pBackGround);
-	
 
-	//マップの生成と取り付け
-	CMap* pMap = CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE);
-	//pMap->setVisible(false);
+	//部屋画像の生成と取り付け
+	this->m_pRoom = Sprite::create();
+	this->m_pRoom->setTexture(IMAGE_BACK_STAGE2_ROOM);
+	this->m_pRoom->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
+	this->m_pMainLayer->addChild(this->m_pRoom);
+
+	//部屋マップの生成と取り付け
+	CMap* pMap = CMapManager::getInstance()->changeMap(MAP_DATA_SAMPLE);
+	pMap->setVisible(false);
 	this->m_pMainLayer->addChild(pMap);
 
-	
-	//地平線の生成と取り付け
-	this->m_pHrizon = Sprite::create();
-	this->m_pHrizon->setTexture(IMAGE_BACK_HORIZON);
-	this->m_pHrizon->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
-	this->m_pMainLayer->addChild(this->m_pHrizon);
-	
 
-	
+	//UI画像の生成と取り付け
+	this->m_pUI = Sprite::create();
+	this->m_pUI->setTexture(IMAGE_BACK_STAGE2_FRONT);
+	this->m_pUI->setPosition(WINDOW_RIGHT*0.5, WINDOW_TOP*0.5);
+	this->m_pMainLayer->addChild(this->m_pUI);
+
+
+
 	// プレイヤーの生成
 	CPlayerCharacterBoy* pPlayerChara = CPlayerBoyFactoryManager::getInstance()->create((int)PLAYER_TYPE::BASE);
 	////CCharacterAggregateにプレイヤーを追加
@@ -211,7 +213,7 @@ bool CGameMain::init() {
 	CCharacterAggregate::getInstance()->add(playerGirl);
 	//参照先として登録
 	CCharacterAggregate::getInstance()->setGirl(playerGirl);
-	playerGirl->m_pMove->m_pos.set(1200,500);
+	playerGirl->m_pMove->m_pos.set(1200, 500);
 
 	//取り付け
 	this->m_pMainLayer->addChild(playerGirl);
@@ -219,44 +221,49 @@ bool CGameMain::init() {
 
 	////初期画面にいる敵の生成
 	CMapManager::getInstance()->getMap()->initCheckEnemyLaunch();
+	////全体の拡大
+	//this->setScale(SCALE_MAIN);
+	////拡大に伴う画面位置の設定
+	//this->setPosition((SCREEN_WIDTH*(SCALE_MAIN-1))/2, (SCREEN_HEIGHT*(SCALE_MAIN-1))/2);
 
 
 	//￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 	// ↓↓　デバック用　リリース時消します
 	//￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 	/*
-	* @desc		メニューアイテムの生成　ゲーム終了ボタン
+	* @desc		メニューアイテムの生成　ゲーム開始ボタン
 	* @param	通常の画像を設定
 	* @param	押された時の画像を設定
 	* @param	押された時に呼び出されるメンバ関数の設定
 	*/
-	cocos2d::MenuItemImage* pointerEndBtnItem = cocos2d::MenuItemImage::create(
+	cocos2d::MenuItemImage* pointerStartBtnItem = cocos2d::MenuItemImage::create(
 		IMAGE_TITLE_BUTTON_END,
 		IMAGE_TITLE_BUTTON_END,
-		CC_CALLBACK_1(CGameMain::callbackChangeGameOver, this)
+		CC_CALLBACK_1(CGameMain2::callbackChangeGameOver, this)
 	);
 
 	//位置設定
-	pointerEndBtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.1f);
+	pointerStartBtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.1f);
 
 
 	/*
-	* @desc		メニューアイテムの生成　ゲームステージボタン
+	* @desc		メニューアイテムの生成　ステージ1ボタン
 	* @param	通常の画像を設定
 	* @param	押された時の画像を設定
 	* @param	押された時に呼び出されるメンバ関数の設定
 	*/
-	cocos2d::MenuItemImage* pointerSt2BtnItem = cocos2d::MenuItemImage::create(
+	cocos2d::MenuItemImage* pointerStage1BtnItem = cocos2d::MenuItemImage::create(
 		IMAGE_TITLE_BUTTON_START,
 		IMAGE_TITLE_BUTTON_START,
-		CC_CALLBACK_1(CGameMain::callbackChangeStage2, this)
+		CC_CALLBACK_1(CGameMain2::callbackChangeStage1, this)
 	);
 
 	//位置設定
-	pointerSt2BtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.2f);
+	pointerStage1BtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.2f);
+
 
 	//メニューの生成とメニューアイテムの登録
-	cocos2d::Menu* pointerMenu = cocos2d::Menu::create(pointerEndBtnItem, pointerSt2BtnItem, NULL);
+	cocos2d::Menu* pointerMenu = cocos2d::Menu::create(pointerStartBtnItem, pointerStage1BtnItem, NULL);
 
 	//位置の初期化
 	pointerMenu->setPosition(0.0f, 0.0f);
@@ -271,20 +278,22 @@ bool CGameMain::init() {
 	// デバック用↑↑　消します
 	//￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
 
+
+
 	// BGMの再生
 	int musicID = AudioEngine::play2d(SOUND_FILE_BGM_STAGE_FIRST, true, 0.0f);
 	// ID設定
 	CAudioManager::getInstance()->setMusicID(BGM_STAGE1, musicID);
 
-	
+
 	//=========================================================================
 	//
 	//	ここまでに初期化、初期設定のコードを追加
 	//
 	//=========================================================================
 
-	return true ;
-	
+	return true;
+
 }
 
 
@@ -292,7 +301,7 @@ bool CGameMain::init() {
 * @desc 画面スクロール
 * @tips 今回は強制スクロールではなくキャラクターの移動による画面のスクロールとなる
 */
-void CGameMain::scroll() {
+void CGameMain2::scroll() {
 
 	//マップの位置を取得
 	Point pt = this->m_pMainLayer->getPosition();
@@ -300,42 +309,42 @@ void CGameMain::scroll() {
 	//プレイヤーキャラクターの取得
 	CCharacter* pPlayerChara = CCharacterAggregate::getInstance()->getAtTag(TAG_PLAYER_1);
 
-	
+
 	//プレイヤーの位置が320.0ｆを超えたら
-	if (pt.x > WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x) {
+	if (pt.x > WINDOW_RIGHT * 3 / 5 - pPlayerChara->m_pMove->m_pos.x) {
 		//原点を超えた分に設定する
-		pt.x = WINDOW_RIGHT * 3/5 - pPlayerChara->m_pMove->m_pos.x;
+		pt.x = WINDOW_RIGHT * 3 / 5 - pPlayerChara->m_pMove->m_pos.x;
 	}
 
-	if (pt.x < WINDOW_RIGHT * 1/3 - pPlayerChara->m_pMove->m_pos.x) {
+	if (pt.x < WINDOW_RIGHT * 1 / 3 - pPlayerChara->m_pMove->m_pos.x) {
 		//原点を超えた分に設定する
-		pt.x = WINDOW_RIGHT * 1/3 - pPlayerChara->m_pMove->m_pos.x;
+		pt.x = WINDOW_RIGHT * 1 / 3 - pPlayerChara->m_pMove->m_pos.x;
 	}
-	
+
 
 	//超えた分を設定する
 	this->m_pMainLayer->setPosition(pt);
 
 	//スクロールが行われたときに敵の出撃判定を行う
 	CMapManager::getInstance()->getMap()->checkEnemyLaunch(this->m_pMainLayer->getPosition());
-	
+
 }
 
 
 
 /**
- *	@desc	更新処理
- *	@param	１フレーム経過時間
- */
-void CGameMain::update( float deltaTime_ ) {
+*	@desc	更新処理
+*	@param	１フレーム経過時間
+*/
+void CGameMain2::update(float deltaTime_) {
 
 	//入力状態の更新処理
 	CInputManager::getInstance()->update();
 
 	// esc キーを押したらゲーム終了
-	if ( CInputManager::getInstance()->getInputController()->getGameExitFlag())
+	if (CInputManager::getInstance()->getInputController()->getGameExitFlag())
 	{
-		cocos2d::Director::getInstance()->end() ;
+		cocos2d::Director::getInstance()->end();
 	}
 
 
@@ -389,10 +398,10 @@ void CGameMain::update( float deltaTime_ ) {
 * @param	タイトルレイヤーのインスタンス
 * @tips		スタートボタンが押された時に呼び出される
 */
-void CGameMain::callbackChangeGameOver(cocos2d::Ref* pSender)
+void CGameMain2::callbackChangeGameOver(cocos2d::Ref* pSender)
 {
 	// 効果音再生
-	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON, false, CAudioManager::getInstance()->getSEVolume());
+	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON);
 	//BGM停止
 	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_STAGE1));
 
@@ -409,14 +418,14 @@ void CGameMain::callbackChangeGameOver(cocos2d::Ref* pSender)
 
 
 /**
-* @desc		ステージ2に遷移
+* @desc		ステージ1に遷移
 * @param	タイトルレイヤーのインスタンス
 * @tips		スタートボタンが押された時に呼び出される
 */
-void CGameMain::callbackChangeStage2(cocos2d::Ref* pSender) {
+void CGameMain2::callbackChangeStage1(cocos2d::Ref* pSender) {
 
 	// 効果音再生
-	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON, false, CAudioManager::getInstance()->getSEVolume());
+	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON);
 	//BGM停止
 	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_STAGE1));
 
@@ -424,9 +433,9 @@ void CGameMain::callbackChangeStage2(cocos2d::Ref* pSender) {
 	AudioEngine::setFinishCallback(musicID, [](int musicID, const std::string) {
 
 		//シーンを生成する
-		cocos2d::Scene* pScene = CGameMain2::createScene();
+		cocos2d::Scene* pScene = CGameMain::createScene();
 		//シーンを切り替える
-		cocos2d::Director::getInstance()->replaceScene(pScene);
+		cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionShrinkGrow::create(1.0f, pScene));
 
 	});
 }
