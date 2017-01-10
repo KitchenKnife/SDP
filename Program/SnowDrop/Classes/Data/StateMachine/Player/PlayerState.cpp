@@ -883,6 +883,15 @@ void CPlayerJumpRightState::update(void)
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
 
+	//右移動
+	if (CInputManager::getInstance()->getInputController()->getRightMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = 2.0f;
+	}
+	//左移動
+	if (CInputManager::getInstance()->getInputController()->getLeftMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = -2.0f;
+	}
+
 	//プレイヤーが下へ移動していたら
 	if (this->m_pPlayer->m_pMove->m_vel.y <= 0.0f) {
 		//落下状態へ移行する
@@ -890,13 +899,13 @@ void CPlayerJumpRightState::update(void)
 
 		return;
 	}
+
 	//左向きジャンプ
 	if (CInputManager::getInstance()->getInputController()->getJumpFlag()) {
 		//開始処理を再起動する
 		this->start();
 		return;
 	}
-	
 }
 
 /**
@@ -958,6 +967,15 @@ void CPlayerJumpLeftState::update(void)
 
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
+	//右移動
+	if (CInputManager::getInstance()->getInputController()->getRightMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = 2.0f;
+	}
+	//左移動
+	if (CInputManager::getInstance()->getInputController()->getLeftMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = -2.0f;
+	}
+
 
 	//プレイヤーが下へ移動していたら
 	if (this->m_pPlayer->m_pMove->m_vel.y <= 0.0f) {
@@ -1033,6 +1051,15 @@ void CPlayerFallRightState::update(void)
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
 
+	//右移動
+	if (CInputManager::getInstance()->getInputController()->getRightMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = 2.0f;
+	}
+	//左移動
+	if (CInputManager::getInstance()->getInputController()->getLeftMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = -2.0f;
+	}
+
 	//プレイヤーが下へ移動していたら
 	if (this->m_pPlayer->m_pMove->m_vel.y == 0.0f) {
 		//落下状態へ移行する
@@ -1048,6 +1075,8 @@ void CPlayerFallRightState::update(void)
 */
 void CPlayerFallRightState::onChangeEvent(void)
 {
+	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+
 	this->m_pPlayer->m_pMove->m_vel.x = 0.0f;
 
 
@@ -1100,6 +1129,14 @@ void CPlayerFallLeftState::update(void)
 
 	//プレイヤーの速度を維持させる
 	this->m_pPlayer->m_pMove->m_vel.x = this->m_velX;
+	//右移動
+	if (CInputManager::getInstance()->getInputController()->getRightMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = 2.0f;
+	}
+	//左移動
+	if (CInputManager::getInstance()->getInputController()->getLeftMoveFlag()) {
+		this->m_pPlayer->m_pMove->m_accele.x = -2.0f;
+	}
 
 	//プレイヤーが下へ移動していたら
 	if (this->m_pPlayer->m_pMove->m_vel.y == 0.0f) {
@@ -1108,7 +1145,6 @@ void CPlayerFallLeftState::update(void)
 
 		return;
 	}
-
 }
 
 /**
@@ -1116,6 +1152,8 @@ void CPlayerFallLeftState::update(void)
 */
 void CPlayerFallLeftState::onChangeEvent(void)
 {
+	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+
 	this->m_pPlayer->m_pMove->m_vel.x = 0.0f;
 
 
