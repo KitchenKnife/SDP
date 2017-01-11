@@ -160,6 +160,12 @@
     <Filter Include="src\Model\Character\EnemyCharacter\Mouse">
       <UniqueIdentifier>{f8092a3a-4a73-422f-9f6e-d00182c0c759}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\MouseKing">
+      <UniqueIdentifier>{731e210b-e6fc-4654-8877-fde025dbc830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\Mouse">
+      <UniqueIdentifier>{a33b4731-687c-428b-9a7a-7654a8c9b84a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -347,6 +353,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\Mouse\MouseCharacter.cpp">
       <Filter>src\Model\Character\EnemyCharacter\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\MouseKing\MouseKingState.cpp">
+      <Filter>src\Data\StateMachine\Enemy\MouseKing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Mouse\MouseState.cpp">
+      <Filter>src\Data\StateMachine\Enemy\Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -550,6 +562,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\Mouse\MouseCharacter.h">
       <Filter>src\Model\Character\EnemyCharacter\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\MouseKing\MouseKingState.h">
+      <Filter>src\Data\StateMachine\Enemy\MouseKing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Mouse\MouseState.h">
+      <Filter>src\Data\StateMachine\Enemy\Mouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

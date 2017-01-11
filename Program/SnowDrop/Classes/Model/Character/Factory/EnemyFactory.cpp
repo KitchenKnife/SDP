@@ -6,6 +6,7 @@
 #include "Data\StateMachine\Enemy\Maidead\MaideadState.h"
 #include "Data\StateMachine\Enemy\NutCracker\NutCrackerState.h"
 #include "Data\StateMachine\Enemy\Baron\BaronState.h"
+#include "Data\StateMachine\Enemy\MouseKing\MouseKingState.h"
 #include "Model\Character\CharacterAggregate.h"
 
 //================================================
@@ -1079,8 +1080,47 @@ void CMouseKingFactory::settingPhysicals(CEnemyCharacter* pChara) {
 }
 
 void CMouseKingFactory::settingActions(CEnemyCharacter* pChara) {
+	//開始時のアクションの状態
+	int m_actionState = (int)ENEMY_MOUSEKING_ACTION_STATE::IDLE;
 
+	//--------------------------------------------------------------------
+	//
+	//	待機アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
 
+	//待機状態アクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機状態中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機状態アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MOUSEKING_ACTION_STATE::IDLE] = pActionIdle;
+
+	//--------------------------------------------------------------------
+	//
+	//	移動アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//移動アクションの生成
+	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
+	//移動アクション中に行うアクションを生成して取りける
+	pActionStraight->push_back(new CActionMoveStraight());
+	//移動アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MOUSEKING_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MOUSEKING_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
 }
 
 
@@ -1128,7 +1168,59 @@ void CMouseKingFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 */
 void CMouseKingFactory::settingStateMachine(CEnemyCharacter* pChara)
 {
+	//--------------------------------------------------------------------
+	//
+	//	待機状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
 
+	//待機状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSEKING_STATE::IDLE, new CMouseKingIdleState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	徘徊状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//徘徊状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSEKING_STATE::WANDERING, new CMouseKingWanderingState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSEKING_STATE::ATTACK, new CMouseKingAttackState(pChara, NULL, NULL));
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃を受けた状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃を受けた状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSEKING_STATE::UNDER_ATTACK, new CMouseKingUnderAttackState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	死亡状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//死亡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSEKING_STATE::DEAD, new CMouseKingDeadState(pChara, NULL, NULL));
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)ENEMY_MOUSEKING_STATE::IDLE);
 }
 
 void CMouseKingFactory::settingInitialize(CEnemyCharacter* pChara) {
