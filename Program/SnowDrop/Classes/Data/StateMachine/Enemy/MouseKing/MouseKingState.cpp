@@ -13,7 +13,8 @@
 //==========================================
 #include "MouseKingState.h"
 #include "Model\Character\CharacterAggregate.h"
-#include "Model\Character\EnemyCharacter\EnemyCharacter.h"
+#include "Model\Character\EnemyCharacter\MouseKing\MouseKingCharacter.h"
+#include "Model\Character\EnemyCharacter\Mouse\MouseCharacter.h"
 #include "Data\Enum\EnumEnemy.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"
 
@@ -78,7 +79,7 @@ void CMouseKingState::toWandering(void)
 void CMouseKingState::toAttack(void)
 {
 	this->m_pOwner->m_state = (int)ENEMY_MOUSEKING_STATE::ATTACK;
-	this->m_pOwner->m_animationState = (int)ENEMY_MOUSEKING_ANIMATION_STATE::ATTACK;
+	this->m_pOwner->m_animationState = (int)ENEMY_MOUSEKING_ANIMATION_STATE::IDLE;
 	this->m_pOwner->m_actionState = (int)ENEMY_MOUSEKING_ACTION_STATE::IDLE;
 	this->m_nextRegisterKey = this->m_pOwner->m_state;
 	//待機動作を終了
@@ -128,8 +129,8 @@ bool CMouseKingState::checkEnableAttack(void)
 
 	if (this->m_pOwner->m_attackInterval <= 0)
 	{
-		if (customMath->lengthBitweenChara(this->m_pOwner, pPlayer) <= 128.0f ||
-			customMath->lengthBitweenChara(this->m_pOwner, pGirl) <= 128.0f)
+		if (customMath->lengthBitweenChara(this->m_pOwner, pPlayer) <= 384.0f ||
+			customMath->lengthBitweenChara(this->m_pOwner, pGirl) <= 384.0f)
 		{
 			return true;
 		}
@@ -399,6 +400,47 @@ void CMouseKingAttackState::start(void)
 
 	//アニメーションをリセット
 	(*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->reset();
+
+	CMouseKingCharacter* pOwner = (CMouseKingCharacter*)this->m_pOwner;
+
+	this->m_nextAttackOrder = m_nextAttackOrder * -1;
+	switch (this->m_nextAttackOrder)
+	{
+	case 1:
+			if (pOwner->m_pHenchmans[0])
+			{
+				if (pOwner->m_pHenchmans[0]->m_isAlive)
+				{
+					pOwner->m_pHenchmans[0]->setAttackOrder(true);
+					this->m_pOrderChara = pOwner->m_pHenchmans[0];
+				}
+				else
+				{
+					//メモ：ここでNULLを入れないと何故か予期しないデータが残る
+					pOwner->m_pHenchmans[0] = NULL;
+				}
+			}
+			
+			break;
+
+	case -1:
+			if (pOwner->m_pHenchmans[1])
+			{
+				if (pOwner->m_pHenchmans[1]->m_isAlive)
+				{
+					pOwner->m_pHenchmans[1]->setAttackOrder(true);
+					this->m_pOrderChara = pOwner->m_pHenchmans[1];
+				}
+				else
+				{
+					//メモ：ここでNULLを入れないと何故か予期しないデータが残る
+					pOwner->m_pHenchmans[1] = NULL;
+				}
+			}
+			break;
+
+	default:break;
+	}
 }
 
 /**
@@ -407,11 +449,13 @@ void CMouseKingAttackState::start(void)
 void CMouseKingAttackState::update(void)
 {
 	//アニメーションが終了したかどうかのフラグ
-	if ((*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->isEnd())
+	if (!this->m_pOrderChara || this->m_pOrderChara->getAttackOrder() == false)
 	{
-		//待機状態へ移行
-		this->toIdle();
+			//待機状態へ移行
+			this->toIdle();
+			return;
 	}
+	
 }
 
 /**
@@ -419,7 +463,7 @@ void CMouseKingAttackState::update(void)
 */
 void CMouseKingAttackState::onChangeEvent(void)
 {
-
+	this->m_pOrderChara = NULL;
 	//待機動作を終了
 	this->m_isNext = false;
 }

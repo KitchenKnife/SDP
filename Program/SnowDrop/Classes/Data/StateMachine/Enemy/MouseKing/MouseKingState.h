@@ -18,7 +18,7 @@
 // ‘O•ûéŒ¾
 //==========================================
 class CCharacter;
-
+class CMouseCharacter;
 //==========================================
 //
 // Class: CMouseKingIdleState
@@ -221,6 +221,9 @@ public:
 	void onChangeEvent(void);
 
 private:
+	int m_nextAttackOrder = -1;
+	CMouseCharacter* m_pOrderChara = NULL;
+
 };
 
 //==========================================

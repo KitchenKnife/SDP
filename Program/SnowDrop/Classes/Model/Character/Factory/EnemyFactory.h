@@ -399,16 +399,16 @@ class CMouseEnemyFactory: public CEnemyFactory
 {
 protected:
 	//敵の生成と組み立て
-	virtual CMouseCharacter* createEnemy(CMouseKingCharacter* pMaster) = 0;
+	virtual CMouseCharacter* createEnemy(CMouseKingCharacter* pMaster,int positionType) = 0;
 public:
 	//デストラクタ
 	virtual ~CMouseEnemyFactory() {};
 
 	//敵の生成とセッティング
-	CMouseCharacter* create(float posX, float posY,CMouseKingCharacter* pMaster) {
+	CMouseCharacter* create(float posX, float posY,CMouseKingCharacter* pMaster,int positionType) {
 
 		//敵の生成と組み立て
-		CMouseCharacter* pChara = this->createEnemy(pMaster);
+		CMouseCharacter* pChara = this->createEnemy(pMaster,positionType);
 
 		//移動データ設定
 		this->settingMove(pChara, posX, posY);
@@ -450,10 +450,10 @@ protected:
 	}
 
 	//敵の生成と組み立て
-	CMouseCharacter* createEnemy(CMouseKingCharacter* pMaster){
+	CMouseCharacter* createEnemy(CMouseKingCharacter* pMaster, int positionType){
 
 		// 敵生成
-		CMouseCharacter* pEnemy = CMouseCharacter::create(pMaster);
+		CMouseCharacter* pEnemy = CMouseCharacter::create(pMaster,positionType);
 		// 敵パーツ工場生成
 		CEnemeyPartsFactory pEnemyPartsFactory;
 

@@ -7,6 +7,7 @@
 #include "Data\StateMachine\Enemy\NutCracker\NutCrackerState.h"
 #include "Data\StateMachine\Enemy\Baron\BaronState.h"
 #include "Data\StateMachine\Enemy\MouseKing\MouseKingState.h"
+#include "Data\StateMachine\Enemy\Mouse\MouseState.h"
 #include "Model\Character\CharacterAggregate.h"
 
 //================================================
@@ -1058,7 +1059,7 @@ void CMouseKingFactory::settingTexture(CEnemyCharacter* pChara) {
 
 void CMouseKingFactory::settingAnimations(CEnemyCharacter* pChara) {
 	//直立アニメーションの設定
-	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true));
 	//直立アニメーションに設定する為のチップデータの設定
 	(*pChara->m_pAnimations)[(int)ENEMY_MOUSEKING_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 128, 128, 128));
 
@@ -1226,7 +1227,7 @@ void CMouseKingFactory::settingStateMachine(CEnemyCharacter* pChara)
 void CMouseKingFactory::settingInitialize(CEnemyCharacter* pChara) {
 
 	//状態を待機状態に変更
-	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+	pChara->m_state = (int)ENEMY_MOUSEKING_STATE::IDLE;
 
 	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
 
@@ -1234,7 +1235,7 @@ void CMouseKingFactory::settingInitialize(CEnemyCharacter* pChara) {
 	pChara->m_activeFlag = true;
 
 	//ステータスを設定する
-	pChara->m_status.set(3, 3, 1, 3);
+	pChara->m_status.set(3, 3, 1, 1);
 
 	//生死フラグを立てる
 	pChara->m_isAlive = true;
@@ -1248,8 +1249,8 @@ void CMouseKingFactory::settingInitialize(CEnemyCharacter* pChara) {
 	//子分を生成する
 	CMouseFactory henchmansFactory;
 
-	pMouseKing->m_pHenchmans[0] = henchmansFactory.create(pMouseKing->m_pMove->m_pos.x, pMouseKing->m_pMove->m_pos.y, pMouseKing);
-	pMouseKing->m_pHenchmans[1] = henchmansFactory.create(pMouseKing->m_pMove->m_pos.x, pMouseKing->m_pMove->m_pos.y, pMouseKing);
+	pMouseKing->m_pHenchmans[0] = henchmansFactory.create(pMouseKing->m_pMove->m_pos.x, pMouseKing->m_pMove->m_pos.y, pMouseKing, (int)HENCHMAN_POSITION_TYPE::FORWARD);
+	pMouseKing->m_pHenchmans[1] = henchmansFactory.create(pMouseKing->m_pMove->m_pos.x, pMouseKing->m_pMove->m_pos.y, pMouseKing, (int)HENCHMAN_POSITION_TYPE::DEFENDER);
 
 	//キャラクターをキャラクターの集合体に取り付ける
 	CCharacterAggregate::getInstance()->add(pMouseKing->m_pHenchmans[0]);
@@ -1305,8 +1306,47 @@ void CMouseFactory::settingPhysicals(CEnemyCharacter* pChara) {
 }
 
 void CMouseFactory::settingActions(CEnemyCharacter* pChara) {
+	//開始時のアクションの状態
+	int m_actionState = (int)ENEMY_MOUSE_ACTION_STATE::IDLE;
 
+	//--------------------------------------------------------------------
+	//
+	//	待機アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
 
+	//待機状態アクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機状態中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機状態アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MOUSE_ACTION_STATE::IDLE] = pActionIdle;
+
+	//--------------------------------------------------------------------
+	//
+	//	移動アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//移動アクションの生成
+	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
+	//移動アクション中に行うアクションを生成して取りける
+	pActionStraight->push_back(new CActionMoveStraight());
+	//移動アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MOUSE_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MOUSE_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
 }
 
 
@@ -1344,7 +1384,6 @@ void CMouseFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 
 	//画面端の衝突判定を取り付ける
 	pChara->m_pCollisionAreas->push_back(pMapArea);
-
 }
 
 /**
@@ -1354,13 +1393,65 @@ void CMouseFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 */
 void CMouseFactory::settingStateMachine(CEnemyCharacter* pChara)
 {
+	//--------------------------------------------------------------------
+	//
+	//	待機状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
 
+	//待機状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSE_STATE::IDLE, new CMouseIdleState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	徘徊状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//徘徊状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSE_STATE::WANDERING, new CMouseWanderingState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSE_STATE::ATTACK, new CMouseAttackState(pChara, NULL, NULL));
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃を受けた状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃を受けた状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSE_STATE::UNDER_ATTACK, new CMouseUnderAttackState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	死亡状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//死亡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MOUSE_STATE::DEAD, new CMouseDeadState(pChara, NULL, NULL));
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)ENEMY_MOUSE_STATE::IDLE);
 }
 
 void CMouseFactory::settingInitialize(CEnemyCharacter* pChara) {
 
 	//状態を待機状態に変更
-	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+	pChara->m_state = (int)ENEMY_MOUSE_STATE::IDLE;
 
 	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
 
