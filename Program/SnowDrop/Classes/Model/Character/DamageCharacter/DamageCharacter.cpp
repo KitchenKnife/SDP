@@ -99,8 +99,6 @@ void CDamageCharacter::collisionAll() {
 			}
 		}
 	}
-
-
 }
 
 //状態チェック

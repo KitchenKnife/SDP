@@ -166,6 +166,10 @@ bool CGameMain2::init() {
 	this->m_pMainLayer = LayerColor::create(ccc4(51, 75, 112, 255));
 	this->addChild(this->m_pMainLayer);
 
+	//キャラクターを取り付けるレイヤーを設定
+	CCharacterAggregate::getInstance()->setLayer(this->m_pMainLayer);
+
+
 	////UIレイヤーの生成と取り付け
 	this->m_pUILayer = LayerColor::create();
 	this->addChild(this->m_pUILayer, -1);

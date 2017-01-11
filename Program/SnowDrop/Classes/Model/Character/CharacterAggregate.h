@@ -60,6 +60,9 @@ private:
 	//ガール
 	CPlayerCharacterGirl* m_pGirl = NULL;
 
+	//キャラクターレイヤー
+	cocos2d::Layer* m_pLayer = NULL;
+
 public:
 	/**
 	* @desc	キャラタクーの集まりの参照を設定
@@ -129,5 +132,18 @@ public:
 	* @return ガールのインスタンス
 	*/
 	CPlayerCharacterGirl* getGirl(void);
+
+
+	/**
+	* @desc	キャラクターを取り付けるレイヤーを設定
+	* @param キャラクターを取り付けるレイヤーのインスタンス
+	*/
+	void setLayer(cocos2d::Layer* pLayer);
+
+	/**
+	* @desc	キャラクターを取り付けるレイヤーを取得
+	* @return キャラクターを取り付けるレイヤーのインスタンス
+	*/
+	cocos2d::Layer* getLayer(void);
 };
 

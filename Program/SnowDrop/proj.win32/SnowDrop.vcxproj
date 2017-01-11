@@ -186,6 +186,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model\Character\CharacterAggregate.cpp" />
     <ClCompile Include="..\Classes\Model\Character\DamageCharacter\DamageCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.cpp" />
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\MouseKing\MouseKingCharacter.cpp" />
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\Mouse\MouseCharacter.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\DamageFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\EffectFactory.cpp" />
     <ClCompile Include="..\Classes\Model\Character\Factory\EnemyFactory.cpp" />
@@ -253,6 +255,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model\Character\CharacterAggregate.h" />
     <ClInclude Include="..\Classes\Model\Character\DamageCharacter\DamageCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\EnemyCharacter.h" />
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\MouseKing\MouseKingCharacter.h" />
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\Mouse\MouseCharacter.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\DamageFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\EffectFactory.h" />
     <ClInclude Include="..\Classes\Model\Character\Factory\EnemyFactory.h" />

@@ -148,3 +148,21 @@ CPlayerCharacterGirl* CCharacterAggregate::getGirl(void)
 {
 	return this->m_pGirl;
 }
+
+/**
+* @desc	キャラクターを取り付けるレイヤーを設定
+* @param キャラクターを取り付けるレイヤーのインスタンス
+*/
+void CCharacterAggregate::setLayer(cocos2d::Layer* pLayer)
+{
+	this->m_pLayer = pLayer;
+}
+
+/**
+* @desc	キャラクターを取り付けるレイヤーを取得
+* @return キャラクターを取り付けるレイヤーのインスタンス
+*/
+cocos2d::Layer* CCharacterAggregate::getLayer(void)
+{
+	return this->m_pLayer;
+}

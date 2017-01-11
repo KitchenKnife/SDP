@@ -6,6 +6,7 @@
 #include "Data\StateMachine\Enemy\Maidead\MaideadState.h"
 #include "Data\StateMachine\Enemy\NutCracker\NutCrackerState.h"
 #include "Data\StateMachine\Enemy\Baron\BaronState.h"
+#include "Model\Character\CharacterAggregate.h"
 
 //================================================
 // キャラクターパーツクラス工場
@@ -1042,22 +1043,19 @@ void CBaronFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 //	（FactoryMethod）
 //================================================
 //各々のパーツのセッティング
-template <class Ty>
-void CMouseKingFactory<Ty>::settingMove(CEnemyCharacter* pChara, float x, float y) {
+void CMouseKingFactory::settingMove(CEnemyCharacter* pChara, float x, float y) {
 	//初期位置の設定
 	pChara->m_pMove->m_pos.set(x, y);
 	//初期速度
 	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
 }
 
-template <class Ty>
-void CMouseKingFactory<Ty>::settingTexture(CEnemyCharacter* pChara) {
+void CMouseKingFactory::settingTexture(CEnemyCharacter* pChara) {
 	//テクスチャの設定
 	pChara->setTexture(IMAGE_MOUSEKING);
 }
 
-template <class Ty>
-void CMouseKingFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
+void CMouseKingFactory::settingAnimations(CEnemyCharacter* pChara) {
 	//直立アニメーションの設定
 	pChara->m_pAnimations->push_back(new CChipNotAnimation());
 	//直立アニメーションに設定する為のチップデータの設定
@@ -1075,27 +1073,24 @@ void CMouseKingFactory<Ty>::settingAnimations(CEnemyCharacter* pChara) {
 	pChara->m_animationState = (int)ENEMY_MOUSEKING_ANIMATION_STATE::IDLE;
 }
 
-template <class Ty>
-void CMouseKingFactory<Ty>::settingPhysicals(CEnemyCharacter* pChara) {
+void CMouseKingFactory::settingPhysicals(CEnemyCharacter* pChara) {
 	//歩行キャラには重力つける
 	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
 }
 
-template <class Ty>
-void CMouseKingFactory<Ty>::settingActions(CEnemyCharacter* pChara) {
+void CMouseKingFactory::settingActions(CEnemyCharacter* pChara) {
 
 
 }
 
-template <class Ty>
-void CMouseKingFactory<Ty>::settingBody(CEnemyCharacter* pChara) {
+
+void CMouseKingFactory::settingBody(CEnemyCharacter* pChara) {
 	//実体のボディを設定
 	pChara->m_pBody->set(-64.0f, 64.0f, 64.0f, -64.0f);
 }
 
 //衝突判定空間の設定
-template <class Ty>
-void CMouseKingFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
+void CMouseKingFactory::settingCollisionArea(CEnemyCharacter* pChara) {
 
 	//画面端衝突空間の生成
 	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
@@ -1131,14 +1126,146 @@ void CMouseKingFactory<Ty>::settingCollisionArea(CEnemyCharacter* pChara) {
 *	@param 設定するキャラクター
 *	@author Shinya Ueba
 */
-template <class Ty>
-void CMouseKingFactory<Ty>::settingStateMachine(CEnemyCharacter* pChara)
+void CMouseKingFactory::settingStateMachine(CEnemyCharacter* pChara)
 {
 
 }
 
-template <class Ty>
-void CMouseKingFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
+void CMouseKingFactory::settingInitialize(CEnemyCharacter* pChara) {
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 3);
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
+
+	//CMouseKingCharacterにアップキャストする
+	CMouseKingCharacter* pMouseKing = (CMouseKingCharacter*)pChara;
+
+	//子分を生成する
+	CMouseFactory henchmansFactory;
+
+	pMouseKing->m_pHenchmans[0] = henchmansFactory.create(pMouseKing->m_pMove->m_pos.x, pMouseKing->m_pMove->m_pos.y, pMouseKing);
+	pMouseKing->m_pHenchmans[1] = henchmansFactory.create(pMouseKing->m_pMove->m_pos.x, pMouseKing->m_pMove->m_pos.y, pMouseKing);
+
+	//キャラクターをキャラクターの集合体に取り付ける
+	CCharacterAggregate::getInstance()->add(pMouseKing->m_pHenchmans[0]);
+	CCharacterAggregate::getInstance()->add(pMouseKing->m_pHenchmans[1]);
+
+	//キャラクターをメインレイヤーに取り付ける
+	CCharacterAggregate::getInstance()->getLayer()->addChild(pMouseKing->m_pHenchmans[0]);
+	CCharacterAggregate::getInstance()->getLayer()->addChild(pMouseKing->m_pHenchmans[1]);
+}
+
+//================================================
+// Mouse工場
+//	（FactoryMethod）
+//================================================
+//各々のパーツのセッティング
+void CMouseFactory::settingMove(CEnemyCharacter* pChara, float x, float y) {
+	//初期位置の設定
+	pChara->m_pMove->m_pos.set(x, y);
+	//初期速度
+	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
+}
+
+void CMouseFactory::settingTexture(CEnemyCharacter* pChara) {
+	//テクスチャの設定
+	pChara->setTexture(IMAGE_MOUSEKING);
+}
+
+void CMouseFactory::settingAnimations(CEnemyCharacter* pChara) {
+	//直立アニメーションの設定
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	//直立アニメーションに設定する為のチップデータの設定
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSE_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 640, 128, 128));
+
+	//徘徊のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSE_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 640, 128, 128));
+
+	//攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSE_ANIMATION_STATE::ATTACK]->addChipData(new CChip(0, 256, 128, 128));
+
+	//死亡のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 6, false,3));
+	(*pChara->m_pAnimations)[(int)ENEMY_MOUSE_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 384, 128, 128));
+
+	//最初のアニメーションを設定
+	pChara->m_animationState = (int)ENEMY_MOUSE_ANIMATION_STATE::IDLE;
+}
+
+void CMouseFactory::settingPhysicals(CEnemyCharacter* pChara) {
+	//歩行キャラには重力つける
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+}
+
+void CMouseFactory::settingActions(CEnemyCharacter* pChara) {
+
+
+}
+
+
+void CMouseFactory::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-64.0f, 64.0f, 64.0f, -64.0f);
+}
+
+//衝突判定空間の設定
+void CMouseFactory::settingCollisionArea(CEnemyCharacter* pChara) {
+
+	//画面端衝突空間の生成
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+
+	//マップ衝突空間の生成
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 64.0f);
+
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pMapArea);
+
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+void CMouseFactory::settingStateMachine(CEnemyCharacter* pChara)
+{
+
+}
+
+void CMouseFactory::settingInitialize(CEnemyCharacter* pChara) {
 
 	//状態を待機状態に変更
 	pChara->m_state = (int)ENEMY_BAT_STATE::IDLE;
@@ -1158,6 +1285,7 @@ void CMouseKingFactory<Ty>::settingInitialize(CEnemyCharacter* pChara) {
 	pChara->applyFunc();
 
 }
+
 
 //================================================
 // パーツセッティングクラスを管理するクラス
