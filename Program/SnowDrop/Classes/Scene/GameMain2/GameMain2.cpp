@@ -107,21 +107,8 @@ CGameMain2::~CGameMain2() {
 	//出撃スケジュールの破棄
 	SAFE_DELETE(this->m_pLaunchSchedule);
 
-	//キャラクターの集まりを削除
-	if (this->m_pCharacters) {
-		// キャラの解放
-		for (CCharacter* pChara : (*this->m_pCharacters)) {
-
-			SAFE_DELETE(pChara);
-		}
-	}
+	
 	SAFE_DELETE(this->m_pCharacters);
-
-	SAFE_DELETE(this->m_pBackGround);
-	SAFE_DELETE(this->m_pRoom);
-	SAFE_DELETE(this->m_pUI);
-	SAFE_DELETE(this->m_pMainLayer);
-	SAFE_DELETE(this->m_pUILayer);
 }
 
 
@@ -155,12 +142,12 @@ bool CGameMain2::init() {
 	////キャラクターの集まりの生成
 	this->m_pCharacters = new std::vector<CCharacter*>();
 	//キャラクターの集まりをCCharacterAggregateに設定する
-	CCharacterAggregate::getInstance()->change(this->m_pCharacters);
+	CCharacterAggregate::getInstance()->set(this->m_pCharacters);
 
 	//出撃スケジュールの生成
 	this->m_pLaunchSchedule = new std::vector<CLaunchTrigger*>();
 	//出撃スケジュールを出撃スケジューラに取り付ける
-	CLaunchScheduler::getInstance()->changeLauncher(this->m_pLaunchSchedule);
+	CLaunchScheduler::getInstance()->createLauncher(this->m_pLaunchSchedule);
 
 	////メインレイヤーの生成と取り付け
 	this->m_pMainLayer = LayerColor::create(ccc4(51, 75, 112, 255));
@@ -188,7 +175,7 @@ bool CGameMain2::init() {
 	this->m_pMainLayer->addChild(this->m_pRoom);
 
 	//部屋マップの生成と取り付け
-	CMap* pMap = CMapManager::getInstance()->changeMap(MAP_DATA_SAMPLE);
+	CMap* pMap = CMapManager::getInstance()->createMap(MAP_DATA_SAMPLE);
 	pMap->setVisible(false);
 	this->m_pMainLayer->addChild(pMap);
 
@@ -250,24 +237,8 @@ bool CGameMain2::init() {
 	pointerStartBtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.1f);
 
 
-	/*
-	* @desc		メニューアイテムの生成　ステージ1ボタン
-	* @param	通常の画像を設定
-	* @param	押された時の画像を設定
-	* @param	押された時に呼び出されるメンバ関数の設定
-	*/
-	cocos2d::MenuItemImage* pointerStage1BtnItem = cocos2d::MenuItemImage::create(
-		IMAGE_TITLE_BUTTON_START,
-		IMAGE_TITLE_BUTTON_START,
-		CC_CALLBACK_1(CGameMain2::callbackChangeStage1, this)
-	);
-
-	//位置設定
-	pointerStage1BtnItem->setPosition(WINDOW_RIGHT*0.9f, WINDOW_TOP*0.2f);
-
-
 	//メニューの生成とメニューアイテムの登録
-	cocos2d::Menu* pointerMenu = cocos2d::Menu::create(pointerStartBtnItem, pointerStage1BtnItem, NULL);
+	cocos2d::Menu* pointerMenu = cocos2d::Menu::create(pointerStartBtnItem, NULL);
 
 	//位置の初期化
 	pointerMenu->setPosition(0.0f, 0.0f);
@@ -414,30 +385,6 @@ void CGameMain2::callbackChangeGameOver(cocos2d::Ref* pSender)
 
 		//シーンを生成する
 		cocos2d::Scene* pScene = CGameOver::createScene();
-		//シーンを切り替える
-		cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionShrinkGrow::create(1.0f, pScene));
-
-	});
-}
-
-
-/**
-* @desc		ステージ1に遷移
-* @param	タイトルレイヤーのインスタンス
-* @tips		スタートボタンが押された時に呼び出される
-*/
-void CGameMain2::callbackChangeStage1(cocos2d::Ref* pSender) {
-
-	// 効果音再生
-	int musicID = AudioEngine::play2d(SOUND_FILE_SE_BUTTON);
-	//BGM停止
-	AudioEngine::stop(CAudioManager::getInstance()->getMusicID(BGM_STAGE1));
-
-	// 効果音再生終了後
-	AudioEngine::setFinishCallback(musicID, [](int musicID, const std::string) {
-
-		//シーンを生成する
-		cocos2d::Scene* pScene = CGameMain::createScene();
 		//シーンを切り替える
 		cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionShrinkGrow::create(1.0f, pScene));
 

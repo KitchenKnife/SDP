@@ -370,13 +370,6 @@ public:
 	 * @param	発射台に設定する出撃スケジュールのアドレス
 	 */
 	void createLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule);
-	/**
-	* @desc	発射台の変更
-	* @param	発射台に設定する出撃スケジュールのアドレス
-	*/
-	void changeLauncher(std::vector<CLaunchTrigger*>* pLaunchSchedule);
-
-
 
 	/**
 	 * @desc	キャラクターの出撃

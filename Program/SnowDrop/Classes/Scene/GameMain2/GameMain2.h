@@ -83,12 +83,6 @@ public:
 	* @tips		スタートボタンが押された時に呼び出される
 	*/
 	void callbackChangeGameOver(cocos2d::Ref* pSender);
-	/**
-	* @desc		ステージ1に遷移
-	* @param	タイトルレイヤーのインスタンス
-	* @tips		スタートボタンが押された時に呼び出される
-	*/
-	void callbackChangeStage1(cocos2d::Ref* pSender);
 
 	//=========================================================================
 	//	ここまでは理解出来るまでは変更禁止
