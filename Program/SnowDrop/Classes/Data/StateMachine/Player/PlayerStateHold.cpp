@@ -67,10 +67,11 @@ void CPlayerStateHold::toFall(void)
  * @desc	お姫様抱っこ状態から通常状態へ移行（右向き）
  */
 void CPlayerStateHold::toFreeIdle(void) {
-	//右向き待機状態へ移行
-	this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::HOLD;
 
-	(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+	//待機動作を終了
+	this->m_isNext = true;
 }
 
 //==========================================
@@ -116,10 +117,16 @@ void CPlayerHoldIdleState::update(void)
 	//手が離されたら
 	if (!pointerInputController->getHugFlag())
 	{
-		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
+		this->toFreeIdle();
 
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+		return;
+	}
 
+	//ジャンプ
+	if (pointerInputController->getJumpFlag())
+	{
+		//右向きジャンプ状態へ移行
+		this->toJump();
 		return;
 	}
 
@@ -148,13 +155,7 @@ void CPlayerHoldIdleState::update(void)
 		return;
 	}
 
-	//ジャンプ
-	if (pointerInputController->getJumpFlag()) 
-	{
-		//右向きジャンプ状態へ移行
-		this->toJump();
-		return;
-	}
+	
 }
 
 /**
@@ -207,12 +208,19 @@ void CPlayerHoldWalkState::update(void)
 	//手が離されたら
 	if (!pointerInputController->getHugFlag())
 	{
-		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
-
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+		this->toFreeIdle();
 
 		return;
 	}
+
+	//ジャンプ
+	if (pointerInputController->getJumpFlag())
+	{
+		//右向きジャンプ状態へ移行
+		this->toJump();
+		return;
+	}
+
 
 	//右へ移動（歩行）
 	if (pointerInputController->getRightMoveFlag())
@@ -230,14 +238,7 @@ void CPlayerHoldWalkState::update(void)
 		return;
 	}
 
-	//ジャンプ
-	if (pointerInputController->getJumpFlag())
-	{
-		//右向きジャンプ状態へ移行
-		this->toJump();
-		return;
-	}
-
+	
 
 	//右向き待機状態へ移行
 	this->toIdle();
@@ -248,6 +249,8 @@ void CPlayerHoldWalkState::update(void)
  */
 void CPlayerHoldWalkState::onChangeEvent(void)
 {
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_STATE::WALK])[0]->stop();
+
 	this->m_isNext = false;
 }
 
@@ -381,6 +384,59 @@ void CPlayerHoldFallState::update(void)
 void CPlayerHoldFallState::onChangeEvent(void)
 {
 	this->m_pPlayer->m_pMove->m_vel.x = 0.0f;
+
+	this->m_isNext = false;
+}
+
+//==========================================
+//
+// Class: CPlayerHoldReleaseState
+//
+// プレイヤー お姫様抱っこ 下ろす 状態クラス
+//
+// 2017/ 1/ 5
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerHoldReleaseState::CPlayerHoldReleaseState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerStateHold::CPlayerStateHold(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerHoldReleaseState::~CPlayerHoldReleaseState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerHoldReleaseState::start(void)
+{
+	(*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->reset();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerHoldReleaseState::update(void)
+{
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->isEnd())
+	{
+		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
+
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+
+		return;
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerHoldReleaseState::onChangeEvent(void)
+{
 
 	this->m_isNext = false;
 }

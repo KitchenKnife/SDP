@@ -16,6 +16,7 @@
 #include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Data/Enum/EnumPlayer.h"
 #include "Data/LaunchTrigger/LaunchTrigger.h"
+#include "Model/Character/CharacterAggregate.h"
 
 //==========================================
 //
@@ -83,15 +84,17 @@ void CActionMove::update(CCharacter* pChara) {
 
 	//プレイヤーの向いている方向によって割り当てる値を変化させる。
 	if (pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
-		pPlayer->m_pMove->m_vel.x = 2.0f;
+		pPlayer->m_pMove->m_accele.x = 2.0f;
 	}
 	else if (pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
-		pPlayer->m_pMove->m_vel.x = -2.0f;
+		pPlayer->m_pMove->m_accele.x = -2.0f;
 	}
 }
 
 void CActionMove::stop() {
+	CPlayerCharacterBoy* pPlayer = CCharacterAggregate::getInstance()->getPlayer();
 
+	pPlayer->m_pMove->m_accele.x = 0.0f;
 }
 
 

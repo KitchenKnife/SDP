@@ -58,11 +58,6 @@ public:
 	 */
 	void toAttack(void);
 
-	/**
-	 * @desc	装備状態へ移行
-	 */
-	void toEquip(void);
-
 	/*
 	 *	@desc	手を離した状態へ移行
 	 */
@@ -181,6 +176,48 @@ public:
 	* @desc	デストラクタ
 	*/
 	~CPlayerGraspAttackState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+
+};
+
+
+//==========================================
+//
+// Class: CPlayerGraspReleaseState
+//
+// プレイヤー 手を繋ぐ 手を離す 状態クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+class CPlayerGraspReleaseState :public CPlayerStateGraps
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerGraspReleaseState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerGraspReleaseState(void);
 
 	/**
 	* @desc	開始処理

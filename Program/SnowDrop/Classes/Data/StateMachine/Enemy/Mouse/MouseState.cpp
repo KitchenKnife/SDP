@@ -323,77 +323,80 @@ void CMouseWanderingState::update(void)
 		return;
 	}
 
-
-	cocos2d::Vec2 vec2TargetPos = pOwner->m_pMaster->m_pMove->m_pos;
-	if (pOwner->m_pMaster->getScaleX() < 0)
-	{
-		switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
-		{
-		case HENCHMAN_POSITION_TYPE::FORWARD:	vec2TargetPos.x += 128.0f;
-												break;
-		case HENCHMAN_POSITION_TYPE::DEFENDER:
-												vec2TargetPos.x += 64.0f;
-												break;
-		default:break;
-		}
-		this->m_vec = 1;
-	}
-	else
-	{
-		switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
-		{
-		case HENCHMAN_POSITION_TYPE::FORWARD:	vec2TargetPos.x -= 128.0f;
-												break;
-		case HENCHMAN_POSITION_TYPE::DEFENDER:
-												vec2TargetPos.x -= 64.0f;
-												break;
-		default:break;
-		}
-		this->m_vec = -1;
-	}
-
-	
-
-	//アイドル状態に戻るか
-	if (customMath->length(vec2TargetPos, pOwner->m_pMove->m_pos) < 3.0f)
-	{
-		if (pOwner->m_pMaster->getScaleX() < 0)
-		{
-			switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
-			{
-			case HENCHMAN_POSITION_TYPE::FORWARD:	pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x + 128.0f;
-													break;
-			case HENCHMAN_POSITION_TYPE::DEFENDER:
-													pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x +  64.0f;
-													break;
-			default:break;
-			}
-		}
-		else
-		{
-			switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
-			{
-			case HENCHMAN_POSITION_TYPE::FORWARD:	pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x - 128.0f;
-													break;
-			case HENCHMAN_POSITION_TYPE::DEFENDER:
-													pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x - 64.0f;
-													break;
-			default:break;
-			}
-		}
+	//if (pOwner->m_pMaster)
+	//{
+	//	cocos2d::Vec2 vec2TargetPos = pOwner->m_pMaster->m_pMove->m_pos;
+	//	if (pOwner->m_pMaster->getScaleX() < 0)
+	//	{
+	//		switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
+	//		{
+	//		case HENCHMAN_POSITION_TYPE::FORWARD:	vec2TargetPos.x += 128.0f;
+	//			break;
+	//		case HENCHMAN_POSITION_TYPE::DEFENDER:
+	//			vec2TargetPos.x += 64.0f;
+	//			break;
+	//		default:break;
+	//		}
+	//		this->m_vec = 1;
+	//	}
+	//	else
+	//	{
+	//		switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
+	//		{
+	//		case HENCHMAN_POSITION_TYPE::FORWARD:	vec2TargetPos.x -= 128.0f;
+	//			break;
+	//		case HENCHMAN_POSITION_TYPE::DEFENDER:
+	//			vec2TargetPos.x -= 64.0f;
+	//			break;
+	//		default:break;
+	//		}
+	//		this->m_vec = -1;
+	//	}
 
 
 
-		this->toIdle();
-		return;
-	}
-	else
-	{
-		//速さを設定
-		this->m_pOwner->m_pMove->m_vel.set(this->m_pOwner->m_status.getSpeed()*this->m_vec, 0.0f);
+	//	//アイドル状態に戻るか
+	//	if (customMath->length(vec2TargetPos, pOwner->m_pMove->m_pos) < 3.0f)
+	//	{
+	//		if (pOwner->m_pMaster->getScaleX() < 0)
+	//		{
+	//			switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
+	//			{
+	//			case HENCHMAN_POSITION_TYPE::FORWARD:	pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x + 128.0f;
+	//				break;
+	//			case HENCHMAN_POSITION_TYPE::DEFENDER:
+	//				pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x + 64.0f;
+	//				break;
+	//			default:break;
+	//			}
+	//		}
+	//		else
+	//		{
+	//			switch ((HENCHMAN_POSITION_TYPE)pOwner->m_positionType)
+	//			{
+	//			case HENCHMAN_POSITION_TYPE::FORWARD:	pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x - 128.0f;
+	//				break;
+	//			case HENCHMAN_POSITION_TYPE::DEFENDER:
+	//				pOwner->m_pMove->m_pos.x = pOwner->m_pMaster->m_pMove->m_pos.x - 64.0f;
+	//				break;
+	//			default:break;
+	//			}
+	//		}
 
-		pOwner->setScaleX(this->m_vec * -1.0f);
-	}
+
+
+	//		this->toIdle();
+	//		return;
+	//	}
+	//	else
+	//	{
+	//		//速さを設定
+	//		this->m_pOwner->m_pMove->m_vel.set(this->m_pOwner->m_status.getSpeed()*this->m_vec, 0.0f);
+
+	//		pOwner->setScaleX(this->m_vec * -1.0f);
+	//	}
+	//}
+
 }
 
 /**

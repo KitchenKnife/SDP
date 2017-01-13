@@ -74,11 +74,6 @@ public:
 	 */
 	void toJumpAttack(void);
 
-	/**
-	 * @desc	装備する状態へ移行
-	 */
-	void toEquip(void);
-
 	/*
 	 *	@desc	手を掴む状態へ移行
 	 */
@@ -343,47 +338,6 @@ public:
 
 };
 
-
-//==========================================
-//
-// Class: CPlayerEquipState
-//
-// プレイヤー 装備する 状態クラス
-//
-// 2016/12/25
-//						Author Shinya Ueba
-//==========================================
-class CPlayerEquipState :public CPlayerState
-{
-public:
-	/**
-	 * @desc	コンストラクタ
-	 */
-	CPlayerEquipState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
-
-	/**
-	 * @desc	デストラクタ
-	 */
-	~CPlayerEquipState(void);
-
-	/**
-	 * @desc	開始処理
-	 */
-	void start(void)override;
-
-	/**
-	 * @desc	更新処理
-	 */
-	void update(void)override;
-
-
-	/**
-	 * @desc	状態が変わるときの処理
-	 */
-	void onChangeEvent(void)override;
-
-private:
-};
 
 //==========================================
 //

@@ -76,18 +76,6 @@ void CPlayerStateGraps::toAttack(void) {
 	this->m_isNext = true;
 }
 
-/**
- * @desc	装備する状態へ移行
- */
-void CPlayerStateGraps::toEquip(void)
-{
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::EQUIP;
-
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
 /*
  * @desc	手を離す状態へ移行
  */
@@ -146,10 +134,7 @@ void CPlayerGraspIdleState::update(void)
 	//手が離されたら
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-
-		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
-
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+		this->toGrasp();
 
 		return;
 	}
@@ -237,9 +222,7 @@ void CPlayerGraspWalkState::update(void)
 	//手が離されたら
 	if (!pointerInputController->getHolodHandsFlag())
 	{
-		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
-
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+		this->toGrasp();
 
 		return;
 	}
@@ -280,7 +263,7 @@ void CPlayerGraspWalkState::update(void)
 */
 void CPlayerGraspWalkState::onChangeEvent(void)
 {
-	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_STATE::WALK])[0]->stop();
 
 	this->m_isNext = false;
 }
@@ -311,20 +294,12 @@ CPlayerGraspAttackState::~CPlayerGraspAttackState(void) {}
 */
 void CPlayerGraspAttackState::start(void)
 {
-	this->m_pPlayer->setScaleX(-2.0f);
-
 	//現在のアニメーションをリセット
 	(*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->reset();
 
-	//ダメージキャラクター生成データを作成
-	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
-		cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_right, this->m_pPlayer->m_pMove->m_pos.y),
-		1);
-	//ダメージキャラクター生成トリガーを作成
-	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+	//攻撃アクションをスタートさせる
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_STATE::ATTACK])[0]->start();
 
-	//作成したトリガーをスケジューラーに登録
-	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
 }
 
 /**
@@ -350,10 +325,62 @@ void CPlayerGraspAttackState::update(void)
 */
 void CPlayerGraspAttackState::onChangeEvent(void)
 {
-	this->m_pPlayer->setScaleX(2.0f);
-
-
 	//次のステートへ移行することが確定しているので元に戻しておく
 	this->m_isNext = false;
 }
 
+
+
+//==========================================
+//
+// Class: CPlayerGraspReleaseState
+//
+// プレイヤー 手を繋ぐ 手を離す 状態クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerGraspReleaseState::CPlayerGraspReleaseState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerGraspReleaseState::~CPlayerGraspReleaseState(void) {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerGraspReleaseState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->reset();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerGraspReleaseState::update(void)
+{
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->isEnd())
+	{
+		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
+
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
+
+		return;
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerGraspReleaseState::onChangeEvent(void)
+{
+	//次のステートへ移行することが確定しているので元に戻しておく
+	this->m_isNext = false;
+}

@@ -343,12 +343,12 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 
 	//Žè‚ðŒq‚®
 	//­—‚ÆŽè‚ðŒq‚®A‰EŒü‚«‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
-	pAni = new CChipAnimation(10, 5, true);
+	pAni = new CChipAnimation(10, 5, false);
 	pAni->addChipData(new CChip(0, 768, 128, 128));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//­—‚ÆŽè‚ðŒq‚®A¶Œü‚«‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
-	pAni = new CChipAnimation(10, 5, true);
+	pAni = new CChipAnimation(10, 5, false);
 	pAni->addChipData(new CChip(0, 768, 128, 128));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
@@ -398,6 +398,32 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	pAni = new CChipAnimation(10, 2, false);
 	pAni->addChipData(new CChip(0, 512, 128, 128));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+	//================================================
+	// ‚¨•P—l•ø‚Á‚±‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“Ý’è
+	//================================================
+	//ŠÖŒW‚È‚µ
+	//­—‚ÆŠÖŒW‚È‚µA‰EŒü‚«‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(256, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//­—‚ÆŠÖŒW‚È‚µA¶Œü‚«‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//‚¨•P—l•ø‚Á‚±
+	//­—‚ÆŽè‚ðŒq‚®A‰EŒü‚«‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(256, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//­—‚ÆŽè‚ðŒq‚®A¶Œü‚«‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ðÝ’è
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 	
 }
@@ -532,17 +558,12 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 //------------------------------------------------------------------------------------------
 
-	//‘•”õ‚ÉŠÖ‚·‚éó‘Ô‚ðì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
-	pStateMachine->registerState((int)PLAYER_STATE::EQUIP, new CPlayerEquipState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//‰EŒü‚«Žè‚ðŒq‚®ó‘Ô‚ðì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	//Žè‚ðŒq‚®ó‘Ô‚ðì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachine->registerState((int)PLAYER_STATE::GRASP, new CPlayerGraspState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//‰EŒü‚«Žè‚ðŒq‚®ó‘Ô‚ðì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	//‚¨•P—l•ø‚Á‚±ó‘Ô‚ðì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachine->registerState((int)PLAYER_STATE::HOLD, new CPlayerHoldState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
@@ -577,6 +598,12 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 //------------------------------------------------------------------------------------------
 
+	//Žè‚ð—£‚·ó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pStateMachineGrips->registerState((int)PLAYER_STATE::GRASP, new CPlayerGraspReleaseState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
 	//ƒvƒŒƒCƒ„[‚Éì¬‚µ‚½ƒXƒe[ƒgƒ}ƒV[ƒ“‚ðŽæ‚è•t‚¯‚é
 	(*pChara->m_pStateMachines)[(int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS] = pStateMachineGrips;
 
@@ -587,27 +614,33 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	CStateMachine* pStateMachineHold = new CStateMachine();
 
 
-	//‰EŒü‚«‚¨•P—l•ø‚Á‚±‚Å‘Ò‹@‚·‚éó‘Ô
+	//‘Ò‹@ó‘Ô
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachineHold->registerState((int)PLAYER_STATE::IDLE, new CPlayerHoldIdleState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//‰EŒü‚«‚¨•P—l•ø‚Á‚±‚Å•às‚·‚éó‘Ô
+	//•àsó‘Ô
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachineHold->registerState((int)PLAYER_STATE::WALK, new CPlayerHoldWalkState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//‰EŒü‚«‚¨•P—l•ø‚Á‚±‚ÅƒWƒƒƒ“ƒv‚·‚éó‘Ô
+	//ƒWƒƒƒ“ƒvó‘Ô
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachineHold->registerState((int)PLAYER_STATE::JUMP, new CPlayerHoldJumpState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//‰EŒü‚«‚¨•P—l•ø‚Á‚±‚Å—Ž‰º‚·‚éó‘Ô
+	//—Ž‰ºó‘Ô
 	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
 	pStateMachineHold->registerState((int)PLAYER_STATE::FALL, new CPlayerHoldFallState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//‚¨•P—l•ø‚Á‚±‚ð‚â‚ß‚éó‘Ô
+	//ì¬‚µ‚½ó‘Ô‚ð“o˜^‚µ‚Ä‚¢‚­
+	pStateMachineHold->registerState((int)PLAYER_STATE::HOLD, new CPlayerHoldReleaseState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 

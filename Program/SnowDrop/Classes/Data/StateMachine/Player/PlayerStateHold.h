@@ -240,3 +240,45 @@ private:
 	//ジャンプ中のX軸速度
 	float m_velX;
 };
+
+//==========================================
+//
+// Class: CPlayerHoldReleaseState
+//
+// プレイヤー お姫様抱っこ 下ろす 状態クラス
+//
+// 2017/ 1/ 5
+//						Author Harada
+//==========================================
+class CPlayerHoldReleaseState :public CPlayerStateHold
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerHoldReleaseState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerHoldReleaseState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+private:
+	//ジャンプ中のX軸速度
+	float m_velX;
+};

@@ -114,19 +114,6 @@ void CPlayerState::toJumpAttack(void) {
 }
 
 
-/**
- * @desc	装備する状態へ移行
- */
-void CPlayerState::toEquip(void)
-{
-	this->m_pPlayer->m_state			= (int)PLAYER_STATE::EQUIP;
-	
-	this->m_nextRegisterKey				= this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
-
 /*
  * @desc	手を掴む状態へ移行
  */
@@ -395,6 +382,8 @@ void CPlayerWalkState::update(void)
  */
 void CPlayerWalkState::onChangeEvent(void)
 {
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_STATE::WALK])[0]->stop();
+
 	this->m_isNext = false;
 }
 
@@ -701,57 +690,9 @@ void CPlayerJumpAttackState::update(void)
  */
 void CPlayerJumpAttackState::onChangeEvent(void)
 {
-	this->m_pPlayer->setScaleX(2.0f);
+	
 
 	//次のステートへ移行することが確定しているので元に戻しておく
-	this->m_isNext = false;
-}
-
-
-//==========================================
-//
-// Class: CPlayerEquipState
-//
-// プレイヤー 装備する 状態クラス
-//
-// 2016/12/25
-//						Author Shinya Ueba
-//==========================================
-/**
- * @desc	コンストラクタ
- */
-CPlayerEquipState::CPlayerEquipState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerState::CPlayerState(pPlayer, pGirl){}
-
-/**
- * @desc	デストラクタ
- */
-CPlayerEquipState::~CPlayerEquipState(void){}
-
-/**
- * @desc	開始処理
- */
-void CPlayerEquipState::start(void)
-{
-	//現在のアニメーションをリセット
-	(*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->reset();
-}
-
-/**
- * @desc	更新処理
- */
-void CPlayerEquipState::update(void)
-{
-	//優先順で処理していく
-
-	
-}
-
-/**
- * @desc	状態が変わるときの処理
- */
-void CPlayerEquipState::onChangeEvent(void)
-{
 	this->m_isNext = false;
 }
 
