@@ -154,6 +154,18 @@
     <Filter Include="src\Scene\GameMain2">
       <UniqueIdentifier>{5df24d3f-8510-4685-b8b0-72f2c108aa14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Model\Character\EnemyCharacter\MouseKing">
+      <UniqueIdentifier>{07ebba70-67df-413f-998d-a40cdf48886c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Character\EnemyCharacter\Mouse">
+      <UniqueIdentifier>{f8092a3a-4a73-422f-9f6e-d00182c0c759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\MouseKing">
+      <UniqueIdentifier>{731e210b-e6fc-4654-8877-fde025dbc830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\Mouse">
+      <UniqueIdentifier>{a33b4731-687c-428b-9a7a-7654a8c9b84a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -335,6 +347,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Scene\GameMain2\GameMain2.cpp">
       <Filter>src\Scene\GameMain2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\MouseKing\MouseKingCharacter.cpp">
+      <Filter>src\Model\Character\EnemyCharacter\MouseKing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\Mouse\MouseCharacter.cpp">
+      <Filter>src\Model\Character\EnemyCharacter\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\MouseKing\MouseKingState.cpp">
+      <Filter>src\Data\StateMachine\Enemy\MouseKing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Mouse\MouseState.cpp">
+      <Filter>src\Data\StateMachine\Enemy\Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -532,6 +556,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene\GameMain2\GameMain2.h">
       <Filter>src\Scene\GameMain2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\MouseKing\MouseKingCharacter.h">
+      <Filter>src\Model\Character\EnemyCharacter\MouseKing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\Mouse\MouseCharacter.h">
+      <Filter>src\Model\Character\EnemyCharacter\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\MouseKing\MouseKingState.h">
+      <Filter>src\Data\StateMachine\Enemy\MouseKing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Mouse\MouseState.h">
+      <Filter>src\Data\StateMachine\Enemy\Mouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
