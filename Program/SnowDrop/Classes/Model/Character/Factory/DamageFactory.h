@@ -191,6 +191,40 @@ public:
 
 };
 
+//================================================
+// ナイフダメージ工場
+//================================================
+class CFallKnifeDamageFactory :public CDamageCreateFactory {
+public:
+	//デストラクタ
+	virtual ~CFallKnifeDamageFactory() {}
+
+	//移動データの設定
+	void settingMove(CDamageCharacter* pChara, cocos2d::Point pos)override;
+	//画像の設定
+	void settingTexture(CDamageCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CDamageCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CDamageCharacter* pChara)override;
+	//アクション群データの設定
+	void settingActions(CDamageCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CDamageCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CDamageCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CDamageCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CDamageCharacter* pChara, CCharacter* pAttackChara, int activeFrame)override;
+
+};
+
+
 
 //================================================
 // ダメージ工場群を管理するクラス
@@ -206,6 +240,9 @@ private:
 
 		//煙攻撃生成工場を生成し [key : SMOKE] に取り付ける
 		this->m_factories[DAMAGE_TYPE::SMOKE] = new CSmokeDamageFactory();
+
+		//ナイフ攻撃生成工場を生成し [key : FALL_KNIFE] に取り付ける
+		this->m_factories[DAMAGE_TYPE::FALL_KNIFE] = new CFallKnifeDamageFactory();
 	}
 
 	//共有のインスタンス

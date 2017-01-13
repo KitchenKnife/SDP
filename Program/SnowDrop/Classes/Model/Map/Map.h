@@ -47,6 +47,7 @@ enum class ENEMY_TYPE :int {
 	NUTCRACKER = 106,
 	BARON = 107,
 	MOUSEKING = 108,
+	MARIONETTE = 1000,//マリオネット
 };
 
 //ギミックの種類

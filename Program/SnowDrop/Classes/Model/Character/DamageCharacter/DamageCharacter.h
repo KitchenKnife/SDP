@@ -19,6 +19,7 @@
 enum class DAMAGE_TYPE :int {
 	NONE = 0,	//‰½‚à‚È‚¢
 	SMOKE = 1,	//‰Œ
+	FALL_KNIFE = 2,	//
 };
 
 
