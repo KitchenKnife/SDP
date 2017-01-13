@@ -12,6 +12,7 @@
 #include "Model/Character/PlayerCharacter/PlayerCharacter.h"
 #include "Model\Character\Factory\CharacterFactory.h"
 
+
 //================================================
 // 少年キャラクターパーツ製造工場
 //	（AbstractFactory）
@@ -26,6 +27,9 @@ public:
 
 	//アニメーション群データの生成と取得
 	virtual std::vector<CAnimation*>* getAnimations()override;
+	//マップ形式のアニメーション群データの生成と取得
+	virtual std::map<int,CAnimation*>* getMapAnimations();
+
 	//移動データの生成と取得
 	virtual CMove* getMove()override;
 	//物理演算群データの生成と取得

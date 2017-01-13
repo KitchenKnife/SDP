@@ -42,170 +42,70 @@ CPlayerStateGraps::~CPlayerStateGraps(void) {}
 
 
 /**
-* @desc	右向き待機状態へ移行
-*/
-void CPlayerStateGraps::toIdleRight(void)
+ * @desc	待機状態へ移行
+ */
+void CPlayerStateGraps::toIdle(void)
 {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::IDLE_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
-	this->m_pPlayer->m_actionState = 0;
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::IDLE;
+
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
 
 /**
-* @desc	左向き待機状態へ移行
-*/
-void CPlayerStateGraps::toIdleLeft(void)
+ * @desc	歩行状態へ移行
+ */
+void CPlayerStateGraps::toWalk(void)
 {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::IDLE_LEFT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_LEFT;
-	this->m_pPlayer->m_actionState = 0;
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::WALK;
+	
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
 
 /**
-* @desc	右向き歩行状態へ移行
-*/
-void CPlayerStateGraps::toWalkRight(void)
-{
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::WALK_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_RIGHT;
-	this->m_pPlayer->m_actionState = 0;
+ * @desc	攻撃状態へ移行
+ */
+void CPlayerStateGraps::toAttack(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK;
+	
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
 
 /**
-* @desc	左向き歩行状態へ移行
-*/
-void CPlayerStateGraps::toWalkLeft(void)
+ * @desc	装備する状態へ移行
+ */
+void CPlayerStateGraps::toEquip(void)
 {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::WALK_LEFT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::WALK_LEFT;
-	this->m_pPlayer->m_actionState = 0;
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::EQUIP;
 
-/**
-* @desc	右向き攻撃状態へ移行
-*/
-void CPlayerStateGraps::toAttackRight(void) {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_RIGHT;
-	this->m_pPlayer->m_actionState = 0;
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
-/**
-* @desc	左向き攻撃状態へ移行
-*/
-void CPlayerStateGraps::toAttackLeft(void) {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::ATTACK_LEFT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_LEFT;
-	this->m_pPlayer->m_actionState = 0;
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
-/**
-* @desc	右向き　装備する状態へ移行
-*/
-void CPlayerStateGraps::toEquipRight(void)
-{
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::EQUIP_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::EQUIP_RIGHT;
-	this->m_pPlayer->m_actionState = 0;
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
-/**
-* @desc	左向き　装備する状態へ移行
-*/
-void CPlayerStateGraps::toEquipLeft(void)
-{
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::EQUIP_LEFT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::EQUIP_LEFT;
-	this->m_pPlayer->m_actionState = 0;
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
-
-/*
-* @desc	右向き　装備解除状態へ移行
-*/
-void CPlayerStateGraps::toUnEquipRight(void)
-{
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::UN_EQUIP_RIGHT;
-	this->m_pPlayer->m_actionState = 0;
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
 
 /*
-* @desc	左向き　装備解除状態へ移行
-*/
-void CPlayerStateGraps::toUnEquipLeft(void)
+ * @desc	手を離す状態へ移行
+ */
+void CPlayerStateGraps::toGrasp(void)
 {
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::UN_EQUIP_LEFT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::UN_EQUIP_LEFT;
-	this->m_pPlayer->m_actionState = 0;
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::GRASP;
+	
 	this->m_nextRegisterKey = this->m_pPlayer->m_state;
 	//待機動作を終了
 	this->m_isNext = true;
 }
 
-
-/*
-* @desc	右向き手を掴む状態へ移行
-*/
-void CPlayerStateGraps::toGraspRight(void)
-{
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::GRASP_RIGHT;
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::GRASP_RIGHT;
-	this->m_pPlayer->m_actionState = 0;
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
-
-/*
-* @desc	左向き手を掴む状態へ移行
-*/
-void CPlayerStateGraps::toGraspLeft(void)
-{
-	//次の総合的なプレイヤーの状態
-	this->m_pPlayer->m_state = (int)PLAYER_STATE::GRASP_LEFT;
-	//現在のプレイヤーのアニメーション状態
-	this->m_pPlayer->m_animationState = (int)PLAYER_ANIMATION_STATE::GRASP_LEFT;
-	//現在のプレイヤーのアクション状態
-	this->m_pPlayer->m_actionState = 0;
-	//次の総合的なプレイヤーの状態を次に行くステートとして指定
-	this->m_nextRegisterKey = this->m_pPlayer->m_state;
-	//待機動作を終了
-	this->m_isNext = true;
-}
 
 //==========================================
 //
-// Class: CPlayerGraspIdleRightState
+// Class: CPlayerGraspIdleState
 //
-// プレイヤー 右向き　手を繋ぐ 待機 状態 クラス
+// プレイヤー 手を繋ぐ 待機 状態クラス
 //
 // 2016/12/28
 //						Author Shinya Ueba
@@ -213,18 +113,18 @@ void CPlayerStateGraps::toGraspLeft(void)
 /**
 * @desc	コンストラクタ
 */
-CPlayerGraspIdleRightState::CPlayerGraspIdleRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+CPlayerGraspIdleState::CPlayerGraspIdleState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
 	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
 
 /**
 * @desc	デストラクタ
 */
-CPlayerGraspIdleRightState::~CPlayerGraspIdleRightState(void) {}
+CPlayerGraspIdleState::~CPlayerGraspIdleState(void) {}
 
 /**
 * @desc	開始処理
 */
-void CPlayerGraspIdleRightState::start(void)
+void CPlayerGraspIdleState::start(void)
 {
 
 }
@@ -232,7 +132,7 @@ void CPlayerGraspIdleRightState::start(void)
 /**
 * @desc	更新処理
 */
-void CPlayerGraspIdleRightState::update(void)
+void CPlayerGraspIdleState::update(void)
 {
 	//優先順で処理していく
 
@@ -249,7 +149,7 @@ void CPlayerGraspIdleRightState::update(void)
 
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
 
 		return;
 	}
@@ -257,100 +157,37 @@ void CPlayerGraspIdleRightState::update(void)
 	//右向き攻撃状態へ移行
 	if (pointerInputController->getAttackFlag()) {
 		//右向き攻撃状態へ移行
-		this->toAttackRight();
+		this->toAttack();
 		return;
 	}
 
-	//右へ移動（歩行）
-	if (pointerInputController->getRightMoveFlag())
-	{
-		//右向き歩行状態へ移行
-		this->toWalkRight();
-		return;
+	if (this->m_pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
+		//右へ移動（歩行）
+		if (pointerInputController->getRightMoveFlag())
+		{
+			//右向き歩行状態へ移行
+			this->toWalk();
+			return;
+		}
 	}
+
+	if (this->m_pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
+		//左へ移動（歩行）
+		if (pointerInputController->getLeftMoveFlag())
+		{
+			//歩行状態へ移行
+			this->toWalk();
+			return;
+		}
+	}
+
+	
 }
 
 /**
 * @desc	状態が変わるときの処理
 */
-void CPlayerGraspIdleRightState::onChangeEvent(void)
-{
-	this->m_isNext = false;
-}
-
-//==========================================
-//
-// Class: CPlayerGraspIdleLeftState
-//
-//	プレイヤー 左向き　手を繋ぐ 待機 状態 クラス
-//
-// 2016/12/28
-//						Author Shinya Ueba
-//==========================================
-/**
-* @desc	コンストラクタ
-*/
-CPlayerGraspIdleLeftState::CPlayerGraspIdleLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
-
-/**
-* @desc	デストラクタ
-*/
-CPlayerGraspIdleLeftState::~CPlayerGraspIdleLeftState(void) {}
-
-/**
-* @desc	開始処理
-*/
-void CPlayerGraspIdleLeftState::start(void)
-{
-
-}
-
-/**
-* @desc	更新処理
-*/
-void CPlayerGraspIdleLeftState::update(void)
-{
-	//優先順で処理していく
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
-	//プレイヤーを取得
-	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
-
-	//手が離されたら
-	if (!pointerInputController->getHolodHandsFlag())
-	{
-		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
-
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);
-
-		return;
-	}
-
-	//左向き攻撃状態へ移行
-	if (pointerInputController->getAttackFlag()) {
-		//左向き攻撃状態へ移行
-		this->toAttackLeft();
-		return;
-	}
-
-	//左へ移動（歩行）
-	if (pointerInputController->getLeftMoveFlag())
-	{
-		//左向き歩行状態へ移行
-		this->toWalkLeft();
-		return;
-	}
-
-
-
-}
-
-/**
-* @desc	状態が変わるときの処理
-*/
-void CPlayerGraspIdleLeftState::onChangeEvent(void)
+void CPlayerGraspIdleState::onChangeEvent(void)
 {
 	this->m_isNext = false;
 }
@@ -358,9 +195,9 @@ void CPlayerGraspIdleLeftState::onChangeEvent(void)
 
 //==========================================
 //
-// Class: CPlayerGraspWalkRightState
+// Class: CPlayerGraspWalkState
 //
-// プレイヤー 右向き 手を繋ぐ　歩行 状態 クラス
+// プレイヤー 手を繋ぐ 歩行 状態クラス
 //
 // 2016/12/25
 //						Author Shinya Ueba
@@ -368,18 +205,18 @@ void CPlayerGraspIdleLeftState::onChangeEvent(void)
 /**
 * @desc	コンストラクタ
 */
-CPlayerGraspWalkRightState::CPlayerGraspWalkRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+CPlayerGraspWalkState::CPlayerGraspWalkState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
 	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
 
 /**
 * @desc	デストラクタ
 */
-CPlayerGraspWalkRightState::~CPlayerGraspWalkRightState(void) {}
+CPlayerGraspWalkState::~CPlayerGraspWalkState(void) {}
 
 /**
 * @desc	開始処理
 */
-void CPlayerGraspWalkRightState::start(void)
+void CPlayerGraspWalkState::start(void)
 {
 
 }
@@ -387,7 +224,7 @@ void CPlayerGraspWalkRightState::start(void)
 /**
 * @desc	更新処理
 */
-void CPlayerGraspWalkRightState::update(void)
+void CPlayerGraspWalkState::update(void)
 {
 	//優先順で処理していく
 
@@ -402,7 +239,7 @@ void CPlayerGraspWalkRightState::update(void)
 	{
 		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_RIGHT);
+		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE);
 
 		return;
 	}
@@ -410,108 +247,38 @@ void CPlayerGraspWalkRightState::update(void)
 	//右向き攻撃状態へ移行
 	if (pointerInputController->getAttackFlag()) {
 		//右向き攻撃状態へ移行
-		this->toAttackRight();
+		this->toAttack();
 		return;
 	}
 
-	//右へ移動（歩行）
-	if (pointerInputController->getRightMoveFlag())
-	{
-		//右向きに歩行する
-		this->m_pPlayer->m_pMove->m_accele.x = 0.5f;
-		return;
+	if (this->m_pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
+		//右へ移動（歩行）
+		if (pointerInputController->getRightMoveFlag())
+		{
+			//右向き歩行状態へ移行
+			this->toWalk();
+			return;
+		}
 	}
 
-	//右向き待機状態へ移行
-	this->toIdleRight();
+	if (this->m_pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
+		//左へ移動（歩行）
+		if (pointerInputController->getLeftMoveFlag())
+		{
+			//歩行状態へ移行
+			this->toWalk();
+			return;
+		}
+	}
+
+	//待機状態へ移行
+	this->toIdle();
 }
 
 /**
 * @desk	状態が変わるときの処理
 */
-void CPlayerGraspWalkRightState::onChangeEvent(void)
-{
-	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
-
-	this->m_isNext = false;
-}
-
-
-
-//==========================================
-//
-// Class: CPlayerGraspWalkLeftState
-//
-// プレイヤー 左向き　歩行 状態 クラス
-//
-// 2016/12/25
-//						Author Shinya Ueba
-//==========================================
-/**
-* @desc	コンストラクタ
-*/
-CPlayerGraspWalkLeftState::CPlayerGraspWalkLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
-
-/**
-* @desc	デストラクタ
-*/
-CPlayerGraspWalkLeftState::~CPlayerGraspWalkLeftState(void) {}
-
-/**
-* @desc	開始処理
-*/
-void CPlayerGraspWalkLeftState::start(void)
-{
-
-}
-
-/**
-* @desc	更新処理
-*/
-void CPlayerGraspWalkLeftState::update(void)
-{
-	//優先順で処理していく
-
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
-	//プレイヤーを取得
-	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
-
-	//手が離されたら
-	if (!pointerInputController->getHolodHandsFlag())
-	{
-		this->m_pPlayer->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
-
-		(*this->m_pPlayer->m_pStateMachines)[this->m_pPlayer->m_playerAndGirlState]->setStartState((int)PLAYER_STATE::IDLE_LEFT);
-
-		return;
-	}
-
-	//左向き攻撃状態へ移行
-	if (pointerInputController->getAttackFlag()) {
-		//左向き攻撃状態へ移行
-		this->toAttackLeft();
-		return;
-	}
-
-	//左へ移動（歩行）
-	if (pointerInputController->getLeftMoveFlag())
-	{
-		//左向きに歩行する
-		this->m_pPlayer->m_pMove->m_accele.x = -0.5f;
-		return;
-	}
-
-	//右向き待機状態へ移行
-	this->toIdleLeft();
-}
-
-/**
-* @desc	状態が変わるときの処理
-*/
-void CPlayerGraspWalkLeftState::onChangeEvent(void)
+void CPlayerGraspWalkState::onChangeEvent(void)
 {
 	this->m_pPlayer->m_pMove->m_accele.x = 0.0f;
 
@@ -521,9 +288,9 @@ void CPlayerGraspWalkLeftState::onChangeEvent(void)
 
 //==========================================
 //
-// Class: CPlayerGrapsAttackRightState
+// Class: CPlayerGraspAttackState
 //
-// プレイヤー 右向き　攻撃 状態 クラス
+// プレイヤー 手を繋ぐ 攻撃 状態クラス
 //
 // 2016/12/25
 //						Author Harada
@@ -531,23 +298,23 @@ void CPlayerGraspWalkLeftState::onChangeEvent(void)
 /**
 * @desc	コンストラクタ
 */
-CPlayerGrapsAttackRightState::CPlayerGrapsAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+CPlayerGraspAttackState::CPlayerGraspAttackState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
 	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
 
 /**
 * @desc	デストラクタ
 */
-CPlayerGrapsAttackRightState::~CPlayerGrapsAttackRightState(void) {}
+CPlayerGraspAttackState::~CPlayerGraspAttackState(void) {}
 
 /**
 * @desc	開始処理
 */
-void CPlayerGrapsAttackRightState::start(void)
+void CPlayerGraspAttackState::start(void)
 {
 	this->m_pPlayer->setScaleX(-2.0f);
 
 	//現在のアニメーションをリセット
-	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
+	(*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->reset();
 
 	//ダメージキャラクター生成データを作成
 	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
@@ -563,17 +330,17 @@ void CPlayerGrapsAttackRightState::start(void)
 /**
 * @desc	更新処理
 */
-void CPlayerGrapsAttackRightState::update(void)
+void CPlayerGraspAttackState::update(void)
 {
 	//優先順で処理していく
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 	//アニメーションが終了したかどうかのフラグ
-	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
+	if ((*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->isEnd())
 	{
 		//右向き待機状態へ戻す
-		this->toIdleRight();
+		this->toIdle();
 		return;
 	}
 }
@@ -581,77 +348,11 @@ void CPlayerGrapsAttackRightState::update(void)
 /**
 * @desc	状態が変わるときの処理
 */
-void CPlayerGrapsAttackRightState::onChangeEvent(void)
+void CPlayerGraspAttackState::onChangeEvent(void)
 {
 	this->m_pPlayer->setScaleX(2.0f);
 
 
-	//次のステートへ移行することが確定しているので元に戻しておく
-	this->m_isNext = false;
-}
-
-//==========================================
-//
-// Class: CPlayerAttackLeftState
-//
-// プレイヤー 左向き　攻撃 状態 クラス
-//
-// 2016/12/25
-//						Author Harada
-//==========================================
-/**
-* @desc	コンストラクタ
-*/
-CPlayerGrapsAttackLeftState::CPlayerGrapsAttackLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
-	:CPlayerStateGraps::CPlayerStateGraps(pPlayer, pGirl) {}
-
-/**
-* @desc	デストラクタ
-*/
-CPlayerGrapsAttackLeftState::~CPlayerGrapsAttackLeftState() {}
-
-/**
-* @desc	開始処理
-*/
-void CPlayerGrapsAttackLeftState::start(void)
-{
-	//現在のアニメーションをリセット
-	(*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->reset();
-
-	//ダメージキャラクター生成データを作成
-	CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pPlayer,
-		cocos2d::Point(this->m_pPlayer->m_pMove->m_pos.x + this->m_pPlayer->m_pBody->m_left, this->m_pPlayer->m_pMove->m_pos.y),
-		1);
-	//ダメージキャラクター生成トリガーを作成
-	CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
-
-	//作成したトリガーをスケジューラーに登録
-	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
-}
-
-/**
-* @desc	更新処理
-*/
-void CPlayerGrapsAttackLeftState::update(void)
-{
-	//優先順で処理していく
-	//入力コントローラーの取得
-	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
-
-	//アニメーションが終了したかどうかのフラグ
-	if ((*this->m_pPlayer->m_pAnimations)[this->m_pPlayer->m_animationState]->isEnd())
-	{
-		//右向き待機状態へ戻す
-		this->toIdleLeft();
-		return;
-	}
-}
-
-/**
-* @desc	状態が変わるときの処理
-*/
-void CPlayerGrapsAttackLeftState::onChangeEvent(void)
-{
 	//次のステートへ移行することが確定しているので元に戻しておく
 	this->m_isNext = false;
 }

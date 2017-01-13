@@ -521,11 +521,11 @@ void CGirlGraspIdleRightState::update(void)
 		return;
 	}
 
-	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT)
 	{
 		this->toGraspWalkRight();
 	}
-	else if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_LEFT)
+	else if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT)
 	{
 		this->toGraspWalkLeft();
 	}
@@ -586,11 +586,11 @@ void CGirlGraspIdleLeftState::update(void)
 		return;
 	}
 
-	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK &&pPlayer->m_playerDirectionState ==(int)PLATYER_DIRECTION_STATE::RIGHT)
 	{
 		this->toGraspWalkRight();
 	}
-	else if  (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK_LEFT)
+	else if  (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::WALK && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT)
 	{
 		this->toGraspWalkLeft();
 	}
@@ -651,7 +651,7 @@ void CGirlGraspWalkRightState::update(void)
 		return;
 	}
 
-	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::IDLE_RIGHT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::IDLE && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT)
 	{
 		this->toGraspIdleRight();
 		return;
@@ -712,7 +712,7 @@ void CGirlGraspWalkLeftState::update(void)
 		return;
 	}
 
-	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::IDLE_LEFT)
+	if (pPlayer->m_playerAndGirlState == (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS && pPlayer->m_state == (int)PLAYER_STATE::IDLE && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT)
 	{
 		this->toGraspIdleLeft();
 		return;
@@ -772,7 +772,7 @@ void CGirlHoldIdleRightState::update(void)
 		//フリーの右向きの待機状態へ移行
 		this->toIdleRight();
 	}
-	if (pPlayer->m_state == (int)PLAYER_STATE::WALK_LEFT) {
+	if (pPlayer->m_state == (int)PLAYER_STATE::WALK && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
 		//左向きへ移行
 		this->toHoldLeft();
 	}
@@ -830,7 +830,7 @@ void CGirlHoldIdleLeftState::update(void)
 		//左向き待機状態へ移行
 		this->toIdleLeft();
 	}
-	if (pPlayer->m_state == (int)PLAYER_STATE::WALK_RIGHT) {
+	if (pPlayer->m_state == (int)PLAYER_STATE::WALK && pPlayer->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
 		//左向きへ移行
 		this->toHoldRight();
 	}

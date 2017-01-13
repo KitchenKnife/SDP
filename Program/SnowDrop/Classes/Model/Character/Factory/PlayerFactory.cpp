@@ -27,6 +27,11 @@ std::vector<CAnimation* >* CPlayerBoyPartsFactory::getAnimations() {
 	return new std::vector<CAnimation*>();
 }
 
+//マップ形式のアニメーション群データの生成と取得
+std::map<int,CAnimation*>*  CPlayerBoyPartsFactory::getMapAnimations() {
+	return new std::map<int,CAnimation*>();
+}
+
 //移動データの生成と取得
 CMove* CPlayerBoyPartsFactory::getMove() {
 	//移動データの作成
@@ -128,8 +133,10 @@ CPlayerCharacterBoy* CPlayerBoyCreateFactory::createPlayer() {
 	//移動の取得
 	pPlayerBoy->m_pMove = factory.getMove();
 
-	//アニメーション群の取得
 	pPlayerBoy->m_pAnimations = factory.getAnimations();
+
+	//マップ形式のアニメーション群の取得
+	pPlayerBoy->m_pMapAnimations = factory.getMapAnimations();
 	
 	//物理演算群の取得
 	pPlayerBoy->m_pPhysicals = factory.getPhysicals();
@@ -169,122 +176,230 @@ void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 }
 
 void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
+	//================================================
+	// 待機のアニメーション設定
+	//================================================
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	CAnimation* pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//開始時のアニメーションの状態
-	pChara->m_animationState = (int)PLAYER_ANIMATION_STATE::IDLE_RIGHT;
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//手を繋ぐ
+	//少女と手を繋ぐ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女と手を繋ぐ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//お姫様抱っこ
+	//少女とお姫様抱っこ、納刀、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女とお姫様抱っこ、納刀、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 	//================================================
-	// 待機・歩行のアニメーション設定
+	// 歩行のアニメーション設定
 	//================================================
-	//右待機 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_RIGHT]->addChipData(new CChip(512, 384, 128, 128));
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 7, true);
+	pAni->addChipData(new CChip(0, 128, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//左待機 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::IDLE_LEFT]->addChipData(new CChip(0, 384, 128, 128));
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 7, true);
+	pAni->addChipData(new CChip(0, 256, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
-	//右歩行 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_RIGHT]->addChipData(new CChip(0, 128, 128, 128));
 
-	//左歩行 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 7, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::WALK_LEFT]->addChipData(new CChip(0, 256, 128, 128));
+	//手を繋ぐ
+	//少女と手を繋ぐ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 7, true);
+	pAni->addChipData(new CChip(0, 128, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//右ジャンプ のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_RIGHT]->addChipData(new CChip(0, 384, 128, 128));
+	//少女と手を繋ぐ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 7, true);
+	pAni->addChipData(new CChip(0, 256, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
-	//左ジャンプ のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_LEFT]->addChipData(new CChip(512, 384, 128, 128));
 
-	//右落下 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, true));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_RIGHT]->addChipData(new CChip(0, 384, 128, 128));
+	//お姫様抱っこ
+	//少女とお姫様抱っこ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 7, true);
+	pAni->addChipData(new CChip(0, 128, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//左落下 のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, true, 4));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FALL_LEFT]->addChipData(new CChip(512, 384, 128, 128));
+	//少女とお姫様抱っこ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 7, true);
+	pAni->addChipData(new CChip(0, 256, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//================================================
+	// ジャンプのアニメーション設定
+	//================================================
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//手を繋ぐ
+	//ここはジャンプが不可なので設定しない
+
+	//お姫様抱っこ
+	//少女とお姫様抱っこ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女とお姫様抱っこ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));;
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//================================================
+	// 落下のアニメーション設定
+	//================================================
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//手を繋ぐ
+	//少女と手を繋ぐ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女と手を繋ぐ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//お姫様抱っこ
+	//少女とお姫様抱っこ、納刀、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, true, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女とお姫様抱っこ、納刀、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, true);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
 
 	//================================================
 	// 攻撃のアニメーション設定
 	//================================================
-	//右攻撃（１撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
+	//関係なし
+	//少女と関係なし、抜刀、右向きのアニメーションを設定
+	pAni = new CPlayerAttackAnimation(10, 5, false);
+	pAni->addChipData(new CChip(0, 640, 128, 128));	//１撃目
+	pAni->addChipData(new CChip(0, 768, 128, 128));	//２撃目
+	pAni->addChipData(new CChip(0, 896, 128, 128));	//３撃目
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//右攻撃（２撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_RIGHT]->addChipData(new CChip(0, 768, 128, 128));
+	//少女と関係なし、抜刀、左向きのアニメーションを設定
+	pAni = new CPlayerAttackAnimation(10, 5, false);
+	pAni->addChipData(new CChip(0, 640, 128, 128));	//１撃目
+	pAni->addChipData(new CChip(0, 768, 128, 128));	//２撃目
+	pAni->addChipData(new CChip(0, 896, 128, 128));	//３撃目
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
-	//右攻撃（３撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_RIGHT]->addChipData(new CChip(0, 896, 128, 128));
 
-	//左攻撃（１撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::FIRST_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
+	//手を繋ぐ
+	//少女と手を繋ぐ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 5, true);
+	pAni->addChipData(new CChip(0, 768, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//左攻撃（２撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::SECOND_ATTACK_LEFT]->addChipData(new CChip(0, 768, 128, 128));
+	//少女と手を繋ぐ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 5, true);
+	pAni->addChipData(new CChip(0, 768, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
-	//左攻撃（３撃目）のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::THURD_ATTACK_LEFT]->addChipData(new CChip(0, 896, 128, 128));
+	//お姫様抱っこ
+	//攻撃不可
 
-	//右ジャンプ攻撃のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(5, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_ATTACK_RIGHT]->addChipData(new CChip(0, 640, 128, 128));
-
-	//左ジャンプ攻撃のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(5, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::JUMP_ATTACK_LEFT]->addChipData(new CChip(0, 640, 128, 128));
 
 	//================================================
-	// その他のアニメーション設定
+	// ジャンプ攻撃のアニメーション設定
 	//================================================
-	//右向き装備する のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_RIGHT]->addChipData(new CChip(384, 0, 128, 128));
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	pAni = new CChipAnimation(5, 5, false);
+	pAni->addChipData(new CChip(0, 768, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//左向き装備する のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 8, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::EQUIP_LEFT]->addChipData(new CChip(384, 0, 128, 128));
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(5, 5, false);
+	pAni->addChipData(new CChip(0, 768, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
-	//右向き装備を外す のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_RIGHT]->addChipData(new CChip(0, 0, 128, 128));
 
-	//左向き装備を外す のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 3, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::UN_EQUIP_LEFT]->addChipData(new CChip(0, 0, 128, 128));
 	
-	//手を掴む右向き のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false,2));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_RIGHT]->addChipData(new CChip(256, 512, 128, 128));
 
-	//手を掴む左向き のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 2, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRASP_LEFT]->addChipData(new CChip(0, 512, 128, 128));
+	//================================================
+	// 手を握るアニメーション設定
+	//================================================
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(256, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//手を掴んだ状態での右攻撃のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_RIGHT]->addChipData(new CChip(0, 896, 128, 128));
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
-	//手を掴んだ状態での左攻撃のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::GRAPS_ATTACK_LEFT]->addChipData(new CChip(0, 896, 128, 128));
 
-	//右向きお姫様抱っこ状態のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::HOLD_RIGHT]->addChipData(new CChip(256, 512, 128, 128));
+	//手を握る
+	//少女と手を繋ぐ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(256, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
-	//左向きお姫様抱っこ状態のアニメーションを設定
-	pChara->m_pAnimations->push_back(new CChipAnimation(10, 5, false));
-	(*pChara->m_pAnimations)[(int)PLAYER_ANIMATION_STATE::HOLD_LEFT]->addChipData(new CChip(0, 512, 128, 128));
+	//少女と手を繋ぐ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 512, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+	
 }
 
 void CBasePlayerBoyFactory::settingPhysicals(CPlayerCharacterBoy* pChara){
@@ -302,7 +417,21 @@ void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 	//待機中に行うアクションを生成して取りける
 	pActionIdle->push_back(new CActionIdle());
 	//待機アクションをマップ配列に取り付ける
-	pChara->m_mapAction[(int)PLAYER_ACTION_STATE::IDLE] = pActionIdle;
+	pChara->m_mapAction[(int)PLAYER_STATE::IDLE] = pActionIdle;
+
+	//歩行中のアクション群の実体を生成
+	std::vector<CAction*>* pActionWalk = new std::vector<CAction*>();
+	//歩行中に行うアクションを生成して取り付ける
+	pActionWalk->push_back(new CActionMove());
+	//歩行アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)PLAYER_STATE::WALK] = pActionWalk;
+
+	//攻撃中のアクション群の実体を生成
+	std::vector<CAction*>* pActionAttack = new std::vector<CAction*>();
+	//攻撃中に行うアクションを生成して取り付ける
+	pActionAttack->push_back(new CActionPlayerAttack());
+	//攻撃アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)PLAYER_STATE::ATTACK] = pActionAttack;
 
 
 	//ジャンプ中のアクション群の実体を生成
@@ -310,7 +439,7 @@ void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 	//ジャンプ中に行うアクションを生成して取り付ける
 	pActionJump->push_back(new CActionJump(5.0f, 4.0f));
 	//ジャンプアクションをマップ配列に取り付ける
-	pChara->m_mapAction[(int)PLAYER_ACTION_STATE::JUMP] = pActionJump;
+	pChara->m_mapAction[(int)PLAYER_STATE::JUMP] = pActionJump;
 }
 
 void CBasePlayerBoyFactory::settingBody(CPlayerCharacterBoy* pChara){
@@ -367,132 +496,54 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	
 	//必要な状態を作成していく
 
-	//===============================================================================
-	// 少女との関係がフリーな状態のステートマシーン設定はここから
-	//===============================================================================
-
+//===============================================================================
+// 少女との関係がフリーな状態のステートマシーン設定はここから
+//===============================================================================
 	//取り付けるステートマシーンを生成する
 	CStateMachine* pStateMachine = new CStateMachine();
 
-	//右向き待機状態
-	CStateBase* pIdleRightState = new CPlayerIdleRightState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::IDLE_RIGHT, pIdleRightState);
+	//待機状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::IDLE, new CPlayerIdleState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//左向き待機状態
-	CStateBase* pIdleLeftState = new CPlayerIdleLeftState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::IDLE_LEFT, pIdleLeftState);
+	//歩行状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::WALK, new CPlayerWalkState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//右向き歩行状態
-	CStateBase* pWalkRightState = new CPlayerWalkRightState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::WALK_RIGHT, pWalkRightState);
+	//ジャンプ状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::JUMP, new CPlayerJumpState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//左向き歩行状態
-	CStateBase* pWalkLeftState = new CPlayerWalkLeftState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::WALK_LEFT, pWalkLeftState);
+	//落下状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::FALL, new CPlayerFallState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//右向きジャンプ状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::JUMP_RIGHT, new CPlayerJumpRightState(pChara, NULL));
+	//攻撃状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::ATTACK, new CPlayerAttackState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//左向きジャンプ状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::JUMP_LEFT, new CPlayerJumpLeftState(pChara, NULL));
+	//ジャンプ攻撃状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::JUMP_ATTACK, new CPlayerJumpAttackState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//右向き落下状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::FALL_RIGHT, new CPlayerFallRightState(pChara, NULL));
+	//装備に関する状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::EQUIP, new CPlayerEquipState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//左向き落下状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::FALL_LEFT, new CPlayerFallLeftState(pChara, NULL));
+	//右向き手を繋ぐ状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::GRASP, new CPlayerGraspState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//右向き攻撃状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerAttackRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//左向き攻撃状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::ATTACK_LEFT, new CPlayerAttackLeftState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//右向きジャンプ攻撃状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::JUMP_ATTACK_RIGHT, new CPlayerJumpAttackRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//左向きジャンプ攻撃状態を作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::JUMP_ATTACK_LEFT, new CPlayerJumpAttackLeftState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//右向き装備する状態
-	CStateBase* pEquipRightState = new CPlayerEquipRightState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::EQUIP_RIGHT, pEquipRightState);
-
-//------------------------------------------------------------------------------------------
-
-	//左向き装備する状態
-	CStateBase* pEquipLeftState = new CPlayerEquipLeftState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::EQUIP_LEFT, pEquipLeftState);
-
-//------------------------------------------------------------------------------------------
-
-
-	//右向き装備解除する状態
-	CStateBase* pUnEquipRightState = new CPlayerUnEquipRightState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::UN_EQUIP_RIGHT, pUnEquipRightState);
-
-//------------------------------------------------------------------------------------------
-
-	//左向き装備解除する状態
-	CStateBase* pUnEquipLeftState = new CPlayerUnEquipLeftState(pChara, NULL);
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::UN_EQUIP_LEFT, pUnEquipLeftState);
-
-//------------------------------------------------------------------------------------------
-
-
-	//右向き手を繋ぐ状態
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::GRASP_RIGHT, new CPlayerGraspRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//左向き手を繋ぐ状態
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::GRASP_LEFT, new CPlayerGraspLeftState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//右向き手を繋ぐ状態
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::HOLD_RIGHT, new CPlayerHoldRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//左向き手を繋ぐ状態
-	//作成した状態を登録していく
-	pStateMachine->registerState((int)PLAYER_STATE::HOLD_LEFT, new CPlayerHoldLeftState(pChara, NULL));
+	//右向き手を繋ぐ状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::HOLD, new CPlayerHoldState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 	
@@ -501,105 +552,62 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 
 
-	//===============================================================================
-	// 少女との関係が手を握った状態のステートマシーン設定はここから
-	//===============================================================================
+//===============================================================================
+// 少女との関係が手を握った状態のステートマシーン設定はここから
+//===============================================================================
 	//取り付けるステートマシーンを生成する
 	CStateMachine* pStateMachineGrips = new CStateMachine();
 
 
-	//右向き手を繋いで待機する状態
+	//待機状態
 	//作成した状態を登録していく
-	pStateMachineGrips->registerState((int)PLAYER_STATE::IDLE_RIGHT, new CPlayerGraspIdleRightState(pChara, NULL));
+	pStateMachineGrips->registerState((int)PLAYER_STATE::IDLE, new CPlayerGraspIdleState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//左向き手を繋いで待機する状態
+	//歩行状態
 	//作成した状態を登録していく
-	pStateMachineGrips->registerState((int)PLAYER_STATE::IDLE_LEFT, new CPlayerGraspIdleLeftState(pChara, NULL));
+	pStateMachineGrips->registerState((int)PLAYER_STATE::WALK, new CPlayerGraspWalkState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//右向き手を繋いで歩行する状態
+	//攻撃状態
 	//作成した状態を登録していく
-	pStateMachineGrips->registerState((int)PLAYER_STATE::WALK_RIGHT, new CPlayerGraspWalkRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//左向き手を繋いで歩行する状態
-	//作成した状態を登録していく
-	pStateMachineGrips->registerState((int)PLAYER_STATE::WALK_LEFT, new CPlayerGraspWalkLeftState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-	//左向き手を繋いで攻撃する状態
-	//作成した状態を登録していく
-	pStateMachineGrips->registerState((int)PLAYER_STATE::ATTACK_RIGHT, new CPlayerGrapsAttackRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-
-	//左向き手を繋いで攻撃する状態
-	//作成した状態を登録していく
-	pStateMachineGrips->registerState((int)PLAYER_STATE::ATTACK_LEFT, new CPlayerGrapsAttackLeftState(pChara, NULL));
+	pStateMachineGrips->registerState((int)PLAYER_STATE::ATTACK, new CPlayerGraspAttackState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
 	//プレイヤーに作成したステートマシーンを取り付ける
 	(*pChara->m_pStateMachines)[(int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS] = pStateMachineGrips;
 
-	//===============================================================================
-	// 少女との関係がお姫様抱っこ状態のステートマシーン設定はここから
-	//===============================================================================
+//===============================================================================
+// 少女との関係がお姫様抱っこ状態のステートマシーン設定はここから
+//===============================================================================
 	//取り付けるステートマシーンを生成する
 	CStateMachine* pStateMachineHold = new CStateMachine();
 
 
 	//右向きお姫様抱っこで待機する状態
 	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::IDLE_RIGHT, new CPlayerHoldIdleRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-	//左向きお姫様抱っこで待機する状態
-	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::IDLE_LEFT, new CPlayerHoldIdleLeftState(pChara, NULL));
+	pStateMachineHold->registerState((int)PLAYER_STATE::IDLE, new CPlayerHoldIdleState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
 	//右向きお姫様抱っこで歩行する状態
 	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::WALK_RIGHT, new CPlayerHoldWalkRightState(pChara, NULL));
+	pStateMachineHold->registerState((int)PLAYER_STATE::WALK, new CPlayerHoldWalkState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
-	//左向きお姫様抱っこで歩行する状態
-	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::WALK_LEFT, new CPlayerHoldWalkLeftState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
 	//右向きお姫様抱っこでジャンプする状態
 	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::JUMP_RIGHT, new CPlayerHoldJumpRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-
-	//左向きお姫様抱っこでジャンプする状態
-	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::JUMP_LEFT, new CPlayerHoldJumpLeftState(pChara, NULL));
+	pStateMachineHold->registerState((int)PLAYER_STATE::JUMP, new CPlayerHoldJumpState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
 	//右向きお姫様抱っこで落下する状態
 	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::FALL_RIGHT, new CPlayerHoldFallRightState(pChara, NULL));
-
-//------------------------------------------------------------------------------------------
-
-
-	//左向きお姫様抱っこで落下する状態
-	//作成した状態を登録していく
-	pStateMachineHold->registerState((int)PLAYER_STATE::FALL_LEFT, new CPlayerHoldFallLeftState(pChara, NULL));
+	pStateMachineHold->registerState((int)PLAYER_STATE::FALL, new CPlayerHoldFallState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
@@ -611,7 +619,10 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 	//少女との状態をFREEに変更
 	pChara->m_playerAndGirlState = (int)PLAYER_AND_GIRL_STATE::FREE;
 	//状態を待機状態に変更
-	pChara->m_state = (int)PLAYER_STATE::IDLE_RIGHT;
+	pChara->m_state = (int)PLAYER_STATE::IDLE;
+	//プレイヤーの向きを変更
+	pChara->m_playerDirectionState = (int)PLATYER_DIRECTION_STATE::RIGHT;
+	
 	//最後に最初の状態を設定する！！！！！
 	(*pChara->m_pStateMachines)[pChara->m_playerAndGirlState]->setStartState(pChara->m_state);
 }
