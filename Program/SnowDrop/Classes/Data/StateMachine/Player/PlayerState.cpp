@@ -114,6 +114,18 @@ void CPlayerState::toJumpAttack(void) {
 }
 
 
+/**
+ * @desc	攻撃を受けた状態へ移行
+ */
+void CPlayerState::toUnderAttack(void) {
+	this->m_pPlayer->m_state = (int)PLAYER_STATE::UNDER_ATTACK;
+
+	this->m_nextRegisterKey = this->m_pPlayer->m_state;
+
+	this->m_isNext = true;
+}
+
+
 /*
  * @desc	手を掴む状態へ移行
  */
@@ -181,6 +193,12 @@ void CPlayerIdleState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 	
 	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+
+	//プレイヤーが攻撃を受けたら
+	if (this->m_pPlayer->m_underAttack) {
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+	}
 	
 	//少女にマークパーティクルが出現しているか確認
 	if (pGirl->getPlayerAndGirlActionMark()) {
@@ -299,6 +317,12 @@ void CPlayerWalkState::update(void)
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
 	CPlayerCharacterGirl* pGirl = CCharacterAggregate::getInstance()->getGirl();
+
+	//プレイヤーが攻撃を受けたら
+	if (this->m_pPlayer->m_underAttack) {
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+	}
 
 	//少女にマークパーティクルが出現しているか確認
 	if (pGirl->getPlayerAndGirlActionMark()) {
@@ -428,6 +452,12 @@ void CPlayerJumpState::update(void)
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
 
+	//プレイヤーが攻撃を受けたら
+	if (this->m_pPlayer->m_underAttack) {
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+	}
+
 	if (pointerInputController->getAttackFlag()) {
 		//右ジャンプ攻撃状態へ移行する
 		this->toJumpAttack();
@@ -511,6 +541,12 @@ void CPlayerFallState::update(void)
 
 	//入力コントローラーの取得
 	CInputController* pointerInputController = CInputManager::getInstance()->getInputController();
+
+	//プレイヤーが攻撃を受けたら
+	if (this->m_pPlayer->m_underAttack) {
+		//攻撃を受けた状態へ移行
+		this->toUnderAttack();
+	}
 
 	if (pointerInputController->getAttackFlag()) {
 		//右ジャンプ攻撃状態へ移行する
@@ -619,6 +655,8 @@ void CPlayerAttackState::update(void)
  */
 void CPlayerAttackState::onChangeEvent(void)
 {
+	this->m_pPlayer->m_underAttack = false;
+
 	//次のステートへ移行することが確定しているので元に戻しておく
 	this->m_isNext = false;
 }
@@ -690,8 +728,67 @@ void CPlayerJumpAttackState::update(void)
  */
 void CPlayerJumpAttackState::onChangeEvent(void)
 {
-	
+	this->m_pPlayer->m_underAttack = false;
 
+	//次のステートへ移行することが確定しているので元に戻しておく
+	this->m_isNext = false;
+}
+
+
+//==========================================
+//
+// Class: CPlayerUnderAttackState
+//
+// プレイヤー 攻撃を受けた 状態クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+/**
+* @desc	コンストラクタ
+*/
+CPlayerUnderAttackState::CPlayerUnderAttackState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl)
+	:CPlayerState::CPlayerState(pPlayer, pGirl) {}
+
+/**
+* @desc	デストラクタ
+*/
+CPlayerUnderAttackState::~CPlayerUnderAttackState() {}
+
+/**
+* @desc	開始処理
+*/
+void CPlayerUnderAttackState::start(void)
+{
+	//現在のアニメーションをリセット
+	(*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->reset();
+
+	//現在のアクションをスタートさせる。
+	(*this->m_pPlayer->m_mapAction[(int)PLAYER_STATE::UNDER_ATTACK])[0]->start();
+}
+
+/**
+* @desc	更新処理
+*/
+void CPlayerUnderAttackState::update(void)
+{
+	//アニメーションが終了したかどうかのフラグ
+	if ((*this->m_pPlayer->m_pMapAnimations)[this->m_pPlayer->m_state + this->m_pPlayer->m_playerAndGirlState + this->m_pPlayer->m_playerDirectionState]->isEnd())
+	{
+		//待機状態へ戻す
+		this->toIdle();
+
+		this->m_pPlayer->m_underAttack = false;
+
+		return;
+	}
+}
+
+/**
+* @desc	状態が変わるときの処理
+*/
+void CPlayerUnderAttackState::onChangeEvent(void)
+{
 	//次のステートへ移行することが確定しているので元に戻しておく
 	this->m_isNext = false;
 }
@@ -748,6 +845,8 @@ void CPlayerGraspState::update(void)
  */
 void CPlayerGraspState::onChangeEvent(void)
 {
+	this->m_pPlayer->m_underAttack = false;
+
 	this->m_isNext = false;
 }
 
@@ -803,6 +902,8 @@ void CPlayerHoldState::update(void)
 */
 void CPlayerHoldState::onChangeEvent(void)
 {
+	this->m_pPlayer->m_underAttack = false;
+
 	this->m_isNext = false;
 }
 //EOF

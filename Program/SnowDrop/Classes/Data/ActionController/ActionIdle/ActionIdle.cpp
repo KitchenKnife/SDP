@@ -147,3 +147,47 @@ void CActionPlayerAttack::update(CCharacter* pChara) {
 void CActionPlayerAttack::stop() {
 
 }
+
+//==========================================
+//
+// Class: CActionPlayerUnderAttack
+//
+// アクション　プレイヤー 攻撃を受けた	クラス
+//
+// 2017/01/12
+//						Author Harada
+//==========================================
+void CActionPlayerUnderAttack::update(CCharacter* pChara) {
+	if (this->m_inAction == true) {
+		//プレイヤーキャラクターに変換
+		CPlayerCharacterBoy* pBoy = (CPlayerCharacterBoy*)pChara;
+
+		//プレイヤーの向きが右向きなら
+		if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
+			pBoy->m_pMove->m_accele.y = 4.0;
+
+			pBoy->m_pMove->m_accele.x = -4.0;
+		}
+		else if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
+			pBoy->m_pMove->m_accele.y = 4.0;
+
+			pBoy->m_pMove->m_accele.x = 4.0;
+		}
+
+		this->m_inAction = false;
+	}
+	else {
+		CPlayerCharacterBoy* pBoy = CCharacterAggregate::getInstance()->getPlayer();
+
+		pBoy->m_pMove->m_accele.y = 0.0f;
+
+		pBoy->m_pMove->m_accele.x = 0.0f;
+	}
+}
+
+/**
+* @desc アクション終了
+*/
+void CActionPlayerUnderAttack::stop(void) {
+	
+}

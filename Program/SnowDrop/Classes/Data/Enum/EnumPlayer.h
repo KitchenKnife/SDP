@@ -63,10 +63,9 @@ enum class PLAYER_STATE :int
 	FALL			= 3,	//落下
 	ATTACK			= 4,	//攻撃
 	JUMP_ATTACK		= 5,	//ジャンプ攻撃
-	HIT_DAMAGE		= 6,	//ダメージを受けた
-	EQUIP			= 7,	//装備
-	GRASP			= 8,	//手を掴む・離す
-	HOLD			= 9,	//お姫様抱っこ
+	UNDER_ATTACK	= 6,	//ダメージを受けた
+	GRASP			= 7,	//手を掴む・離す
+	HOLD			= 8,	//お姫様抱っこ
 };
 
 

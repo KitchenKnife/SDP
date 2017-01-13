@@ -134,6 +134,46 @@ public:
 	void stop(void)override;
 };
 
+//==========================================
+//
+// Class: CActionPlayerUnderAttack
+//
+// アクション　プレイヤー 攻撃を受けた	クラス
+//
+// 2017/01/12
+//						Author Harada
+//==========================================
+class CActionPlayerUnderAttack : public CAction
+{
+private:
+	//アクション中かどうかのフラグ true...アクション中
+	bool m_inAction = false;
+
+public:
+
+	/**
+	* @desc コンストラクタ
+	*/
+	CActionPlayerUnderAttack() {}
+
+	/**
+	* @desc アクション開始
+	*/
+	void start(void)override {
+		this->m_inAction = true;
+	}
+
+	/**
+	* @desc 更新処理
+	* @param アクションを行う対象のキャラクター
+	*/
+	void update(CCharacter* pChara)override;
+
+	/**
+	* @desc アクション終了
+	*/
+	void stop(void)override;
+};
 
 //==========================================
 //

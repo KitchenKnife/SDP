@@ -74,6 +74,11 @@ public:
 	 */
 	void toJumpAttack(void);
 
+	/**
+	 * @desc	攻撃を受けた状態へ移行
+	 */
+	void toUnderAttack(void);
+
 	/*
 	 *	@desc	手を掴む状態へ移行
 	 */
@@ -338,6 +343,45 @@ public:
 
 };
 
+
+//==========================================
+//
+// Class: CPlayerUnderAttackState
+//
+// プレイヤー 攻撃を受けた 状態クラス
+//
+// 2016/12/25
+//						Author Harada
+//==========================================
+class CPlayerUnderAttackState :public CPlayerState
+{
+public:
+	/**
+	* @desc	コンストラクタ
+	*/
+	CPlayerUnderAttackState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+
+	/**
+	* @desc	デストラクタ
+	*/
+	~CPlayerUnderAttackState(void);
+
+	/**
+	* @desc	開始処理
+	*/
+	void start(void)override;
+
+	/**
+	* @desc	更新処理
+	*/
+	void update(void)override;
+
+	/**
+	* @desc	状態が変わるときの処理
+	*/
+	void onChangeEvent(void)override;
+
+};
 
 //==========================================
 //

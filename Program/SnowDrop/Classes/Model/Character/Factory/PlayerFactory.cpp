@@ -371,7 +371,44 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
-	
+	//================================================
+	// 攻撃を受けた時のアニメーション設定
+	//================================================
+	//関係なし
+	//少女と関係なし、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, false, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女と関係なし、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, false);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//手を繋ぐ
+	//少女と手を繋ぐ、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, false, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女と手を繋ぐ、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, false);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
+
+	//お姫様抱っこ
+	//少女とお姫様抱っこ、納刀、右向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 3, false, 4);
+	pAni->addChipData(new CChip(512, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+
+	//少女とお姫様抱っこ、納刀、左向きのアニメーションを設定
+	pAni = new CChipAnimation(10, 4, false);
+	pAni->addChipData(new CChip(0, 384, 128, 128));
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+
 
 	//================================================
 	// 手を握るアニメーション設定
@@ -458,6 +495,13 @@ void CBasePlayerBoyFactory::settingActions(CPlayerCharacterBoy* pChara){
 	pActionAttack->push_back(new CActionPlayerAttack());
 	//攻撃アクションをマップ配列に取り付ける
 	pChara->m_mapAction[(int)PLAYER_STATE::ATTACK] = pActionAttack;
+
+	//攻撃を受けた時のアクション群の実体を生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃を受けた時のアクションを生成して取り付ける
+	pActionUnderAttack->push_back(new CActionPlayerUnderAttack());
+	//攻撃を受けた時のアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)PLAYER_STATE::UNDER_ATTACK] = pActionUnderAttack;
 
 
 	//ジャンプ中のアクション群の実体を生成
@@ -555,6 +599,11 @@ void CBasePlayerBoyFactory::settingStateMachine(CPlayerCharacterBoy* pChara)
 
 	//ジャンプ攻撃状態を作成した状態を登録していく
 	pStateMachine->registerState((int)PLAYER_STATE::JUMP_ATTACK, new CPlayerJumpAttackState(pChara, NULL));
+
+//------------------------------------------------------------------------------------------
+
+	//攻撃を受けた状態を作成した状態を登録していく
+	pStateMachine->registerState((int)PLAYER_STATE::UNDER_ATTACK, new CPlayerUnderAttackState(pChara, NULL));
 
 //------------------------------------------------------------------------------------------
 
