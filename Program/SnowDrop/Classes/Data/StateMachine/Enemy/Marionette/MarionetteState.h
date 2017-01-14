@@ -170,13 +170,6 @@ public:
 private:
 	cocos2d::Vec2 m_targetPositions[3];
 
-	int m_numTargetPosition = 0;
-
-	//アクションを行う時間（ランダムで30～60で設定される）
-	int m_actionInterval = 45;
-
-	int m_actionCounter = 0;
-
 	//うろうろする方向
 	int m_vec = 1;
 };

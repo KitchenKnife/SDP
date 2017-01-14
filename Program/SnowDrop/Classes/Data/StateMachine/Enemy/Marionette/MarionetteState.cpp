@@ -262,9 +262,9 @@ CMarionetteWanderingState::CMarionetteWanderingState(CEnemyCharacter* const pOwn
 )
 	:CMarionetteState::CMarionetteState(pOwner, pPlayer, pGirl)
 {
-	this->m_targetPositions[0] = cocos2d::Point(WINDOW_RIGHT - this->m_pOwner->m_pBody->m_right,0);
-	this->m_targetPositions[1] = cocos2d::Point(WINDOW_RIGHT*0.5f, 0);
-	this->m_targetPositions[2] = cocos2d::Point(0, 0);
+	this->m_targetPositions[CMarionetteCharacter::IDLE_POSITION::RIGHT] = cocos2d::Point(WINDOW_RIGHT - this->m_pOwner->m_pBody->m_right,0);
+	this->m_targetPositions[CMarionetteCharacter::IDLE_POSITION::CENTER] = cocos2d::Point(WINDOW_RIGHT*0.5f, 0);
+	this->m_targetPositions[CMarionetteCharacter::IDLE_POSITION::LEFT] = cocos2d::Point(0, 0);
 }
 
 /**
@@ -284,10 +284,13 @@ void CMarionetteWanderingState::start(void)
 	CAction* pAction = (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState])[0];
 	pAction->start();
 
-	this->m_numTargetPosition = rand() % 3;
+	//アップキャスト
+	CMarionetteCharacter* pMarionette = (CMarionetteCharacter*)this->m_pOwner;
+
+	pMarionette->m_numIdlePosition = rand() % (int)CMarionetteCharacter::IDLE_POSITION::MAX_IDLE_POSITION;
 
 	cocos2d::Vec2 positionLayer = CCharacterAggregate::getInstance()->getLayer()->getPosition();
-	if ( (this->m_targetPositions[this->m_numTargetPosition].x - positionLayer.x) - this->m_pOwner->m_pMove->m_pos.x >= 0.0f)
+	if ( (this->m_targetPositions[pMarionette->m_numIdlePosition].x - positionLayer.x) - this->m_pOwner->m_pMove->m_pos.x >= 0.0f)
 	{
 		this->m_vec = 1;
 	}
@@ -337,9 +340,11 @@ void CMarionetteWanderingState::update(void)
 		return;
 	}
 
+	//アップキャスト
+	CMarionetteCharacter* pMarionette = (CMarionetteCharacter*)this->m_pOwner;
 
 	cocos2d::Vec2 positionLayer = CCharacterAggregate::getInstance()->getLayer()->getPosition();
-	if (abs( (this->m_targetPositions[this->m_numTargetPosition].x - positionLayer.x ) - this->m_pOwner->m_pMove->m_pos.x) < this->m_pOwner->m_status.getSpeed() + 256)
+	if (abs( (this->m_targetPositions[pMarionette->m_numIdlePosition].x - positionLayer.x ) - this->m_pOwner->m_pMove->m_pos.x) < this->m_pOwner->m_status.getSpeed() + 256)
 	{
 		//動作を停止
 		for (CAction* pAction : (*this->m_pOwner->m_mapAction[this->m_pOwner->m_actionState]))
@@ -413,15 +418,52 @@ void CMarionetteAttackState::update(void)
 	//アニメーションが終了したかどうかのフラグ
 	if ((*this->m_pOwner->m_pAnimations)[this->m_pOwner->m_animationState]->isEnd())
 	{
-		//ダメージキャラクター生成データを作成
-		CDamageLaunchData* pLaunchData = new CDamageLaunchData(this->m_pOwner,
-			cocos2d::Point(this->m_pOwner->m_pMove->m_pos.x + this->m_pOwner->m_pBody->m_right, WINDOW_TOP),
-			500,DAMAGE_TYPE::FALL_KNIFE);
-		//ダメージキャラクター生成トリガーを作成
-		CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+		cocos2d::Point fallKnifeLaunchPoints[4];
 
-		//作成したトリガーをスケジューラーに登録
-		CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
+		//アップキャスト
+		CMarionetteCharacter* pMarionette = (CMarionetteCharacter*)this->m_pOwner;
+
+		cocos2d::Vec2 positionLayer = CCharacterAggregate::getInstance()->getLayer()->getPosition();
+		switch(pMarionette->m_numIdlePosition)
+		{
+		case CMarionetteCharacter::IDLE_POSITION::RIGHT:
+															fallKnifeLaunchPoints[0] = cocos2d::Point( -positionLayer.x + 224.0f,952.0f);
+															fallKnifeLaunchPoints[1] = cocos2d::Point(-positionLayer.x + 704.0f, 952.0f);
+															fallKnifeLaunchPoints[2] = cocos2d::Point(-positionLayer.x + 1184.0f, 952.0f);
+															fallKnifeLaunchPoints[3] = cocos2d::Point(-positionLayer.x + 1664.0f, 952.0f);
+															break;
+		case CMarionetteCharacter::IDLE_POSITION::CENTER:
+															fallKnifeLaunchPoints[0] = cocos2d::Point(-positionLayer.x + 224.0f, 952.0f);
+															fallKnifeLaunchPoints[1] = cocos2d::Point(-positionLayer.x + 704.0f, 952.0f);
+															fallKnifeLaunchPoints[2] = cocos2d::Point(-positionLayer.x + 1184.0f, 952.0f);
+															fallKnifeLaunchPoints[3] = cocos2d::Point(-positionLayer.x + 1664.0f, 952.0f);
+
+															break;
+		case CMarionetteCharacter::IDLE_POSITION::LEFT:	
+															fallKnifeLaunchPoints[0] = cocos2d::Point(-positionLayer.x + 224.0f, 952.0f);
+															fallKnifeLaunchPoints[1] = cocos2d::Point(-positionLayer.x + 704.0f, 952.0f);
+															fallKnifeLaunchPoints[2] = cocos2d::Point(-positionLayer.x + 1184.0f, 952.0f);
+															fallKnifeLaunchPoints[3] = cocos2d::Point(-positionLayer.x + 1664.0f, 952.0f);
+
+															break;
+		default:
+			break;
+		}
+
+		CDamageLaunchData* pLaunchData = NULL;
+		CDamageLaunchTrigger* pLaunchTrigger = NULL;
+		for (int index = 0; index < CMarionetteCharacter::IDLE_POSITION::MAX_IDLE_POSITION; index++)
+		{
+			//ダメージキャラクター生成データを作成
+			pLaunchData = new CDamageLaunchData(this->m_pOwner,
+				fallKnifeLaunchPoints[index],
+				500, DAMAGE_TYPE::FALL_KNIFE);
+			//ダメージキャラクター生成トリガーを作成
+			pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
+
+			//作成したトリガーをスケジューラーに登録
+			CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
+		}
 
 		//待機状態へ移行
 		this->toIdle();

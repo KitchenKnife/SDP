@@ -23,6 +23,14 @@
 //================================================
 class CMarionetteCharacter :public CEnemyCharacter {
 public:
+	enum IDLE_POSITION :int
+	{
+		RIGHT		= 0,
+		CENTER		= 1,
+		LEFT		= 2,
+		MAX_IDLE_POSITION
+	};
+
 
 	//コンストラクタ
 	CMarionetteCharacter();
@@ -32,6 +40,8 @@ public:
 
 	CREATE_FUNC(CMarionetteCharacter);
 
+	//待機する位置番号
+	int m_numIdlePosition = 0;
 };
 
 //EOF
