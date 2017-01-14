@@ -706,7 +706,7 @@ void CPlayerJumpAttackState::start(void)
 	//作成したトリガーをスケジューラーに登録
 	CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
 
-	this->m_pPlayer->setScaleX(-2.0f);
+
 }
 
 /**
