@@ -188,6 +188,7 @@ void CSmokeDamageFactory::settingAnimations(CDamageCharacter* pCharacter) {
 }
 
 void CSmokeDamageFactory::settingPhysicals(CDamageCharacter* pCharacter) {
+
 }
 
 void CSmokeDamageFactory::settingActions(CDamageCharacter* pCharacter) {
@@ -286,6 +287,95 @@ void CSmokeDamageFactory::settingInitialize(CDamageCharacter* pChara, CCharacter
 	pChara->applyFunc();
 
 }
+
+
+//================================================
+// FallKnifeダメージ工場
+//================================================
+//各々のパーツのセッティング
+void CFallKnifeDamageFactory::settingMove(CDamageCharacter* pCharacter, cocos2d::Point pos) {
+
+	//位置の設定
+	pCharacter->m_pMove->m_pos.set(pos);
+}
+void CFallKnifeDamageFactory::settingTexture(CDamageCharacter* pCharacter) {
+	//テクスチャの設定
+	pCharacter->setTexture(IMAFE_MARIONETTE_WEAPON);
+}
+
+void CFallKnifeDamageFactory::settingAnimations(CDamageCharacter* pCharacter) {
+
+	//攻撃のアニメーションを設定
+	pCharacter->m_pAnimations->push_back(new CChipNotAnimation());
+	(*pCharacter->m_pAnimations)[0]->addChipData(new CChip(0, 0, 128, 128));
+
+	//最初のアニメーションを設定
+	pCharacter->m_animationState = 0;
+
+}
+
+void CFallKnifeDamageFactory::settingPhysicals(CDamageCharacter* pCharacter) {
+	//重力つける
+	pCharacter->m_pPhysicals->push_back(new CPhysicalGravity());
+}
+
+void CFallKnifeDamageFactory::settingActions(CDamageCharacter* pCharacter) {
+	
+}
+
+void CFallKnifeDamageFactory::settingBody(CDamageCharacter* pCharacter) {
+
+	pCharacter->m_pBody->set(-64.0f, 64.0f, 64.0f, -64.0f);
+}
+
+//衝突判定空間の設定
+void CFallKnifeDamageFactory::settingCollisionArea(CDamageCharacter* pCharacter) {
+	//画面端衝突空間の生成
+	//同時に画面端の衝突空間に衝突を行う下の基準点を設定
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pCharacter->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+	//画面端の衝突判定を取り付ける
+	pCharacter->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+}
+
+//衝突判定空間の設定
+void CFallKnifeDamageFactory::settingStateMachine(CDamageCharacter* pCharacter) {
+
+}
+
+void CFallKnifeDamageFactory::settingInitialize(CDamageCharacter* pChara, CCharacter* pAttackChara, int activeFrame) {
+
+	//状態の設定
+	pChara->m_state = 0;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//生きているフラグを立てる
+	pChara->m_isAlive = true;
+
+	//ダメージキャラクターを出現させたキャラクター
+	pChara->m_pChara = pAttackChara;
+
+	// 存在させておくフレーム数
+	pChara->m_activeFrame = activeFrame;
+
+	//ステータスを設定
+	pChara->m_status.set(1, 1, 1, 3);
+
+	/*
+	*　計算データのままで起動すると1フレームずれが発生するので
+	*　初期化時に最後に値をSpriteに反映する
+	*/
+	pChara->applyFunc();
+
+}
+
 
 
 

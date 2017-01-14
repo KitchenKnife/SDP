@@ -8,6 +8,7 @@
 #include "Data\StateMachine\Enemy\Baron\BaronState.h"
 #include "Data\StateMachine\Enemy\MouseKing\MouseKingState.h"
 #include "Data\StateMachine\Enemy\Mouse\MouseState.h"
+#include "Data\StateMachine\Enemy\Marionette\MarionetteState.h"
 #include "Model\Character\CharacterAggregate.h"
 
 //================================================
@@ -1468,6 +1469,216 @@ void CMouseFactory::settingInitialize(CEnemyCharacter* pChara) {
 	pChara->applyFunc();
 
 }
+
+
+//================================================
+// Marionette工場
+//	（FactoryMethod）
+//================================================
+//各々のパーツのセッティング
+void CMarionetteFactory::settingMove(CEnemyCharacter* pChara, float x, float y) {
+	//初期位置の設定
+	pChara->m_pMove->m_pos.set(x, y);
+	//初期速度
+	pChara->m_pMove->m_vel.set(0.0f, 0.0f);
+}
+
+void CMarionetteFactory::settingTexture(CEnemyCharacter* pChara) {
+	//テクスチャの設定
+	pChara->setTexture(IMAGE_MARIONETTE);
+}
+
+void CMarionetteFactory::settingAnimations(CEnemyCharacter* pChara) {
+	//直立アニメーションの設定
+	pChara->m_pAnimations->push_back(new CChipNotAnimation());
+	//直立アニメーションに設定する為のチップデータの設定
+	(*pChara->m_pAnimations)[(int)ENEMY_MARIONETTE_ANIMATION_STATE::IDLE]->addChipData(new CChip(0, 512, 128, 128));
+
+	//徘徊のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MARIONETTE_ANIMATION_STATE::WANDERING]->addChipData(new CChip(0, 512, 128, 128));
+
+	//攻撃のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 4, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MARIONETTE_ANIMATION_STATE::ATTACK]->addChipData(new CChip(0, 384, 128, 128));
+
+	//死亡のアニメーションを設定
+	pChara->m_pAnimations->push_back(new CChipAnimation(10, 10, false));
+	(*pChara->m_pAnimations)[(int)ENEMY_MARIONETTE_ANIMATION_STATE::DAED]->addChipData(new CChip(0, 128, 128, 128));
+
+	//最初のアニメーションを設定
+	pChara->m_animationState = (int)ENEMY_MARIONETTE_ANIMATION_STATE::IDLE;
+}
+
+void CMarionetteFactory::settingPhysicals(CEnemyCharacter* pChara) {
+	//歩行キャラには重力つける
+	pChara->m_pPhysicals->push_back(new CPhysicalGravity());
+}
+
+void CMarionetteFactory::settingActions(CEnemyCharacter* pChara) {
+	//開始時のアクションの状態
+	int m_actionState = (int)ENEMY_MARIONETTE_ACTION_STATE::IDLE;
+
+	//--------------------------------------------------------------------
+	//
+	//	待機アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//待機状態アクションの生成
+	std::vector<CAction*>* pActionIdle = new std::vector<CAction*>();
+	//待機状態中に行うアクションを生成して取りける
+	pActionIdle->push_back(new CActionIdle());
+	//待機状態アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MARIONETTE_ACTION_STATE::IDLE] = pActionIdle;
+
+	//--------------------------------------------------------------------
+	//
+	//	移動アクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//移動アクションの生成
+	std::vector<CAction*>* pActionStraight = new std::vector<CAction*>();
+	//移動アクション中に行うアクションを生成して取りける
+	pActionStraight->push_back(new CActionMoveStraight());
+	//移動アクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MARIONETTE_ACTION_STATE::WANDERING] = pActionStraight;
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃受けたアクションを設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃受けたアクションの生成
+	std::vector<CAction*>* pActionUnderAttack = new std::vector<CAction*>();
+	//攻撃受けたアクション中に行うアクションを生成して取りける
+	pActionUnderAttack->push_back(new CActionJump(6.0f, 16.0f));
+	//攻撃受けたアクションをマップ配列に取り付ける
+	pChara->m_mapAction[(int)ENEMY_MARIONETTE_ACTION_STATE::UNDER_ATTACK] = pActionUnderAttack;
+}
+
+
+void CMarionetteFactory::settingBody(CEnemyCharacter* pChara) {
+	//実体のボディを設定
+	pChara->m_pBody->set(-64.0f, 64.0f, 64.0f, -64.0f);
+}
+
+//衝突判定空間の設定
+void CMarionetteFactory::settingCollisionArea(CEnemyCharacter* pChara) {
+
+	//画面端衝突空間の生成
+	CCollisionArea* pEndOfScreenArea = new CCollsionAreaEndOfScreen(pChara->m_pBody);
+
+	//画面下端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenBottom());
+	//画面左端領域の生成と取り付け
+	pEndOfScreenArea->addTerritory(new CCollisionTerritoryEndOfScreenLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pEndOfScreenArea);
+
+
+	//マップ衝突空間の生成
+	CCollisionArea* pMapArea = new CCollsionAreaMap(pChara->m_pBody, 32.0f, 64.0f);
+
+	//マップチップ下端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipBottom());
+	//マップチップ上端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipTop());
+	//マップチップ右端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipRight());
+	//マップチップ左端領域の生成と取り付け
+	pMapArea->addTerritory(new CCollisionTerritoryMapChipLeft());
+
+	//画面端の衝突判定を取り付ける
+	pChara->m_pCollisionAreas->push_back(pMapArea);
+
+}
+
+/**
+*	@desc 状態遷移データの設定
+*	@param 設定するキャラクター
+*	@author Shinya Ueba
+*/
+void CMarionetteFactory::settingStateMachine(CEnemyCharacter* pChara)
+{
+	//--------------------------------------------------------------------
+	//
+	//	待機状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//待機状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MARIONETTE_STATE::IDLE, new CMarionetteIdleState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	徘徊状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//徘徊状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MARIONETTE_STATE::WANDERING, new CMarionetteWanderingState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MARIONETTE_STATE::ATTACK, new CMarionetteAttackState(pChara, NULL, NULL));
+
+
+	//--------------------------------------------------------------------
+	//
+	//	攻撃を受けた状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//攻撃を受けた状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MARIONETTE_STATE::UNDER_ATTACK, new CMarionetteUnderAttackState(pChara, NULL, NULL));
+
+	//--------------------------------------------------------------------
+	//
+	//	死亡状態を設定する ここから
+	//
+	//--------------------------------------------------------------------
+
+	//死亡状態
+	//作成した状態を登録していく
+	pChara->m_pStateMachine->registerState((int)ENEMY_MARIONETTE_STATE::DEAD, new CMarionetteDeadState(pChara, NULL, NULL));
+
+	//最後に最初の状態を設定する！！！！！
+	pChara->m_pStateMachine->setStartState((int)ENEMY_MARIONETTE_STATE::IDLE);
+}
+
+void CMarionetteFactory::settingInitialize(CEnemyCharacter* pChara) {
+
+	//状態を待機状態に変更
+	pChara->m_state = (int)ENEMY_MARIONETTE_STATE::IDLE;
+
+	pChara->m_charaType = (int)CHARACTER_TYPE::ENEMY;
+
+	//有効フラグを立てる
+	pChara->m_activeFlag = true;
+
+	//ステータスを設定する
+	pChara->m_status.set(3, 3, 1, 5);
+
+	//生死フラグを立てる
+	pChara->m_isAlive = true;
+
+	//現在の移動データとアニメーションを反映
+	pChara->applyFunc();
+}
+
 
 
 //================================================

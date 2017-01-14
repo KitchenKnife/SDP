@@ -54,6 +54,14 @@ void CDamageCharacter::moveFunc() {
 		}
 	}
 
+	//•¨—ŒvŽZ
+	if (this->m_pPhysicals)
+	{
+		for (CPhysical* pPhysical : (*this->m_pPhysicals)) {
+			pPhysical->update(this->m_pMove);
+		}
+	}
+
 	//ˆÚ“®ŒvŽZ
 	this->m_pMove->moveBy();
 }

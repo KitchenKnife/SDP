@@ -78,7 +78,8 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 #define IMAGE_NUTCRACKER		"Images/Enemy/NutCracker/kurumi.png"
 #define IMAGE_BARON				"Images/Enemy/Baron/baron.png"
 #define IMAGE_MOUSEKING			"Images/Enemy/MouseKing/king.png"
-
+#define IMAGE_MARIONETTE		"Images/Enemy/Marionette/marionette.png"
+#define IMAFE_MARIONETTE_WEAPON "Images/Enemy/Marionette/marionetteW.png"
 
 // ìGïêäÌÇ‡Çø
 #define IMAGE_ENEMY_WEAPON		"Images/kari_weapon.png"

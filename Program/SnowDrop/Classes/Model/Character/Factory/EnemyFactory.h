@@ -13,6 +13,7 @@
 #include "Model\Character\Factory\CharacterFactory.h"
 #include "Model\Character\EnemyCharacter\MouseKing\MouseKingCharacter.h"
 #include "Model\Character\EnemyCharacter\Mouse\MouseCharacter.h"
+#include "Model\Character\EnemyCharacter\Marionette\MarionetteCharacter.h"
 #include <map>
 
 //================================================
@@ -474,7 +475,7 @@ protected:
 };
 
 //================================================
-//　MouseKing工場
+//　Mouse工場
 //	2017/01/11	Autor Shinya Ueba
 //================================================
 class CMouseFactory :public CMouseCreateFactory
@@ -508,6 +509,79 @@ public:
 
 };
 
+
+
+//================================================
+// キャラクターの生成と組み立てを担当するクラス
+//	（FactoryMethod）
+//================================================
+class CMarionetteCreateFactory :public CEnemyFactory {
+public:
+	//デストラクタ
+	virtual ~CMarionetteCreateFactory() {}
+
+protected:
+	//敵の生成と組み立て
+	virtual CEnemyCharacter* createEnemy()override {
+
+		// 敵生成
+		CMarionetteCharacter* pEnemy = CMarionetteCharacter::create();
+		// 敵パーツ工場生成
+		CEnemeyPartsFactory pEnemyPartsFactory;
+
+		// パーツの設定
+		pEnemy->m_pMove = pEnemyPartsFactory.getMove();
+		pEnemy->m_pAnimations = pEnemyPartsFactory.getAnimations();
+
+		pEnemy->m_pPhysicals = pEnemyPartsFactory.getPhysicals();
+		pEnemy->m_pBody = pEnemyPartsFactory.getBody();
+		pEnemy->m_pCollisionAreas = pEnemyPartsFactory.getCollisionAreas();
+
+		//状態データの生成と取得
+		pEnemy->m_pStateMachine = pEnemyPartsFactory.getStateMachine();
+
+		//　敵返す
+		return pEnemy;
+	}
+};
+
+
+//================================================
+//　Marionette工場
+//	2017/01/11	Autor Shinya Ueba
+//================================================
+class CMarionetteFactory :public CMarionetteCreateFactory
+{
+public:
+	//デストラクタ
+	~CMarionetteFactory() {}
+
+	//移動データの設定
+	void settingMove(CEnemyCharacter* pChara, float posX, float posY)override;
+	//画像の設定
+	void settingTexture(CEnemyCharacter* pChara)override;
+	//アニメーション群データの設定
+	void settingAnimations(CEnemyCharacter* pChara)override;
+	//物理演算群データの設定
+	void settingPhysicals(CEnemyCharacter* pCharacter)override;
+	//アクション群データの設定
+	void settingActions(CEnemyCharacter* pChara)override;
+	//実体データの設定
+	void settingBody(CEnemyCharacter* pChara)override;
+	//衝突判定空間群データの設定
+	void settingCollisionArea(CEnemyCharacter* pChara)override;
+	/**
+	*	@desc 状態遷移データの設定
+	*	@param 設定するキャラクター
+	*	@author Shinya Ueba
+	*/
+	void settingStateMachine(CEnemyCharacter* pChara)override;
+	//その他初期設定
+	void settingInitialize(CEnemyCharacter* pChara)override;
+
+};
+
+
 //================================================
 // 敵工場群を管理するクラス
 //	（Singleton）
@@ -534,7 +608,8 @@ private:
 		//MouseKing生成工場を生成し [key : NutCracker] に取り付ける
 		m_factories[ENEMY_TYPE::MOUSEKING] = new CMouseKingFactory();
 
-
+		//Marionette生成工場を生成し [key : Marionette] に取り付ける
+		m_factories[ENEMY_TYPE::MARIONETTE ] = new CMarionetteFactory();
 	}
 
 	//共有のインスタンス

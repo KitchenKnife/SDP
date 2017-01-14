@@ -259,6 +259,24 @@ bool CGameMain::init() {
 	this->m_pMainLayer->runAction(CCTintTo::create(1.0, 255, 0, 0));
 
 
+
+	//“G‚ğ¶¬
+	//“GoŒ‚ƒf[ƒ^‚ğì¬
+	CEnemyLaunchData* pLaunchData = new CEnemyLaunchData(ENEMY_TYPE::MARIONETTE, cocos2d::Point(700,700));
+
+
+	//ˆø”‚ÉoŒ‚‚³‚¹‚éƒ|ƒCƒ“ƒg‚Æ“G‚Ìƒ^ƒCƒv‚ğ“n‚·
+	CCharacter* pEnemyCharacter = CEnemyFactoryManager::getInstance()->create(
+		pLaunchData->m_pos,
+		pLaunchData->m_type
+	);
+	//CCharacterAggregate‚ÉƒvƒŒƒCƒ„[‚ğ’Ç‰Á
+	CCharacterAggregate::getInstance()->add(pEnemyCharacter);
+
+	this->m_pMainLayer->addChild(pEnemyCharacter);
+	SAFE_DELETE(pLaunchData);
+
+
 	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 	// ƒfƒoƒbƒN—pªª@Á‚µ‚Ü‚·
 	//PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP

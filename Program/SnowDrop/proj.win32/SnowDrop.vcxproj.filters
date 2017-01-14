@@ -166,6 +166,12 @@
     <Filter Include="src\Data\StateMachine\Enemy\Mouse">
       <UniqueIdentifier>{a33b4731-687c-428b-9a7a-7654a8c9b84a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data\StateMachine\Enemy\Marionette">
+      <UniqueIdentifier>{14245d06-2e50-46b0-89c9-acb3c3fb6670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Model\Character\EnemyCharacter\Marionette">
+      <UniqueIdentifier>{5572f3de-eac7-4c4f-ae43-58a22d71793a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -359,6 +365,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Mouse\MouseState.cpp">
       <Filter>src\Data\StateMachine\Enemy\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Data\StateMachine\Enemy\Marionette\MarionetteState.cpp">
+      <Filter>src\Data\StateMachine\Enemy\Marionette</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model\Character\EnemyCharacter\Marionette\MarionetteCharacter.cpp">
+      <Filter>src\Model\Character\EnemyCharacter\Marionette</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +580,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Mouse\MouseState.h">
       <Filter>src\Data\StateMachine\Enemy\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Data\StateMachine\Enemy\Marionette\MarionetteState.h">
+      <Filter>src\Data\StateMachine\Enemy\Marionette</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model\Character\EnemyCharacter\Marionette\MarionetteCharacter.h">
+      <Filter>src\Model\Character\EnemyCharacter\Marionette</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
