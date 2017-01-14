@@ -10,7 +10,6 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "PlayerCharacter.h"
-#include "Lib/Input/InputManager.h"
 #include "Data\Enum\EnumPlayer.h"
 #include "Model\Character\CharacterAggregate.h"
 
@@ -24,7 +23,27 @@
 CPlayerCharacterBoy::CPlayerCharacterBoy() {}
 
 //デストラクタ
-CPlayerCharacterBoy::~CPlayerCharacterBoy() {}
+CPlayerCharacterBoy::~CPlayerCharacterBoy() {
+	
+	//ステートマシーン群の削除
+	std::map<int, CStateMachine*>::iterator itr = (*this->m_pStateMachines).begin();
+	while (itr != (*this->m_pStateMachines).end()) {
+		SAFE_DELETE(itr->second);
+
+		itr++;
+	}
+	SAFE_DELETE(this->m_pStateMachines);
+	
+	//マップ型アニメーション群の削除
+	std::map<int, CAnimation*>::iterator anim_itr = (*this->m_pMapAnimations).begin();
+	while (anim_itr != (*this->m_pMapAnimations).end()) {
+		SAFE_DELETE(anim_itr->second);
+		
+		anim_itr++;
+	}
+	SAFE_DELETE(this->m_pMapAnimations);
+	
+}
 
 //初期化処理
 bool CPlayerCharacterBoy::init() {
@@ -48,9 +67,9 @@ void CPlayerCharacterBoy::moveFunc() {
 	//this->inputFunc();
 
 	//アクションの更新処理
-	if (this->m_mapAction[this->m_actionState])
+	if (this->m_mapAction[this->m_state])
 	{
-		for (CAction* pAction : (*this->m_mapAction[this->m_actionState])) {
+		for (CAction* pAction : (*this->m_mapAction[this->m_state])) {
 			pAction->update(this);
 		}
 	}
@@ -71,7 +90,11 @@ void CPlayerCharacterBoy::animationFunc() {
 
 
 	//プレイヤーアニメーション
-	(*this->m_pAnimations)[this->m_animationState]->update();
+	if ((*this->m_pMapAnimations)[this->m_state + this->m_playerAndGirlState + this->m_playerDirectionState])
+	{
+		(*this->m_pMapAnimations)[this->m_state + this->m_playerAndGirlState + this->m_playerDirectionState]->update();
+	}
+	
 }
 
 
@@ -105,9 +128,13 @@ void  CPlayerCharacterBoy::applyFunc() {
 	//位置データを反映
 	this->setPosition(this->m_pMove->m_pos);
 
+
 	//チップデータを反映
-	this->setTextureRect((*this->m_pAnimations)[this->m_animationState]->getCurrentChip());
+	this->setTextureRect((*this->m_pMapAnimations)[this->m_state + this->m_playerAndGirlState + this->m_playerDirectionState ]->getCurrentChip());
+
 }
+	
+	
 
 
 /**
@@ -127,4 +154,3 @@ bool  CPlayerCharacterBoy::collision(CCharacter* pChara) {
 void CPlayerCharacterBoy::hits(CCharacter* pChara) {
 
 }
-

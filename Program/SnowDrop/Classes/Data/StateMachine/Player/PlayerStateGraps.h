@@ -44,64 +44,24 @@ public:
 	virtual ~CPlayerStateGraps(void);
 
 	/**
-	 *	@desc	右向き待機状態へ移行
+	 *	@desc	待機状態へ移行
 	 */
-	void toIdleRight(void);
+	void toIdle(void);
 
 	/**
-	 *	@desc	左向き待機状態へ移行
+	 *	@desc	歩行状態へ移行
 	 */
-	void toIdleLeft(void);
+	void toWalk(void);
 
 	/**
-	 *	@desc	右向き歩行状態へ移行
+	 * @desc	攻撃状態へ移行
 	 */
-	void toWalkRight(void);
-
-	/**
-	 *	@desc	左向き歩行状態へ移行
-	 */
-	void toWalkLeft(void);
-
-	/**
-	 * @desc	右向き攻撃状態（１撃目）へ移行
-	 */
-	void toAttackRight(void);
-
-	/**
-	 * @desc	左向き攻撃状態（１撃目）へ移行
-	 */
-	void toAttackLeft(void);
-
-	/**
-	 * @desc	右向き装備する状態へ移行
-	 */
-	void toEquipRight(void);
-
-	/**
-	 *	@desc	左向き装備する状態へ移行
-	 */
-	void toEquipLeft(void);
-
-	/**
-	 *	@desc	右向き装備を解除する状態へ移行
-	 */
-	void toUnEquipRight(void);
+	void toAttack(void);
 
 	/*
-	 *	@desc	左向き装備を解除する状態へ移行
+	 *	@desc	手を離した状態へ移行
 	 */
-	void toUnEquipLeft(void);
-
-	/*
-	 *	@desc	右向き手を掴む状態へ移行
-	 */
-	void toGraspRight(void);
-
-	/*
-	 *	@desc	左向き手を掴む状態へ移行
-	 */
-	void toGraspLeft(void);
+	void toGrasp(void);
 
 protected:
 	//参照するプレイヤーキャラクター
@@ -115,71 +75,31 @@ protected:
 
 //==========================================
 //
-// Class: CPlayerGraspIdleRightState
+// Class: CPlayerGraspIdleState
 //
-// プレイヤー 右向き　手を繋ぐ待機 状態 クラス
-//
-// 2016/12/28
-//						Author Shinya Ueba
-//==========================================
-class CPlayerGraspIdleRightState :public CPlayerStateGraps
-{
-public:
-	/**
-	* @desc	コンストラクタ
-	*/
-	CPlayerGraspIdleRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
-
-	/**
-	* @desc	デストラクタ
-	*/
-	~CPlayerGraspIdleRightState(void);
-
-	/**
-	* @desc	開始処理
-	*/
-	void start(void)override;
-
-	/**
-	* @desc	更新処理
-	*/
-	void update(void)override;
-
-	/**
-	* @desc	状態が変わるときの処理
-	*/
-	void onChangeEvent(void)override;
-
-private:
-};
-
-
-//==========================================
-//
-// Class: CPlayerGraspWalkLeftState
-//
-// プレイヤー 左向き　手を繋ぐ待機 状態 クラス
+// プレイヤー 手を繋ぐ 待機 状態クラス
 //
 // 2016/12/28
 //						Author Shinya Ueba
 //==========================================
-class CPlayerGraspIdleLeftState :public CPlayerStateGraps
+class CPlayerGraspIdleState :public CPlayerStateGraps
 {
 public:
 	/**
 	* @desc	コンストラクタ
 	*/
-	CPlayerGraspIdleLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+	CPlayerGraspIdleState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
 	* @desc	デストラクタ
 	*/
-	~CPlayerGraspIdleLeftState(void);
+	~CPlayerGraspIdleState(void);
 
 	/**
 	* @desc	開始処理
 	*/
 	void start(void)override;
+
 	/**
 	* @desc	更新処理
 	*/
@@ -194,28 +114,27 @@ private:
 };
 
 
-
 //==========================================
 //
-// Class: CPlayerGraspWalkRightState
+// Class: CPlayerGraspWalkState
 //
-// プレイヤー 右向き　歩行 状態 クラス
+// プレイヤー 手を繋ぐ 歩行 状態クラス
 //
 // 2016/12/25
 //						Author Shinya Ueba
 //==========================================
-class CPlayerGraspWalkRightState :public CPlayerStateGraps
+class CPlayerGraspWalkState :public CPlayerStateGraps
 {
 public:
 	/**
 	* @desc	コンストラクタ
 	*/
-	CPlayerGraspWalkRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+	CPlayerGraspWalkState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
 	* @desc	デストラクタ
 	*/
-	~CPlayerGraspWalkRightState(void);
+	~CPlayerGraspWalkState(void);
 
 	/**
 	* @desc	開始処理
@@ -238,65 +157,25 @@ private:
 
 //==========================================
 //
-// Class: CPlayerGraspWalkLeftState
+// Class: CPlayerGraspAttackState
 //
-// プレイヤー 左向き　歩行 状態 クラス
-//
-// 2016/12/25
-//						Author Shinya Ueba
-//==========================================
-class CPlayerGraspWalkLeftState :public CPlayerStateGraps
-{
-public:
-	/**
-	* @desc	コンストラクタ
-	*/
-	CPlayerGraspWalkLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
-
-	/**
-	* @desc	デストラクタ
-	*/
-	~CPlayerGraspWalkLeftState(void);
-
-	/**
-	* @desc	開始処理
-	*/
-	void start(void)override;
-	/**
-	* @desc	更新処理
-	*/
-	void update(void)override;
-
-	/**
-	* @desc	状態が変わるときの処理
-	*/
-	void onChangeEvent(void)override;
-
-private:
-};
-
-
-//==========================================
-//
-// Class: CPlayerAttackRightState
-//
-// プレイヤー 右向き　攻撃 状態 クラス
+// プレイヤー 手を繋ぐ 攻撃 状態クラス
 //
 // 2016/12/25
 //						Author Harada
 //==========================================
-class CPlayerGrapsAttackRightState :public CPlayerStateGraps
+class CPlayerGraspAttackState :public CPlayerStateGraps
 {
 public:
 	/**
 	* @desc	コンストラクタ
 	*/
-	CPlayerGrapsAttackRightState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+	CPlayerGraspAttackState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
 	* @desc	デストラクタ
 	*/
-	~CPlayerGrapsAttackRightState(void);
+	~CPlayerGraspAttackState(void);
 
 	/**
 	* @desc	開始処理
@@ -317,27 +196,28 @@ private:
 
 };
 
+
 //==========================================
 //
-// Class: CPlayerAttackLeftState
+// Class: CPlayerGraspReleaseState
 //
-// プレイヤー 左向き　攻撃 状態 クラス
+// プレイヤー 手を繋ぐ 手を離す 状態クラス
 //
 // 2016/12/25
 //						Author Harada
 //==========================================
-class CPlayerGrapsAttackLeftState :public CPlayerStateGraps
+class CPlayerGraspReleaseState :public CPlayerStateGraps
 {
 public:
 	/**
 	* @desc	コンストラクタ
 	*/
-	CPlayerGrapsAttackLeftState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
+	CPlayerGraspReleaseState(CPlayerCharacterBoy* const pPlayer, CGirlCharacter* const pGirl);
 
 	/**
 	* @desc	デストラクタ
 	*/
-	~CPlayerGrapsAttackLeftState(void);
+	~CPlayerGraspReleaseState(void);
 
 	/**
 	* @desc	開始処理
@@ -355,4 +235,5 @@ public:
 	void onChangeEvent(void)override;
 
 private:
+
 };

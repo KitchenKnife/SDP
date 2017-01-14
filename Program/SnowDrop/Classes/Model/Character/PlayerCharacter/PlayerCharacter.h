@@ -75,6 +75,9 @@ public:
 	//================================================ 
 	// CPlayerCharacterBoyクラス専用メンバ
 	//================================================
+	//プレイヤー専用のアニメーションデータ群
+	std::map<int, CAnimation*>* m_pMapAnimations = NULL;
+
 
 	//プレイヤー専用のステートマシーンデータ群
 	std::map<int, CStateMachine*>* m_pStateMachines = NULL;
@@ -82,8 +85,15 @@ public:
 	//プレイヤーと少女の状態
 	int m_playerAndGirlState = 0;
 
-	
+	//プレイヤーの向いている方向の状態
+	int m_playerDirectionState = 0;
 
+	//連撃フラグ
+	bool m_chainAttackFlag = false;
+
+
+	//攻撃を受けたときの受けた方向
+	int m_underAttackDirection = 0;
 
 private:
 };

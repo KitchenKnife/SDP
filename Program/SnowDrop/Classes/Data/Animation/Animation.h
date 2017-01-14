@@ -17,6 +17,8 @@
 //=====================================
 typedef cocos2d::Rect CChip;
 
+class CPlayerCharacterBoy;
+
 //=====================================
 // アニメーションクラス
 //		このクラスにはチップの情報は存在しない
@@ -76,7 +78,7 @@ public:
 	* @desc	アニメーションをリセットする
 	* @atuhr	Shinya Ueba
 	*/
-	void reset(void) {
+	virtual void reset(void) {
 		this->m_counter = 0;
 		this->m_currentFrame = 0;
 		this->m_isEnd = false;
@@ -258,6 +260,79 @@ public:
 	virtual CChip getCurrentChip() override {
 		//添字演算子で取得したデータ自体がCChip*なのでその中身を返す。
 		return *(this->m_chipList[this->m_currentFrame]);
+	}
+
+};
+
+//========================================================================
+// プレイヤー専用連撃アニメーション
+//========================================================================
+class CPlayerAttackAnimation : public CAnimation {
+protected:
+	//アニメーションさせるチップデータのリスト
+	int m_line;
+
+	int m_nowLine = 0;
+
+	bool changeLineFlag = false;
+
+	//再生するチップの先頭のチップデータ情報を格納
+	std::vector<CChip*> m_pChipLine;
+
+	
+
+public:
+	CPlayerAttackAnimation(int interval, int number, int line, bool isLoop = false, int startFrame = 0) :CAnimation(interval, number, isLoop, startFrame) {
+		this->m_line = line;
+	}
+
+	~CPlayerAttackAnimation() {
+		for (CChip* pChip : this->m_pChipLine) {
+			SAFE_DELETE(pChip);
+		}
+	}
+
+	/**
+	* @desc チップデータの追加
+	* @param チップデータ
+	*/
+	void addChipData(CChip* pChip) override {
+
+		//チップデータを追加する
+		this->m_pChipLine.push_back(pChip);
+
+		//チップデータも更新したらアニメーションの最大数も更新する
+		this->m_line = this->m_pChipLine.size();
+	}
+
+	/**
+	* @desc	アニメーションの更新処理
+	* @return	表示するフレーム数（-1初期化がまだ行われていない）
+	*/
+	virtual int update()override;
+
+	/**
+	* @desc 現在フレームのチップを取得する
+	* @return 現在のフレームチップ
+	*/
+	virtual CChip getCurrentChip() override {
+		CChip chip
+		(
+			this->m_pChipLine[m_nowLine]->size.width * (this->m_currentFrame + this->m_startFrame),
+			this->m_pChipLine[m_nowLine]->origin.y,
+			this->m_pChipLine[m_nowLine]->size.width,
+			this->m_pChipLine[m_nowLine]->size.height
+		);
+
+		return chip;
+	}
+
+	void reset(void)override {
+		this->m_counter = 0;
+		this->m_currentFrame = 0;
+		this->m_isEnd = false;
+		this->changeLineFlag = false;
+		this->m_nowLine = 0;
 	}
 
 };

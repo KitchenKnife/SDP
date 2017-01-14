@@ -11,6 +11,7 @@
 #include "DamageCharacter.h"
 #include "Data/ActionController/ActionController.h"
 #include "Model/Character/CharacterAggregate.h"
+#include "Data/Enum/EnumPlayer.h"
 
 
 //================================================	
@@ -96,7 +97,7 @@ void CDamageCharacter::collisionAll() {
 	//ダメージを出したのが敵だったら
 	if (this->m_pChara->m_charaType == (int)CHARACTER_TYPE::ENEMY) {
 
-		CCharacter* pTarget = CCharacterAggregate::getInstance()->getPlayer();
+		CPlayerCharacterBoy* pTarget = CCharacterAggregate::getInstance()->getPlayer();
 		if (pTarget->m_isAlive)
 		{
 			if (this->collision(pTarget)) {
@@ -104,6 +105,15 @@ void CDamageCharacter::collisionAll() {
 			//	pTarget->decreaseHP(this->m_status.getAttackPt());
 				//攻撃を受けている状態フラグを上げる
 				pTarget->m_underAttack = true;
+
+				if (this->m_pMove->m_pos.x < pTarget->m_pMove->m_pos.x) {
+					pTarget->m_underAttackDirection = (int)PLAYER_UNDER_ATTACK_DIRECTION::LEFT;
+				}
+				else {
+					pTarget->m_underAttackDirection = (int)PLAYER_UNDER_ATTACK_DIRECTION::RIGHT;
+				}
+
+				
 			}
 		}
 	}
