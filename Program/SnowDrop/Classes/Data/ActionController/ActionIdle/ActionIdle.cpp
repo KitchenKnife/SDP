@@ -163,12 +163,12 @@ void CActionPlayerUnderAttack::update(CCharacter* pChara) {
 		CPlayerCharacterBoy* pBoy = (CPlayerCharacterBoy*)pChara;
 
 		//プレイヤーの向きが右向きなら
-		if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
+		if (pBoy->m_underAttackDirection == (int)PLAYER_UNDER_ATTACK_DIRECTION::RIGHT) {
 			pBoy->m_pMove->m_accele.y = 4.0;
 
 			pBoy->m_pMove->m_accele.x = -4.0;
 		}
-		else if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
+		else if (pBoy->m_underAttackDirection == (int)PLAYER_UNDER_ATTACK_DIRECTION::LEFT) {
 			pBoy->m_pMove->m_accele.y = 4.0;
 
 			pBoy->m_pMove->m_accele.x = 4.0;

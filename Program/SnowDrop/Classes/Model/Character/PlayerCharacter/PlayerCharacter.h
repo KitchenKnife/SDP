@@ -92,7 +92,8 @@ public:
 	bool m_chainAttackFlag = false;
 
 
-
+	//UŒ‚‚ğó‚¯‚½‚Æ‚«‚Ìó‚¯‚½•ûŒü
+	int m_underAttackDirection = 0;
 
 private:
 };

@@ -77,3 +77,4 @@ public:
 	// 有効フレーム数(何フレーム存在しておくか)
 	int m_activeFrame;
 };
+

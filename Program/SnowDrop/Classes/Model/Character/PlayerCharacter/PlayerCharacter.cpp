@@ -10,7 +10,6 @@
 //　追加のインクルードはここから
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 #include "PlayerCharacter.h"
-#include "Lib/Input/InputManager.h"
 #include "Data\Enum\EnumPlayer.h"
 #include "Model\Character\CharacterAggregate.h"
 
