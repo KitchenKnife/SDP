@@ -460,7 +460,7 @@ void CPlayerJumpState::update(void)
 
 	if (pointerInputController->getAttackFlag()) {
 		//右ジャンプ攻撃状態へ移行する
-		this->toJumpAttack();
+		//this->toJumpAttack();
 		return;
 	}
 
@@ -550,7 +550,7 @@ void CPlayerFallState::update(void)
 
 	if (pointerInputController->getAttackFlag()) {
 		//右ジャンプ攻撃状態へ移行する
-		this->toJumpAttack();
+		//this->toJumpAttack();
 		return;
 	}
 

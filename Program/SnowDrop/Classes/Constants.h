@@ -59,7 +59,7 @@ void ClearAndSwap( Ty p_ ) { p_->clear() ; Ty().swap( *p_ ) ; }
 
 // プレイヤー
 //#define IMAGE_PLAYER			"Images/player.png"
-#define IMAGE_PLAYER			"Images/Boy/ProvisionalKnight_2.png"
+#define IMAGE_PLAYER			"Images/Boy/knight.png"
 
 //消失エフェクト
 #define IMAGE_DIAPPEAR_EFFECT	"Images/bakuhatsuM01.png"

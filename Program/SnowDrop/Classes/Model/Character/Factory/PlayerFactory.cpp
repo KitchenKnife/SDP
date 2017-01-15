@@ -171,7 +171,7 @@ void CBasePlayerBoyFactory::settingTexture(CPlayerCharacterBoy* pChara){
 	//テクスチャの設定
 	pChara->setTexture(IMAGE_PLAYER);
 
-	pChara->setScale(2.0f);
+	pChara->setScale(0.5f);
 	
 }
 
@@ -181,37 +181,37 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
-	CAnimation* pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	CAnimation* pAni = new CChipAnimation(10, 3, true, 3);
+	pAni->addChipData(new CChip(1500, 500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, true);
+	pAni->addChipData(new CChip(0, 500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//手を繋ぐ
 	//少女と手を繋ぐ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipNotAnimation();
+	pAni->addChipData(new CChip(0, 7500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と手を繋ぐ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipNotAnimation();
+	pAni->addChipData(new CChip(0, 7000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//お姫様抱っこ
 	//少女とお姫様抱っこ、納刀、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipNotAnimation();
+	pAni->addChipData(new CChip(0, 3500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女とお姫様抱っこ、納刀、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipNotAnimation();
+	pAni->addChipData(new CChip(0, 3000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::IDLE + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 	//================================================
@@ -220,36 +220,36 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 7, true);
-	pAni->addChipData(new CChip(0, 128, 128, 128));
+	pAni->addChipData(new CChip(0, 0, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 7, true);
-	pAni->addChipData(new CChip(0, 256, 128, 128));
+	pAni->addChipData(new CChip(0, 0, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//手を繋ぐ
 	//少女と手を繋ぐ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 7, true);
-	pAni->addChipData(new CChip(0, 128, 128, 128));
+	pAni = new CChipAnimation(10, 5, true);
+	pAni->addChipData(new CChip(0, 7500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と手を繋ぐ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 7, true);
-	pAni->addChipData(new CChip(0, 256, 128, 128));
+	pAni = new CChipAnimation(10, 5, true);
+	pAni->addChipData(new CChip(0, 7000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//お姫様抱っこ
 	//少女とお姫様抱っこ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 7, true);
-	pAni->addChipData(new CChip(0, 128, 128, 128));
+	pAni = new CChipAnimation(10, 6, true);
+	pAni->addChipData(new CChip(0, 3500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女とお姫様抱っこ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 7, true);
-	pAni->addChipData(new CChip(0, 256, 128, 128));
+	pAni = new CChipAnimation(10, 6, true);
+	pAni->addChipData(new CChip(0, 3000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::WALK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
@@ -258,13 +258,13 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 2000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 2000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
@@ -273,13 +273,13 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 
 	//お姫様抱っこ
 	//少女とお姫様抱っこ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 5500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女とお姫様抱っこ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));;
+	pAni = new CChipAnimation(10, 2, false);
+	pAni->addChipData(new CChip(0, 5000, 500, 500));;
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
@@ -288,37 +288,28 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(1000, 2000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(1000, 2000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//手を繋ぐ
-	//少女と手を繋ぐ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
-
-	//少女と手を繋ぐ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
-
+	
 
 	//お姫様抱っこ
 	//少女とお姫様抱っこ、納刀、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, true, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(1000, 5500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女とお姫様抱っこ、納刀、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, true);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 2, false, 2);
+	pAni->addChipData(new CChip(1000, 5000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::FALL + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
@@ -327,30 +318,56 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、抜刀、右向きのアニメーションを設定
-	pAni = new CPlayerAttackAnimation(10, 5, false);
-	pAni->addChipData(new CChip(0, 640, 128, 128));	//１撃目
-	pAni->addChipData(new CChip(0, 768, 128, 128));	//２撃目
-	pAni->addChipData(new CChip(0, 896, 128, 128));	//３撃目
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+	CPlayerAttackAnimation* pAttackAnim = new CPlayerAttackAnimation();
+	
+	//１撃目
+	pAni = new CChipAnimation(5, 7, false);
+	pAni->addChipData(new CChip(0, 8500, 500, 500));
+	pAttackAnim->addChipData(pAni);
+
+	//２撃目
+	pAni = new CChipAnimation(5, 4, false);
+	pAni->addChipData(new CChip(0, 9500, 500, 500));
+	pAttackAnim->addChipData(pAni);
+
+	//３撃目
+	pAni = new CChipAnimation(5, 5, false);
+	pAni->addChipData(new CChip(0, 10500, 500, 500));
+	pAttackAnim->addChipData(pAni);
+
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAttackAnim;
 
 	//少女と関係なし、抜刀、左向きのアニメーションを設定
-	pAni = new CPlayerAttackAnimation(10, 5, false);
-	pAni->addChipData(new CChip(0, 640, 128, 128));	//１撃目
-	pAni->addChipData(new CChip(0, 768, 128, 128));	//２撃目
-	pAni->addChipData(new CChip(0, 896, 128, 128));	//３撃目
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+	pAttackAnim = new CPlayerAttackAnimation();
+
+	//１撃目
+	pAni = new CChipAnimation(5, 7, false);
+	pAni->addChipData(new CChip(0, 8000, 500, 500));
+	pAttackAnim->addChipData(pAni);
+
+	//２撃目
+	pAni = new CChipAnimation(5, 4, false);
+	pAni->addChipData(new CChip(0, 9000, 500, 500));
+	pAttackAnim->addChipData(pAni);
+
+	//３撃目
+	pAni = new CChipAnimation(5, 5, false);
+	pAni->addChipData(new CChip(0, 10000, 500, 500));
+	pAttackAnim->addChipData(pAni);
+
+	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAttackAnim;
 
 
 	//手を繋ぐ
 	//少女と手を繋ぐ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 5, false);
-	pAni->addChipData(new CChip(0, 768, 128, 128));
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+	//pAni = new CChipAnimation(10, 5, false);
+	//pAni->addChipData(new CChip(0, 768, 128, 128));
+	//(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と手を繋ぐ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 5, false);
-	pAni->addChipData(new CChip(0, 768, 128, 128));
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+	//pAni = new CChipAnimation(10, 5, false);
+	//pAni->addChipData(new CChip(0, 768, 128, 128));
+	//(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 	//お姫様抱っこ
 	//攻撃不可
@@ -361,14 +378,14 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
-	pAni = new CChipAnimation(5, 5, false);
-	pAni->addChipData(new CChip(0, 768, 128, 128));
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
+	//pAni = new CChipAnimation(5, 5, false);
+	//pAni->addChipData(new CChip(0, 768, 128, 128));
+	//(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
-	pAni = new CChipAnimation(5, 5, false);
-	pAni->addChipData(new CChip(0, 768, 128, 128));
-	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
+	//pAni = new CChipAnimation(5, 5, false);
+	//pAni->addChipData(new CChip(0, 768, 128, 128));
+	//(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::JUMP_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//================================================
@@ -376,37 +393,37 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, false, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, false);
+	pAni->addChipData(new CChip(0, 1500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, false);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, false);
+	pAni->addChipData(new CChip(0, 1500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//手を繋ぐ
 	//少女と手を繋ぐ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, false, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, false);
+	pAni->addChipData(new CChip(0, 1500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と手を繋ぐ、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, false);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, false);
+	pAni->addChipData(new CChip(0, 1500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//お姫様抱っこ
 	//少女とお姫様抱っこ、納刀、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 3, false, 4);
-	pAni->addChipData(new CChip(512, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, false);
+	pAni->addChipData(new CChip(0, 1500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女とお姫様抱っこ、納刀、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 4, false);
-	pAni->addChipData(new CChip(0, 384, 128, 128));
+	pAni = new CChipAnimation(10, 3, false);
+	pAni->addChipData(new CChip(0, 1500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::UNDER_ATTACK + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
@@ -416,24 +433,24 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 2, false, 2);
-	pAni->addChipData(new CChip(256, 512, 128, 128));
+	pAni->addChipData(new CChip(1000, 2500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 2, false);
-	pAni->addChipData(new CChip(0, 512, 128, 128));
+	pAni->addChipData(new CChip(0, 2500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//手を握る
 	//少女と手を繋ぐ、右向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 2, false, 2);
-	pAni->addChipData(new CChip(256, 512, 128, 128));
+	pAni->addChipData(new CChip(1000, 2500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と手を繋ぐ、左向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 2, false);
-	pAni->addChipData(new CChip(0, 512, 128, 128));
+	pAni->addChipData(new CChip(0, 2500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::GRASP + (int)PLAYER_AND_GIRL_STATE::GRAPS_HANDS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 	//================================================
@@ -441,25 +458,25 @@ void CBasePlayerBoyFactory::settingAnimations(CPlayerCharacterBoy* pChara) {
 	//================================================
 	//関係なし
 	//少女と関係なし、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 2, false, 2);
-	pAni->addChipData(new CChip(256, 512, 128, 128));
+	pAni = new CChipAnimation(10, 5, false);
+	pAni->addChipData(new CChip(0, 4000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と関係なし、左向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 2, false);
-	pAni->addChipData(new CChip(0, 512, 128, 128));
+	pAni = new CChipAnimation(10, 5, false);
+	pAni->addChipData(new CChip(0, 4500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 
 	//お姫様抱っこ
 	//少女と手を繋ぐ、右向きのアニメーションを設定
-	pAni = new CChipAnimation(10, 2, false, 2);
-	pAni->addChipData(new CChip(256, 512, 128, 128));
+	pAni = new CChipAnimation(10, 5, false);
+	pAni->addChipData(new CChip(0, 6000, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::RIGHT] = pAni;
 
 	//少女と手を繋ぐ、左向きのアニメーションを設定
 	pAni = new CChipAnimation(10, 2, false);
-	pAni->addChipData(new CChip(0, 512, 128, 128));
+	pAni->addChipData(new CChip(0, 6500, 500, 500));
 	(*pChara->m_pMapAnimations)[(int)PLAYER_STATE::HOLD + (int)PLAYER_AND_GIRL_STATE::HOLD_THE_PRINCESS + (int)PLATYER_DIRECTION_STATE::LEFT] = pAni;
 
 	

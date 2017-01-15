@@ -126,11 +126,14 @@ void CActionPlayerAttack::update(CCharacter* pChara) {
 			pLaunchData = new CDamageLaunchData(pChara,
 				cocos2d::Point(pChara->m_pMove->m_pos.x + pChara->m_pBody->m_right, pChara->m_pMove->m_pos.y),
 				1);
+
 		}
 		else if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
 			pLaunchData = new CDamageLaunchData(pChara,
 				cocos2d::Point(pChara->m_pMove->m_pos.x + pChara->m_pBody->m_left, pChara->m_pMove->m_pos.y),
 				1);
+
+			
 		}
 		//ダメージキャラクター生成トリガーを作成
 		CDamageLaunchTrigger* pLaunchTrigger = new CDamageLaunchTrigger(pLaunchData);
@@ -138,8 +141,34 @@ void CActionPlayerAttack::update(CCharacter* pChara) {
 		//作成したトリガーをスケジューラーに登録
 		CLaunchScheduler::getInstance()->m_pLauncher->add(pLaunchTrigger);
 
+
+		this->m_afterAction = true;
+
 		this->m_inAction = false;
 		
+	}
+
+	if (this->m_afterAction) {
+		//プレイヤーキャラクターに変換
+		CPlayerCharacterBoy* pBoy = (CPlayerCharacterBoy*)pChara;
+
+		if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::RIGHT) {
+
+			//プレイヤーの攻撃アニメーションが一撃目の４枚目なら
+			if ((*pBoy->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::RIGHT]->getCurrentFrame() == 4) {
+				pBoy->m_pMove->m_pos.x += 100;
+
+				this->m_afterAction = false;
+			}
+		}
+		else if (pBoy->m_playerDirectionState == (int)PLATYER_DIRECTION_STATE::LEFT) {
+			//プレイヤーの攻撃アニメーションが一撃目の４枚目なら
+			if ((*pBoy->m_pMapAnimations)[(int)PLAYER_STATE::ATTACK + (int)PLAYER_AND_GIRL_STATE::FREE + (int)PLATYER_DIRECTION_STATE::LEFT]->getCurrentFrame() == 4) {
+				pBoy->m_pMove->m_pos.x -= 100;
+
+				this->m_afterAction = false;
+			}
+		}
 	}
 	
 }

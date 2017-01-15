@@ -110,6 +110,8 @@ private:
 	//アクション中かどうかのフラグ true...アクション中
 	bool m_inAction = false;
 
+	bool m_afterAction = false;
+
 public:
 
 	/**

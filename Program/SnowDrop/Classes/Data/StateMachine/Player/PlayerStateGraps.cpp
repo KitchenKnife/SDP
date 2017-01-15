@@ -142,7 +142,7 @@ void CPlayerGraspIdleState::update(void)
 	//‰EŒü‚«UŒ‚ó‘Ô‚ÖˆÚs
 	if (pointerInputController->getAttackFlag()) {
 		//‰EŒü‚«UŒ‚ó‘Ô‚ÖˆÚs
-		this->toAttack();
+		//this->toAttack();
 		return;
 	}
 
@@ -230,7 +230,7 @@ void CPlayerGraspWalkState::update(void)
 	//‰EŒü‚«UŒ‚ó‘Ô‚ÖˆÚs
 	if (pointerInputController->getAttackFlag()) {
 		//‰EŒü‚«UŒ‚ó‘Ô‚ÖˆÚs
-		this->toAttack();
+		//this->toAttack();
 		return;
 	}
 

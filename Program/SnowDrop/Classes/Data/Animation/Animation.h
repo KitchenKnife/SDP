@@ -51,6 +51,9 @@ protected:
 	bool m_isEnd = false;
 
 public:
+	//デフォルトコンストラクタ
+	CAnimation(){}
+
 	//コンストラクタ
 	CAnimation(int interval, int number,bool isLoop = false, int startFrame = 0) :
 		m_interval(interval), m_number(number), m_startFrame(startFrame), m_isLoop(isLoop) {}
@@ -62,7 +65,7 @@ public:
 	 * @desc	現在のフレームの取得
 	 * @return	現在のフレーム
 	 */
-	int getCurrentFrame() {
+	virtual int getCurrentFrame() {
 		return this->m_currentFrame;
 	}
 
@@ -70,7 +73,7 @@ public:
 	 * @desc	アニメーション終了フラグの取得
 	 * @return	true...終了しました。
 	 */
-	bool isEnd() {
+	virtual bool isEnd() {
 		return this->m_isEnd;
 	}
 
@@ -274,35 +277,18 @@ protected:
 
 	int m_nowLine = 0;
 
-	bool changeLineFlag = false;
-
 	//再生するチップの先頭のチップデータ情報を格納
-	std::vector<CChip*> m_pChipLine;
+	std::vector<CAnimation*> m_pAnimations;
 
 	
 
 public:
-	CPlayerAttackAnimation(int interval, int number, int line, bool isLoop = false, int startFrame = 0) :CAnimation(interval, number, isLoop, startFrame) {
-		this->m_line = line;
-	}
+	CPlayerAttackAnimation() {}
 
 	~CPlayerAttackAnimation() {
-		for (CChip* pChip : this->m_pChipLine) {
-			SAFE_DELETE(pChip);
+		for (CAnimation* pAnimation : this->m_pAnimations) {
+			SAFE_DELETE(pAnimation);
 		}
-	}
-
-	/**
-	* @desc チップデータの追加
-	* @param チップデータ
-	*/
-	void addChipData(CChip* pChip) override {
-
-		//チップデータを追加する
-		this->m_pChipLine.push_back(pChip);
-
-		//チップデータも更新したらアニメーションの最大数も更新する
-		this->m_line = this->m_pChipLine.size();
 	}
 
 	/**
@@ -312,27 +298,49 @@ public:
 	virtual int update()override;
 
 	/**
+	* @desc チップデータの追加
+	* @param チップデータ
+	*/
+	void addChipData(CChip* pChip)override {
+
+	}
+
+	void addChipData(CAnimation* pAnimation) {
+
+		//チップデータを追加する
+		this->m_pAnimations.push_back(pAnimation);
+
+		//チップデータも更新したらアニメーションの最大数も更新する
+		this->m_line = this->m_pAnimations.size();
+	}
+
+	/**
 	* @desc 現在フレームのチップを取得する
 	* @return 現在のフレームチップ
 	*/
 	virtual CChip getCurrentChip() override {
-		CChip chip
-		(
-			this->m_pChipLine[m_nowLine]->size.width * (this->m_currentFrame + this->m_startFrame),
-			this->m_pChipLine[m_nowLine]->origin.y,
-			this->m_pChipLine[m_nowLine]->size.width,
-			this->m_pChipLine[m_nowLine]->size.height
-		);
 
-		return chip;
+		return this->m_pAnimations[this->m_nowLine]->getCurrentChip();
+	}
+
+	int getCurrentFrame()override {
+		this->m_currentFrame = 0;
+
+		for (int i = 0; i < this->m_line; i++) {
+			this->m_currentFrame += this->m_pAnimations[i]->getCurrentFrame();
+		}
+
+		return this->m_currentFrame;
 	}
 
 	void reset(void)override {
-		this->m_counter = 0;
-		this->m_currentFrame = 0;
-		this->m_isEnd = false;
-		this->changeLineFlag = false;
+		for (CAnimation* pAnimation : this->m_pAnimations) {
+			pAnimation->reset();
+		}
+		
 		this->m_nowLine = 0;
+
+		this->m_isEnd = false;
 	}
 
 };

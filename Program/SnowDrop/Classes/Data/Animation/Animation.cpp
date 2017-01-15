@@ -14,70 +14,41 @@
 // プレイヤー専用連撃アニメーション
 //========================================================================
 int CPlayerAttackAnimation::update() {
-	//アニメーションが終了していなければカウンターの更新を行う
-	if (this->m_isEnd == false && this->changeLineFlag == false) {
-
-		this->m_counter++;
-
-		//カウンターの数がアニメーションさせる枚数以上になったらカウンターをリセットする
-		if (this->m_counter >= this->m_interval*this->m_number) {
-
-			//ループするなら
-			if (this->m_isLoop == true) {
-
-				//カウンターをリセット
-				this->m_counter = 0;
-			}
-			else {
-
-				//アニメーションが終了したかどうかのフラグに対してtrueを入れる
-				this->changeLineFlag = true;
-
-				//ループしないアニメーションに対しては飛び出たカウンターをデクリメントする
-				this->m_counter--;
-			}
-		}
-	}
-	//アニメーションが終了
-	else if(this->m_isEnd == false && this->changeLineFlag == true)
-	{
+	//現在のアニメーションを終了したか確認
+	if (this->m_pAnimations[this->m_nowLine]->isEnd()) {
+		//終了していたら
+		
+		//プレイヤーの取得
 		CPlayerCharacterBoy* pBoy = CCharacterAggregate::getInstance()->getPlayer();
-
-		//プレイヤーの連撃フラグが立っているか確認
-		if (pBoy->m_chainAttackFlag == true) {
-			//現在のチップラインを更新
+		
+		//プレイヤーの連撃フラグが立っていたら
+		if (pBoy->m_chainAttackFlag) {
+			//現在の再生するアニメーションを更新
 			this->m_nowLine++;
 
-			//現在のチップラインが格納しているライン数よりも下なら
-			if (this->m_nowLine < this->m_line)
-			{
-				this->changeLineFlag = false;
-
-				this->m_counter = 0;
-
-				(*pBoy->m_mapAction[(int)PLAYER_STATE::ATTACK])[0]->start();
-			}
-			//これ以上再生できるラインがなければ
-			else
-			{
-				//アニメーション終了フラグを立てる
-				this->m_isEnd = true;
-			}
-
 			pBoy->m_chainAttackFlag = false;
+
+			//もし再生するアニメーションがなければ
+			if (this->m_nowLine >= this->m_line) {
+				//このアニメーション全体の終了フラグを立てる
+				this->m_isEnd = true;
+
+				return -1;
+			}
+
+			//次回のアニメーションが存在していれば
+			//ダメージキャラクターを出す
+			(*pBoy->m_mapAction[(int)PLAYER_STATE::ATTACK])[0]->start();
 		}
-		//プレイヤーの連撃フラグが立っていなければ
-		else
-		{
-			//アニメーション終了フラグを立てる
+		//連撃フラグを降りていたら
+		else {
+			//このアニメーション全体の終了フラグを立てる。
 			this->m_isEnd = true;
+
+			return -1;
 		}
-		
 	}
 
-	//表示するフレーム数
-	m_currentFrame = this->m_counter / this->m_interval;
-
-	//更新した現在のフレームを一応返す。
-	return m_currentFrame;
+	//現在のアニメーションを更新して返す。
+	return this->m_pAnimations[this->m_nowLine]->update();
 }

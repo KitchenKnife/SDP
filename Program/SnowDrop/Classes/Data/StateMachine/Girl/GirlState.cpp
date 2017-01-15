@@ -500,7 +500,7 @@ CGirlGraspIdleRightState::~CGirlGraspIdleRightState(void) {}
 */
 void CGirlGraspIdleRightState::start(void)
 {
-
+	this->m_pGirl->setVisible(false);
 }
 
 /**
@@ -537,6 +537,8 @@ void CGirlGraspIdleRightState::update(void)
 */
 void CGirlGraspIdleRightState::onChangeEvent(void)
 {
+	this->m_pGirl->setVisible(true);
+
 	this->m_isNext = false;
 }
 
@@ -565,7 +567,7 @@ CGirlGraspIdleLeftState::~CGirlGraspIdleLeftState(void) {}
 */
 void CGirlGraspIdleLeftState::start(void)
 {
-
+	this->m_pGirl->setVisible(false);
 }
 
 /**
@@ -602,6 +604,8 @@ void CGirlGraspIdleLeftState::update(void)
 */
 void CGirlGraspIdleLeftState::onChangeEvent(void)
 {
+	this->m_pGirl->setVisible(true);
+
 	this->m_isNext = false;
 }
 
@@ -631,7 +635,7 @@ CGirlGraspWalkRightState::~CGirlGraspWalkRightState(void) {}
 */
 void CGirlGraspWalkRightState::start(void)
 {
-
+	this->m_pGirl->setVisible(false);
 }
 
 
@@ -663,6 +667,8 @@ void CGirlGraspWalkRightState::update(void)
 */
 void CGirlGraspWalkRightState::onChangeEvent(void)
 {
+	this->m_pGirl->setVisible(true);
+
 	this->m_isNext = false;
 }
 
@@ -693,7 +699,7 @@ CGirlGraspWalkLeftState::~CGirlGraspWalkLeftState(void) {}
 */
 void CGirlGraspWalkLeftState::start(void)
 {
-
+	this->m_pGirl->setVisible(false);
 }
 
 /**
@@ -724,6 +730,8 @@ void CGirlGraspWalkLeftState::update(void)
 */
 void CGirlGraspWalkLeftState::onChangeEvent(void)
 {
+	this->m_pGirl->setVisible(true);
+
 	this->m_isNext = false;
 }
 
@@ -753,7 +761,7 @@ CGirlHoldIdleRightState::~CGirlHoldIdleRightState(void) {}
 */
 void CGirlHoldIdleRightState::start(void)
 {
-
+	this->m_pGirl->setVisible(false);
 }
 
 /**
@@ -783,6 +791,7 @@ void CGirlHoldIdleRightState::update(void)
 */
 void CGirlHoldIdleRightState::onChangeEvent(void)
 {
+	this->m_pGirl->setVisible(true);
 	this->m_isNext = false;
 }
 
@@ -812,7 +821,7 @@ CGirlHoldIdleLeftState::~CGirlHoldIdleLeftState(void) {}
 */
 void CGirlHoldIdleLeftState::start(void)
 {
-
+	this->m_pGirl->setVisible(false);
 }
 
 /**
@@ -841,6 +850,8 @@ void CGirlHoldIdleLeftState::update(void)
 */
 void CGirlHoldIdleLeftState::onChangeEvent(void)
 {
+	this->m_pGirl->setVisible(true);
+
 	this->m_isNext = false;
 }
 
